@@ -11,7 +11,7 @@ class Integrante(models.Model):
     num_telf  = models.IntegerField(blank=True, null=True)
     direccion = models.CharField(max_length=150)
     abilidad  = models.CharField(max_length=30)
-    empresa = models.ForeignKey(Empresa, null=False, blank=False,on_delete=models.CASCADE)
+    empresa = models.ForeignKey(Empresa, related_name='Integrante', null=False, blank=False,on_delete=models.CASCADE)
     
     
     class Meta:

@@ -18,7 +18,7 @@ class Prenda(models.Model):
     rXL           = models.IntegerField(blank=True, null=True)
     rXXL          = models.IntegerField(blank=True, null=True)
     nota          = models.CharField(max_length=50)
-    referencia    = models.ForeignKey(Referencia, related_name='referencia',on_delete=models.CASCADE)
+    referencia    = models.ForeignKey(Referencia, related_name='Prenda',on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

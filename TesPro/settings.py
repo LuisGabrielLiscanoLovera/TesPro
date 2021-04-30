@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'referencia',
     'destajo',
     'casino',
+    'despacho',
 ]
 
 MIDDLEWARE = [
