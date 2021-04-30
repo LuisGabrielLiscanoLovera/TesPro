@@ -5,7 +5,7 @@ from integrante.models import Integrante
 class Despacho(models.Model):
     prenda        = models.ForeignKey(Prenda,related_name='Despacho',on_delete=models.CASCADE)
     can_terminada = models.IntegerField(blank=True, null=True)
-    integrante = models.ForeignKey(Integrante, null=False, blank=False,on_delete=models.CASCADE)    
+    integrante = models.ForeignKey(Integrante,related_name='Despacho', null=False, blank=False,on_delete=models.CASCADE)    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)   
     
