@@ -1,8 +1,18 @@
 from django.http import HttpResponse
 from django.template import Context,Template
 import datetime
-def bienvenida(request):
-    return HttpResponse("bienvenida")
+
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
+@login_required(login_url='signin')
+def home(request):
+    return render(request, 'homeq.html')
+
+
+
+
 
 def bienvenidaRojo(request):
     return HttpResponse("<p style='color:red;'>bienvenida</p>")
