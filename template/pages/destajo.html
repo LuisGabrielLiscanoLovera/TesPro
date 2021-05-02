@@ -1,267 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Material Dash</title>
-  <!-- plugins:css -->
-  <link rel="stylesheet" href="../../../assets/vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="../../../assets/vendors/css/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- Layout styles -->
-  <link rel="stylesheet" href="../../../assets/css/demo/style.css">
-  <!-- End layout styles -->
-  <link rel="shortcut icon" href="../../../assets/images/favicon.png" />
-</head>
-<body>
-<script src="../assets/js/preloader.js"></script>
-  <div class="body-wrapper">
-    <!-- partial:../../partials/_sidebar.html -->
-    <aside class="mdc-drawer mdc-drawer--dismissible mdc-drawer--open">
-      <div class="mdc-drawer__header">
-        <a href="../../index.html" class="brand-logo">
-          <img src="../../../assets/images/logo.svg" alt="logo">
-        </a>
-      </div>
-      <div class="mdc-drawer__content">
-        <div class="user-info">
-          <p class="name">Usuario  {Jefe}</p>
-          <p class="email">Casa del Polo</p>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<header class="mdc-top-app-bar">
+    <div class="mdc-top-app-bar__row">
+      <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+        
+        <span class="mdc-top-app-bar__title">Destajo</span>
+        <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon search-text-field d-none d-md-flex">
+          <i class="material-icons mdc-text-field__icon">search</i>
+          <input class="mdc-text-field__input" id="text-field-hero-input">
+          <div class="mdc-notched-outline">
+            <div class="mdc-notched-outline__leading"></div>
+            <div class="mdc-notched-outline__notch">
+              <label for="text-field-hero-input" class="mdc-floating-label">Search..</label>
+            </div>
+            <div class="mdc-notched-outline__trailing"></div>
+          </div>
         </div>
-        <div class="mdc-list-group">
-          <nav class="mdc-list mdc-drawer-menu">
-            <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-drawer-link" href="../../index.html">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i>
-                Inicio
-              </a>
-            </div>
-            
-            <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-drawer-link" href="#"  data-toggle="modal" data-target="#modal_crearOP">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">track_changes</i>
-                Crear Operacion
-              </a>
-            </div>
-                        
-
-            <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-drawer-link" href="segimientoOp.html">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">grid_on</i>
-                Seguimiento de OP </a>
-            </div>
-
-            <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-contabilidad">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i>
-                Contabilidad
-                <i class="mdc-drawer-arrow material-icons">chevron_right</i>
-              </a>
-              <div class="mdc-expansion-panel" id="ui-sub-menu-contabilidad">
-                <nav class="mdc-list mdc-drawer-submenu">
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="destajo.html" data-toggle="modazxl" data-target="destajo">
-                       Destajo
-                    </a>
-                  </div>
-
-                  <nav class="mdc-list mdc-drawer-submenu">
-                    <div class="mdc-list-item mdc-drawer-item">
-                      <a class="mdc-drawer-link" href="casino.html" data-toggle="modazxl" data-target="act_casino">
-                         Casino
-                      </a>
-                    </div>
-
-                </nav>
-              </div>
-            </div>
-
-
-
-
-
-            <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-act">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i>
-                Actividad
-                <i class="mdc-drawer-arrow material-icons">chevron_right</i>
-              </a>
-              <div class="mdc-expansion-panel" id="ui-sub-menu-act">
-                <nav class="mdc-list mdc-drawer-submenu">
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="acumulado.html" data-toggle="modazxl" data-target="acumulado">
-                       Acumulado
-                    </a>
-                  </div>
-
-                  <nav class="mdc-list mdc-drawer-submenu">
-                    <div class="mdc-list-item mdc-drawer-item">
-                      <a class="mdc-drawer-link" href="xtarea.html" data-toggle="modazxl" data-target="act_tarea">
-                         Tarea
-                      </a>
-                    </div>
-
-                   
-  
-                    
-
-                    <nav class="mdc-list mdc-drawer-submenu">
-                      <div class="mdc-list-item mdc-drawer-item">
-                        <a class="mdc-drawer-link" href="#" data-toggle="modazxl" data-target="act">
-                         Depacho
-                        </a>
-                      </div>
-                </nav>
-              </div>
-            </div>
-
-
-            
-
-            <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-elm">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i>
-                Elementos
-                <i class="mdc-drawer-arrow material-icons">chevron_right</i>
-              </a>
-              <div class="mdc-expansion-panel" id="ui-sub-menu-elm">
-                <nav class="mdc-list mdc-drawer-submenu">
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="#" data-toggle="modal" data-target="#modal_integrante">
-                      Agregar Integrante
-                    </a>
-                  </div>
-
-                
-
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="#" data-toggle="modal" data-target="#modal_referencia">
-                      Agregar Referencia
-                    </a>
-                                    
-                  </div>
-
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="#" data-toggle="modal" data-target="#modal_tarea">
-                      Agregar Tarea
-                    </a>
-                                    
-                  </div>
-
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="#" data-toggle="modal" data-target="#modal_color">
-                      Agregar Color
-                    </a>
-                  </div>
-
-
-                  
-                </nav>
-              </div>
-            </div>
-
-          </nav>  
-        </div>
-
-
       </div>
-    </aside>
-    <!-- partial -->
-    <div class="main-wrapper mdc-drawer-app-content">
-      <!-- partial:../../partials/_navbar.html -->
-      <header class="mdc-top-app-bar">
-        <div class="mdc-top-app-bar__row">
-          <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-            <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
-            <span class="mdc-top-app-bar__title">Destajo</span>
-            <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon search-text-field d-none d-md-flex">
-              <i class="material-icons mdc-text-field__icon">search</i>
-              <input class="mdc-text-field__input" id="text-field-hero-input">
-              <div class="mdc-notched-outline">
-                <div class="mdc-notched-outline__leading"></div>
-                <div class="mdc-notched-outline__notch">
-                  <label for="text-field-hero-input" class="mdc-floating-label">Search..</label>
+      <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right">
+        <div class="menu-button-container menu-profile d-none d-md-block">
+        
+          <div class="mdc-menu mdc-menu-surface" tabindex="-1">
+            <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
+             
+              <li class="mdc-list-item" role="menuitem">
+                <div class="item-thumbnail item-thumbnail-icon-only">
+                  <i class="mdi mdi-settings-outline text-primary"></i>                      
                 </div>
-                <div class="mdc-notched-outline__trailing"></div>
-              </div>
-            </div>
-          </div>
-          <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right">
-            <div class="menu-button-container menu-profile d-none d-md-block">
-              <button class="mdc-button mdc-menu-button">
-                <span class="d-flex align-items-center">
-                  <span class="figure">
-                    <img src="../../../assets/images/faces/face1.jpg" alt="user" class="user">
-                  </span>
-                  <span class="user-name">Usuario{Jefe}</span>
-                </span>
-              </button>
-              <div class="mdc-menu mdc-menu-surface" tabindex="-1">
-                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
-                 
-                  <li class="mdc-list-item" role="menuitem">
-                    <div class="item-thumbnail item-thumbnail-icon-only">
-                      <i class="mdi mdi-settings-outline text-primary"></i>                      
-                    </div>
-                    <div class="item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 class="item-subject font-weight-normal">Logout</h6>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="divider d-none d-md-block"></div>
-           
-            
-           
-          
+                
+              </li>
+            </ul>
           </div>
         </div>
-      </header>
-      <!-- partial -->
-      <div class="page-wrapper mdc-toolbar-fixed-adjust">
-        <main class="content-wrapper">
-          
-        </main>
-        <!-- partial:../../partials/_footer.html -->
-        <footer>
-          <div class="mdc-layout-grid">
-            <div class="mdc-layout-grid__inner">
-              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
-                <span class="text-center text-sm-left d-block d-sm-inline-block tx-14">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com </a>2020</span>
-              </div>
-              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop d-flex justify-content-end">
-                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center tx-14">Free <a href="https://www.bootstrapdash.com/material-design-dashboard/" target="_blank"> material admin </a> dashboards from Bootstrapdash.com</span>
-              </div>
-            </div>
-          </div>
-        </footer>
-        <!-- partial -->
+        <div class="divider d-none d-md-block"></div> 
+       
+    
+
       </div>
     </div>
-
+  </header>
+<div class="mdc-layout-grid">
+<div class="mdc-layout-grid__inner">   
+  
+   
+    
+ 
+  
     
   </div>
+</div>
 
 
-
-
-
-
-  
-  <!-- plugins:js -->
-  <script src="../../../assets/vendors/js/vendor.bundle.base.js"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page-->
-  <!-- End plugin js for this page-->
-  <!-- inject:js -->
-  <script src="../../../assets/js/material.js"></script>
-  <script src="../../../assets/js/misc.js"></script>
-  <!-- endinject -->
-  <!-- Custom js for this page-->
-  <!-- End custom js for this page-->
-</body>
-</html>
+{% endblock %}

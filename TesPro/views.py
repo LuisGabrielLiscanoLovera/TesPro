@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 
 @login_required(login_url='signin')
 def home(request):
-    return render(request, 'homeq.html')
+    return render(request, 'home.html')
 
 
 
