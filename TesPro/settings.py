@@ -67,6 +67,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
 ]
+MIDDLEWARE_CLASSES = [
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
+     
+]
 
 ROOT_URLCONF = 'TesPro.urls'
 
@@ -140,3 +145,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+
+SESSION_COOKIE_AGE = 3600
+SESSION_EXPIRE_SECONDS = 3
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+
