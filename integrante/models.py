@@ -1,6 +1,5 @@
 from django.db import models
 from empresa.models import Empresa
-
 # Create your models here.
 
 class Integrante(models.Model):
