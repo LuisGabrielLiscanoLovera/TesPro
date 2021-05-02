@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'destajo',
     'casino',
     'despacho',
-    
+    'segimientoOp',
+    #usuario
     'authapp',
 ]
 
