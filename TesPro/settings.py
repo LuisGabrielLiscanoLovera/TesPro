@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'casino',
     'despacho',
     'segimientoOp',
+    'acumulado',
+    'xtarea',
     #usuario
     'authapp',
 ]
@@ -148,7 +150,7 @@ STATICFILES_DIRS = [
 ]
 
 
-SESSION_COOKIE_AGE = 3600
+SESSION_COOKIE_AGE = 5
 SESSION_EXPIRE_SECONDS = 3
 SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
 

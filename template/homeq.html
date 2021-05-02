@@ -3,892 +3,195 @@
 
 {% block content %}
 
-<div class="body-wrapper">
-    <!-- partial:partials/_sidebar.html -->
-    <aside class="mdc-drawer mdc-drawer--dismissible mdc-drawer--open">
-      <div class="mdc-drawer__header">
-        <a href="index.html" class="brand-logo">
-          <!-- <img src="../assets/images/logo.svg" alt="logo"> -->
-          Aqui va el logo .svg
-        </a>
-      </div>
-      <div class="mdc-drawer__content">
-        <div class="user-info">
-          <p class="name">Usuario  {Jefe}</p>
-          <p class="email">Casa del Polo</p>
-        </div>
-        <div class="mdc-list-group">
-          <nav class="mdc-list mdc-drawer-menu">
-            <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-drawer-link" href="index.html">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i>
-                Inicio
-              </a>
-            </div>
-            
-            <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-drawer-link" href="#"  data-toggle="modal" data-target="#modal_crearOP">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">track_changes</i>
-                Crear Operacion
-              </a>
-            </div>
-                        
-
-            <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-drawer-link"  href="#">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">grid_on</i>
-                Seguimiento de OP </a>
-            </div>
-            
-
-         
-           
-          
-    
-           
-            
-
-         
-         
-
-
-
-            <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-contabilidad">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i>
-                Contabilidad
-                <i class="mdc-drawer-arrow material-icons">chevron_right</i>
-              </a>
-              <div class="mdc-expansion-panel" id="ui-sub-menu-contabilidad">
-                <nav class="mdc-list mdc-drawer-submenu">
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="pages/samples/destajo.html" data-toggle="modazxl" data-target="destajo">
-                       Destajo
-                    </a>
-                  </div>
-
-                  <nav class="mdc-list mdc-drawer-submenu">
-                    <div class="mdc-list-item mdc-drawer-item">
-                      <a class="mdc-drawer-link" href="pages/samples/casino.html" data-toggle="modazxl" data-target="act_casino">
-                         Casino
-                      </a>
-                    </div>
-
-                </nav>
-              </div>
-            </div>
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-act">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i>
-                Actividad
-                <i class="mdc-drawer-arrow material-icons">chevron_right</i>
-              </a>
-              <div class="mdc-expansion-panel" id="ui-sub-menu-act">
-                <nav class="mdc-list mdc-drawer-submenu">
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="pages/samples/acumulado.html" data-toggle="modazxl" data-target="acumulado">
-                       Acumulado
-                    </a>
-                  </div>
-
-                  <nav class="mdc-list mdc-drawer-submenu">
-                    <div class="mdc-list-item mdc-drawer-item">
-                      <a class="mdc-drawer-link" href="pages/samples/xtarea.html" data-toggle="modazxl" data-target="act_tarea">
-                         Tarea
-                      </a>
-                    </div>
-
-                   
-  
-                    
-
-                    <nav class="mdc-list mdc-drawer-submenu">
-                      <div class="mdc-list-item mdc-drawer-item">
-                        <a class="mdc-drawer-link" href="#" data-toggle="modazxl" data-target="act">
-                         Depacho
-                        </a>
-                      </div>
-                </nav>
-              </div>
-            </div>
-
-
-            
-
-            <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-elm">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i>
-                Elementos
-                <i class="mdc-drawer-arrow material-icons">chevron_right</i>
-              </a>
-              <div class="mdc-expansion-panel" id="ui-sub-menu-elm">
-                <nav class="mdc-list mdc-drawer-submenu">
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="#" data-toggle="modal" data-target="#modal_integrante">
-                      + Integrante
-                    </a>
-                  </div>
-
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="#" data-toggle="modal" data-target="#modal_patinador">
-                      + Patinador
-                    </a>
-                  </div>
-
-                
-
-
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="#" data-toggle="modal" data-target="#modal_tarea">
-                      + Tarea
-                    </a>
-                                    
-                  </div>
-
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="#" data-toggle="modal" data-target="#modal_color">
-                      + Color
-                    </a>
-                  </div>
-                  
-                  
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="#" data-toggle="modal" data-target="#modal_referencia">
-                      + Refererencia
-                    </a>
-                  </div>
-                  
-                </nav>
-              </div>
-            </div>
-
-          </nav>  
-        </div>
-        
-      
-      </div>
-    </aside>
-    <!-- partial -->
-    <div class="main-wrapper mdc-drawer-app-content">
-      <!-- partial:partials/_navbar.html -->
-      <header class="mdc-top-app-bar">
-        <div class="mdc-top-app-bar__row">
-          <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-            <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
-            <span class="mdc-top-app-bar__title">Casa de Polo </span>
-            
-
-
-          </div>
-          <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right">
-            <div class="menu-button-container menu-profile d-none d-md-block">
-              <button class="mdc-button mdc-menu-button">
-                <span class="d-flex align-items-center">
-                  <span class="figure">
-<!--     ---------------------------------------------------------------   face              -->
-                    
-                  <img src="{% static 'images/faces/face1.jpg' %}" alt="user" class="user">
-                  </span>
-                  <span class="user-name">{{ request.user.first_name }} {{ request.user.last_name }}     </span>
-               </button>
-
-              <div class="mdc-menu mdc-menu-surface" tabindex="-1">
-                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
-                 
-                  
-
-                  <li class="mdc-list-item" role="menuitem">
-                    <div class="item-thumbnail item-thumbnail-icon-only">
-                      <i class="mdi mdi-settings-outline text-primary"></i>                      
-                    </div>
-                    <div class="item-content d-flex align-items-start flex-column justify-content-center">                     
-                      <a href="{% url 'signout' %}" class="item-subject font-weight-normal  " >Logout</a>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="divider d-none d-md-block"></div>
-          
-            
-
-
-
-
-            
-
-
-
-
-
-
-
+<div class="mdc-layout-grid">
+  <div class="mdc-layout-grid__inner">
+    <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet">
+      <div class="mdc-card info-card info-card--success">
+        <div class="card-inner">
+          <h5 class="card-title">Operaciones registrada</h5>
+          <h5 class="font-weight-light pb-2 mb-1 border-bottom">50</h5>
+          <p class="tx-12 text-muted">48% target reached</p>
+          <div class="card-icon-wrapper">
+            <i class="material-icons">dvr</i>
           </div>
         </div>
-      </header>
-      <!-- partial -->
-      <div class="page-wrapper mdc-toolbar-fixed-adjust">
-        <main class="content-wrapper">
-          <div class="mdc-layout-grid">
-            <div class="mdc-layout-grid__inner">
-              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet">
-                <div class="mdc-card info-card info-card--success">
-                  <div class="card-inner">
-                    <h5 class="card-title">Operaciones registrada</h5>
-                    <h5 class="font-weight-light pb-2 mb-1 border-bottom">50</h5>
-                    <p class="tx-12 text-muted">48% target reached</p>
-                    <div class="card-icon-wrapper">
-                      <i class="material-icons">dvr</i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet">
-                <div class="mdc-card info-card info-card--danger">
-                  <div class="card-inner">
-                    <h5 class="card-title">Prendas procesadas</h5>
-                    <h5 class="font-weight-light pb-2 mb-1 border-bottom">5000</h5>
-                    <p class="tx-12 text-muted">55% target reached</p>
-                    <div class="card-icon-wrapper">
-                      <i class="material-icons">attach_money</i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet">
-                <div class="mdc-card info-card info-card--primary">
-                  <div class="card-inner">
-                    <h5 class="card-title">Integrantes </h5>
-                    <h5 class="font-weight-light pb-2 mb-1 border-bottom">150</h5>
-                    <p class="tx-12 text-muted">87% target reached</p>
-                    <div class="card-icon-wrapper">
-                      <i class="material-icons">trending_up</i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet">
-                <div class="mdc-card info-card info-card--info">
-                  <div class="card-inner">
-                    <h5 class="card-title">Patinadores</h5>
-                    <h5 class="font-weight-light pb-2 mb-1 border-bottom">6</h5>
-                    <p class="tx-12 text-muted">87% target reached</p>
-                    <div class="card-icon-wrapper">
-                      <i class="material-icons">credit_card</i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-             
-              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop mdc-layout-grid__cell--span-4-tablet">
-                <div class="mdc-card bg-success text-white">
-                  <div class="d-flex justify-content-between">
-                    <h3 class="font-weight-normal">Impressions</h3>
-                    <i class="material-icons options-icon text-white">more_vert</i>
-                  </div>
-                  <div class="mdc-layout-grid__inner align-items-center">
-                    <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-3-tablet mdc-layout-grid__cell--span-2-phone">
-                      <div>
-                        <h5 class="font-weight-normal mt-2">Customers 58.39k</h5>
-                        <h2 class="font-weight-normal mt-3 mb-0">636,757K</h2>
-                      </div>
-                    </div>
-                    <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-8-desktop mdc-layout-grid__cell--span-5-tablet mdc-layout-grid__cell--span-2-phone">
-                      <canvas id="impressions-chart" height="80"></canvas>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop mdc-layout-grid__cell--span-4-tablet">
-                <div class="mdc-card bg-info text-white">
-                    <div class="d-flex justify-content-between">
-                      <h3 class="font-weight-normal">Traffic</h3>
-                      <i class="material-icons options-icon text-white">more_vert</i>
-                    </div>
-                    <div class="mdc-layout-grid__inner align-items-center">
-                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-3-tablet mdc-layout-grid__cell--span-2-phone">
-                        <div>
-                          <h5 class="font-weight-normal mt-2">Customers 58.39k</h5>
-                          <h2 class="font-weight-normal mt-3 mb-0">636,757K</h2>
-                        </div>
-                      </div>
-                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-8-desktop mdc-layout-grid__cell--span-5-tablet mdc-layout-grid__cell--span-2-phone">
-                        <canvas id="traffic-chart" height="80"></canvas>
-                      </div>
-                    </div>
-                </div>
-              </div>
-              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-8">
-                <div class="mdc-card">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <h4 class="card-title mb-2 mb-sm-0">Revenue by location</h4>
-                    <div class="d-flex justtify-content-between align-items-center">
-                      <p class="d-none d-sm-block text-muted tx-12 mb-0 mr-2">Goal reached</p>
-                      <i class="material-icons options-icon">more_vert</i>
-                    </div>
-                  </div>
-                  <div class="d-block d-sm-flex justify-content-between align-items-center">
-                    <h6 class="card-sub-title mb-0">Sales performance revenue based by country</h6>
-                    <div class="mdc-tab-wrapper revenue-tab mdc-tab--secondary"> 
-                      <div class="mdc-tab-bar" role="tablist">
-                        <div class="mdc-tab-scroller">
-                          <div class="mdc-tab-scroller__scroll-area">
-                            <div class="mdc-tab-scroller__scroll-content">
-                              <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
-                                <span class="mdc-tab__content">
-                                  <span class="mdc-tab__text-label">1W</span>
-                                </span>
-                                <span class="mdc-tab-indicator mdc-tab-indicator--active">
-                                  <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-                                </span>
-                                <span class="mdc-tab__ripple"></span>
-                              </button>
-                              <button class="mdc-tab mdc-tab" role="tab" aria-selected="true" tabindex="0">
-                                <span class="mdc-tab__content">
-                                  <span class="mdc-tab__text-label">1M</span>
-                                </span>
-                                <span class="mdc-tab-indicator mdc-tab-indicator">
-                                  <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-                                </span>
-                                <span class="mdc-tab__ripple"></span>
-                              </button>
-                              <button class="mdc-tab mdc-tab" role="tab" aria-selected="true" tabindex="0">
-                                <span class="mdc-tab__content">
-                                  <span class="mdc-tab__text-label">3M</span>
-                                </span>
-                                <span class="mdc-tab-indicator mdc-tab-indicator">
-                                  <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-                                </span>
-                                <span class="mdc-tab__ripple"></span>
-                              </button>
-                              <button class="mdc-tab mdc-tab" role="tab" aria-selected="true" tabindex="0">
-                                <span class="mdc-tab__content">
-                                  <span class="mdc-tab__text-label">1Y</span>
-                                </span>
-                                <span class="mdc-tab-indicator mdc-tab-indicator">
-                                  <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-                                </span>
-                                <span class="mdc-tab__ripple"></span>
-                              </button>
-                              <button class="mdc-tab mdc-tab" role="tab" aria-selected="true" tabindex="0">
-                                <span class="mdc-tab__content">
-                                  <span class="mdc-tab__text-label">ALL</span>
-                                </span>
-                                <span class="mdc-tab-indicator mdc-tab-indicator">
-                                  <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-                                </span>
-                                <span class="mdc-tab__ripple"></span>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="content content--active">    
-                      </div>
-                      <div class="content">
-                      </div>
-                      <div class="content">    
-                      </div>
-                      <div class="content">
-                      </div>
-                      <div class="content">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="chart-container mt-4">
-                    <canvas id="revenue-chart" height="260"></canvas>
-                  </div>
-                </div>
-              </div>
-              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-8-tablet">
-                <div class="mdc-card">
-                  <div class="d-flex d-lg-block d-xl-flex justify-content-between">
-                    <div>
-                      <h4 class="card-title">Order Statistics</h4>
-                      <h6 class="card-sub-title">Customers 58.39k</h6>
-                    </div>
-                    <div id="sales-legend" class="d-flex flex-wrap"></div>
-                  </div>
-                  <div class="chart-container mt-4">
-                    <canvas id="chart-sales" height="260"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </main>
-        <!-- partial:partials/_footer.html -->
-        <footer>
-          <div class="mdc-layout-grid">
-            <div class="mdc-layout-grid__inner">
-              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
-                <span class="text-center text-sm-left d-block d-sm-inline-block tx-14">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com </a>2020</span>
-              </div>
-              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop d-flex justify-content-end">
-                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center tx-14">Free <a href="https://www.bootstrapdash.com/material-design-dashboard/" target="_blank"> material admin </a> dashboards from Bootstrapdash.com</span>
-              </div>
-            </div>
-          </div>
-        </footer>
-        <!-- partial -->
       </div>
     </div>
-  </div>
-
-
-
-<!-- modal patinador -->
-
-
-<div class="modal fade" id="modal_patinador" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-      <form id="modal_form_signup" novalidate="novalidate">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title">
-                      <i class="fa fa-lock mr-1"></i>PATINADOR
-                  </h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span>&times;</span>
-                  </button>
-              </div>
-              <div class="modal-body">
-                  <div class="form-row">
-                      <div class="col-sm-6">
-                          <div class="form-group">
-                              <label for="modal_patinador_firstname">Nombres</label>
-                              <div class="input-group">
-                                  <span class="input-group-addon">
-                                      <i class="fa fa-user"></i>
-                                  </span>
-                                  <input type="text" id="modal_patinador_nombres" name="modal_patinador_nombres" class="form-control" placeholder="nombres" />
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-sm-6">
-                          <div class="form-group">
-                              <label for="modal_patinador_apellidos">Apellidos</label>
-                              <div class="input-group">
-                                  <span class="input-group-addon">
-                                      <i class="fa fa-user"></i>
-                                  </span>
-                                  <input type="text" id="modal_patinador_lastname" name="modal_patinador_lastname" class="form-control" placeholder="apellidos" />
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="form-group">
-                      <label for="modal_patinador_correo">Correo</label>
-                      <div class="input-group">
-                          <span class="input-group-addon">
-                              <i class="fa fa-envelope"></i>
-                          </span>
-                          <input type="email" id="modal_patinador_correo" name="modal_patinador_email" class="form-control" placeholder="Correo" />
-                      </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="modal_patinador_cedula">Cedula</label>
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="fa fa-unlock-alt"></i>
-                        </span>
-                        <input type="cedula" id="modal_patinador_cedula" name="modal_patinador_confirm_password" class="form-control" placeholder="Cedula" />
-                    </div>
-                </div> 
-
-                  <div class="form-group">
-                      <label for="modal_patinador_clave">Clave</label>
-                      <div class="input-group">
-                          <span class="input-group-addon">
-                              <i class="fa fa-unlock-alt"></i>
-                          </span>
-                          <input type="clave" id="modal_patinador_clave" name="modal_patinador_clave" class="form-control" placeholder="Clave" />
-                      </div>
-                  </div>  
-                  
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELLAR</button>
-                  <button type="submit" class="btn btn-primary">GUARDAR</button>
-              </div>
+    <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet">
+      <div class="mdc-card info-card info-card--danger">
+        <div class="card-inner">
+          <h5 class="card-title">Prendas procesadas</h5>
+          <h5 class="font-weight-light pb-2 mb-1 border-bottom">5000</h5>
+          <p class="tx-12 text-muted">55% target reached</p>
+          <div class="card-icon-wrapper">
+            <i class="material-icons">attach_money</i>
           </div>
-      </form>
-  </div>
-</div>
-
-
-
-
-
-<!-- modal color -->
-   <!-- Bootstrap Modal Signup Popup Form -->
-   <div class="modal fade" id="modal_color" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <form id="modal_form_signup" novalidate="novalidate">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        <i class="fa fa-lock mr-1"></i>COLOR
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span>&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="modal_codigo_color">Nombre Color</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-user"></i>
-                                    </span>
-                                    <input type="text" id="modal_codigo_color" name="modal_codigo_color" class="form-control" placeholder="Nombre Color" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="modal_codigo_color">Codigo Color</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-user"></i>
-                                    </span>
-                                    <input type="text" id="modal_codigo_color" name="modal_codigo_color" class="form-control" placeholder="Codigo Color" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                
-                    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELLAR</button>
-                    <button type="submit" class="btn btn-primary">GUARDAR</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-
-
-
-<!-- modal referencia -->
-
-    <!-- Bootstrap Modal Signup Popup Form -->
-    <div class="modal fade" id="modal_referencia" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-          <form id="modal_form_signup" novalidate="novalidate">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title">
-                          <i class="fa fa-lock mr-1"></i>Referencia
-                      </h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span>&times;</span>
-                      </button>
-                  </div>
-                  <div class="modal-body">
-                      <div class="form-row">
-                          <div class="col-sm-6">
-                              <div class="form-group">
-                                  <label for="modal_referencia_nombre">Nombre Referencia</label>
-                                  <div class="input-group">
-                                      <span class="input-group-addon">
-                                          <i class="fa fa-user"></i>
-                                      </span>
-                                      <input type="text" id="modal_referencia_nombre" name="modal_referencia_nombre" class="form-control" placeholder="Nombre referencia" />
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="col-sm-6">
-                              <div class="form-group">
-                                  <label for="modal_codigo_color">Descriccion</label>
-                                  <div class="input-group">
-                                      <span class="input-group-addon">
-                                          <i class="fa fa-user"></i>
-                                      </span>
-                                      <input type="text" id="modal_codigo_color" name="modal_codigo_color" class="form-control" placeholder="Descriccion" />
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  
-                      
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELLAR</button>
-                      <button type="submit" class="btn btn-primary">GUARDAR</button>
-                  </div>
-              </div>
-          </form>
-      </div>
-  </div>
-
-
-
-<!-- modal crear tarea -->
-    <div class="modal fade" id="modal_tarea" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <form id="modal_form_signup" novalidate="novalidate">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">
-                            <i class="fa fa-lock mr-1"></i>TAREA
-                        </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span>&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="modal_tarea_color">Nombre Tarea</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-user"></i>
-                                        </span>
-                                        <input type="text" id="modal_tarea_color" name="modal_tarea_color" class="form-control" placeholder="Nombre Tarea" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="modal_tarea_lastname">Valor Tarea</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-user"></i>
-                                        </span>
-                                        <input type="text" id="modal_tarea_lastname" name="modal_tarea_lastname" class="form-control" placeholder="Valor Tarea" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="modal_tarea_duracion_min">Duracion por Min</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-envelope"></i>
-                                </span>
-                                <input type="number" id="modal_tarea_email" name="modal_tarea_duracion_min" class="form-control" placeholder="Duracion por Min" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="modal_tarea_can_hora">Cantidad por Hora</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-unlock-alt"></i>
-                                </span>
-                                <input type="number" id="modal_tarea_can_hora" name="modal_tarea_can_hora" class="form-control" placeholder="Cantidad por Hora" />
-                            </div>
-                        </div>  
-                          
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
-                        <button type="submit" class="btn btn-primary">GUARDAR</button>
-                    </div>
-                </div>
-            </form>
         </div>
+      </div>
     </div>
-
-
-
-
-<!-- modal integrante -->
-
-
-
-<div class="modal fade" id="modal_integrante" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-      <form id="modal_form_integrante" novalidate="novalidate">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title">
-                      <i class="fa fa-lock mr-1"></i>INTEGRANTE
-                  </h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span>&times;</span>
-                  </button>
+    <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet">
+      <div class="mdc-card info-card info-card--primary">
+        <div class="card-inner">
+          <h5 class="card-title">Integrantes </h5>
+          <h5 class="font-weight-light pb-2 mb-1 border-bottom">150</h5>
+          <p class="tx-12 text-muted">87% target reached</p>
+          <div class="card-icon-wrapper">
+            <i class="material-icons">trending_up</i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet">
+      <div class="mdc-card info-card info-card--info">
+        <div class="card-inner">
+          <h5 class="card-title">Patinadores</h5>
+          <h5 class="font-weight-light pb-2 mb-1 border-bottom">6</h5>
+          <p class="tx-12 text-muted">87% target reached</p>
+          <div class="card-icon-wrapper">
+            <i class="material-icons">credit_card</i>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+    <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop mdc-layout-grid__cell--span-4-tablet">
+      <div class="mdc-card bg-success text-white">
+        <div class="d-flex justify-content-between">
+          <h3 class="font-weight-normal">Impressions</h3>
+          <i class="material-icons options-icon text-white">more_vert</i>
+        </div>
+        <div class="mdc-layout-grid__inner align-items-center">
+          <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-3-tablet mdc-layout-grid__cell--span-2-phone">
+            <div>
+              <h5 class="font-weight-normal mt-2">Customers 58.39k</h5>
+              <h2 class="font-weight-normal mt-3 mb-0">636,757K</h2>
+            </div>
+          </div>
+          <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-8-desktop mdc-layout-grid__cell--span-5-tablet mdc-layout-grid__cell--span-2-phone">
+            <canvas id="impressions-chart" height="80"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop mdc-layout-grid__cell--span-4-tablet">
+      <div class="mdc-card bg-info text-white">
+          <div class="d-flex justify-content-between">
+            <h3 class="font-weight-normal">Traffic</h3>
+            <i class="material-icons options-icon text-white">more_vert</i>
+          </div>
+          <div class="mdc-layout-grid__inner align-items-center">
+            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-3-tablet mdc-layout-grid__cell--span-2-phone">
+              <div>
+                <h5 class="font-weight-normal mt-2">Customers 58.39k</h5>
+                <h2 class="font-weight-normal mt-3 mb-0">636,757K</h2>
               </div>
-              <div class="modal-body">
-                  <div class="form-row">
-                      <div class="col-sm-6">
-                          <div class="form-group">
-                              <label for="_nombres">Nombres</label>
-                              <div class="input-group">
-                                  <span class="input-group-addon">
-                                      <i class="fa fa-user"></i>
-                                  </span>
-                                  <input type="text" id="_nombres" name="_nombre" class="form-control" placeholder="Nombres" />
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-sm-6">
-                          <div class="form-group">
-                              <label for="_apellida">Apellidos</label>
-                              <div class="input-group">
-                                  <span class="input-group-addon">
-                                      <i class="fa fa-user"></i>
-                                  </span>
-                                  <input type="text" id="_apellida" name="_apellida" class="form-control" placeholder="Apellido" />
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="_abilidad">Abilidad</label>
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="fa fa-unlock-alt"></i>
-                        </span>
-                        <input type="text" id="_abilidad" name="_abilidad" class="form-control" placeholder="abilidad" />
-                    </div>
-                </div>  
-
-                  <div class="form-group">
-                      <label for="_email">Correo</label>
-                      <div class="input-group">
-                          <span class="input-group-addon">
-                              <i class="fa fa-envelope"></i>
-                          </span>
-                          <input type="email" id="_email" name="_email" class="form-control" placeholder="Correo" />
-                      </div>
-                  </div>
-                  <div class="form-group">
-                      <label for="_cedula">Cedula</label>
-                      <div class="input-group">
-                          <span class="input-group-addon">
-                              <i class="fa fa-unlock-alt"></i>
-                          </span>
-                          <input type="text" id="_cedula" name="_cedula" class="form-control" placeholder="cedula" />
-                      </div>
-                  </div>  
-                 
-                  <div class="form-group">
-                    <label for="_telefono">Numero de Telefono</label>
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="fa fa-unlock-alt"></i>
-                        </span>
-                        <input type="number" id="_cedula" name="_cedula" class="form-control" placeholder="Numero de Telefono" />
-                    </div>
-                </div>  
-              
-                <div class="form-group">
-                  <label for="_telefono">Direccion</label>
-                  <div class="input-group">
-                      <span class="input-group-addon">
-                          <i class="fa fa-unlock-alt"></i>
+            </div>
+            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-8-desktop mdc-layout-grid__cell--span-5-tablet mdc-layout-grid__cell--span-2-phone">
+              <canvas id="traffic-chart" height="80"></canvas>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-8">
+      <div class="mdc-card">
+        <div class="d-flex justify-content-between align-items-center">
+          <h4 class="card-title mb-2 mb-sm-0">Revenue by location</h4>
+          <div class="d-flex justtify-content-between align-items-center">
+            <p class="d-none d-sm-block text-muted tx-12 mb-0 mr-2">Goal reached</p>
+            <i class="material-icons options-icon">more_vert</i>
+          </div>
+        </div>
+        <div class="d-block d-sm-flex justify-content-between align-items-center">
+          <h6 class="card-sub-title mb-0">Sales performance revenue based by country</h6>
+          <div class="mdc-tab-wrapper revenue-tab mdc-tab--secondary"> 
+            <div class="mdc-tab-bar" role="tablist">
+              <div class="mdc-tab-scroller">
+                <div class="mdc-tab-scroller__scroll-area">
+                  <div class="mdc-tab-scroller__scroll-content">
+                    <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
+                      <span class="mdc-tab__content">
+                        <span class="mdc-tab__text-label">1W</span>
                       </span>
-                      <input type="number" id="_direccion" name="_cedula" class="form-control" placeholder="Direccion" />
+                      <span class="mdc-tab-indicator mdc-tab-indicator--active">
+                        <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                      </span>
+                      <span class="mdc-tab__ripple"></span>
+                    </button>
+                    <button class="mdc-tab mdc-tab" role="tab" aria-selected="true" tabindex="0">
+                      <span class="mdc-tab__content">
+                        <span class="mdc-tab__text-label">1M</span>
+                      </span>
+                      <span class="mdc-tab-indicator mdc-tab-indicator">
+                        <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                      </span>
+                      <span class="mdc-tab__ripple"></span>
+                    </button>
+                    <button class="mdc-tab mdc-tab" role="tab" aria-selected="true" tabindex="0">
+                      <span class="mdc-tab__content">
+                        <span class="mdc-tab__text-label">3M</span>
+                      </span>
+                      <span class="mdc-tab-indicator mdc-tab-indicator">
+                        <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                      </span>
+                      <span class="mdc-tab__ripple"></span>
+                    </button>
+                    <button class="mdc-tab mdc-tab" role="tab" aria-selected="true" tabindex="0">
+                      <span class="mdc-tab__content">
+                        <span class="mdc-tab__text-label">1Y</span>
+                      </span>
+                      <span class="mdc-tab-indicator mdc-tab-indicator">
+                        <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                      </span>
+                      <span class="mdc-tab__ripple"></span>
+                    </button>
+                    <button class="mdc-tab mdc-tab" role="tab" aria-selected="true" tabindex="0">
+                      <span class="mdc-tab__content">
+                        <span class="mdc-tab__text-label">ALL</span>
+                      </span>
+                      <span class="mdc-tab-indicator mdc-tab-indicator">
+                        <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                      </span>
+                      <span class="mdc-tab__ripple"></span>
+                    </button>
                   </div>
-              </div>  
-             
-                 
-                 
-                     
+                </div>
               </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
-                  <button type="submit" class="btn btn-primary">GUARDAR</button>
-              </div>
+            </div>
+            <div class="content content--active">    
+            </div>
+            <div class="content">
+            </div>
+            <div class="content">    
+            </div>
+            <div class="content">
+            </div>
+            <div class="content">
+            </div>
           </div>
-      </form>
+        </div>
+        <div class="chart-container mt-4">
+          <canvas id="revenue-chart" height="260"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-8-tablet">
+      <div class="mdc-card">
+        <div class="d-flex d-lg-block d-xl-flex justify-content-between">
+          <div>
+            <h4 class="card-title">Order Statistics</h4>
+            <h6 class="card-sub-title">Customers 58.39k</h6>
+          </div>
+          <div id="sales-legend" class="d-flex flex-wrap"></div>
+        </div>
+        <div class="chart-container mt-4">
+          <canvas id="chart-sales" height="260"></canvas>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 
-
-
-
-<!-- modal crear operacion -->
-  <div class="modal fade" id="modal_crearOP" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <form id="modal_form_integrante" novalidate="novalidate">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        <i class="fa fa-lock mr-1"></i>Crear Operacion
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span>&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="modal_crearOP_nombre">Codigo Operacion</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-user"></i>
-                                    </span>
-                                    <input type="text" id="modal_crearOP_nombre" name="modal_crearOP_nombre" class="form-control" placeholder="Codigo Operacion" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="modal_crearOP_referencia">Referencia</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-user"></i>
-                                    </span>
-                                    <input type="text" id="modal_crearOP_referencia" name="modal_crearOP_referencia" class="form-control" placeholder="Referencia" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="modal_crearOP_email">Color</label>
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="fa fa-envelope"></i>
-                            </span>
-                            <input type="email" id="modal_crearOP_color" name="modal_crearOP_email" class="form-control" placeholder="Enter email" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="modal_crearOP_can_total">Cantidad Total</label>
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="fa fa-unlock-alt"></i>
-                            </span>
-                            <input type="text" id="modal_crearOP_can_total" name="modal_crearOP_can_total" class="form-control" placeholder="Cantidad Total" />
-                        </div>
-                    </div>  
-                
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
-                    <button type="submit" class="btn btn-primary">GUARDAR</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
 {% endblock %}
 
 

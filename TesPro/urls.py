@@ -1,29 +1,28 @@
-"""TesPro URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path,include
-
-#auth
 from .views import home
 
+from segimientoOp.views import SegimientoOp
+from destajo.views import Destajo
+from casino.views import Casino
+from acumulado.views import Acumulado
+from despacho.views import Despacho
+from xtarea.views import Xtarea
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
-    path('auth/', include('authapp.urls')),
+    path('auth/', include('authapp.urls')),   
+    path('SegimientoOp/', SegimientoOp.as_view(), name='SegimientoOp'),
+    path('Destajo/', Destajo.as_view(), name='Destajo'),
+    path('Casino/', Casino.as_view(), name='Casino'),
+    path('Acumulado/', Acumulado.as_view(), name='Acumulado'),
+    path('Despacho/', Despacho.as_view(), name='Despacho'),
+    path('Xtarea/', Xtarea.as_view(), name='Xtarea')
     
-
+    
+    
+    
  ]
+
+
