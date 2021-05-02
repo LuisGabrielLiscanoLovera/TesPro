@@ -4,6 +4,7 @@ from django.db import models
 
 
 class Empresa(models.Model):
+   
     nom_empresa = models.CharField(max_length=30)
     descripcion = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
