@@ -256,9 +256,12 @@
 			<div class="mdc-top-app-bar__row">
 			  <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
 				<button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
-				<span class="mdc-top-app-bar__title">{{login_user_id}}</span>
-				
-
+				<span class="mdc-top-app-bar__title">
+					{% for empresas in empresa %}
+					{{empresas.nom_empresa}}
+					{% endfor %}
+				</span>
+					
 	
 	
 			  </div>
