@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.urls import path,include
-from .views import home
 
 from segimientoOp.views import SegimientoOp
 from destajo.views import Destajo
@@ -8,10 +7,12 @@ from casino.views import Casino
 from acumulado.views import Acumulado
 from despacho.views import Despacho
 from xtarea.views import Xtarea
+from home.views import Home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home, name='home'),
+    path('', Home.as_view(), name='home'),
+    
     path('auth/', include('authapp.urls')),   
     path('SegimientoOp/', SegimientoOp.as_view(), name='SegimientoOp'),
     path('Destajo/', Destajo.as_view(), name='Destajo'),

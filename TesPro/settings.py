@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'segimientoOp',
     'acumulado',
     'xtarea',
+    'home',
     #usuario
     'authapp',
 ]
