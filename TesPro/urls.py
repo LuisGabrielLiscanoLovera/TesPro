@@ -11,19 +11,14 @@ from home.views import Home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', Home.as_view(), name='home'),
-    
+    path('', Home.as_view(), name='home'),    
     path('auth/', include('authapp.urls')),   
     path('SegimientoOp/', SegimientoOp.as_view(), name='SegimientoOp'),
     path('Destajo/', Destajo.as_view(), name='Destajo'),
     path('Casino/', Casino.as_view(), name='Casino'),
     path('Acumulado/', Acumulado.as_view(), name='Acumulado'),
     path('Despacho/', Despacho.as_view(), name='Despacho'),
-    path('Xtarea/', Xtarea.as_view(), name='Xtarea')
-    
-    
-    
-    
+    path('Xtarea/', Xtarea.as_view(), name='Xtarea')   
  ]
 
 

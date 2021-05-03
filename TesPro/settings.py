@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     'acumulado',
     'xtarea',
     'home',
-    #usuario
+      #usuario
     'authapp',
 ]
 

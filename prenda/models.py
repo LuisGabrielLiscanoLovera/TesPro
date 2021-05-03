@@ -5,6 +5,11 @@ from django.contrib.auth.models import User
 
 class Prenda(models.Model):
     #falta color
+    ESTATUS=(
+        ('A','Activo'),
+        ('C','Cerrado')
+    )
+    estutus       = models.CharField(max_length=1,choices=ESTATUS)
     nom_operacion = models.CharField(max_length=20, unique=True)
     referencia    = models.CharField(max_length=20)    
     estado        = models.CharField(max_length=20)
@@ -19,7 +24,7 @@ class Prenda(models.Model):
     rL            = models.IntegerField(blank=True, null=True)
     rXL           = models.IntegerField(blank=True, null=True)
     rXXL          = models.IntegerField(blank=True, null=True)
-    nota          = models.CharField(max_length=50)
+    nota          = models.CharField(max_length=50,blank=True, null=True)
     referencia    = models.ForeignKey(Referencia, related_name='Prenda',on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -12,6 +12,8 @@ class Integrante(models.Model):
     direccion = models.CharField(max_length=150)
     abilidad  = models.CharField(max_length=30)
     user      = models.ForeignKey(User, related_name='Integrante', null=False, blank=False,on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
             ordering = ["nombres"]
