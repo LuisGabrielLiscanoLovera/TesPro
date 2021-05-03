@@ -1,7 +1,8 @@
 from django.db import models
 from empresa.models import Empresa
 # Create your models here.
-
+from django.contrib.auth.models import User
+   
 class Integrante(models.Model):
     nombres   = models.CharField(max_length=30)
     apellidos = models.CharField(max_length=30)
@@ -10,8 +11,7 @@ class Integrante(models.Model):
     num_telf  = models.IntegerField(blank=True, null=True)
     direccion = models.CharField(max_length=150)
     abilidad  = models.CharField(max_length=30)
-    empresa = models.ForeignKey(Empresa, related_name='Integrante', null=False, blank=False,on_delete=models.CASCADE)
-    
+    user      = models.ForeignKey(User, related_name='Integrante', null=False, blank=False,on_delete=models.CASCADE)
     
     class Meta:
             ordering = ["nombres"]

@@ -1,6 +1,8 @@
 from django.db import models
 from referencia.models import Referencia
 # Create your models here.
+from django.contrib.auth.models import User
+
 class Prenda(models.Model):
     #falta color
     nom_operacion = models.CharField(max_length=20, unique=True)
@@ -21,6 +23,7 @@ class Prenda(models.Model):
     referencia    = models.ForeignKey(Referencia, related_name='Prenda',on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    user      = models.ForeignKey(User, related_name='Prenda', null=False, blank=False,on_delete=models.CASCADE)
 
     class Meta:
             ordering = ["nom_operacion"]
