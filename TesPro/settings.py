@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'home',
       #usuario
     'authapp',
+    'api',
 ]
 
 REST_FRAMEWORK = {
@@ -167,3 +168,4 @@ SESSION_COOKIE_AGE = 300
 SESSION_EXPIRE_SECONDS = 300
 SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
 
+APPEND_SLASH=False

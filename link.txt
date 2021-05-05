@@ -2,3 +2,8 @@ https://github.com/LuisGabrielLiscanoLovera/TesPro.git
 git add .
 git commit -m "commit numero 6"
 
+{
+    "empresa": 1,
+    "nom_referencia": "fsjk01",
+    "descripcion": "casa de telas"
+  }

@@ -1,72 +1,60 @@
-from rest_framework import status
+from django.shortcuts import render
+from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Referencia
 from .serializers import ReferenciaSerializer
+from django.contrib.auth.decorators import login_required
+from .models import Referencia
+# Create your views here.
 
+@api_view(['GET'])
+def apiOverview(request):
+	api_urls = {
+		'List':'/Referencia-list/',
+		'Detail View':'/Referencia-detail/<str:pk>/',
+		'Create':'/Referencia-create/',
+		'Update':'/Referencia-update/<str:pk>/',
+		'Delete':'/Referencia-delete/<str:pk>/',
+		}
+	return Response(api_urls)
+#@login_required(login_url='signin')
+@api_view(['GET'])
+def referenciaList(request):
+	referencias = Referencia.objects.all().order_by('-id')
+	serializer = ReferenciaSerializer(referencias, many=True)
+	return Response(serializer.data)
 
-@api_view(['GET', 'POST'])
-def referencia_list(request):
-    """
-    List all code Referencia, or create a new referencia.
-    """
-    if request.method == 'GET':
-        referencia = Referencia.objects.all()
-        serializer = ReferenciaSerializer(referencia, many=True)
-        return Response(serializer.data)
+#@login_required(login_url='signin')
+@api_view(['GET'])
+def referenciaDetail(request, pk):
+	referencias = Referencia.objects.get(id=pk)
+	serializer = ReferenciaSerializer(referencias, many=False)
+	return Response(serializer.data)
 
-    elif request.method == 'POST':
-        serializer = ReferenciaSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#@login_required(login_url='signin')
+@api_view(['POST'])
+def referenciaCreate(request):
+	serializer = ReferenciaSerializer(data=request.data)
+	if serializer.is_valid():
+		serializer.save()
+	return Response(serializer.data)
 
+#@login_required(login_url='signin')
+@api_view(['POST'])
+def referenciaUpdate(request, pk):
+	referencia = Referencia.objects.get(id=pk)
+	serializer = ReferenciaSerializer(instance=referencia, data=request.data)
 
+	if serializer.is_valid():
+		serializer.save()
+	return Response(serializer.data)
 
-
-# from rest_framework.response import Response
-# from .models import Referencia
-# from .serializers import ReferenciatSerializer
-# from rest_framework.decorators import api_view
-
-
-# @api_view(['GET'])
-# def referenciaList(request):
-#     referencia = Referencia.objects.all()
-#     serializer = ReferenciaSerializer(referencia, many=True)
-
-# @api_view(['GET'])
-# def referenciaDetail(request,pk):
-#     referencia = Referencia.objects.get(id=pk)
-#     serializer = ReferenciaSerializer(referencia, many=True)
-#     return Response(serializer.data)
-
-
-# @api_view(['POST'])
-# def referenciaCreate(request):
-#     serializer = ReferenciaSerializer(data=request.data)
-#     if serializer.is_valid():
-#         serializer.save()
-#     return Response(serializer.data)
-
-# @api_view(['POST'])
-
-# def referenciaUpdate(request,pk):
-#     referencia=Referencia.objects.get(id=pk)
-#     serializer = ReferenciaSerializer(instance=referencia,data=request.data)
-#     if serializer.is_valid():
-#         serializer.save()
-#     return Response(serializer.data)
-
-
-# @api_view(['DELETE'])
-# def referenciaDelete(request,pk):
-#     referencia = Referencia.objects.get(id=pk)
-#     referencia.delete()
-#     return Response('deleted')
-
-
+#@login_required(login_url='signin')
+@api_view(['DELETE'])
+def referenciaDelete(request, pk):
+	referencia = Referencia.objects.get(id=pk)
+	referencia.delete()
+	return Response('Item succsesfully delete!')
 
 
 
