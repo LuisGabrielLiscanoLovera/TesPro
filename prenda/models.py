@@ -1,15 +1,20 @@
 from django.db import models
 from referencia.models import Referencia
+from color.models import Color
+
 # Create your models here.
 from django.contrib.auth.models import User
 
 class Prenda(models.Model):
     #falta color
     referencia      = models.ForeignKey(Referencia, related_name='Prenda', null=False, blank=False,on_delete=models.CASCADE)
+    color           = models.ForeignKey(Color, related_name='Prenda',on_delete=models.CASCADE)
+
     ESTATUS=(
         ('A','Activo'),
         ('C','Cerrado')
     )
+    
     estutus       = models.CharField(max_length=1,choices=ESTATUS)
     nom_operacion = models.CharField(max_length=20, unique=True)
     estado        = models.CharField(max_length=20)
@@ -25,7 +30,6 @@ class Prenda(models.Model):
     rXL           = models.IntegerField(blank=True, null=True)
     rXXL          = models.IntegerField(blank=True, null=True)
     nota          = models.CharField(max_length=50,blank=True, null=True)
-    referencia    = models.ForeignKey(Referencia, related_name='Prenda',on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

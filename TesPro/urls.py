@@ -47,10 +47,9 @@ urlpatterns = [
     path('tarea/', include('tarea.urls')),
     path('integrante/', include('integrante.urls')),
     path('patinador/', include('patinador.urls')),
+    path('prenda/', include('prenda.urls')),
+    
     
     
     
  ]
-
-
-

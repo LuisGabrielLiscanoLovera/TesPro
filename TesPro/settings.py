@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'empresa',
-    'prenda',
     'destajo',
     'casino',
     'despacho',
@@ -69,6 +68,7 @@ INSTALLED_APPS = [
     'referencia',
     'integrante',
     'patinador',
+    'prenda',
 ]
 
 REST_FRAMEWORK = {
