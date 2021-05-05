@@ -4,7 +4,7 @@ from empresa.models import Empresa
 # Create your models here.
 
 class Color(models.Model):
-    #falta color
+    
     empresa           = models.ForeignKey(Empresa, related_name='Color', null=False, blank=False,on_delete=models.CASCADE)
     nom_color      = models.CharField(max_length=20, unique=True)
     codigo_color   = models.IntegerField()    

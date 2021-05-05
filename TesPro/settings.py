@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'integrante',
     'empresa',
     'prenda',
     'destajo',
@@ -68,6 +67,8 @@ INSTALLED_APPS = [
     'color',
     'tarea',
     'referencia',
+    'integrante',
+    'patinador',
 ]
 
 REST_FRAMEWORK = {

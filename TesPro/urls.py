@@ -45,7 +45,7 @@ urlpatterns = [
     path('referencia/', include('referencia.urls')),
     path('color/', include('color.urls')),
     path('tarea/', include('tarea.urls')),
-    
+    path('integrante/', include('integrante.urls')),
     
     
     
