@@ -5,13 +5,13 @@ from django.contrib.auth.models import User
 
 class Prenda(models.Model):
     #falta color
+    referencia      = models.ForeignKey(Referencia, related_name='Prenda', null=False, blank=False,on_delete=models.CASCADE)
     ESTATUS=(
         ('A','Activo'),
         ('C','Cerrado')
     )
     estutus       = models.CharField(max_length=1,choices=ESTATUS)
     nom_operacion = models.CharField(max_length=20, unique=True)
-    referencia    = models.CharField(max_length=20)    
     estado        = models.CharField(max_length=20)
     cant_total    = models.IntegerField(blank=True, null=True)
     cant_tallaS   = models.IntegerField(blank=True, null=True)
@@ -28,7 +28,7 @@ class Prenda(models.Model):
     referencia    = models.ForeignKey(Referencia, related_name='Prenda',on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    user      = models.ForeignKey(User, related_name='Prenda', null=False, blank=False,on_delete=models.CASCADE)
+    
 
     class Meta:
             ordering = ["nom_operacion"]
