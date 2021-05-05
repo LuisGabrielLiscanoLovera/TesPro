@@ -14,17 +14,17 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Referencia',
+            name='Color',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nom_referencia', models.CharField(max_length=20, unique=True)),
-                ('descripcion', models.CharField(max_length=50)),
+                ('nom_color', models.CharField(max_length=20, unique=True)),
+                ('codigo_color', models.IntegerField()),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('empresa', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='Referencia', to='empresa.empresa')),
+                ('empresa', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='Color', to='empresa.empresa')),
             ],
             options={
-                'ordering': ['nom_referencia'],
+                'ordering': ['nom_color'],
             },
         ),
     ]

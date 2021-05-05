@@ -42,7 +42,9 @@ urlpatterns = [
     path('rf', include(router.urls)),#eliminar
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/', include('api.urls')),
-    path('fererencia/', include('referencia.urls')),
+    path('referencia/', include('referencia.urls')),
+    path('color/', include('color.urls')),
+    path('tarea/', include('tarea.urls')),
     
     
     

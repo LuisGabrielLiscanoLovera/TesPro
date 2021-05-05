@@ -55,6 +55,3 @@ def referenciaDelete(request, pk):
 	referencia = Referencia.objects.get(id=pk)
 	referencia.delete()
 	return Response('Item succsesfully delete!')
-
-
-

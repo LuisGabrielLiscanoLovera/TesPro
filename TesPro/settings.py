@@ -54,8 +54,6 @@ INSTALLED_APPS = [
     'integrante',
     'empresa',
     'prenda',
-    'tarea',
-    'referencia',
     'destajo',
     'casino',
     'despacho',
@@ -65,7 +63,11 @@ INSTALLED_APPS = [
     'home',
       #usuario
     'authapp',
+    #rest-framework crud
     'api',
+    'color',
+    'tarea',
+    'referencia',
 ]
 
 REST_FRAMEWORK = {

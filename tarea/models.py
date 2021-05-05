@@ -1,12 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from empresa.models import Empresa
 # Create your models here.
 
 
 class Tarea(models.Model):
     
-    user      = models.ForeignKey(User, related_name='Tarea', null=False, blank=False,on_delete=models.CASCADE)
+    empresa           = models.ForeignKey(Empresa, related_name='Tarea', null=False, blank=False,on_delete=models.CASCADE)
     nom_tarea     = models.CharField(max_length=20)
     duracion      = models.IntegerField(blank=True, null=True)
     valor         = models.IntegerField(blank=True, null=True)
