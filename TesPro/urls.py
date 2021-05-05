@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers, viewsets, routers
 from segimientoOp.views import SegimientoOp
 from destajo.views import Destajo
-from casino.views import Casino
+from casino.views import CasinoTemplate
 from acumulado.views import Acumulado
 from despacho.views import Despacho
 from xtarea.views import Xtarea
@@ -34,7 +34,7 @@ urlpatterns = [
     path('auth/', include('authapp.urls')),   
     path('SegimientoOp/', SegimientoOp.as_view(), name='SegimientoOp'),
     path('Destajo/', Destajo.as_view(), name='Destajo'),
-    path('Casino/', Casino.as_view(), name='Casino'),
+    path('Casino/', CasinoTemplate.as_view(), name='Casino'),
     path('Acumulado/', Acumulado.as_view(), name='Acumulado'),
     path('Despacho/', Despacho.as_view(), name='Despacho'),
     path('Xtarea/', Xtarea.as_view(), name='Xtarea'),
@@ -48,6 +48,8 @@ urlpatterns = [
     path('integrante/', include('integrante.urls')),
     path('patinador/', include('patinador.urls')),
     path('prenda/', include('prenda.urls')),
+    path('casino/', include('casino.urls')),
+    
     
     
     
