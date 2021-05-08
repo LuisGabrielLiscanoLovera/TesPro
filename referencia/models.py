@@ -5,7 +5,7 @@ from empresa.models import Empresa
 
 class Referencia(models.Model):
     
-    empresa           = models.ForeignKey(Empresa, related_name='Referencia', null=False, blank=False,on_delete=models.CASCADE)
+    empresa           = models.ForeignKey(Empresa, related_name='Referencia', null=True, blank=True,on_delete=models.CASCADE)
     nom_referencia = models.CharField(max_length=20, unique=True)
     descripcion    = models.CharField(max_length=50)    
     created_at     = models.DateTimeField(auto_now_add=True)

@@ -10,22 +10,6 @@ from despacho.views import Despacho
 from xtarea.views import Xtarea
 from home.views import Home
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ['url', 'username', 'email', 'is_staff']
-# ViewSets define the view behavior.
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-# Routers provide a way of automatically determining the URL conf.
-router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
-# Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
-
-
-
 
 
 urlpatterns = [
@@ -39,9 +23,9 @@ urlpatterns = [
     path('Despacho/', Despacho.as_view(), name='Despacho'),
     path('Xtarea/', Xtarea.as_view(), name='Xtarea'),
     #apis rest-framework urls
-    path('rf', include(router.urls)),#eliminar
+   
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('api/', include('api.urls')),
+    
     path('referencia/', include('referencia.urls')),
     path('color/', include('color.urls')),
     path('tarea/', include('tarea.urls')),
@@ -52,6 +36,4 @@ urlpatterns = [
     
     
     
-    
-    
- ]
+     ]

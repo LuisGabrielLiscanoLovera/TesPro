@@ -14,7 +14,7 @@ class Destajo(models.Model):
     # user = models.ForeignKey(User, related_name='destajo',on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    user      = models.ForeignKey(User, related_name='Destajo', null=False, blank=False,on_delete=models.CASCADE)
+    #user      = models.ForeignKey(User, related_name='Destajo', null=False, blank=False,on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.integrante)

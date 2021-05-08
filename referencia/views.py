@@ -34,10 +34,19 @@ def referenciaDetail(request, pk):
 #@login_required(login_url='signin')
 @api_view(['POST'])
 def referenciaCreate(request):
+	request.data._mutable = True
+	request.data._mutable = False
 	serializer = ReferenciaSerializer(data=request.data)
+	print(type(request.data))
+	print((request.data))
 	if serializer.is_valid():
+		print(type(request.data))
+		print((request.data))
 		serializer.save()
 	return Response(serializer.data)
+
+
+
 
 #@login_required(login_url='signin')
 @api_view(['POST'])

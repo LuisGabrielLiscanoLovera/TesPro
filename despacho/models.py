@@ -10,7 +10,7 @@ class Despacho(models.Model):
     integrante = models.ForeignKey(Integrante,related_name='Despacho', null=False, blank=False,on_delete=models.CASCADE)    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True) 
-    user      = models.ForeignKey(User, related_name='Despacho', null=False, blank=False,on_delete=models.CASCADE)  
+    #user      = models.ForeignKey(User, related_name='Despacho', null=False, blank=False,on_delete=models.CASCADE)  
     
     def __str__(self):
         return str(self.prenda)
