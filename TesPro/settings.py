@@ -1,4 +1,6 @@
 """
+pillow
+django-cors-headers
 librerias 
 djangorestframework-3.12.1
 Django settings for TesPro project.
