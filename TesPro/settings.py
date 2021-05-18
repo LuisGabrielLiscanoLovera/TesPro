@@ -32,12 +32,14 @@ SECRET_KEY = 'z=d8tk47=)muszj)2j7*cm@7tl!5sh^=c&%kxxp1=)gy%15*2u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',    
     'django.contrib.contenttypes',
@@ -55,7 +57,6 @@ INSTALLED_APPS = [
     #usuario
     'authapp',
     #rest-framework crud
-   'users',
     'color',
     'tarea',
     'referencia',
@@ -72,6 +73,7 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -167,5 +169,5 @@ SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
 
 APPEND_SLASH=False
 
-
-AUTH_USER_MODEL = 'users.MyUser'
+CORS_ORIGIN_ALLOW_ALL = True
+AUTH_USER_MODEL = 'authapp.MyUser'

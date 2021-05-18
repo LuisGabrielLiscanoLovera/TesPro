@@ -1,0 +1,262 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<header class="">
+    <div class="">
+      
+
+
+
+
+      <div class="">
+        <div class="menu-button-container menu-profile d-none d-md-block">
+        
+          <div class="mdc-menu mdc-menu-surface" tabindex="-1">
+            <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
+             
+              <li class="mdc-list-item" role="menuitem">
+                <div class="item-thumbnail item-thumbnail-icon-only">
+                  <i class="mdi mdi-settings-outline text-primary"></i>                      
+                </div>
+                
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class=""></div> 
+       
+    
+
+      </div>
+    </div>
+  </header>
+<div >
+ 
+  
+   
+    
+ 
+
+
+<div class="container">
+    <h1>Django Ajax CRUD</h1>
+    <div class="row">
+      <div class="col-md-4 ">
+        <h3>Agregar referencia</h3>
+        <form id="addUser" action="">
+          
+          <div class="form-group">
+            <input class="form-control" type="text" name="nom_referencia" placeholder="nom_referencia" required>
+          </div>
+          <div class="form-group">
+            <input class="form-control" type="text" name="descripcion" min="10" max="100" placeholder="descripcion" required>
+          </div>
+          <button class="btn btn-primary form-control" type="submit">SUBMIT</button>
+        </form>
+      </div>
+      <div class="col-md-8">
+        <h3>Referencias</h3>
+        <table id="userTable" class="table table-striped">
+          <tr>
+            <th>creado</th>
+            <th>Nombre</th>
+            <th colspan="3">Descripcion</th>
+          </tr>
+          {% for referencia in referencias %}
+          <tr id="referencia-{{referencia.id}}">
+              <td class="Created_at referenciaData" name="created_at">{{referencia.created_at}}</td>
+              <td class="Nom_referencia referenciaData" name="nom_referencia">{{referencia.nom_referencia}}</td>
+              <td class="Descripcion referenciaData" name="Descripcion">{{referencia.descripcion}}</td>
+              <td align="center">
+                  <button class="btn btn-success form-control" onClick="editUser({{user.id}})" data-toggle="modal" data-target="#myModal")">EDIT</button>
+              </td>
+              <td align="center">
+                  <button class="btn btn-danger form-control" onClick="deleteUser({{user.id}})">DELETE</button>
+              </td>
+          </tr>
+
+
+
+
+
+
+
+
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Update User</h4>
+        </div>
+        <form id="updateUser" action="">
+        <div class="modal-body">
+            <input class="form-control" id="form-id" type="hidden" name="formId"/>
+            
+            
+            <label for="nom_referencia">nom_referencia</label>
+            <input class="form-control" id="form-nom_referencia" type="text" name="formnom_referencia"/>
+            <label for="descripcion">descripcion</label>
+            <input class="form-control" id="form-descripcion" type="number" name="formdescripcion" min=10 max=100/>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" >Save changes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+{% block javascript %}
+
+<script>
+// Create Django Ajax Call
+$("form#addUser").submit(function() {
+    
+    var nom_referenciaInput = $('input[name="nom_referencia"]').val().trim();
+    var descripcionInput = $('input[name="descripcion"]').val().trim();
+    if (nom_referenciaInput && descripcionInput) {
+        // Create Ajax Call
+        $.ajax({
+            url: '{% url "Referencia_ajax_create" %}',
+            data: {
+                
+                'nom_referencia': nom_referenciaInput,
+                'descripcion': descripcionInput
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.user) {
+                  appendToUsrTable(data.user);
+                }
+            }
+        });
+
+    } else {
+        alert("All fields must have a valid value.");
+    }
+    $('form#addUser').trigger("reset");
+    return false;
+});
+
+
+// Delete Django Ajax Call
+function deleteUser(id) {
+  var action = confirm("Are you sure you want to delete this user?");
+  if (action != false) {
+    $.ajax({
+        url: '{% url "crud_ajax_delete" %}',
+        data: {
+            'id': id,
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.deleted) {
+              $("#userTable #user-" + id).remove();
+            }
+        }
+    });
+  }
+}
+
+
+// Create Django Ajax Call
+$("form#updateUser").submit(function() {
+    
+    var nom_referenciaInput = $('input[name="formnom_referencia"]').val().trim();
+    var descripcionInput = $('input[name="formdescripcion"]').val().trim();
+    if ( nom_referenciaInput && descripcionInput) {
+        // Create Ajax Call
+        $.ajax({
+            url: '{% url "crud_ajax_update" %}',
+            data: {
+                'id': idInput,
+                
+                'nom_referencia': nom_referenciaInput,
+                'descripcion': descripcionInput
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.user) {
+                  updateToUserTabel(data.user);
+                }
+            }
+        });
+
+    } else {
+        alert("All fields must have a valid value.");
+    }
+    $('form#updateUser').trigger("reset");
+    $('#myModal').modal('hide');
+    return false;
+});
+
+
+// Update Django Ajax Call
+function editUser(id) {
+  if (id) {
+    tr_id = "#user-" + id;
+    name = $(tr_id).find(".Created_at").text();
+    nom_referencia = $(tr_id).find(".Nom_referencia").text();
+    descripcion = $(tr_id).find(".Descripcion").text();
+    $('#form-id').val(id);
+    $('#form-name').val(name);
+    $('#form-nom_referencia').val(nom_referencia);
+    $('#form-descripcion').val(descripcion);
+  }
+}
+
+function appendToUsrTable(user) {
+  $("#userTable > tbody:last-child").append(`
+        <tr id="user-${user.id}">
+            
+            '<td class="Nom_referencia" name="nom_referencia">${user.created_at}</td>
+            '<td class="Nom_referencia" name="nom_referencia">${user.nom_referencia}</td>
+            '<td class="Descripcion" name="descripcion">${user.descripcion}</td>
+            '<td align="center">
+                <button class="btn btn-success form-control" onClick="editUser(${user.id})" data-toggle="modal" data-target="#myModal")">EDIT</button>
+            </td>
+            <td align="center">
+                <button class="btn btn-danger form-control" onClick="deleteUser(${user.id})">DELETE</button>
+            </td>
+        </tr>
+    `);
+}
+
+function updateToUserTabel(user){
+    $("#userTable #user-" + user.id).children(".referenciaData").each(function() {
+        
+        
+        if (attr == "nom_referencia") {
+          $(this).text(user.nom_referencia);
+        } else {
+          $(this).text(user.descripcion);
+        }
+      });
+}
+</script>
+
+{% endblock javascript %}
+
+
+
+
+
+
+
+
+  
+    
+ 
+</div>
+
+
+{% endblock %}

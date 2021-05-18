@@ -11,6 +11,7 @@
 <!--material disigner-->
   <!-- plugins:css -->
 
+  	
 	<link rel="stylesheet" type="text/css" href="{% static 'vendors/mdi/css/materialdesignicons.min.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
 
@@ -57,6 +58,7 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 <!--===============================================================================================-->
+ {% block stylesheet %}{% endblock stylesheet %}
 </head>
 <body>
 	<script src="{% static 'js/preloader.js' %}"></script>
@@ -80,12 +82,50 @@
 			</div>
 			<div class="mdc-list-group">
 			  <nav class="mdc-list mdc-drawer-menu">
-				<div class="mdc-list-item mdc-drawer-item">
-				  <a class="mdc-drawer-link" href="{% url 'home'%}">
+
+
+			  	<div class="mdc-list-item mdc-drawer-item">
+				  <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-Empresas">
+					<i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i>
+					Empresas
+					<i class="mdc-drawer-arrow material-icons">chevron_right</i>
+				  </a>
+				  <div class="mdc-expansion-panel" id="ui-sub-menu-Empresas">
+					
+					
+	
+						    
+						    
+
+
+					{% for i in nomEmpresa %}
+					<nav class="mdc-list mdc-drawer-submenu">
+					  <div class="mdc-list-item mdc-drawer-item">
+						<a class="mdc-drawer-link" href="{% url 'Destajo'%}"
+						data-toggle="modazxl" data-target="destajo">
+						       {{ i }}
+						</a>
+					  </div>
+					</nav>
+					{% endfor %}
+					
+
+
+				  
+				  </div>
+				</div>
+	
+	
+				
+
+
+
+				<!-- <div class="mdc-list-item mdc-drawer-item">
+				  <a class="mdc-drawer-link" href="{ url 'home'}">
 					<i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i>
 					Inicio
 				  </a>
-				</div>
+				</div> -->
 				
 				<div class="mdc-list-item mdc-drawer-item">
 				  <a class="mdc-drawer-link" href="#"  data-toggle="modal" data-target="#modal_crearOP">
@@ -196,7 +236,7 @@
 	
 				
 	
-				<div class="mdc-list-item mdc-drawer-item">
+				 <div class="mdc-list-item mdc-drawer-item">
 				  <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-elm">
 					<i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i>
 					Elementos
@@ -234,14 +274,14 @@
 					  
 					  
 					  <div class="mdc-list-item mdc-drawer-item">
-						<a class="mdc-drawer-link" href="#" data-toggle="modal" data-target="#modal_referencia">
+						<a class="mdc-drawer-link" href="{% url 'Referencia_ajax'%}">
 						  + Referencia
 						</a>
 					  </div>
 					  
 					</nav>
 				  </div>
-				</div>
+				</div> 
 	
 			  </nav>  
 			</div>
@@ -257,12 +297,14 @@
 			<div class="mdc-top-app-bar__row">
 			  <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
 				<button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
-				<span class="mdc-top-app-bar__title">
-					mombre de empresa
+				<span class="mdc-top-app-bar__title">				 
+					 {% for i in nomEmpresaU %}
+					      {{ i }}
+					{% endfor %}
 				</span>
-					
-	
-	
+				
+							
+							
 			  </div>
 			  <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right">
 				<div class="menu-button-container menu-profile d-none d-md-block">
@@ -488,7 +530,7 @@
 
 
 <p id="output-message"></p>
-<form action="{% url 'referencia-create' %}"  id="formdata" method="POST" role="form" class="contactForm">>
+<form action="{ url 'referencia-create' }"  id="formdata" method="POST" role="form" class="contactForm">>
 	{% csrf_token %}
 	
 	<div class="modal fade" id="modal_referencia" tabindex="-1" role="dialog">
@@ -548,57 +590,57 @@
 	<script type="text/javascript">
 
 
-		document.getElementById("formdata").addEventListener("submit", function(e){
-		e.preventDefault();
-		//var url = '/'
-		nomRf = document.getElementById("nomRf").value;
-		descrpRf = document.getElementById("descrpRf").value;
+		// document.getElementById("formdata").addEventListener("submit", function(e){
+		// e.preventDefault();
+		// //var url = '/'
+		// nomRf = document.getElementById("nomRf").value;
+		// descrpRf = document.getElementById("descrpRf").value;
 		
-	  const formData = new FormData();
+	 //  const formData = new FormData();
 	  
-	  //console.log(nomRf);
-	  formData.append('nomRf', nomRf);
-	  formData.append('descrpRf', descrpRf);
+	 //  //console.log(nomRf);
+	 //  formData.append('nomRf', nomRf);
+	 //  formData.append('descrpRf', descrpRf);
 	  
-	  formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
-	  console.log(formData);
-	  fetch('{% url "referencia-create" %}', {
-		method: 'POST',
-		body: formData
-	  })
-	  .then(response => response.json())
-	  .then(data => {
-		console.log('Success:', data);
-		document.getElementById("nomRf").value = "";
-		document.getElementById("descrpRf").value = "";
+	 //  formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+	 //  console.log(formData);
+	 //  fetch('{ url "referencia-create" }', {
+		// method: 'POST',
+		// body: formData
+	 //  })
+	 //  .then(response => response.json())
+	 //  .then(data => {
+		// console.log('Success:', data);
+		// document.getElementById("nomRf").value = "";
+		// document.getElementById("descrpRf").value = "";
 		
-		document.getElementById("output-message").innerText = "Your enquiry has been sent!"
-		setTimeout(function(){ 
-		document.getElementById("output-message").style.display = "none";
-		 }, 3000);
-		setTimeout(function(){ 
-		document.getElementById("output-message").style.display = "";
-		 }, 1000);
+		// document.getElementById("output-message").innerText = "Your enquiry has been sent!"
+		// setTimeout(function(){ 
+		// document.getElementById("output-message").style.display = "none";
+		//  }, 3000);
+		// setTimeout(function(){ 
+		// document.getElementById("output-message").style.display = "";
+		//  }, 1000);
 	  
 	   
 	   
 	   
-	  })
-	  .catch(error => {
-		console.error('Error:', error);
-		document.getElementById("output-message").innerText = "Sorry! There was an error submitting your enquiry. "
-		setTimeout(function(){ 
-		document.getElementById("output-message").style.display = "none";
-		 }, 3000);
-		setTimeout(function(){ 
-		document.getElementById("output-message").style.display = "";
-		 }, 1000);
+	 //  })
+	 //  .catch(error => {
+		// console.error('Error:', error);
+		// document.getElementById("output-message").innerText = "Sorry! There was an error submitting your enquiry. "
+		// setTimeout(function(){ 
+		// document.getElementById("output-message").style.display = "none";
+		//  }, 3000);
+		// setTimeout(function(){ 
+		// document.getElementById("output-message").style.display = "";
+		//  }, 1000);
 	  
-	  });
+	 //  });
 	  
 	  
 	  
-	  });
+	 //  });
 	  
 	  </script>
 	  
@@ -915,6 +957,7 @@
 	<script src="{% static 'vendors/countdowntime/countdowntime.js' %}"></script>
 <!--===============================================================================================-->
 	<script src="{% static 'js/main.js' %}"></script>
-
+	{% block javascript %}
+    {% endblock javascript%}
 </body>
 </html>
