@@ -1,3 +1,3 @@
 git init
 git pull
-python manage runserver 192.164.1.54:8000
+python3 manage.py runserver 192.164.1.54:8000
