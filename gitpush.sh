@@ -1,7 +1,8 @@
 git init
 git add .
-git commit -m 'automatico'
 git status
+
+git commit -m 'automatico'
 git push
 git config credential.helper store        
 git config --global credential.helper store
