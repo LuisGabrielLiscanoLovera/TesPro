@@ -3,5 +3,9 @@ git add .
 git commit -m 'automatico'
 git status
 git push
-ccidbcomputacion12@gmail.com
-22760414luis
+git config credential.helper store        
+git config --global credential.helper store
+git config credential.helper cache
+git config --global credential.helper cache
+
+git status
