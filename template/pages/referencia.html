@@ -73,7 +73,7 @@
                   <button class="btn btn-danger form-control" onClick="deleteUser({{user.id}})">DELETE</button>
               </td>
           </tr>
-          
+
 
           {% endfor %}
         </table>
@@ -211,7 +211,7 @@ function appendToUsrTable(user) {
   $("#userTable > tbody:last-child").append(`
         <tr id="user-${user.id}">
             
-            '<td class="Nom_referencia" name="nom_referencia">${user.created_at}</td>
+            '<td class="created_at" name="created_at">${user.created_at}</td>
             '<td class="Nom_referencia" name="nom_referencia">${user.nom_referencia}</td>
             '<td class="Descripcion" name="descripcion">${user.descripcion}</td>
             '<td align="center">
