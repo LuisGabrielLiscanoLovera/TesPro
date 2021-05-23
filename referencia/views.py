@@ -26,6 +26,7 @@ class CreateReferenciaUser(View):
             nom_referencia = nom_referencia1,
             descripcion = descripcion1
         )
+        obj = Referencia.object.latest()
 
         user = {'id':obj.id,'nom_referencia':obj.nom_referencia,'descripcion':obj.descripcion,'created_at':'obj.created_at'}
 
