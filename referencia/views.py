@@ -27,7 +27,7 @@ class CreateReferenciaUser(View):
             descripcion = descripcion1
         )
 
-        user = {'id':obj.id,'nom_referencia':obj.nom_referencia,'descripcion':obj.descripcion}
+        user = {'id':obj.id,'nom_referencia':obj.nom_referencia,'descripcion':obj.descripcion,'created_at':obj.created_at}
 
         data = {
             'user': user
