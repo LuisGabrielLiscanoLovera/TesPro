@@ -40,6 +40,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'django_tables2',
     'corsheaders',
     'crispy_forms',
     'django.contrib.admin',
@@ -147,7 +148,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es-co'
 
-TIME_ZONE = 'America/Colombia'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 

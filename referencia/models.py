@@ -2,6 +2,7 @@ from django.db import models
 from authapp.models import MyUser as User
 from empresa.models import Empresa
 # Create your models here.
+import django_tables2 as tables
 
 class Referencia(models.Model):
     usuario        = models.ForeignKey(User, related_name='Referencia', null=True, blank=True,on_delete=models.CASCADE)
@@ -13,8 +14,15 @@ class Referencia(models.Model):
     created_at     = models.DateTimeField(auto_now_add=True)
     updated_at     = models.DateTimeField(auto_now=True)
     class Meta:
-        ordering = ["nom_referencia"]
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['created_at',]),
+            
+        ]
     def __str__(self):
-        return self.nom_referencia
+        return '%s %s %s %s' % (self.id, self.nom_referencia, self.descripcion,self.created_at)
 
- 
+
+class SimpleTable(tables.Table):
+    class Meta:
+        model = Referencia

@@ -63,7 +63,7 @@
           </tr>
           {% for referencia in referencias %}
           <tr id="referencia-{{referencia.id}}">
-              <td class="Created_at referenciaData" name="created_at">{{referencia.created_at}}</td>
+              <td class="Created_at referenciaData" name="created_at">{{referencia.created_at|date:'Y-m-d H:i'}}</td>
               <td class="Nom_referencia referenciaData" name="nom_referencia">{{referencia.nom_referencia}}</td>
               <td class="Descripcion referenciaData" name="Descripcion">{{referencia.descripcion}}</td>
               <td align="center">
@@ -106,6 +106,16 @@
       </div>
     </div>
   </div>
+
+
+
+
+
+
+{% load django_tables2 %}
+{% render_table table %}
+
+
 
 
 {% block javascript %}
@@ -212,7 +222,7 @@ function appendToUsrTable(user) {
   $("#userTable > tbody:last-child").append(`
         <tr id="user-${user.id}">
             
-            '<td class="created_at" name="created_at">${user.created_at}</td>
+            '<td class="created_at referenciaData" name="created_at">${user.created_at}</td>
             '<td class="Nom_referencia" name="nom_referencia">${user.nom_referencia}</td>
             '<td class="Descripcion" name="descripcion">${user.descripcion}</td>
             '<td align="center">

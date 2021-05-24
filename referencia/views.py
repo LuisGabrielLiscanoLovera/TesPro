@@ -1,17 +1,21 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from referencia.models import Referencia
+from referencia.models import Referencia,SimpleTable
 from django.views.generic import TemplateView, View, DeleteView
 from django.core import serializers
 from django.http import JsonResponse
+import django_tables2 as tables
 
 
-class ReferenciaView(TemplateView):
+
+class ReferenciaView(tables.SingleTableView):
+    table_class = SimpleTable
+    queryset = Referencia.objects.all()
     template_name = 'pages/referencia.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['referencias'] = Referencia.objects.all()
-        print (context)
+       # print (context)
         return context
 
 
@@ -20,14 +24,16 @@ class CreateReferenciaUser(View):
         
         nom_referencia1 = request.GET.get('nom_referencia', None)
         descripcion1 = request.GET.get('descripcion', None)
-        print (nom_referencia1,descripcion1)
+       # print (nom_referencia1,descripcion1)
         obj = Referencia.objects.create(
             
             nom_referencia = nom_referencia1,
             descripcion = descripcion1
         )
-        obj = Referencia.object.latest()
+        obj = Referencia.objects.latest('id')
+
         print(obj)
+
 
         user = {'id':obj.id,'nom_referencia':obj.nom_referencia,'descripcion':obj.descripcion,'created_at':obj.created_at}
 
