@@ -16,7 +16,7 @@ class ReferenciaView(tables.SingleTableView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['referencias'] = Referencia.objects.all()
-        print (context)
+       
         return context
 
 
