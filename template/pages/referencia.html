@@ -63,7 +63,7 @@
           </tr>
           {% for referencia in referencias %}
           <tr id="referencia-{{referencia.id}}">
-              <td class="Created_at referenciaData" name="created_at">{{referencia.created_at|date:'Y-m-d H:i'}}</td>
+              <td class="Created_at referenciaData" name="created_at">{{referencia.created_at|date:'Y-m-d H:i:s'}}</td>
               <td class="Nom_referencia referenciaData" name="nom_referencia">{{referencia.nom_referencia}}</td>
               <td class="Descripcion referenciaData" name="Descripcion">{{referencia.descripcion}}</td>
               <td align="center">
@@ -157,7 +157,7 @@ function deleteUser(id) {
   var action = confirm("Are you sure you want to delete this user?");
   if (action != false) {
     $.ajax({
-        url: '{% url "crud_ajax_delete" %}',
+        url: '{% url "Referencia_ajax_delete" %}',
         data: {
             'id': id,
         },
@@ -219,7 +219,7 @@ function editUser(id) {
 }
 
 function appendToUsrTable(user) {
-  $("#userTable > tbody:last-child").append(`
+  $("#userTable > tbody:first-child").append(`
         <tr id="user-${user.id}">
             
             '<td class="created_at referenciaData" name="created_at">${user.created_at}</td>

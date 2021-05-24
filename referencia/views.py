@@ -6,6 +6,7 @@ from django.core import serializers
 from django.http import JsonResponse
 import django_tables2 as tables
 
+from django.utils import (dateformat, formats)
 
 
 class ReferenciaView(tables.SingleTableView):
@@ -35,7 +36,7 @@ class CreateReferenciaUser(View):
         print(obj)
 
 
-        user = {'id':obj.id,'nom_referencia':obj.nom_referencia,'descripcion':obj.descripcion,'created_at':obj.created_at}
+        user = {'id':obj.id,'nom_referencia':obj.nom_referencia,'descripcion':obj.descripcion,'created_at':obj.created_at.strftime("%Y-%m-%d %H:%M:%S")}
 
         data = {
             'user': user
