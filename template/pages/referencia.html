@@ -67,10 +67,10 @@
               <td class="Nom_referencia referenciaData" name="nom_referencia">{{referencia.nom_referencia}}</td>
               <td class="Descripcion referenciaData" name="Descripcion">{{referencia.descripcion}}</td>
               <td align="center">
-                  <button class="btn btn-success form-control" onClick="editUser({{user.id}})" data-toggle="modal" data-target="#myModal")">EDIT</button>
+                  <button class="btn btn-success form-control" onClick="editUser({{referencia.id}})" data-toggle="modal" data-target="#myModal")">EDIT</button>
               </td>
               <td align="center">
-                  <button class="btn btn-danger form-control" onClick="deleteUser({{user.id}})">DELETE</button>
+                  <button class="btn btn-danger form-control" onClick="deleteUser({{referencia.id}})">DELETE ({{referencia.id}})  </button>
               </td>
           </tr>
 

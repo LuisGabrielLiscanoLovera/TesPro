@@ -16,7 +16,7 @@ class ReferenciaView(tables.SingleTableView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['referencias'] = Referencia.objects.all()
-       # print (context)
+        print (context)
         return context
 
 
@@ -33,7 +33,7 @@ class CreateReferenciaUser(View):
         )
         obj = Referencia.objects.latest('id')
 
-        print(obj)
+        
 
 
         user = {'id':obj.id,'nom_referencia':obj.nom_referencia,'descripcion':obj.descripcion,'created_at':obj.created_at.strftime("%Y-%m-%d %H:%M:%S")}
