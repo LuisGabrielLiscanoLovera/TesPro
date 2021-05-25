@@ -53,7 +53,7 @@ class DeleteReferenciaUser(View):
         return JsonResponse(data)
 
 
-class UpdateReferenciaUser(View):
+class UpdateReferenciaUser(tables.SingleTableView):
     def  get(self, request):
         id1 = request.GET.get('id', None)
         name1 = request.GET.get('name', None)

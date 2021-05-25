@@ -70,7 +70,7 @@
                   <button class="btn btn-success form-control" onClick="editUser({{referencia.id}})" data-toggle="modal" data-target="#myModal")">EDIT</button>
               </td>
               <td align="center">
-                  <button class="btn btn-danger form-control" onClick="deleteUser({{referencia.id}})">DELETE ({{referencia.id}})  </button>
+                  <button class="btn btn-danger form-control" onClick="deleteUser({{referencia.id}})">DELETE</button>
               </td>
           </tr>
 
@@ -95,7 +95,7 @@
             <label for="nom_referencia">nom_referencia</label>
             <input class="form-control" id="form-nom_referencia" type="text" name="formnom_referencia"/>
             <label for="descripcion">descripcion</label>
-            <input class="form-control" id="form-descripcion" type="number" name="formdescripcion" min=10 max=100/>
+            <input class="form-control" id="form-descripcion" type="text" name="formdescripcion" min=10 max=100/>
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary" >Save changes</button>
@@ -173,16 +173,15 @@ function deleteUser(id) {
 
 // Create Django Ajax Call
 $("form#updateUser").submit(function() {
-    
+    var idInput = $('input[name="formId"]').val().trim();
     var nom_referenciaInput = $('input[name="formnom_referencia"]').val().trim();
     var descripcionInput = $('input[name="formdescripcion"]').val().trim();
-    if ( nom_referenciaInput && descripcionInput) {
+    if (idInput && nom_referenciaInput && descripcionInput) {
         // Create Ajax Call
         $.ajax({
-            url: '{% url "crud_ajax_update" %}',
+            url: '{% url "Referencia_ajax_update" %}',
             data: {
-                'id': idInput,
-                
+                'id': idInput,                
                 'nom_referencia': nom_referenciaInput,
                 'descripcion': descripcionInput
             },
