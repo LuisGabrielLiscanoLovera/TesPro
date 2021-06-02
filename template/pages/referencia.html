@@ -79,15 +79,7 @@ id="user
 
 
 </style>
-</style>
-
-
-
-
-
-
-
-
+    <div class="form form-control">
       <form id="addUser" action="">
           <div class="form-group">
             <input class="form-control" type="text" name="name" placeholder="Name" required>
@@ -98,9 +90,10 @@ id="user
           <div class="form-group">
             <input class="form-control" type="number" name="age" min="10" max="100" placeholder="Age" required>
           </div>
-          <button class="btn btn-primary form-control" type="submit">SUBMIT</button>
+          <button class="btn btn-primary form-control" type="submit">Guardar</button>
         </form>
       </div>
+
       <div class="col-md-8">
         <h3>USERS</h3>
         <table id="userTable" class="table table-striped">
@@ -114,26 +107,20 @@ id="user
               <td class="userName userData" name="name">{{user.name}}</td>
               <td class="userAddress userData" name="address">{{user.address}}</td>
               <td class="userAge userData" name="age">{{user.age}}</td>
-              <td align="center">
-                  
+              <td align="center">              
            
 
             <div class="text-center">
              <a href="#openModal"
              onClick="editUser({{user.id}})"
-             >Editar</a>
-                
+             class="btn btn-outline-warning form-control"
+             >Editar</a>               
              
-              </a>
             </div>  
-
-
-
-
           
               </td>
               <td align="center">
-                  <button class="btn btn-danger form-control" onClick="deleteUser({{user.id}})">DELETE</button>
+                  <button class="btn btn-outline-danger form-control" onClick="deleteUser({{user.id}})">Eliminar</button>
               </td>
           </tr>
           {% endfor %}
@@ -164,111 +151,21 @@ id="user
             <input class="form-control" id="form-age" type="number" name="formAge" min=10 max=100/>       
           </div>
 
-          <button type="submit" class="btn btn-success" onclick="location.href='#close'">
-            save
+          <button type="submit" class="btn btn-success" 
+
+          onclick="location.href='#123'">
+            Guardar
           
           </button>
          
-                  
-
-
-
-
-
-
-       
-     
        </form>
-
-
-
-
-    </div>
-      
-        
-            
-       
-      
+    </div>  
 
 </div>
 
 
 
-<div id="miModales" class="modales">
-  <div class="modales-contenido">
-    
-    <h2>Mi primer Modal</h2>
-    
 
-     <form id="updateUser" action="">
-          <div class="modale-body">
-            <input class="form-control" id="form-id" type="hidden" name="formId"/>
-            <label for="name">Name</label>
-            <input class="form-control" id="form-name" type="text" name="formName"/>
-            <label for="address">Address</label>
-            <input class="form-control" id="form-address" type="text" name="formAddress"/>
-            <label for="age">Age</label>
-            <input class="form-control" id="form-age" type="number" name="formAge" min=10 max=100/>       
-          </div>
-
-
-       <div class="-footer d-flex justify-content-center">        
-        <a href="#"  class="btn btn-secondary"
-         >CANCELAR</a>
-        <button type="submit" href="#"    class="btn btn-primary">GUARDAR</button>
-      </div>
-       </form>
-
-  </div>  
-</div>
-
-
-
-
-
-<!-- mmmmmmmmmmmmmmm-->
-
-
-
-
-
-
-<div class="modales fade" id="myModal-referencia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
-
-      <div class="modal-body mx-3">
-        <form id="updateUser" action="">
-          <div class="modal-body">
-            <input class="form-control" id="form-id" type="hidden" name="formId"/>
-            <label for="name">Name</label>
-            <input class="form-control" id="form-name" type="text" name="formName"/>
-            <label for="address">Address</label>
-            <input class="form-control" id="form-address" type="text" name="formAddress"/>
-            <label for="age">Age</label>
-            <input class="form-control" id="form-age" type="number" name="formAge" min=10 max=100/>       
-          </div>
-
-      </div>
-
-      <div class="modal-footer d-flex justify-content-center">        
-        <button type="button" class="btn btn-secondary"
-         data-dismiss="modal">CANCELAR</button>
-        <button type="submit" class="btn btn-primary">GUARDAR</button>
-      </div>
-       </form>
-    </div>
-  </div>
-</div>
 
 
 
