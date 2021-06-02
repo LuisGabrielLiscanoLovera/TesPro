@@ -1,11 +1,17 @@
-from django.urls import path
+
+from django.urls import include, path
+from rest_framework import routers
 from . import views
 
+
+
+# Wire up our API using automatic URL routing.
+# Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-	path('', views.apiOverview, name="api-overview"),
-	path('color-list/', views.colorList, name="color-list"),
-	path('color-detail/<str:pk>/', views.colorDetail, name="color-detail"),
-	path('color-create/', views.colorCreate, name="color-create"),
-	path('color-update/<str:pk>/', views.colorUpdate, name="color-update"),
-	path('color-delete/<str:pk>/', views.colorDelete, name="color-delete"),
+    
+    # register todo get, post
+    path('todos', views.TodoList.as_view()),
+    # register todo put, patch delete
+    path('todos/<int:pk>', views.TodoDetail.as_view()),
+    #path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

@@ -9,9 +9,7 @@ from acumulado.views import Acumulado
 from despacho.views import Despacho
 from xtarea.views import Xtarea
 from home.views import Home
-
-
-
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,7 +25,7 @@ urlpatterns = [
    
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     
-    path('color/', include('color.urls')),
+   # path('color/', include('color.urls')),
     path('tarea/', include('tarea.urls')),
     path('integrante/', include('integrante.urls')),
     path('patinador/', include('patinador.urls')),
@@ -35,11 +33,16 @@ urlpatterns = [
     path('casino/', include('casino.urls')),
     
     
+    
 
 
 
     path('referencia/', include('referencia.urls')),
 
+
+
+    path('zinggrid/', views.zinggrid, name='zinggrid'),
+    path('panda/', include('color.urls')),
   
 
      

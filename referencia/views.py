@@ -5,7 +5,7 @@ from django.views.generic import TemplateView, View, DeleteView
 from django.core import serializers
 from django.http import JsonResponse
 import django_tables2 as tables
-
+from .models import CrudUser
 from django.utils import (dateformat, formats)
 
 
@@ -65,8 +65,8 @@ class UpdateReferenciaUser(tables.SingleTableView):
         obj.nom_referencia = nom_referencia1
         obj.descripcion = descripcion1
         obj.save()
-
-        user = {'id':obj.id,'name':obj.name,'nom_referencia':obj.nom_referencia,'descripcion':obj.descripcion}
+        obj = Referencia.objects.latest('id')
+        user = {'id':obj.id,'nom_referencia':obj.nom_referencia,'descripcion':obj.descripcion,'created_at':obj.created_at.strftime("%Y-%m-%d %H:%M:%S")}
 
         data = {
             'user': user
@@ -79,6 +79,64 @@ class UpdateReferenciaUser(tables.SingleTableView):
 
 
 
+class CrudView(TemplateView):
+    template_name = 'pages/referencia.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['users'] = CrudUser.objects.all()
+
+        return context
+
+
+class CreateCrudUser(View):
+    def  get(self, request):
+        name1 = request.GET.get('name', None)
+        address1 = request.GET.get('address', None)
+        age1 = request.GET.get('age', None)
+
+        obj = CrudUser.objects.create(
+            name = name1,
+            address = address1,
+            age = age1
+        )
+
+        user = {'id':obj.id,'name':obj.name,'address':obj.address,'age':obj.age}
+
+        data = {
+            'user': user
+        }
+        return JsonResponse(data)
+
+class DeleteCrudUser(View):
+    def  get(self, request):
+        id1 = request.GET.get('id', None)
+        CrudUser.objects.get(id=id1).delete()
+        data = {
+            'deleted': True
+        }
+        return JsonResponse(data)
+
+
+class UpdateCrudUser(View):
+    def  get(self, request):
+        id1 = request.GET.get('id', None)
+        name1 = request.GET.get('name', None)
+        address1 = request.GET.get('address', None)
+        age1 = request.GET.get('age', None)
+        print('uuuuuuuuuuuuuuuuuppppppppppppppppdddddddddddddtttttttttttt')
+
+        obj = CrudUser.objects.get(id=id1)
+        obj.name = name1
+        obj.address = address1
+        obj.age = age1
+        obj.save()
+
+        user = {'id':obj.id,'name':obj.name,'address':obj.address,'age':obj.age}
+
+        data = {
+            'user': user
+        }
+        return JsonResponse(data)
 
 
 

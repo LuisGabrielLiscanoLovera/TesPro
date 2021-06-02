@@ -1,139 +1,313 @@
+
 {% extends 'base.html' %}
 {% load static %}
+
+ 
+{% block title %}Django Ajax CRUD{% endblock %}
+id="user
 {% block content %}
-<header class="">
-    <div class="">
-      
+
+<style type="text/css">
+
+
+
+.modalDialog {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99999;
+    opacity:0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+}
+.modalDialog:target {
+    opacity:1;
+    pointer-events: auto;
+}
+.modalDialog > div {
+    width: 400px;
+    position: relative;
+    margin: 10% auto;
+    padding: 5px 20px 13px 20px;
+    border-radius: 10px;
+    background: #fff;
+    background: -moz-linear-gradient(#fff, #999);
+    background: -webkit-linear-gradient(#fff, #999);
+    background: -o-linear-gradient(#fff, #999);
+}
+.closeM {
+    background: #606061;
+    color: #FFFFFF;
+    line-height: 25px;
+    position: absolute;
+    right: -12px;
+    text-align: center;
+    top: -10px;
+    width: 24px;
+    text-decoration: none;
+    font-weight: bold;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+}
+
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.closeM:hover,
+.closeM:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
 
 
 
 
-      <div class="">
-        <div class="menu-button-container menu-profile d-none d-md-block">
-        
-          <div class="mdc-menu mdc-menu-surface" tabindex="-1">
-            <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
-             
-              <li class="mdc-list-item" role="menuitem">
-                <div class="item-thumbnail item-thumbnail-icon-only">
-                  <i class="mdi mdi-settings-outline text-primary"></i>                      
-                </div>
-                
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class=""></div> 
-       
-    
+</style>
+</style>
 
-      </div>
-    </div>
-  </header>
-<div >
- 
-  
-   
-    
- 
 
-<div class="container">
-    <h4>Casi termino el crud X</h4>
-    <div class="row">
-      <div class="col-md-4 ">
-        <h3>Agregar referencia</h3>
-        <form id="addUser" action="">
-          
+
+
+
+
+
+
+      <form id="addUser" action="">
           <div class="form-group">
-            <input class="form-control" type="text" name="nom_referencia" placeholder="nom_referencia" required>
+            <input class="form-control" type="text" name="name" placeholder="Name" required>
           </div>
           <div class="form-group">
-            <input class="form-control" type="text" name="descripcion" min="10" max="100" placeholder="descripcion" required>
+            <input class="form-control" type="text" name="address" placeholder="Address" required>
           </div>
-          <button class="btn btn-primary form-control" type="submit">guardar</button>
+          <div class="form-group">
+            <input class="form-control" type="number" name="age" min="10" max="100" placeholder="Age" required>
+          </div>
+          <button class="btn btn-primary form-control" type="submit">SUBMIT</button>
         </form>
       </div>
       <div class="col-md-8">
-        <h3>Referencias</h3>
+        <h3>USERS</h3>
         <table id="userTable" class="table table-striped">
           <tr>
-            <th>creado</th>
-            <th>Nombre</th>
-            <th colspan="3">Descripcion</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th colspan="3">Age</th>
           </tr>
-          {% for referencia in referencias %}
-          <tr id="referencia-{{referencia.id}}">
-              <td class="Created_at referenciaData" name="created_at">{{referencia.created_at|date:'Y-m-d H:i:s'}}</td>
-              <td class="Nom_referencia referenciaData" name="nom_referencia">{{referencia.nom_referencia}}</td>
-              <td class="Descripcion referenciaData" name="Descripcion">{{referencia.descripcion}}</td>
+          {% for user in users %}
+          <tr id="user-{{user.id}}">
+              <td class="userName userData" name="name">{{user.name}}</td>
+              <td class="userAddress userData" name="address">{{user.address}}</td>
+              <td class="userAge userData" name="age">{{user.age}}</td>
               <td align="center">
-                  <button class="btn btn-success form-control" onClick="editUser({{referencia.id}})" data-toggle="modal" data-target="#myModal")">EDIT</button>
-              </td>
-              <td align="center">
-                  <button class="btn btn-danger form-control" onClick="deleteUser({{referencia.id}})">DELETE</button>
-              </td>
-          </tr>
+                  
+           
 
+            <div class="text-center">
+             <a href="#openModal"
+             onClick="editUser({{user.id}})"
+             >Editar</a>
+                
+             
+              </a>
+            </div>  
+
+
+
+
+          
+              </td>
+              <td align="center">
+                  <button class="btn btn-danger form-control" onClick="deleteUser({{user.id}})">DELETE</button>
+              </td>
+          </tr>
           {% endfor %}
         </table>
       </div>
     </div>
   </div>
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Update User</h4>
-        </div>
+
+
+
+
+
+
+<div id="openModal" class="modalDialog">
+    <div> <a href="#close" title="Close" class="close">X</a>
+
+          <h2>Modal Box</h2>
+
+
         <form id="updateUser" action="">
-        <div class="modal-body">
+          <div class="modale-body">
             <input class="form-control" id="form-id" type="hidden" name="formId"/>
+            <label for="name">Name</label>
+            <input class="form-control" id="form-name" type="text" name="formName"/>
+            <label for="address">Address</label>
+            <input class="form-control" id="form-address" type="text" name="formAddress"/>
+            <label for="age">Age</label>
+            <input class="form-control" id="form-age" type="number" name="formAge" min=10 max=100/>       
+          </div>
+
+          <button type="submit" class="btn btn-success" onclick="location.href='#close'">
+            save
+          
+          </button>
+         
+                  
+
+
+
+
+
+
+       
+     
+       </form>
+
+
+
+
+    </div>
+      
+        
             
-            
-            <label for="nom_referencia">nom_referencia</label>
-            <input class="form-control" id="form-nom_referencia" type="text" name="formnom_referencia"/>
-            <label for="descripcion">descripcion</label>
-            <input class="form-control" id="form-descripcion" type="text" name="formdescripcion" min=10 max=100/>
-        </div>
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" >Save changes</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-        </form>
+       
+      
+
+</div>
+
+
+
+<div id="miModales" class="modales">
+  <div class="modales-contenido">
+    
+    <h2>Mi primer Modal</h2>
+    
+
+     <form id="updateUser" action="">
+          <div class="modale-body">
+            <input class="form-control" id="form-id" type="hidden" name="formId"/>
+            <label for="name">Name</label>
+            <input class="form-control" id="form-name" type="text" name="formName"/>
+            <label for="address">Address</label>
+            <input class="form-control" id="form-address" type="text" name="formAddress"/>
+            <label for="age">Age</label>
+            <input class="form-control" id="form-age" type="number" name="formAge" min=10 max=100/>       
+          </div>
+
+
+       <div class="-footer d-flex justify-content-center">        
+        <a href="#"  class="btn btn-secondary"
+         >CANCELAR</a>
+        <button type="submit" href="#"    class="btn btn-primary">GUARDAR</button>
       </div>
+       </form>
+
+  </div>  
+</div>
+
+
+
+
+
+<!-- mmmmmmmmmmmmmmm-->
+
+
+
+
+
+
+<div class="modales fade" id="myModal-referencia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+
+      <div class="modal-body mx-3">
+        <form id="updateUser" action="">
+          <div class="modal-body">
+            <input class="form-control" id="form-id" type="hidden" name="formId"/>
+            <label for="name">Name</label>
+            <input class="form-control" id="form-name" type="text" name="formName"/>
+            <label for="address">Address</label>
+            <input class="form-control" id="form-address" type="text" name="formAddress"/>
+            <label for="age">Age</label>
+            <input class="form-control" id="form-age" type="number" name="formAge" min=10 max=100/>       
+          </div>
+
+      </div>
+
+      <div class="modal-footer d-flex justify-content-center">        
+        <button type="button" class="btn btn-secondary"
+         data-dismiss="modal">CANCELAR</button>
+        <button type="submit" class="btn btn-primary">GUARDAR</button>
+      </div>
+       </form>
     </div>
   </div>
+</div>
 
 
 
 
 
 
-{% load django_tables2 %}
-{% render_table table %}
 
 
 
+
+
+
+
+
+
+
+
+
+{% endblock %}
 
 {% block javascript %}
 
 <script>
+
+
+
 // Create Django Ajax Call
 $("form#addUser").submit(function() {
-    
-    var nom_referenciaInput = $('input[name="nom_referencia"]').val().trim();
-    var descripcionInput = $('input[name="descripcion"]').val().trim();
-    if (nom_referenciaInput && descripcionInput) {
+    var nameInput = $('input[name="name"]').val().trim();
+    var addressInput = $('input[name="address"]').val().trim();
+    var ageInput = $('input[name="age"]').val().trim();
+    if (nameInput && addressInput && ageInput) {
         // Create Ajax Call
         $.ajax({
-            url: '{% url "Referencia_ajax_create" %}',
+            url: '{% url "crud_ajax_create" %}',
             data: {
-                
-                'nom_referencia': nom_referenciaInput,
-                'descripcion': descripcionInput,
-                
+                'name': nameInput,
+                'address': addressInput,
+                'age': ageInput
             },
             dataType: 'json',
             success: function (data) {
@@ -153,17 +327,17 @@ $("form#addUser").submit(function() {
 
 // Delete Django Ajax Call
 function deleteUser(id) {
-  var action = confirm("Are you sure you want to delete this referencia?");
+  var action = confirm("Are you sure you want to delete this user?");
   if (action != false) {
     $.ajax({
-        url: '{% url "Referencia_ajax_delete" %}',
+        url: '{% url "crud_ajax_delete" %}',
         data: {
             'id': id,
         },
         dataType: 'json',
         success: function (data) {
             if (data.deleted) {
-              $("#userTable #referencia-" + id).remove();
+              $("#userTable #user-" + id).remove();
             }
         }
     });
@@ -174,22 +348,25 @@ function deleteUser(id) {
 // Create Django Ajax Call
 $("form#updateUser").submit(function() {
     var idInput = $('input[name="formId"]').val().trim();
-    var nom_referenciaInput = $('input[name="formnom_referencia"]').val().trim();
-    var descripcionInput = $('input[name="formdescripcion"]').val().trim();
-    if (idInput && nom_referenciaInput && descripcionInput) {
+    var nameInput = $('input[name="formName"]').val().trim();
+    var addressInput = $('input[name="formAddress"]').val().trim();
+    var ageInput = $('input[name="formAge"]').val().trim();
+    if (nameInput && addressInput && ageInput) {
+     
         // Create Ajax Call
         $.ajax({
-            url: '{% url "Referencia_ajax_update" %}',
+            url: '{% url "crud_ajax_update" %}',
             data: {
-                'id': idInput,                
-                'nom_referencia': nom_referenciaInput,
-                'descripcion': descripcionInput
+                'id': idInput,
+                'name': nameInput,
+                'address': addressInput,
+                'age': ageInput
             },
             dataType: 'json',
             success: function (data) {
                 if (data.user) {
                   updateToUserTabel(data.user);
-                }
+              }
             }
         });
 
@@ -197,7 +374,8 @@ $("form#updateUser").submit(function() {
         alert("All fields must have a valid value.");
     }
     $('form#updateUser').trigger("reset");
-    $('#myModal').modal('hide');
+    $('#myModal-referencia').modal('hide');
+    $("#btn_modal").trigger("click");
     return false;
 });
 
@@ -206,25 +384,24 @@ $("form#updateUser").submit(function() {
 function editUser(id) {
   if (id) {
     tr_id = "#user-" + id;
-    name = $(tr_id).find(".Created_at").text();
-    nom_referencia = $(tr_id).find(".Nom_referencia").text();
-    descripcion = $(tr_id).find(".Descripcion").text();
+    name = $(tr_id).find(".userName").text();
+    address = $(tr_id).find(".userAddress").text();
+    age = $(tr_id).find(".userAge").text();
     $('#form-id').val(id);
     $('#form-name').val(name);
-    $('#form-nom_referencia').val(nom_referencia);
-    $('#form-descripcion').val(descripcion);
+    $('#form-address').val(address);
+    $('#form-age').val(age);
   }
 }
 
 function appendToUsrTable(user) {
-  $("#userTable > tbody:first-child").append(`
+  $("#userTable > tbody:last-child").append(`
         <tr id="user-${user.id}">
-            
-            '<td class="created_at referenciaData" name="created_at">${user.created_at}</td>
-            '<td class="Nom_referencia" name="nom_referencia">${user.nom_referencia}</td>
-            '<td class="Descripcion" name="descripcion">${user.descripcion}</td>
+            <td class="userName" name="name">${user.name}</td>
+            '<td class="userAddress" name="address">${user.address}</td>
+            '<td class="userAge" name="age">${user.age}</td>
             '<td align="center">
-                <button class="btn btn-success form-control" onClick="editUser(${user.id})" data-toggle="modal" data-target="#myModal")">EDIT</button>
+                <button class="btn btn-success form-control" onClick="editUser(${user.id})" data-toggle="modal" data-target="#myModal-referencia")">EDIT</button>
             </td>
             <td align="center">
                 <button class="btn btn-danger form-control" onClick="deleteUser(${user.id})">DELETE</button>
@@ -234,31 +411,34 @@ function appendToUsrTable(user) {
 }
 
 function updateToUserTabel(user){
-    $("#userTable #user-" + user.id).children(".referenciaData").each(function() {
-        
-        
-        if (attr == "nom_referencia") {
-          $(this).text(user.nom_referencia);
+    $("#userTable #user-" + user.id).children(".userData").each(function() {
+        var attr = $(this).attr("name");
+        if (attr == "name") {
+          $(this).text(user.name);
+        } else if (attr == "address") {
+          $(this).text(user.address);
         } else {
-          $(this).text(user.descripcion);
+          $(this).text(user.age);
         }
       });
 }
 </script>
 
+
+
+
+
+
+
+
+
+
+
+
+ 
 {% endblock javascript %}
 
 
+  </body>
+</html>
 
-
-
-
-
-
-  
-    
- 
-</div>
-
-
-{% endblock %}

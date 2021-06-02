@@ -41,6 +41,12 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django_tables2',
+    'rest_framework.authtoken',
+   
+
+
+    
+    'crudbuilder',
     'corsheaders',
     'crispy_forms',
     'django.contrib.admin',
