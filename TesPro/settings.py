@@ -1,4 +1,4 @@
-"""
+"""https://wpdatatables.com/datatables-alternative/
 pillow
 django-cors-headers
 librerias 

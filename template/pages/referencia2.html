@@ -62,7 +62,7 @@
             <th colspan="3">Descripcion</th>
           </tr>
           {% for referencia in referencias %}
-          <tr id="referencia-{{referencia.id}}">
+          <tr id="referencia-{{referencia.id}}">s
               <td class="Created_at referenciaData" name="created_at">{{referencia.created_at|date:'Y-m-d H:i:s'}}</td>
               <td class="Nom_referencia referenciaData" name="nom_referencia">{{referencia.nom_referencia}}</td>
               <td class="Descripcion referenciaData" name="Descripcion">{{referencia.descripcion}}</td>
@@ -269,3 +269,23 @@ function updateToUserTabel(user){
 
 
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

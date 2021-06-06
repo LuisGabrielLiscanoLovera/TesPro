@@ -1,0 +1,95 @@
+<!-- choose a theme file -->
+{% load static %}
+<link rel="stylesheet" href="/path/to/theme.default.css">
+<!-- load jQuery and tablesorter scripts -->
+<script type="text/javascript" src="/path/to/jquery-latest.js"></script>
+<script type="text/javascript" src="/path/to/jquery.tablesorter.js"></script>
+
+<!-- tablesorter widgets (optional) -->
+<script type="text/javascript" src="/path/to/jquery.tablesorter.widgets.js"></script>
+
+
+
+
+
+<table id="myTable" class="tablesorter">
+  <thead>
+    <tr>
+      <th>Last Name</th>
+      <th>First Name</th>
+      <th>Email</th>
+      <th>Due</th>
+      <th>Web Site</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Smith</td>
+      <td>John</td>
+      <td>jsmith@gmail.com</td>
+      <td>$50.00</td>
+      <td>http://www.jsmith.com</td>
+    </tr>
+    <tr>
+      <td>Bach</td>
+      <td>Frank</td>
+      <td>fbach@yahoo.com</td>
+      <td>$50.00</td>
+      <td>http://www.frank.com</td>
+    </tr>
+    <tr>
+      <td>Doe</td>
+      <td>Jason</td>
+      <td>jdoe@hotmail.com</td>
+      <td>$100.00</td>
+      <td>http://www.jdoe.com</td>
+    </tr>
+    <tr>
+      <td>Conway</td>
+      <td>Tim</td>
+      <td>tconway@earthlink.net</td>
+      <td>$50.00</td>
+      <td>http://www.timconway.com</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+<script type="text/javascript">
+    $(function() {
+  $("#myTable").tablesorter();
+});
+    $(function() {
+  $("#myTable").tablesorter({ sortList: [[0,0], [1,0]] });
+});
+</script>
+
+
+
+
+
+
+    <!-- <table id="example" class="table "  cellspacing="0" width="100%">
+        <thead>
+            <tr class="p-3 mb-2 bg-info text-white">
+                <th><i class="icofont-pie-chart"></i></th>
+                <th>Nom Referencia <i class="icofont-atom"></i></th>
+                <th>desc Referencia  <i class="icofont-brand-appstore"></i></th>
+                <th>img1 <i class="icofont-ui-calculator"></i></th>
+                <th>img2  <i class="icofont-color-bucket"></i></th>
+                <th>Fecha Creada <i class="icofont-clock-time"></i></th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr class="p-3 mb-2 bg-light text-white">
+                <th></th>
+                <th>Nom ReferenciaP</th>
+                <th>desc Referencia</th>
+                <th>img1</th>
+                <th>img2</th>
+                <th>Fecha</th>
+            </tr>
+        </tfoot>
+    </table> -->
+

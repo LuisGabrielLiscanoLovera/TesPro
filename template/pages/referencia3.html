@@ -1,0 +1,519 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+ 
+{% block title %}Django Ajax CRUD{% endblock %}
+id="user
+{% block content %}
+
+<style type="text/css">
+
+
+
+.modalDialog {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99999;
+    opacity:0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+}
+.modalDialog:target {
+    opacity:1;
+    pointer-events: auto;
+}
+.modalDialog > div {
+    width: 400px;
+    position: relative;
+    margin: 10% auto;
+    padding: 5px 20px 13px 20px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.2);
+    background: white;
+    color: #34495E;
+    background: -moz-linear-gradient(#fff, #999);
+    background: -webkit-linear-gradient(#fff, #999);
+    background: -o-linear-gradient(#fff, #999);
+}
+.closeM {
+    background: #606061;
+    color: #FFFFFF;
+    line-height: 25px;
+    position: absolute;
+    right: -12px;
+    text-align: center;
+    top: -10px;
+    width: 24px;
+    text-decoration: none;
+    font-weight: bold;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+}
+
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.closeM:hover,
+.closeM:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+
+</style>
+    <div class="form form-control">
+      <form id="addUser" action="">
+          <div class="form-group">
+            <input class="form-control" type="text" name="name" placeholder="Name" required>
+          </div>
+          <div class="form-group">
+            <input class="form-control" type="text" name="address" placeholder="Address" required>
+          </div>
+          <div class="form-group">
+            <input class="form-control" type="number" name="age" min="10" max="100" placeholder="Age" required>
+          </div>
+          <button class="btn btn-primary form-control" type="submit">Guardar</button>
+        </form>
+      </div>
+
+      <div class="col-md-8">
+       
+
+        <table id="userTable" class="table table-striped">
+          <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th colspan="3">Age</th>
+          </tr>
+          {% for user in users %}
+          <tr id="user-{{user.id}}">
+              <td class="userName userData" name="name">{{user.name}}</td>
+              <td class="userAddress userData" name="address">{{user.address}}</td>
+              <td class="userAge userData" name="age">{{user.age}}</td>
+              <td align="center">              
+           
+
+            <div class="text-center">
+             <a href="#openModal"
+             onClick="editUser({{user.id}})"
+             class="btn btn-outline-warning form-control"
+             >Editar</a>               
+             
+            </div>  
+          
+              </td>
+              <td align="center">
+                  <button class="btn btn-outline-danger form-control" onClick="deleteUser({{user.id}})">Eliminar</button>
+              </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+<div id="openModal" class="modalDialog">
+    <div> <a href="#close" title="Close" class="close">X</a>
+
+          <h2>Modal Box</h2>
+
+
+        <form id="updateUser" action="">
+          <div class="modale-body">
+            <input class="form-control" id="form-id" type="hidden" name="formId"/>
+            <label for="name">Name</label>
+            <input class="form-control" id="form-name" type="text" name="formName"/>
+            <label for="address">Address</label>
+            <input class="form-control" id="form-address" type="text" name="formAddress"/>
+            <label for="age">Age</label>
+            <input class="form-control" id="form-age" type="number" name="formAge" min=10 max=100/>       
+          </div>
+
+          <button type="submit" class="btn btn-success" 
+
+          onclick="location.href='#send'">
+            Guardar
+          
+          </button>
+         
+       </form>
+    </div>  
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table id="example" class=""  cellspacing="0" width="100%">
+        <thead>
+            <tr class="p-3 mb-2 bg-info text-white">
+                <th><i class="icofont-pie-chart"></i></th>
+                <th>Nom Referencia (OP)<i class="icofont-atom"></i></th>
+                <th>desc Referencia  <i class="icofont-brand-appstore"></i></th>
+                <th>Foto1 <i class="icofont-ui-calculator"></i></th>
+                <th>Foto2  <i class="icofont-color-bucket"></i></th>
+                <th>Fecha Creada <i class="icofont-clock-time"></i></th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr class="p-3 mb-2 bg-light text-white">
+                <th></th>
+                <th>Nom ReferenciaP</th>
+                <th>desc Referencia</th>
+                <th>Foto1</th>
+                <th>Foto2</th>
+                <th>Fecha</th>
+            </tr>
+        </tfoot>
+    </table>
+
+
+
+
+{% endblock %}
+
+{% block javascript %}
+
+
+
+
+
+
+
+        
+<script type="text/javascript">
+
+function format ( d ) {
+
+
+    return'<h1>merguevo</h1>'
+        
+}
+/*
+        ffmpeg -f x11grab -r 25 -s 300x200 -i :0.0 -vcodec huffyuv screencast.avi
+
+*/
+
+
+
+    
+
+$(document).ready(function() {
+  
+    var dt = $('#example').DataTable( {
+        
+        "language": {
+            "search":'<d class="font-weight-bold text-decoration-underline">Buscar: </d>',
+            "lengthMenu": " Mostrar _MENU_ registro por paguina",
+            'zeroRecords': '<div class="spinner-border text-success" role="status"><span class="sr-only">Loading...</span></div>',
+            "info": " Mostrar por pagina _PAGE_ of _PAGES_",
+            "infoEmpty": " Cargando datos disponible...",
+            "infoFiltered": "(filtrado de  _MAX_ regstro total)"
+        },
+        "processing": false,
+        "serverSide": false,
+         "ajax": {
+            "url": "/data",
+            "type": "GET"
+        },
+        
+        "columns": [ 
+            {
+                "class":          "details-control",
+                "orderable":      false,
+                "data":           null,
+                "defaultContent": ""
+            },
+            { "data": "opD"},
+            { "data": "referencia" },
+            { "data": "cantidadTotal" },
+            { "data": "color" },
+            { "data": "fecha" }
+        ],
+        "order": [[1, 'dsc']]
+
+    } );
+ 
+    // Array to track the ids of the details displayed rows
+    var detailRows = [];
+ $('#example tbody').on( 'click', 'tr td.details-control', function () {
+        var tr = $(this).closest('tr');
+        var row = dt.row( tr );
+        var idx = $.inArray( tr.attr('id'), detailRows );
+ 
+        if ( row.child.isShown() ) {
+            tr.removeClass( 'details' );
+            row.child.hide();
+ 
+            // Remove from the 'open' array
+            detailRows.splice( idx, 1 );
+        }
+        else {
+            tr.addClass( 'details' );
+            row.child( format( row.data() ) ).show();
+ 
+            // Add to the 'open' array
+            if ( idx === -1 ) {
+                detailRows.push( tr.attr('id') );
+            }
+        }
+    } );
+ 
+    // On each draw, loop over the `detailRows` array and show any child rows
+    dt.on( 'draw', function () {
+        $.each( detailRows, function ( i, id ) {
+            $('#'+id+' td.details-control').trigger( 'click' );
+        } );
+    } );
+} );
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+
+
+// Create Django Ajax Call
+$("form#addUser").submit(function() {
+    var nameInput = $('input[name="name"]').val().trim();
+    var addressInput = $('input[name="address"]').val().trim();
+    var ageInput = $('input[name="age"]').val().trim();
+    if (nameInput && addressInput && ageInput) {
+        // Create Ajax Call
+        $.ajax({
+            url: '{% url "crud_ajax_create" %}',
+            data: {
+                'name': nameInput,
+                'address': addressInput,
+                'age': ageInput
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.user) {
+                  appendToUsrTable(data.user);
+                }
+            }
+        });
+
+    } else {
+        alert("All fields must have a valid value.");
+    }
+    $('form#addUser').trigger("reset");
+    return false;
+});
+
+
+// Delete Django Ajax Call
+function deleteUser(id) {
+  var action = confirm("Are you sure you want to delete this user?");
+  if (action != false) {
+    $.ajax({
+        url: '{% url "crud_ajax_delete" %}',
+        data: {
+            'id': id,
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.deleted) {
+              $("#userTable #user-" + id).remove();
+            }
+        }
+    });
+  }
+}
+
+
+// Create Django Ajax Call
+$("form#updateUser").submit(function() {
+    var idInput = $('input[name="formId"]').val().trim();
+    var nameInput = $('input[name="formName"]').val().trim();
+    var addressInput = $('input[name="formAddress"]').val().trim();
+    var ageInput = $('input[name="formAge"]').val().trim();
+    if (nameInput && addressInput && ageInput) {
+     
+        // Create Ajax Call
+        $.ajax({
+            url: '{% url "crud_ajax_update" %}',
+            data: {
+                'id': idInput,
+                'name': nameInput,
+                'address': addressInput,
+                'age': ageInput
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.user) {
+                  updateToUserTabel(data.user);
+              }
+            }
+        });
+
+    } else {
+        alert("All fields must have a valid value.");
+    }
+    $('form#updateUser').trigger("reset");
+    $('#myModal-referencia').modal('hide');
+    
+    return false;
+});
+
+
+// Update Django Ajax Call
+function editUser(id) {
+
+  if (id) {
+    tr_id = "#user-" + id;
+    name = $(tr_id).find(".userName").text();
+    address = $(tr_id).find(".userAddress").text();
+    age = $(tr_id).find(".userAge").text();
+    $('#form-id').val(id);
+    $('#form-name').val(name);
+    $('#form-address').val(address);
+    $('#form-age').val(age);
+  }
+}
+
+function appendToUsrTable(user) {
+
+  $("#userTable > tbody:last-child").append(`
+        <tr id="user-${user.id}">
+            <td class="userName" name="name">${user.name}</td>
+            '<td class="userAddress" name="address">${user.address}</td>
+            '<td class="userAge" name="age">${user.age}</td>
+            '<td align="center">
+                
+            
+             
+             <a href="#openModal"
+             onClick="editUser(${user.id})"
+             class="btn btn-outline-warning form-control"
+             >Editar</a>    
+
+
+            </td>
+            <td align="center">
+                <button class="btn btn-outline-danger form-control" onClick="deleteUser(${user.id})">Eliminar</button>
+            </td>
+        </tr>
+    `);
+}
+
+function updateToUserTabel(user){
+
+    $("#userTable #user-" + user.id).children(".userData").each(function() {
+        var attr = $(this).attr("name");
+        if (attr == "name") {
+          $(this).text(user.name);
+        } else if (attr == "address") {
+          $(this).text(user.address);
+        } else {
+          $(this).text(user.age);
+        }
+      });
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+{% endblock javascript %}
+
+
+  </body>
+</html>
+

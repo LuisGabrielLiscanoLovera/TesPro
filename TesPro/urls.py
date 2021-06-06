@@ -40,7 +40,7 @@ urlpatterns = [
     path('referencia/', include('referencia.urls')),
 
 
-
+    path('verjson/', views.verjson, name='verjson'),#tess
     path('zinggrid/', views.zinggrid, name='zinggrid'),
     path('panda/', include('color.urls')),
   
