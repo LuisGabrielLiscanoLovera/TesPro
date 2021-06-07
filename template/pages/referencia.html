@@ -4,36 +4,59 @@ https://examples.bootstrap-table.com/index.html#welcome.html
 <script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %}"></script>
 {% block title %}Django Ajax CRUD{% endblock %}
 id="user
+<link href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css" rel="stylesheet">
+
+<script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
+<script src="{% static 'js/bootstrap-table.js' %}"></script>
+
+
+<script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table-locale-all.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/export/bootstrap-table-export.min.js"></script>
+
+
 
 <div id="openModalPadre" class="modalDialogPadre">
     <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>            
       <center>
         <h1>Referencias</h1><hr>
       </center>
-    <table 
+      
+    <table id="table"
+        data-locale="es-SP"
         class="table "
         data-toggle="table"
         data-click-to-select="true"
         data-height="460"
         data-pagination="true"
-        id="table"  
         data-ajax="ajaxRequest"
-        data-search="true"      
-        >
+        data-search="true"
+        data-show-fullscreen="true"        
+        data-show-refresh="true"
+        data-show-export="true"         
+        > 
+        <div class="row">
+          <div class="col-md-2">
+          <a href="#openModalHijo"> 
+              <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar </i>
+          </a > 
+        </div>
+        <div class="col-md-10">
+          <div id="toolbar">
+            <button id="button" class="btn btn-outline-danger icofont-ui-remove"> Eliminar</button>
+          </div>
+        </div>
+        
+    </div>
 
-        <thead>
-            <tr class="p-3 text-center text-white"><th data-field="state" data-checkbox="true"></th>
-                                 
-                    <a href="#openModalHijo"> 
-                        <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar </i>
-                    </a > 
-             
-                <th data-field="nom_referencia">Nom Referencia <i class="icofont-atom"></i></th>
-                <th data-field="descripcion">desc Referencia  <i class="icofont-brand-appstore"></i></th>
-                <th data-field="fotoPrendaUno">img1 <i class="icofont-image"></i></th>
-                <th data-field="fotoPrendaDos">img2 <i class="icofont-image"></i></th>
-                <th data-field="created_at">Fecha Creada <i class="icofont-clock-time"></i></th>
-                <th>Acciones<i class="icofont-abacus-alt"></i></th>
+        <thead>                    
+            <tr>
+                <th class="text-center" data-field="state" data-checkbox="true"></th>
+                <th class="text-center" data-field="nom_referencia">Nombre Referencia <i class="icofont-atom"></i></th>
+                <th class="text-center" data-field="descripcion">Descripcion de Referencia <i   class="icofont-brand-appstore"></i></th>
+                <th class="text-center" data-field="fotoPrendaUno">Imagen 1 <i class="icofont-image"></i></th>
+                <th class="text-center" data-field="fotoPrendaDos">Imagen 1  <i class="icofont-image"></i></th>
+                <th class="text-center" data-field="created_at">Fecha Creada <i class=""></i></th>
+                
             </tr>
         </thead>     
      
@@ -84,7 +107,25 @@ id="user
 {% block javascript %}
 
 
+<script>
+  var $table = $('#table')
+  var $button = $('#button')
+ 
 
+  $(function() {
+    $button.click(function () {
+      var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+        return row.id
+      })
+      $table.bootstrapTable('remove', {
+        field: 'id',
+        values: ids
+      })
+    })
+
+  
+  })
+</script>
 
 <script>
  function ajaxRequest(params) {
@@ -93,6 +134,9 @@ id="user
       params.success(res)
     })
   }
+ 
+
+
 
   $("form#addReferencia").submit(function() {
 
