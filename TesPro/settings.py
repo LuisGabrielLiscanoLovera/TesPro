@@ -1,5 +1,6 @@
 """https://wpdatatables.com/datatables-alternative/
 pillow
+
 django-cors-headers
 librerias 
 djangorestframework-3.12.1
@@ -40,13 +41,13 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'django_tables2',
+    #'django_tables2',
     'rest_framework.authtoken',
    
 
 
     
-    'crudbuilder',
+   # 'crudbuilder',
     'corsheaders',
     'crispy_forms',
     'django.contrib.admin',
@@ -168,7 +169,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, "static",
+                 "static/css/",
+                 "static/js/",
+                 "static/vendors/")
 ]
 
 

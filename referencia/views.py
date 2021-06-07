@@ -93,7 +93,7 @@ class CreateCrudUser(View):
         name1 = request.GET.get('name', None)
         address1 = request.GET.get('address', None)
         age1 = request.GET.get('age', None)
-
+        print("ddddddddddddddddddddddddddddddddddddddddddds")
         obj = CrudUser.objects.create(
             name = name1,
             address = address1,
