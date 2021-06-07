@@ -28,7 +28,7 @@ def referenciaList(request):
 	serializer = ReferenciaSerializer(referencias, many=True)
 	return Response(serializer.data)
 
-class CreateReferenciaUser(View):
+class CreateReferencia(View):
     def  get(self, request):
         
         nom_referencia1 = request.GET.get('nom_referencia', None)
@@ -51,7 +51,7 @@ class CreateReferenciaUser(View):
         }
         return JsonResponse(data)
 
-class DeleteReferenciaUser(View):
+class DeleteReferencia(View):
     def  get(self, request):
         id1 = request.GET.get('id', None)
         Referencia.objects.get(id=id1).delete()
@@ -61,7 +61,7 @@ class DeleteReferenciaUser(View):
         return JsonResponse(data)
 
 
-class UpdateReferenciaUser(tables.SingleTableView):
+class UpdateReferencia(tables.SingleTableView):
     def  get(self, request):
         id1 = request.GET.get('id', None)
         name1 = request.GET.get('name', None)
