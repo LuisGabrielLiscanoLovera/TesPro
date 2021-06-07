@@ -13,7 +13,11 @@ id="user
         data-toggle="table"
         data-search="true"
         data-height="460"
-        data-pagination="true">
+        data-pagination="true"
+        id="table"  
+        data-ajax="ajaxRequest"      
+        data-side-pagination="server">
+
         <thead>
             <tr class="p-3 text-center text-white">
                 <th>                   
@@ -21,42 +25,15 @@ id="user
                         <i class="btn  btn-outline-success icofont-ui-add"></i>
                     </a > 
                 </th>
-                <th>Nom Referencia <i class="icofont-atom"></i></th>
-                <th>desc Referencia  <i class="icofont-brand-appstore"></i></th>
-                <th>img1 <i class="icofont-image"></i></th>
-                <th>img2 <i class="icofont-image"></i></th>
-                <th>Fecha Creada <i class="icofont-clock-time"></i></th>
+                <th data-field="nom_referencia">Nom Referencia <i class="icofont-atom"></i></th>
+                <th data-field="descripcion">desc Referencia  <i class="icofont-brand-appstore"></i></th>
+                <th data-field="fotoPrendaUno">img1 <i class="icofont-image"></i></th>
+                <th data-field="fotoPrendaDos">img2 <i class="icofont-image"></i></th>
+                <th data-field="created_at">Fecha Creada <i class="icofont-clock-time"></i></th>
                 <th>Acciones<i class="icofont-abacus-alt"></i></th>
             </tr>
         </thead>     
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Item 1</td> 
-          <td>Item 1</td>
-          <td>$1</td><td>2</td>
-          <td>Item 2</td>
-          <td>$2</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Item 1</td>
-            <td>Item 2</td>
-            <td>$2</td><td>2</td>
-            <td>Item 2</td>
-            <td>$2</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Item 1</td>
-            <td>Item 2</td>
-            <td>$2</td><td>2</td>
-            <td>Item 2</td>
-            <td>$2</td>
-          </tr>
-         
-      </tbody>
-      
+     
     </table>
     
     </div>  
@@ -109,9 +86,12 @@ id="user
 
 
 <script>
-
-alert("gggggggggg");
-
+ function ajaxRequest(params) {
+    var url = 'referencia/referencia-list/'
+    $.get(url + '?' + $.param(params.data)).then(function (res) {
+      params.success(res)
+    })
+  }
     // Create Django Ajax Call
     $("form#addUser").submit(function() {
         var nameInput = $('input[name="name"]').val().trim();
@@ -119,7 +99,7 @@ alert("gggggggggg");
         var ageInput = $('input[name="age"]').val().trim();
         if (nameInput && addressInput && ageInput) {
             // Create Ajax Call
-            alert("tttttttt");
+           
             $.ajax({
                 url: '{% url "crud_ajax_create" %}',
                 

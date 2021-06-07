@@ -7,18 +7,26 @@ from django.http import JsonResponse
 import django_tables2 as tables
 from .models import CrudUser
 from django.utils import (dateformat, formats)
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import ReferenciaSerializer
+class ReferenciaView(TemplateView):
+     template_name = "pages/referencia.html"
 
+# Create your views here.
 
-class ReferenciaView(tables.SingleTableView):
-    table_class = SimpleTable
-    queryset = Referencia.objects.all()
-    template_name = 'pages/referencia.html'
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['referencias'] = Referencia.objects.all()
-       
-        return context
-
+@api_view(['GET'])
+def apiOverview(request):
+	api_urls = {
+		'List':'/referencia-list/'
+		}
+	return Response(api_urls)
+#@login_required(login_url='signin')
+@api_view(['GET'])
+def referenciaList(request):
+	referencias = Referencia.objects.all().order_by('-id')
+	serializer = ReferenciaSerializer(referencias, many=True)
+	return Response(serializer.data)
 
 class CreateReferenciaUser(View):
     def  get(self, request):
@@ -93,7 +101,6 @@ class CreateCrudUser(View):
         name1 = request.GET.get('name', None)
         address1 = request.GET.get('address', None)
         age1 = request.GET.get('age', None)
-        print("ddddddddddddddddddddddddddddddddddddddddddds")
         obj = CrudUser.objects.create(
             name = name1,
             address = address1,
@@ -137,6 +144,11 @@ class UpdateCrudUser(View):
             'user': user
         }
         return JsonResponse(data)
+
+
+
+
+
 
 
 
