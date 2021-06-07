@@ -1,4 +1,5 @@
 {% load static %}
+https://examples.bootstrap-table.com/index.html#welcome.html
 <script src="{% static 'vendors/bootstrap/js/popper.js' %}"></script>
 <script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %}"></script>
 {% block title %}Django Ajax CRUD{% endblock %}
@@ -12,7 +13,7 @@ id="user
     <table 
         class="table "
         data-toggle="table"
-        
+        data-click-to-select="true"
         data-height="460"
         data-pagination="true"
         id="table"  
@@ -21,12 +22,12 @@ id="user
         >
 
         <thead>
-            <tr class="p-3 text-center text-white">
-                <th>                   
+            <tr class="p-3 text-center text-white"><th data-field="state" data-checkbox="true"></th>
+                                 
                     <a href="#openModalHijo"> 
-                        <i class="btn  btn-outline-success icofont-ui-add"></i>
+                        <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar </i>
                     </a > 
-                </th>
+             
                 <th data-field="nom_referencia">Nom Referencia <i class="icofont-atom"></i></th>
                 <th data-field="descripcion">desc Referencia  <i class="icofont-brand-appstore"></i></th>
                 <th data-field="fotoPrendaUno">img1 <i class="icofont-image"></i></th>
