@@ -34,3 +34,4 @@ class CambioEmpres(models.Model):
     Usuario = models.ForeignKey(User, null=True,blank=True,related_name='CambioEmpres',on_delete=models.CASCADE)
     lastEm=models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
+    

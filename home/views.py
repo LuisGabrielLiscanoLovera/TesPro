@@ -4,7 +4,7 @@ from django.views.generic.base import TemplateView as TVB
 from django.views.generic import TemplateView, View, DeleteView
 from empresa.models import Empresa,RelacionEmpresa,CambioEmpres
 from django.contrib.auth.decorators import login_required
-
+from django.db.models.functions import Lower
 class Home(LoginRequiredMixin,TVB):
     template_name = "home.html"
     login_url = 'auth/signin/'
@@ -13,10 +13,15 @@ class Home(LoginRequiredMixin,TVB):
     def get_context_data(self, **kwargs):
         
         REU=RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)
-        RE=RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)[:1]
+        #RE=RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)[:1]
         # rree=RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk).all()
         idUser=int(self.request.user.pk)        
         #rree = RelacionEmpresa.objects.all().values('Empresa').filter(Usuario_id=idUser)
+        #lastEm=CambioEmpres.objects.values('lastEm').filter(Usuario_id=idUser).first()
+        lastEm=CambioEmpres.objects.values('lastEm').last()
+        
+     
+        RE=Empresa.objects.filter(id=lastEm.get("lastEm"))
         
         context = super(Home, self).get_context_data(**kwargs)        
         context['id'] = self.kwargs.get('id')
@@ -32,6 +37,8 @@ class Home(LoginRequiredMixin,TVB):
     
 
 def cambioEmpresa(request):
+    try:CambioEmpres.objects.order_by('-pk')[0].delete()
+    except Exception as e:  print(str(e))
     idEmpresa = request.GET.get('idEmpresa', None)
     idUser    = request.GET.get('idUser', None)
     obj = CambioEmpres.objects.create(
