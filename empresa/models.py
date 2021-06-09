@@ -26,9 +26,9 @@ class RelacionEmpresa(models.Model):
    
     class Meta:
         ordering = ["id"]
-
     def __str__(self):
-        return str(self.Empresa)
+        return '%s %s %s ' % (self.id, self.Empresa, self.Usuario)
+ 
 
 class CambioEmpres(models.Model):
     Usuario = models.ForeignKey(User, null=True,blank=True,related_name='CambioEmpres',on_delete=models.CASCADE)

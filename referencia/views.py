@@ -39,7 +39,6 @@ class CreateReferencia(View):
         idUser          = request.GET.get('idUser', None)
        # agregar empresa y usuario
         
-        print("ggggggggggggggggggggg",nom_referencia1,idEmpresa,idUser)
         obj = Referencia.objects.create(
             
             nom_referencia = nom_referencia1,
