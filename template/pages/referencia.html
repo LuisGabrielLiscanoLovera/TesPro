@@ -135,7 +135,7 @@ id="user -->
               </div>
               <div class="modal-footer">
                 
-                <input type="number" hidden="True" name="idEmpresa" value="{{ idEmpresa }}">
+                <input type="number" hidde="True" name="empresa" value="{{ lastIdEmpresa }}">
 							  <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">  
 
                 <button class="btn btn-outline-primary form-control" type="submit" onclick="location.href='/'">Guardar</button>
@@ -215,15 +215,15 @@ id="user -->
 
   $("form#addReferencia").submit(function() {
 
-    
+
 var nom_referenciaInput = $('input[name="nom_referencia"]').val().trim();
 var descripcionInput = $('input[name="descripcion"]').val().trim();
 var img1Input = $('input[name="img1"]').val().trim();
 var img2Input = $('input[name="img2"]').val().trim();
-var idEmpresa = $('input[name="idEmpresa"]').val().trim();
+var idEmpresaInput = $('input[name="empresa"]').val().trim();
 var idUser    = $('input[name="idUser"]').val().trim();
-
-if (nom_referenciaInput && descripcionInput,idEmpresa,idUser) {
+alert(idEmpresaInput);
+if (nom_referenciaInput && descripcionInput && img1Input && img2Input && idEmpresaInput && idUser) {
     // Create Ajax Call
     $.ajax({
         url: '{% url "Referencia_ajax_create" %}',
@@ -233,7 +233,7 @@ if (nom_referenciaInput && descripcionInput,idEmpresa,idUser) {
             'descripcion': descripcionInput,
             'img1': img1Input,
             'img2': img2Input,
-            'idEmpresa':idEmpresa,
+            'empresa':idEmpresaInput,
             'idUser':idUser
             
             

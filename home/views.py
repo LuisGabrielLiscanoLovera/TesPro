@@ -33,10 +33,8 @@ class Home(LoginRequiredMixin,TVB):
         #context['empresa']  = RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)
         context['nomEmpresa']=REU#nombre de todas las empresa
         context['nomEmpresaU']=RE#nombre de la empresa actual
-        context['idEmpresa']=rree#ids empresas
-        
-        #context['idEmpresa'] = lastEm.get("lastEm")
-        print ()
+        context['lastIdEmpresa']=lastEm.get("lastEm")#ids empresas
+        print(lastEm.get("lastEm"),"last empresaszzzzzzzzzzzzzzzz")
         return context
 
 def cambioEmpresa(request):
