@@ -33,11 +33,16 @@ class CreateReferencia(View):
         
         nom_referencia1 = request.GET.get('nom_referencia', None)
         descripcion1 = request.GET.get('descripcion', None)
-       # print (nom_referencia1,descripcion1)
+        img1 = request.GET.get('img1', None)
+        img2 = request.GET.get('img2', None)
+       # agregar empresa y usuario
         obj = Referencia.objects.create(
             
             nom_referencia = nom_referencia1,
-            descripcion = descripcion1
+            descripcion = descripcion1,
+            fotoPrendaUno = img1,
+            fotoPrendaDos = img2,
+            
         )
         obj = Referencia.objects.latest('id')
 

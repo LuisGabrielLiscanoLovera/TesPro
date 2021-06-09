@@ -1,9 +1,8 @@
 {% load static %}
-https://examples.bootstrap-table.com/index.html#welcome.html
 <script src="{% static 'vendors/bootstrap/js/popper.js' %}"></script>
 <script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %}"></script>
-{% block title %}Django Ajax CRUD{% endblock %}
-id="user
+<!-- {% block title %}Django Ajax CRUD{% endblock %}
+id="user -->
 <link href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css" rel="stylesheet">
 
 <script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
@@ -76,20 +75,87 @@ id="user
         <h1>Agregar Referencia</h1><hr>
       </center>
       
-      <div class="form form-group">
-        
-            <h3>Agregar referencia</h3>
-            <form id="addReferencia" action="">
+
+     
+
+
+        <div class="modal-dialog" role="document">
+          <form id="addReferencia" action="" novalidate="novalidate">
+            <div class="modal-content">
               
-              <div class="form-group">
-                <input class="form-control" type="text" name="nom_referencia" placeholder="nom_referencia" required>
+              <div class="modal-body">
+                <div class="form-row">
+                  <div class="col-sm-6">
+                   
+                   
+                    <div class="form-group">
+                      <label for="modal_codigo_color">Nombre Referencia</label>
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                          <i class="fa fa-user"></i>
+                        </span>
+                        <input class="form-control" type="text" name="nom_referencia" placeholder="Nombre referencia" required>
+                      </div>
+                    </div>
+                  
+                  </div>
+                 
+                 
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="modal_codigo_color">Descripcion de Referencia</label>
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                          <i class="fa fa-user"></i>
+                        </span>
+                        <input class="form-control" type="text" name="descripcion" min="10" max="100" placeholder="Descripcion" required>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="img1">img1</label>                      
+                        <input class="form-control-file" name="img1" type="file">                   
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="img2">img2</label>                      
+                        <input  class="form-control-file" name="img2" type="file">                   
+                    </div>
+                  </div>
+
+
+                
+                
+                
+                </div>
+              
+                
               </div>
-              <div class="form-group">
-                <input class="form-control" type="text" name="descripcion" min="10" max="100" placeholder="descripcion" required>
+              <div class="modal-footer">
+               
+                <button class="btn btn-outline-primary form-control" type="submit" onclick="location.href='/'">Guardar</button>
               </div>
-              <button class="btn btn-primary form-control" type="submit" onclick="location.href='/'">guardar</button>
-            </form>
-          </div>
+            </div>
+          </form>
+        </div>
+     
+
+
+
+
+
+
+
+
+
+
+     
         </div>
 </div>
    
@@ -115,6 +181,16 @@ id="user
   $(function() {
     $button.click(function () {
       var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+        $.ajax({
+    url: '{% url "Referencia_ajax_delete" %}',
+    data: {
+        'id': row.id,
+    },
+    dataType: 'json',
+    success: function (data) {
+        console.log("borrado")
+    }
+});
         return row.id
       })
       $table.bootstrapTable('remove', {
@@ -143,6 +219,9 @@ id="user
     
 var nom_referenciaInput = $('input[name="nom_referencia"]').val().trim();
 var descripcionInput = $('input[name="descripcion"]').val().trim();
+var img1Input = $('input[name="img1"]').val().trim();
+var img2Input = $('input[name="img2"]').val().trim();
+
 if (nom_referenciaInput && descripcionInput) {
     // Create Ajax Call
     $.ajax({
@@ -151,6 +230,9 @@ if (nom_referenciaInput && descripcionInput) {
             
             'nom_referencia': nom_referenciaInput,
             'descripcion': descripcionInput,
+            'img1': img1Input,
+            'img2': img2Input,
+            
             
         },
         dataType: 'json',

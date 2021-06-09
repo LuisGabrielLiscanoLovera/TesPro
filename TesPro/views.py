@@ -5,6 +5,8 @@ from django.http import JsonResponse
 def zinggrid(request):
     title = 'sMque paso!'
     return render(request, 'zinggrid.html', {'title': title})
+
+
 def verjson(request):
     data={
     

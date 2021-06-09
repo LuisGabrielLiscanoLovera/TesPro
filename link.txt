@@ -38,3 +38,8 @@ $ git config --global credential.helper store
 $ git config credential.helper cache
 OR
 $ git config --global credential.helper cache
+https://examples.bootstrap-table.com/index.html#welcome.html
+
+
+
+https://examples.bootstrap-table.com/index.html#methods/update-row.html#view-source

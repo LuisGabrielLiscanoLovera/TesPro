@@ -8,10 +8,12 @@ from casino.views import CasinoTemplate
 from acumulado.views import Acumulado
 from despacho.views import Despacho
 from xtarea.views import Xtarea
-from home.views import Home
+from home.views import Home,cambioEmpresa
 from . import views
 
 urlpatterns = [
+    
+    
     path('admin/', admin.site.urls),
     path('', Home.as_view(), name='home'),    
     path('auth/', include('authapp.urls')),   
@@ -44,6 +46,6 @@ urlpatterns = [
     path('zinggrid/', views.zinggrid, name='zinggrid'),
     path('panda/', include('color.urls')),
   
-
+    path('cambioEmpresa/',cambioEmpresa, name='cambioEmpresa'),
      
      ]
