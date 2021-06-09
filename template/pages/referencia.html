@@ -75,10 +75,6 @@ id="user -->
         <h1>Agregar Referencia</h1><hr>
       </center>
       
-
-     
-
-
         <div class="modal-dialog" role="document">
           <form id="addReferencia" action="" novalidate="novalidate">
             <div class="modal-content">
@@ -138,7 +134,10 @@ id="user -->
                 
               </div>
               <div class="modal-footer">
-               
+                
+                <input type="number" hidden="True" name="idEmpresa" value="{{ i.id }}">
+							  <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">  
+
                 <button class="btn btn-outline-primary form-control" type="submit" onclick="location.href='/'">Guardar</button>
               </div>
             </div>
@@ -221,8 +220,10 @@ var nom_referenciaInput = $('input[name="nom_referencia"]').val().trim();
 var descripcionInput = $('input[name="descripcion"]').val().trim();
 var img1Input = $('input[name="img1"]').val().trim();
 var img2Input = $('input[name="img2"]').val().trim();
+var idEmpresa = $('input[name="idEmpresa"]').val().trim();
+var idUser    = $('input[name="idUser"]').val().trim();
 
-if (nom_referenciaInput && descripcionInput) {
+if (nom_referenciaInput && descripcionInput,idEmpresa,idUser) {
     // Create Ajax Call
     $.ajax({
         url: '{% url "Referencia_ajax_create" %}',
@@ -232,6 +233,8 @@ if (nom_referenciaInput && descripcionInput) {
             'descripcion': descripcionInput,
             'img1': img1Input,
             'img2': img2Input,
+            'idEmpresa':idEmpresa,
+            'idUser':idUser
             
             
         },

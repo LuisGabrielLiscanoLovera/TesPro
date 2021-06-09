@@ -12,25 +12,22 @@ class Home(LoginRequiredMixin,TVB):
         
     def get_context_data(self, **kwargs):
         
-        REU=RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)
+        allEmpresa     = RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)
         #RE=RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)[:1]
         # rree=RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk).all()
-        idUser=int(self.request.user.pk)        
+        idUser         = int(self.request.user.pk)        
         #rree = RelacionEmpresa.objects.all().values('Empresa').filter(Usuario_id=idUser)
         #lastEm=CambioEmpres.objects.values('lastEm').filter(Usuario_id=idUser).first()
-        lastEm=CambioEmpres.objects.values('lastEm').last()
-        
-     
-        RE=Empresa.objects.filter(id=lastEm.get("lastEm"))
-        
-        context = super(Home, self).get_context_data(**kwargs)        
-        context['id'] = self.kwargs.get('id')
+        lastEm         = CambioEmpres.objects.values('lastEm').last()
+        EmpresaAct     = Empresa.objects.filter(id=lastEm.get("lastEm"))
+        context        = super(Home, self).get_context_data(**kwargs)        
+        context['id']  = self.kwargs.get('id')
         context['login_user_id'] = self.request.user.pk #--aqui se obtiene el user id
         context['msg'] = u'Hello blog!'
-        #context['empresa']  = RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)
-        context['nomEmpresa']=REU#nombre de todas las empresa
-        context['nomEmpresaU']=RE#la primera empresa
-       # context['test']=rree#ids empresas
+        #context['empresa']    = RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)
+        context['nomEmpresa']  = allEmpresa#nombre de todas las empresa
+        context['nomEmpresaU'] = EmpresaAct#nombre de la empresa actual
+        #context['test']=rree#ids empresas
        
         print (context)
         return context 

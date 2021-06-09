@@ -32,17 +32,22 @@ class CreateReferencia(View):
     def  get(self, request):
         
         nom_referencia1 = request.GET.get('nom_referencia', None)
-        descripcion1 = request.GET.get('descripcion', None)
-        img1 = request.GET.get('img1', None)
-        img2 = request.GET.get('img2', None)
+        descripcion1    = request.GET.get('descripcion', None)
+        img1            = request.GET.get('img1', None)
+        img2            = request.GET.get('img2', None)
+        idEmpresa       = request.GET.get('idEmpresa', None)
+        idUser          = request.GET.get('idUser', None)
        # agregar empresa y usuario
+        
+        print("ggggggggggggggggggggg",nom_referencia1,idEmpresa,idUser)
         obj = Referencia.objects.create(
             
             nom_referencia = nom_referencia1,
-            descripcion = descripcion1,
-            fotoPrendaUno = img1,
-            fotoPrendaDos = img2,
-            
+            descripcion    = descripcion1,
+            fotoPrendaUno  = img1,
+            fotoPrendaDos  = img2,
+            empresa_id     = idEmpresa,
+            usuario_id     = idUser,            
         )
         obj = Referencia.objects.latest('id')
 
@@ -72,13 +77,13 @@ class UpdateReferencia(tables.SingleTableView):
         name1 = request.GET.get('name', None)
         nom_referencia1 = request.GET.get('nom_referencia', None)
         descripcion1 = request.GET.get('descripcion', None)
-
         obj = Referencia.objects.get(id=id1)
         obj.name = name1
         obj.nom_referencia = nom_referencia1
         obj.descripcion = descripcion1
         obj.save()
         obj = Referencia.objects.latest('id')
+        
         user = {'id':obj.id,'nom_referencia':obj.nom_referencia,'descripcion':obj.descripcion,'created_at':obj.created_at.strftime("%Y-%m-%d %H:%M:%S")}
 
         data = {
