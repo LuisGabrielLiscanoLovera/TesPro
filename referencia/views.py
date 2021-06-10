@@ -10,6 +10,8 @@ from django.utils import (dateformat, formats)
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import ReferenciaSerializer
+from empresa.models import CambioEmpres
+
 class ReferenciaView(TemplateView):
      template_name = "pages/referencia.html"
 
@@ -24,9 +26,13 @@ def apiOverview(request):
 #@login_required(login_url='signin')
 @api_view(['GET'])
 def referenciaList(request):
-	referencias = Referencia.objects.all().order_by('-id')
-	serializer = ReferenciaSerializer(referencias, many=True)
-	return Response(serializer.data)
+    lastEm=CambioEmpres.objects.values('lastEm').last().get("lastEm")
+    referencias = Referencia.objects.all().filter(empresa_id=lastEm).order_by('-id')
+    
+    
+    serializer = ReferenciaSerializer(referencias, many=True)
+    return Response(serializer.data)
+
 
 class CreateReferencia(View):
     def  get(self, request):
