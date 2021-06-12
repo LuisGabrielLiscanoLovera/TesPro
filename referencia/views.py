@@ -96,7 +96,7 @@ class UpdateReferencia(tables.SingleTableView):
         try:
             obj.save()
             return redirect('home')
-        except Exception as e:  print("eroooooooooooooooooooooooooooooooo")
+        except Exception as e:  print("reparar peo de cors header crsf token")
 
 
 

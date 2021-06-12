@@ -15,7 +15,7 @@ id="user -->
 
 
 <div id="openModalPadre" class="modalDialogPadre">
-    <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>            
+    <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>            
       <center>
         <h1>Referencias {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
       </center>
@@ -83,10 +83,8 @@ id="user -->
 </style>
 
 
-
-
 <div id="openModalHijo" class="modalDialogHijo">
-    <div> <a href="#close" title="Close" class="close"><i class="icofont-ui-close"></i></a>            
+    <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>            
       <center>
         <h1>Crear referencia {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
       </center>
@@ -147,12 +145,7 @@ id="user -->
             </div>
           </div>
         </div>
-
-
-
-
-        
-      </div>
+     </div>
     </form>
    
      
@@ -160,7 +153,7 @@ id="user -->
 </div>
 
 <div id="openModalHijoDos" class="modalDialogHijoDos">
-  <div> <a href="#close" title="Close" class="close"><i class="icofont-ui-close"></i></a>            
+  <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>            
     <center>
       <h1>Editar referencia {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
     </center>
@@ -222,17 +215,6 @@ id="user -->
           </div>
         </form>
       </div>
-   
-
-
-
-
-
-
-
-
-
-
    
       </div>
 </div>
@@ -355,7 +337,7 @@ return false;
  
   $("form#addReferencia").submit(function() {
 
-alert("vvv");
+
 var nom_referenciaInput = $('input[name="nom_referencia"]').val().trim();
 var descripcionInput = $('input[name="descripcion"]').val().trim();
 var img1Input = $('input[name="img1"]').val().trim();
