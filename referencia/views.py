@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from referencia.models import Referencia,SimpleTable
@@ -77,24 +78,26 @@ class DeleteReferencia(View):
 
 
 class UpdateReferencia(tables.SingleTableView):
-    def  get(self, request):
-        id1 = request.GET.get('id', None)
-        name1 = request.GET.get('name', None)
-        nom_referencia1 = request.GET.get('nom_referencia', None)
-        descripcion1 = request.GET.get('descripcion', None)
-        obj = Referencia.objects.get(id=id1)
-        obj.name = name1
-        obj.nom_referencia = nom_referencia1
-        obj.descripcion = descripcion1
-        obj.save()
-        obj = Referencia.objects.latest('id')
-        
-        user = {'id':obj.id,'nom_referencia':obj.nom_referencia,'descripcion':obj.descripcion,'created_at':obj.created_at.strftime("%Y-%m-%d %H:%M:%S")}
+    def  get(self, request):        
+        idReferencia    = request.GET.get('idReferencia', None)
+        nom_referencia2 = request.GET.get('nom_referenciaUP', None)
+        descripcion2    = request.GET.get('descripcionUP', None)
+        img1            = request.GET.get('img1UP', None)
+        img2            = request.GET.get('img2UP', None)
+        idEmpresa       = request.GET.get('empresaUP', None)
+        idUser          = request.GET.get('idUserUP', None)
+        obj = Referencia.objects.get(id=idReferencia)
+        obj.nom_referencia = nom_referencia2
+        obj.descripcion = descripcion2
+        obj.img1 = img1
+        obj.img2 = img2
+        obj.empresa_id = idEmpresa
+        obj.usuario_id = idUser
+        try:
+            obj.save()
+            return redirect('home')
+        except Exception as e:  print("eroooooooooooooooooooooooooooooooo")
 
-        data = {
-            'user': user
-        }
-        return JsonResponse(data)
 
 
 
