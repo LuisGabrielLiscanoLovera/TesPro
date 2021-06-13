@@ -20,6 +20,8 @@
       data-show-fullscreen="true"        
       data-show-refresh="true"
       data-row-style="rowStyle"
+      data-checkbox-header="false"
+      data-click-to-select="true"
             >
         <div class="row">
           <div class="col-sm-2">
@@ -45,7 +47,7 @@
 
         <thead>
           <tr>
-            <th data-field="state" data-checkbox="true"></th>
+            <th data-field="state" data-checkbox="true" class="bs-checkbox"></th>
             <th data-field="nom_color">Nombre color</th>
             <th data-field="codigo_color">Codigo de color</th>
             <th data-field="created_at">Fecha Creada</th>
@@ -268,35 +270,38 @@ return false;
   })
   
 
-  var $buttonEcolor = $('#buttonEliminarColor') 
-  $(function() {
-    alert("cli");
-    $buttonEcolor.click(function () {
-      
-      var idsColor = $.map($tableC.bootstrapTable('getSelections'), function (row) {
-        $.ajax({
-    url: '{% url "Color_ajax_delete" %}',
-    data: {
-        'id': row.id,
-    },
-    dataType: 'json',
-    success: function (data) {
-        console.log("borrado")
-    }
-});
-        return row.id
-      })
-      $tableC.bootstrapTable('remove', {
-        field: 'id',
-        values: idsColor
-      })
-    })
+  var $buttonEcolor = $('#buttonEliminarColor')
 
   
-  })
 </script>
 
+<script type="text/javascript">
+  var $tColor = $('#tableC'),
+      $bColor = $('#buttonEliminarColor');
 
+  $(function () {
+      $bColor.click(function () {
+        var ids = $.map($tColor.bootstrapTable('getSelections'), function (row) {
+          $.ajax({
+            url: '{% url "Color_ajax_delete" %}',
+            data: {
+                'id': row.id,
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log("borrado")
+            }
+            });
+        return row.id
+      })
+      $tColor.bootstrapTable('remove', {
+        field: 'id',
+        values: ids
+      })
+        
+      });
+  });
+</script>
 
 
 <script>
