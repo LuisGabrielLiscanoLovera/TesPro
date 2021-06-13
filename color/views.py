@@ -1,108 +1,91 @@
-from django.shortcuts import render
+from django.shortcuts import redirect
+from color.models import Color
+from django.views.generic import TemplateView, View
 from django.http import JsonResponse
+from django.utils import (dateformat, formats)
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import ColorSerializer
-from django.contrib.auth.decorators import login_required
-
-
-
-
-
-
-
-from rest_framework import viewsets
-
-from rest_framework.views import APIView
-
-from rest_framework import status
-from django.http import Http404
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-
-from .serializers import TodoSerializer
-from .models import Todo
-
-
+from empresa.models import CambioEmpres
 
 # Create your views here.
+@api_view(['GET'])
+def apiOverview(request):
+	api_urls = {
+		'List':'/color-list/'
+		}
+	return Response(api_urls)
+#@login_required(login_url='signin')
+@api_view(['GET'])
+def colorList(request):
+    lastEm=CambioEmpres.objects.values('lastEm').last().get("lastEm")
+    colores = Color.objects.all().filter(empresa_id=lastEm).order_by('-id')    
+    serializer = ColorSerializer(colores, many=True)
+    serializer.data
+    return Response(serializer.data)
 
 
-# class to perform GET, POST for grabbing all todo records and adding a todo record
-class TodoList(APIView):
-    """
-    List all snippets, or create a new snippet.
-    """
-    def get(self, request, format=None):
-        snippets = Todo.objects.all().order_by('id')
-        serializer = TodoSerializer(snippets, many=True)
-        return Response(serializer.data)
 
-    def post(self, request, format=None):
-        serializer = TodoSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# class to perform PUT, PATCH and DELETE for updating and deleting todo records
-class TodoDetail(APIView):
-    """
-    Retrieve, update or delete a snippet instance.
-    """
-    @csrf_exempt
-    def get_object(self, pk):
+
+
+class CreateColor(View):
+    def  get(self, request):
+        nom_color = request.GET.get('nom_color', None)
+        codigo_color    = request.GET.get('codigo_color', None)
+        idEmpresa       = request.GET.get('empresaColor', None)
+        idUser          = request.GET.get('idUserColor', None)
+       # agregar empresa y usuario
+        print("idEmpresa:      >>>>",idEmpresa,idUser)
+        obj = Color.objects.create(
+            nom_color      = nom_color,
+            codigo_color   = codigo_color,
+            empresa_id     = idEmpresa,
+            usuario_id     = idUser,            
+        )
+        obj = Color.objects.latest('id')
+
+        
+
+
+        user = {'id':obj.id,'nom_color':obj.nom_color,'codigo_color':obj.codigo_color,'created_at':obj.created_at.strftime("%Y-%m-%d %H:%M:%S")}
+
+        data = {
+            'user': user
+        }
+        return JsonResponse(data)
+
+
+
+class DeleteColor(View):
+    def  get(self, request):
+        id1 = request.GET.get('id', None)
+        Color.objects.get(id=id1).delete()
+        data = {
+            'deleted': True
+        }
+        return JsonResponse(data)
+
+
+
+
+class UpdateColor(TemplateView):
+    def  get(self, request):        
+        idColor    = request.GET.get('idColor', None)
+        nom_color = request.GET.get('nom_color', None)
+        codigo_color    = request.GET.get('codigo_color', None)
+        idEmpresa       = request.GET.get('empresaUP', None)
+        idUser          = request.GET.get('idUserUP', None)
+              
+        obj = Color.objects.get(id=idColor)
+        obj.nom_color = nom_color
+        obj.codigo_color = codigo_color
+        obj.empresa_id = idEmpresa
+        obj.usuario_id = idUser
         try:
-            return Todo.objects.get(pk=pk)
-        except Snippet.DoesNotExist:
-            raise Http404
-    
-    @csrf_exempt
-    def get(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = TodoSerializer(snippet)
-        return Response(serializer.data)
-
-    # by default ZingGrid will send a /url/:id to update a whole row 
-    @csrf_exempt
-    def put(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = TodoSerializer(snippet, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    # by default ZingGrid will send a /url/:id to update a single cell 
-    @csrf_exempt
-    def patch(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = TodoSerializer(snippet, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    # by default ZingGrid will send a /url/:id to delete     
-    @csrf_exempt
-    def delete(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            obj.save()
+            return redirect('home')
+        except Exception as e:  print("reparar peo de cors header crsf token")
 
 
 

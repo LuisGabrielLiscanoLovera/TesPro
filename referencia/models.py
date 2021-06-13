@@ -2,7 +2,6 @@ from django.db import models
 from authapp.models import MyUser as User
 from empresa.models import Empresa
 # Create your models here.
-import django_tables2 as tables
 
 class Referencia(models.Model):
     usuario        = models.ForeignKey(User, related_name='Referencia', null=True, blank=True,on_delete=models.CASCADE)
@@ -20,16 +19,7 @@ class Referencia(models.Model):
             
         ]
     def __str__(self):
-        return '%s %s %s %s' % (self.id, self.nom_referencia, self.descripcion,self.created_at)
+        return '%s %s %s %s %s %s' % (self.id, self.nom_referencia, self.descripcion,self.created_at,self.usuario,self.empresa)
 
 
-class SimpleTable(tables.Table):
-    class Meta:
-        model = Referencia
 
-
-# Create your models here.
-class CrudUser(models.Model):
-    name = models.CharField(max_length=30, blank=True)
-    address = models.CharField(max_length=100, blank=True)
-    age = models.IntegerField(blank=True, null=True)

@@ -1,21 +1,6 @@
-{% load static %}
-<script src="{% static 'vendors/bootstrap/js/popper.js' %}"></script>
-<script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %}"></script>
-<!-- {% block title %}Django Ajax CRUD{% endblock %}
-id="user -->
-<link href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css" rel="stylesheet">
-
-<script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
-<script src="{% static 'js/bootstrap-table.js' %}"></script>
-
-
-<script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table-locale-all.min.js"></script>
-<script src="https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/export/bootstrap-table-export.min.js"></script>
-
-
-
 <div id="openModalPadre" class="modalDialogPadre">
-    <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>            
+    <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i>
+    </a>            
       <center>
         <h1>Referencias {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
       </center>
@@ -24,13 +9,11 @@ id="user -->
 
 
       
-      
-    <table id="table"
+    <table id="tableReferencia"
         data-locale="es-SP"
         class="table "
         data-toggle="table"
         data-click-to-select="true"
-        data-height="460"
         data-pagination="true"
         data-ajax="ajaxRequest"
         data-search="true"
@@ -77,15 +60,15 @@ id="user -->
     </div>  
 
 </div>  
-<style>
-
-
-</style>
-
 
 <div id="openModalHijo" class="modalDialogHijo">
+
+  
+
+
     <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>            
       <center>
+        
         <h1>Crear referencia {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
       </center>
       <div class="">
@@ -236,7 +219,7 @@ id="user -->
 
 <!-- editar -->
 <script>
-  var $table = $('#table')
+  var $table = $('#tableReferencia')
   var $buttonEd = $('#buttonEditar')
   
   

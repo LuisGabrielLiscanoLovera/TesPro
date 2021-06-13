@@ -1,17 +1,13 @@
+from django.urls import path
 
-from django.urls import include, path
-from rest_framework import routers
-from . import views
+from color.views import CreateColor,DeleteColor,UpdateColor
+from .views import colorList
 
-
-
-# Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    
-    # register todo get, post
-    path('todos', views.TodoList.as_view()),
-    # register todo put, patch delete
-    path('todos/<int:pk>', views.TodoDetail.as_view()),
-    #path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+
+    path('color-list/', colorList, name="color-list"),
+    path('color/crud/create/', CreateColor.as_view(), name='Color_ajax_create'),
+    path('color/crud/delete/', DeleteColor.as_view(), name='Color_ajax_delete'),
+    path('color/crud/Update/', UpdateColor.as_view(), name='Color_ajax_update'),
+   
 ]

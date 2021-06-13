@@ -27,20 +27,14 @@ urlpatterns = [
    
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     
-   # path('color/', include('color.urls')),
     path('tarea/', include('tarea.urls')),
     path('integrante/', include('integrante.urls')),
     path('patinador/', include('patinador.urls')),
     path('prenda/', include('prenda.urls')),
     path('casino/', include('casino.urls')),
-    
-    
-    
-
-
-
-    path('referencia/', include('referencia.urls')),
-
+ 
+    path('referencia/', include('referencia.urls')),#crud creado
+    path('color/', include('color.urls')),#crud creado....
 
     path('verjson/', views.verjson, name='verjson'),#tess
     path('zinggrid/', views.zinggrid, name='zinggrid'),

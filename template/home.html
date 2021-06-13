@@ -2,6 +2,15 @@
 {% load static %}
 
 {% block content %}
+<script src="{% static 'vendors/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %}"></script>
+<!-- {% block title %}Django Ajax CRUD{% endblock %}
+id="user -->
+<link href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css" rel="stylesheet">
+<script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
+<script src="{% static 'js/bootstrap-table.js' %}"></script>
+<script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table-locale-all.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/export/bootstrap-table-export.min.js"></script>
 
 <div class="mdc-layout-grid">
   <div class="mdc-layout-grid__inner">
@@ -69,11 +78,15 @@
       <div class="mdc-card info-card info-card--danger">
         <div class="card-inner">
           <h5 class="card-title">Colores</h5>
-          <h5 class="font-weight-light pb-2 mb-1 border-bottom">5000</h5>
+          <h5 class="font-weight-light pb-2 mb-1 border-bottom">{{"pass"}}</h5>
           <p class="tx-12 text-muted">55% target reached</p>
+          
           <div class="card-icon-wrapper">
-            <i class="material-icons">attach_money</i>
-          </div>
+            <a href="#openModalColor" class=" "> 
+            <i class="material-icons">trending_up</i>
+            </a > 
+        </div>
+       {% include "pages/color.html" %}
         </div>
       </div>
     </div>
@@ -88,24 +101,15 @@
       <div class="mdc-card info-card info-card--primary">
         <div class="card-inner">
           <h5 class="card-title">Referencias </h5>
-          <h5 class="font-weight-light pb-2 mb-1 border-bottom">{{ totalReferencia }}</h5>
+          <h5 class="font-weight-light pb-2 mb-1 border-bottom" >{{ totalReferencia }}</h5>
           <p class="tx-12 text-muted">87% target reached</p>
-           
-
           <div class="card-icon-wrapper">
-
-              <a href="#openModalPadre"> 
+              <a href="#openModalPadre" class=" "> 
               <i class="material-icons">trending_up</i>
               </a > 
           </div>
-        
-          {% include "pages/referencia.html" %} 
-          
-
-
-
-
-        </div> 
+         {% include "pages/referencia.html" %} 
+       </div> 
       </div>
     </div>
     
