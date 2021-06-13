@@ -201,6 +201,9 @@ id="user -->
                   </div>
                 </div>         
               
+                  
+
+                
                 <div class="modal-footer">              
                   <input type="number" hidden="True" name="empresaUP" value="{{ lastIdEmpresa }}">
                   <input type="number" hidden="True" name="idUserUP" value="{{ login_user_id}}">
@@ -254,7 +257,6 @@ var img2InputUP = $('input[name="img2UP"]').val().trim();
 var idEmpresaInputUP = $('input[name="empresaUP"]').val().trim();
 var idUserUP    = $('input[name="idUserUP"]').val().trim();
 
-alert(nom_referenciaInputUP,descripcionInputUP,img1InputUP,img2InputUP,idEmpresaInputUP,idUserUP);
 if (nom_referenciaInputUP && descripcionInputUP && img1InputUP && img2InputUP && idEmpresaInputUP && idUserUP && idss) {
     // Create Ajax Call
     $.ajax({
@@ -279,7 +281,7 @@ if (nom_referenciaInputUP && descripcionInputUP && img1InputUP && img2InputUP &&
     });
 
 } else {
-    alert("All fields must have a valid value.");
+    console.log("All fields must have a valid value.");
 }
 $('form#editReferencia').trigger("reset");
 return false;
