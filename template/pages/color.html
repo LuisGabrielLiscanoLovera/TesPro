@@ -48,6 +48,7 @@
         <thead>
           <tr>
             <th data-field="state" data-checkbox="true" class="bs-checkbox"></th>
+            <th data-field="id">N°-ID</th>
             <th data-field="nom_color">Nombre color</th>
             <th data-field="codigo_color">Codigo de color</th>
             <th data-field="created_at">Fecha Creada</th>
@@ -223,18 +224,34 @@
 </script>
 <!-- editar -->
  <script>
-  var $tableC = $('tableC')
-  var $buttonEd = $('#buttonEditarColor')
+
+var $tColor = $('tableC')
+var $bColor = $('#buttonEditarColor')
+
+$bColor.click(function () {
+  var ids = $.map($tColor.bootstrapTable('getSelections'), function (row) {
+    alert(row.id);
+    return row.id
+
+  })
+
+})  
+
+
+
+  /* var $EtColor = $('tableC')
+  var $BeColor = $('#buttonEditarColor')
   
     $(function() {
-    $buttonEd.click(function () {
-      var idsColor = $.map($tableC.bootstrapTable('getSelections'), function (row) {
-      var idssColor = row.id;
+    $BeColor.click(function () {
+      var idsColor     = $.map($EtColor.bootstrapTable('getSelections'), function (row) {
+      var idssColor    = row.id;
+      alert("maladra");
       
 $("form#editColor").submit(function() {
-var nom_colorInputUP = $('input[name="nom_colorUP"]').val().trim();
+var nom_colorInputUP    = $('input[name="nom_colorUP"]').val().trim();
 var codigo_colorInputUP = $('input[name="codigo_colorUP"]').val().trim();
-var idUserColorUP    = $('input[name="idUserColorUP"]').val().trim();
+var idUserColorUP       = $('input[name="idUserColorUP"]').val().trim();
 
 if (nom_colorInputUP && codigo_colorInputUP && idEmpresaColorInputUP && idUserColorUP && idssColor) {
     // Create Ajax Call
@@ -267,10 +284,9 @@ return false;
       
     })
   
-  })
+  }) */
   
 
-  var $buttonEcolor = $('#buttonEliminarColor')
 
   
 </script>
