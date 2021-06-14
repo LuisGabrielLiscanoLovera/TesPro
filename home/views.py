@@ -16,28 +16,21 @@ class Home(LoginRequiredMixin,TVB):
     def get_context_data(self, **kwargs):
         
         REU=RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)
-        rree=RelacionEmpresa.objects.all().filter(Usuario_id=self.request.user.pk).values('Empresa_id')
-        idUser=int(self.request.user.pk)        
         lastEm=CambioEmpres.objects.values('lastEm').last()
         idlastEmpresa=lastEm.get("lastEm")
         RE=Empresa.objects.filter(id=int(idlastEmpresa))
-        
         totalReferencia = Referencia.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
         totalColor      = Color.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
         totalIntegrante = Integrante.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
-        
-        
-        
         context = super(Home, self).get_context_data(**kwargs)        
         context['id']               = self.kwargs.get('id')
-        context['login_user_id']    = self.request.user.pk #--aqui se obtiene el user id
-        context['nomEmpresa']       = REU#nombre de todas las empresa
-        context['nomEmpresaU']      = RE#nombre de la empresa actual
-        context['lastIdEmpresa']    = int(idlastEmpresa)#ids empresas
-        context['totalReferencia']  = totalReferencia #total referencias
-        context['totalColor']  = totalColor #total color
-        context['totalIntegrante']  = totalIntegrante #total color
-        
+        context['login_user_id']    = self.request.user.pk  # aqui se obtiene el user id
+        context['nomEmpresa']       = REU                   # nombre de todas las empresa
+        context['nomEmpresaU']      = RE                    # nombre de la empresa actual
+        context['lastIdEmpresa']    = int(idlastEmpresa)    # ids empresas
+        context['totalReferencia']  = totalReferencia       # total referencias
+        context['totalColor']       = totalColor            # total color
+        context['totalIntegrante']  = totalIntegrante       # total color
         return context
 
 def cambioEmpresa(request):
