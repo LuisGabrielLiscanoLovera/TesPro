@@ -1,0 +1,401 @@
+<div id="openModalIntegrante" class="modalDialogPadre">
+    <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
+
+      <center>
+        <h1>Integrantes {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
+      </center>
+
+      
+     
+      
+
+      <table id="tableC"
+      data-toggle="table"
+      data-click-to-select="true"
+      data-pagination="true"
+      data-locale="es-SP"        
+      data-search="true"
+      data-search-text=""
+      data-page-size="5"
+      data-show-fullscreen="true"        
+      data-show-refresh="true"
+      data-row-style="rowStyle"
+      data-checkbox-header="false"
+      data-click-to-select="true"
+            >
+        <div class="row">
+          <div class="col-sm-2">
+          <a href="#openModalHijoIntegrante"> 
+              <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar </i>
+          </a>
+        </div>
+        
+       <!--  <div class="col-sm-2">
+          <div id="">
+            <button id="butEColor" class="btn btn-outline-warning icofont-ui-edit"><a href="#openModalHijoIntegranteDos">Editar</a> </button>
+          </div>
+        </div> -->
+
+        <div class="col-sm-2">
+          <div id="toolbar">
+            <button id="buttonEliminarIntegrante" class="btn btn-outline-danger icofont-ui-remove"> Eliminar</button>
+          </div>
+        </div>
+        </div>
+
+
+
+        <thead>
+          <tr>
+            <th data-field="state" data-checkbox="true" class="bs-checkbox"></th>
+            <th data-field="id">N°-ID</th>
+            <th data-field="nom_color">Nombre color</th>
+            <th data-field="codigo_color">Codigo de color</th>
+            <th data-field="created_at">Fecha Creada</th>
+          </tr>
+        </thead>
+
+
+      </table>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+   
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>  
+
+</div>  
+
+
+<div id="openModalHijoIntegrante" class="modalDialogHijo">
+    <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>            
+      <center>
+        <h1>Crear color {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
+      </center>
+      <div class="">
+        
+      <form id="addColor">
+        <div class="content p-3 mb-2 bg-dark text-white ">
+          <div class="border">
+            <div class="col-sm-3">
+            <div class="form-group">
+              <label for="modal_codigo_color">Nombre Color</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input class="form-control" type="text" name="nom_color" placeholder="Nombre color" required>
+              </div>
+            </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label for="codigo_color">Codigo color</label>
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="fa fa-user"></i>
+                  </span>
+                  <input class="form-control" type="number" name="codigo_color"  required>
+                </div>
+              </div>
+            </div>        
+           
+          
+            <div class="modal-footer">          
+              <input type="number" hidden="True" name="empresaColor" value="{{ lastIdEmpresa }}">
+              <input type="number" hidden="True" name="idUserColor" value="{{ login_user_id}}">  
+              <button class="btn btn-outline-primary form-" type="submit" onclick="location.href='/'">Guardar</button>
+            </div>
+          </div>
+        </div>
+     </div>
+    </form>
+   
+     
+  </div>
+</div>
+<!-- 
+<div id="openModalHijoIntegranteDos" class="modalDialogHijoDos">
+  <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>            
+    <center>
+      <h1>Editar color {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
+    </center>
+    
+      <div class="modal-dialo" role="document">
+        <form id="editColor">
+          <div class="content text-light bg-dark">
+            <div class="border">
+              
+                <div class="col-sm-3">
+                 
+                 
+                  <div class="form-group">
+                    <label for="modal_codigo_color">Nombre color</label>
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="fa fa-user"></i>
+                      </span>
+                      <input class="form-control" type="text" name="nomColorUp" placeholder="Nombre color" required>
+                    </div>
+                  </div>
+                
+                </div>                    
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="codigo_color">Codigo de color</label>
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="fa fa-user"></i>
+                      </span>
+                      <input class="form-control" type="number" name="codigocolorUP" min="10" max="100" placeholder="Codigo de color" required>
+                    </div>
+                  </div>
+                </div>
+          
+                  
+
+                
+                <div class="modal-footer">              
+                  <input type="number" hidden="True" name="empresaColorUP" value="{{ lastIdEmpresa }}">
+                  <input type="number" hidden="True" name="idUserColorUP" value="{{ login_user_id}}">
+                  <button class="btn btn-outline-primary form-" type="submit" onclick="location.href='/'">Guardar</button>
+                </div>
+              
+              
+            
+              
+            </div>
+            
+          </div>
+        </form>
+      </div>
+   
+      </div>
+</div>
+
+ -->
+
+
+
+
+
+
+
+
+
+{% block javascript %}
+
+<script>
+  $('#tableC').bootstrapTable({
+  url: 'color/color-list/',
+ 
+})
+</script>
+<!-- editar -->
+<!--  <script>
+
+var $tColor = $('#tableC')
+var $bColor = $('#butEColor')
+
+$bColor.click(function () {
+  var ids = $.map($tColor.bootstrapTable('getSelections'), function (row) {
+    let r=row.id
+    
+    
+  
+    
+    
+    $("form#editColor").submit(function() {
+    let nomcolorInputUP        = $('input[name="nomColorUp"]').val().trim();
+    let codigocolorInputUP     = $('input[name="codigocolorUP"]').val().trim();
+    let idUserColorUP          = $('input[name="idUserColorUP"]').val().trim();
+    let idEmpresaColorInputUP  = $('input[name="empresaColorUP"]').val().trim();
+   
+    if (nomcolorInputUP && codigocolorInputUP && idEmpresaColorInputUP && idUserColorUP && r) {
+    alert("pass");
+    $.ajax({
+        url: '{% url "Color_ajax_update" %}',
+        data: {
+            'idColor':r,
+            'nomColorUp': nomcolorInputUP,
+            'codigocolorUP': codigocolorInputUP,
+            'empresaColorUP':idEmpresaColorInputUP,
+            'idUserColorUP':idUserColorUP
+            
+            
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.editMsj) {
+              alert("passsssssssssssssssssssssssssssssss");
+            }
+        }
+    });
+
+} else {
+    console.log("All fields must have a valid value.");
+}
+
+ 
+    
+    })
+    return r
+
+  })
+
+})  
+
+  /* var $EtColor = $('tableC')
+  var $BeColor = $('#butEColor')
+  
+    $(function() {
+    $BeColor.click(function () {
+    var idsColor     = $.map($EtColor.bootstrapTable('getSelections'), function (row) {
+    var idssColor    = row.id;
+    
+    alert("maladra");
+    $("form#editColor").submit(function() {
+    var nom_colorInputUP    = $('input[name="nomColorUp"]').val().trim();
+    var codigocolorInputUP = $('input[name="codigocolorUP"]').val().trim();
+    var idUserColorUP       = $('input[name="idUserColorUP"]').val().trim();
+
+if (nom_colorInputUP && codigocolorInputUP && idEmpresaColorInputUP && idUserColorUP && idssColor) {
+    // Create Ajax Call
+    $.ajax({
+        url: '{% url "Color_ajax_update" %}',
+        data: {
+            'idColor':idssColor,
+            'nomColorUp': nom_colorInputUP,
+            'codigocolorUP': codigocolorInputUP
+            'empresaColorUP':idEmpresaColorInputP,
+            'idUserColorUP':idUserColorUP
+            
+            
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.editMsj) {
+              alert("passsssssssssssssssssssssssssssssss");
+            }
+        }
+    });
+
+} else {
+    console.log("All fields must have a valid value.");
+}
+$('form#editColor').trigger("reset");
+return false;
+});      
+      })
+      
+    })
+  
+  }) */
+  
+
+
+  
+</script> -->
+
+<script type="text/javascript">
+  var $tColor = $('#tableC'),
+      $bColor = $('#buttonEliminarIntegrante');
+
+  $(function () {
+      $bColor.click(function () {
+        var ids = $.map($tColor.bootstrapTable('getSelections'), function (row) {
+          $.ajax({
+            url: '{% url "Color_ajax_delete" %}',
+            data: {
+                'id': row.id,
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log("borrado")
+            }
+            });
+        return row.id
+      })
+      $tColor.bootstrapTable('remove', {
+        field: 'id',
+        values: ids
+      })
+        
+      });
+  });
+</script>
+
+
+<script>
+ 
+ 
+  $("form#addColor").submit(function() {
+
+
+var nom_colorInput = $('input[name="nom_color"]').val().trim();
+var codigo_colorInput = $('input[name="codigo_color"]').val().trim();
+var idEmpresaColorInput = $('input[name="empresaColor"]').val().trim();
+var idUserColor   = $('input[name="idUserColor"]').val().trim();
+if (nom_colorInput && codigo_colorInput &&  idEmpresaColorInput && idUserColor) {
+    // Create Ajax Call
+    $.ajax({
+        url: '{% url "Color_ajax_create" %}',
+        data: {
+            
+            'nom_color': nom_colorInput,
+            'codigo_color': codigo_colorInput,
+            'empresaColor':idEmpresaColorInput,
+            'idUserColor':idUserColor
+            
+            
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.user) {
+              appendToUsrTable(data.user);
+            }
+        }
+    });
+
+} else {
+    alert("All fields must have a valid value.");
+}
+$('form#addColor').trigger("reset");
+return false;
+});
+
+
+    </script> 
+    {% endblock javascript %}
+ 

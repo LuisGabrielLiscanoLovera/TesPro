@@ -502,7 +502,7 @@
 			<div class="mdc-top-app-bar__row">
 			  <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
 				<button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
-				<span class="mdc-top-app-bar__title">				 
+				<span class="mdc-top-app-bar__title title ">				 
 					{% for i in nomEmpresaU %}
 					      {{ i }}
 					{% endfor %}
@@ -520,7 +520,7 @@
 						
 					  <img src="{% static 'images/faces/face9.jpg' %}" alt="user" class="user">
 					  </span>
-					  <span class="user-name">{{ request.user.first_name }} {{ request.user.last_name }}     </span>
+					  <span class="user-name">{{ request.user.first_name }} {{ request.user.last_name }}</span>
 				   </button>
 	
 				  <div class="mdc-menu mdc-menu-surface" tabindex="-1">

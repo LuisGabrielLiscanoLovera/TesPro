@@ -1,5 +1,6 @@
 from referencia.models import Referencia
 from color.models import Color
+from integrante.models import Integrante
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.views.generic.base import TemplateView as TVB
@@ -23,6 +24,8 @@ class Home(LoginRequiredMixin,TVB):
         
         totalReferencia = Referencia.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
         totalColor      = Color.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
+        totalIntegrante = Integrante.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
+        
         
         
         context = super(Home, self).get_context_data(**kwargs)        
@@ -31,8 +34,9 @@ class Home(LoginRequiredMixin,TVB):
         context['nomEmpresa']       = REU#nombre de todas las empresa
         context['nomEmpresaU']      = RE#nombre de la empresa actual
         context['lastIdEmpresa']    = int(idlastEmpresa)#ids empresas
-        context['totalReferencia']  = totalReferencia #total de referencias
-        context['totalColor']  = totalColor #total de referencias
+        context['totalReferencia']  = totalReferencia #total referencias
+        context['totalColor']  = totalColor #total color
+        context['totalIntegrante']  = totalIntegrante #total color
         
         return context
 
