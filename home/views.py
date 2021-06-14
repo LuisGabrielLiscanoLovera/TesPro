@@ -1,4 +1,5 @@
 from referencia.models import Referencia
+from color.models import Color
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.views.generic.base import TemplateView as TVB
@@ -17,17 +18,22 @@ class Home(LoginRequiredMixin,TVB):
         rree=RelacionEmpresa.objects.all().filter(Usuario_id=self.request.user.pk).values('Empresa_id')
         idUser=int(self.request.user.pk)        
         lastEm=CambioEmpres.objects.values('lastEm').last()
+        idlastEmpresa=lastEm.get("lastEm")
+        RE=Empresa.objects.filter(id=int(idlastEmpresa))
         
-        RE=Empresa.objects.filter(id=lastEm.get("lastEm"))
-        totalReferencia = Referencia.objects.all().filter(empresa_id=lastEm.get("lastEm")).count()
+        totalReferencia = Referencia.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
+        totalColor      = Color.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
+        
         
         context = super(Home, self).get_context_data(**kwargs)        
-        context['id']            = self.kwargs.get('id')
-        context['login_user_id'] = self.request.user.pk #--aqui se obtiene el user id
-        context['nomEmpresa']    = REU#nombre de todas las empresa
-        context['nomEmpresaU']   = RE#nombre de la empresa actual
-        context['lastIdEmpresa'] = lastEm.get("lastEm")#ids empresas
-        context['totalReferencia'] = totalReferencia #total de referencias
+        context['id']               = self.kwargs.get('id')
+        context['login_user_id']    = self.request.user.pk #--aqui se obtiene el user id
+        context['nomEmpresa']       = REU#nombre de todas las empresa
+        context['nomEmpresaU']      = RE#nombre de la empresa actual
+        context['lastIdEmpresa']    = int(idlastEmpresa)#ids empresas
+        context['totalReferencia']  = totalReferencia #total de referencias
+        context['totalColor']  = totalColor #total de referencias
+        
         return context
 
 def cambioEmpresa(request):

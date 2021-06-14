@@ -30,11 +30,11 @@
           </a>
         </div>
         
-        <div class="col-sm-2">
+       <!--  <div class="col-sm-2">
           <div id="">
-            <button id="buttonEditarColor" class="btn btn-outline-warning icofont-ui-edit"><a href="#openModalHijoColorDos">Editar</a> </button>
+            <button id="butEColor" class="btn btn-outline-warning icofont-ui-edit"><a href="#openModalHijoColorDos">Editar</a> </button>
           </div>
-        </div>
+        </div> -->
 
         <div class="col-sm-2">
           <div id="toolbar">
@@ -135,7 +135,7 @@
             <div class="modal-footer">          
               <input type="number" hidden="True" name="empresaColor" value="{{ lastIdEmpresa }}">
               <input type="number" hidden="True" name="idUserColor" value="{{ login_user_id}}">  
-              <button class="btn btn-outline-primary form-control" type="submit" onclick="location.href='/'">Guardar</button>
+              <button class="btn btn-outline-primary form-" type="submit" onclick="location.href='/'">Guardar</button>
             </div>
           </div>
         </div>
@@ -145,7 +145,7 @@
      
   </div>
 </div>
-
+<!-- 
 <div id="openModalHijoColorDos" class="modalDialogHijoDos">
   <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>            
     <center>
@@ -166,7 +166,7 @@
                       <span class="input-group-addon">
                         <i class="fa fa-user"></i>
                       </span>
-                      <input class="form-control" type="text" name="nom_colorUP" placeholder="Nombre color" required>
+                      <input class="form-control" type="text" name="nomColorUp" placeholder="Nombre color" required>
                     </div>
                   </div>
                 
@@ -178,7 +178,7 @@
                       <span class="input-group-addon">
                         <i class="fa fa-user"></i>
                       </span>
-                      <input class="form-control" type="text" name="codigo_colorUP" min="10" max="100" placeholder="Codigo de color" required>
+                      <input class="form-control" type="number" name="codigocolorUP" min="10" max="100" placeholder="Codigo de color" required>
                     </div>
                   </div>
                 </div>
@@ -189,7 +189,7 @@
                 <div class="modal-footer">              
                   <input type="number" hidden="True" name="empresaColorUP" value="{{ lastIdEmpresa }}">
                   <input type="number" hidden="True" name="idUserColorUP" value="{{ login_user_id}}">
-                  <button class="btn btn-outline-primary form-control" type="submit" onclick="location.href='/'">Guardar</button>
+                  <button class="btn btn-outline-primary form-" type="submit" onclick="location.href='/'">Guardar</button>
                 </div>
               
               
@@ -204,7 +204,7 @@
       </div>
 </div>
 
-
+ -->
 
 
 
@@ -223,45 +223,82 @@
 })
 </script>
 <!-- editar -->
- <script>
+<!--  <script>
 
-var $tColor = $('tableC')
-var $bColor = $('#buttonEditarColor')
+var $tColor = $('#tableC')
+var $bColor = $('#butEColor')
 
 $bColor.click(function () {
   var ids = $.map($tColor.bootstrapTable('getSelections'), function (row) {
-    alert(row.id);
-    return row.id
+    let r=row.id
+    
+    
+  
+    
+    
+    $("form#editColor").submit(function() {
+    let nomcolorInputUP        = $('input[name="nomColorUp"]').val().trim();
+    let codigocolorInputUP     = $('input[name="codigocolorUP"]').val().trim();
+    let idUserColorUP          = $('input[name="idUserColorUP"]').val().trim();
+    let idEmpresaColorInputUP  = $('input[name="empresaColorUP"]').val().trim();
+   
+    if (nomcolorInputUP && codigocolorInputUP && idEmpresaColorInputUP && idUserColorUP && r) {
+    alert("pass");
+    $.ajax({
+        url: '{% url "Color_ajax_update" %}',
+        data: {
+            'idColor':r,
+            'nomColorUp': nomcolorInputUP,
+            'codigocolorUP': codigocolorInputUP,
+            'empresaColorUP':idEmpresaColorInputUP,
+            'idUserColorUP':idUserColorUP
+            
+            
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.editMsj) {
+              alert("passsssssssssssssssssssssssssssssss");
+            }
+        }
+    });
+
+} else {
+    console.log("All fields must have a valid value.");
+}
+
+ 
+    
+    })
+    return r
 
   })
 
 })  
 
-
-
   /* var $EtColor = $('tableC')
-  var $BeColor = $('#buttonEditarColor')
+  var $BeColor = $('#butEColor')
   
     $(function() {
     $BeColor.click(function () {
-      var idsColor     = $.map($EtColor.bootstrapTable('getSelections'), function (row) {
-      var idssColor    = row.id;
-      alert("maladra");
-      
-$("form#editColor").submit(function() {
-var nom_colorInputUP    = $('input[name="nom_colorUP"]').val().trim();
-var codigo_colorInputUP = $('input[name="codigo_colorUP"]').val().trim();
-var idUserColorUP       = $('input[name="idUserColorUP"]').val().trim();
+    var idsColor     = $.map($EtColor.bootstrapTable('getSelections'), function (row) {
+    var idssColor    = row.id;
+    
+    alert("maladra");
+    $("form#editColor").submit(function() {
+    var nom_colorInputUP    = $('input[name="nomColorUp"]').val().trim();
+    var codigocolorInputUP = $('input[name="codigocolorUP"]').val().trim();
+    var idUserColorUP       = $('input[name="idUserColorUP"]').val().trim();
 
-if (nom_colorInputUP && codigo_colorInputUP && idEmpresaColorInputUP && idUserColorUP && idssColor) {
+if (nom_colorInputUP && codigocolorInputUP && idEmpresaColorInputUP && idUserColorUP && idssColor) {
     // Create Ajax Call
     $.ajax({
         url: '{% url "Color_ajax_update" %}',
         data: {
             'idColor':idssColor,
-            'nom_colorUP': nom_colorInputUP,
-            'codigo_colorUP': codigo_colorInputUP,
-            'empresaColorUP':idEmpresaColorInputUP,
+            'nomColorUp': nom_colorInputUP,
+            'codigocolorUP': codigocolorInputUP
+            'empresaColorUP':idEmpresaColorInputP,
             'idUserColorUP':idUserColorUP
             
             
@@ -289,7 +326,7 @@ return false;
 
 
   
-</script>
+</script> -->
 
 <script type="text/javascript">
   var $tColor = $('#tableC'),
