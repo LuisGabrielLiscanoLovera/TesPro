@@ -1,11 +1,11 @@
 from django.urls import path
-from . import views
+from integrante.views import CreateIntegrante,DeleteIntegrante,UpdateIntegrante
+from .views import integranteList
 
 urlpatterns = [
-	path('', views.apiOverview, name="api-overview"),
-	path('integrante-list/', views.integranteList, name="integrante-list"),
-	path('integrante-detail/<str:pk>/', views.integranteDetail, name="integrante-detail"),
-	path('integrante-create/', views.integranteCreate, name="integrante-create"),
-	path('integrante-update/<str:pk>/', views.integranteUpdate, name="integrante-update"),
-	path('integrante-delete/<str:pk>/', views.integranteDelete, name="integrante-delete"),
+    path('integrante-list/', integranteList, name="integrante-list"),
+    path('integrante/crud/create/', CreateIntegrante.as_view(), name='Integrante_ajax_create'),
+    path('integrante/crud/delete/', DeleteIntegrante.as_view(), name='Integrante_ajax_delete'),
+    path('integrante/crud/Update/', UpdateIntegrante.as_view(), name='Integrante_ajax_update'),
+
 ]

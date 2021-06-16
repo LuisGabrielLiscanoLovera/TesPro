@@ -23,23 +23,18 @@ urlpatterns = [
     path('Acumulado/', Acumulado.as_view(), name='Acumulado'),
     path('Despacho/', Despacho.as_view(), name='Despacho'),
     path('Xtarea/', Xtarea.as_view(), name='Xtarea'),
-    #apis rest-framework urls
+    
    
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')), #apis rest-framework urls
     
     path('tarea/', include('tarea.urls')),
-    path('integrante/', include('integrante.urls')),
+    
     path('patinador/', include('patinador.urls')),
     path('prenda/', include('prenda.urls')),
     path('casino/', include('casino.urls')),
- 
-    path('referencia/', include('referencia.urls')),#crud creado
-    path('color/', include('color.urls')),#crud creado....
-
-    path('verjson/', views.verjson, name='verjson'),#tess
-    path('zinggrid/', views.zinggrid, name='zinggrid'),
-    path('panda/', include('color.urls')),
-  
-    path('cambioEmpresa/',cambioEmpresa, name='cambioEmpresa'),
-     
+    
+    path('integrante/', include('integrante.urls')),
+    path('referencia/', include('referencia.urls')),            #crud creado
+    path('color/', include('color.urls')),                      #crud creado.    
+    path('cambioEmpresa/',cambioEmpresa, name='cambioEmpresa'), #listo    
      ]
