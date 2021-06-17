@@ -18,6 +18,7 @@ class Home(LoginRequiredMixin,TVB):
         REU=RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)
         lastEm=CambioEmpres.objects.values('lastEm').last()
         idlastEmpresa=lastEm.get("lastEm")
+        #manejar el error  de last id
         RE=Empresa.objects.filter(id=int(idlastEmpresa))
         totalReferencia = Referencia.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
         totalColor      = Color.objects.all().filter(empresa_id=int(idlastEmpresa)).count()

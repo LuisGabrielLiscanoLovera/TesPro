@@ -1,3 +1,8 @@
+{% load static %}
+<script  src="{% static 'js/bootstrap-table-auto-refresh.js' %}"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+
 <div id="openModalIntegrante" class="modalDialogPadre">
   <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
     
@@ -5,9 +10,17 @@
       <h1>Integrantes de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
     </center> 
     
-    
+<!--
+
+data-show-refresh="true"
+data-auto-refresh="true"
+data-auto-refresh-interval="30"
+data-auto-refresh-silent="true"
+data-auto-refresh-status="true"
+-->    
 <table
 id="table"
+data-id-field="id"
 class="table"
 data-toggle="table"
 data-height="460"
@@ -17,7 +30,10 @@ data-detail-view-icon="false"
 data-show-columns="true"
 data-search="true"
 data-show-fullscreen="true"        
-data-show-refresh="true"
+
+
+
+data-always-use-formatter="true"
 data-show-export="true" 
 data-locale="es-SP"
 data-pagination="true"
@@ -65,7 +81,7 @@ function DetailFormatterButInfo(index, row) {
          '<br>Estatus   :'+row.estatus
 }
 function DetailFormatterButAccion(index,row){
-  return row.id+'<button onclick="remove('+row.id+')"  id="buttonEliminarIntegrante" class="btn btn-outline-danger icofont-ui-remove"> Eliminar</button>';
+  return '<button onclick="remove('+row.id+')"  id="buttonEliminarIntegrante" class="btn btn-outline-danger icofont-ui-remove"> Eliminar</button>';
 }
 </script>
 
@@ -305,8 +321,9 @@ return false;
 
 
 <script>
-$bIntegrante = $('#buttonEliminarIntegrante');
-function remove (idIntegrante) {
+ function remove (idIntegrante) {
+
+
   $.ajax({
             url: '{% url "Integrante_ajax_delete" %}',
             data: {
@@ -314,7 +331,11 @@ function remove (idIntegrante) {
             },
             dataType: 'json',
             success: function (data) {
-                alert("borrado")
+           
+              window.location.reload();
+
+
+              
             }
             });
 }
