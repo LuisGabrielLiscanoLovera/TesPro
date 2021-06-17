@@ -12,13 +12,12 @@ class Integrante(models.Model):
     estatus    = models.CharField(max_length=1,choices=ESTATUS)
     nombres    = models.CharField(max_length=30)
     apellidos  = models.CharField(max_length=30)
-    sexo       = models.CharField(max_length=1,choices=SEXO)
-   
+    sexo       = models.CharField(max_length=1,choices=SEXO)   
     correo     = models.EmailField('Correo')
     cedula     = models.IntegerField(blank=True, null=True,unique=True)
     num_telf   = models.IntegerField(blank=True, null=True)
-    direccion  = models.CharField(max_length=150)
-    abilidad   = models.CharField(max_length=30)
+    direccion  = models.CharField(max_length=250)
+    abilidad   = models.CharField(max_length=350)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

@@ -29,7 +29,6 @@ def integranteList(request):
     lastEm=CambioEmpres.objects.values('lastEm').last().get("lastEm")
     integrante = Integrante.objects.all().filter(empresa_id=lastEm).order_by('-id')
     serializer = IntegranteSerializer(integrante, many=True)
-    print(serializer.data)
     return Response(serializer.data)
 
     #return JsonResponse({'data':dt})
@@ -39,6 +38,7 @@ def integranteList(request):
 
 
 class CreateIntegrante(View):
+    
     def  get(self, request):       
         idEmpresa        = request.GET.get('idEmpresa', None)
         idUser           = request.GET.get('idUser', None)
@@ -52,19 +52,20 @@ class CreateIntegrante(View):
         direccion        = request.GET.get('direccion', None)
         abilidad         = request.GET.get('abilidad', None)
   
-        print("idEmpresa:      >>>>",idEmpresa,idUser)
+        print("idEmpresa:      >>>>",idEmpresa,idUser,apellido,sexo,estatus,correo,cedula,num_telf,direccion,abilidad)
+        
         obj = Integrante.objects.create(
-            empresa_id  = idEmpresa,
-            usuario_id  = idUser,
-            nombres     = nombres, 
-            apellido    = apellido, 
-            sexo        = sexo, 
-            estatus     = estatus, 
-            correo      = correo, 
-            cedula      = cedula, 
-            num_telf    = num_telf, 
-            direccion   = direccion, 
-            abilidad    = abilidad, 
+            empresa_id   = idEmpresa,
+            usuario_id   = idUser,
+            nombres      = nombres, 
+            apellidos    = apellido, 
+            sexo         = sexo, 
+            estatus      = estatus, 
+            correo       = correo, 
+            cedula       = cedula, 
+            abilidad     = abilidad,
+            num_telf     = num_telf, 
+            direccion    = direccion, 
               
         )
   

@@ -33,7 +33,7 @@ data-url="integrante/integrante-list/">
 <thead>
   <tr>
     
-    <th data-field="nombres" data-detail-formatter="cedulaDetailFormatter">Nombres</th>
+    <th data-field="nombres" data-detail-formatter="DetailFormatterButnNombre">Nombres</th>
     <th data-field="apellidos">Apellidos</th>
     <th data-field="cedula"   >Cedula</th>
     <th data-field="num_telf" >Telefono</th>
@@ -55,9 +55,9 @@ data-url="integrante/integrante-list/">
 <script>
 
 
-function cedulaDetailFormatter(index, row) {
-  //return index + 'correo  ' + row.correo
 
+function DetailFormatterButnNombre(index, row) {
+//crea y renderiza la tabla
   return '<br>Correo    :'+row.correo+
          '<br>Sexo      :'+row.sexo+
          '<br>Abilidad  :'+row.abilidad+
@@ -65,7 +65,9 @@ function cedulaDetailFormatter(index, row) {
          '<br>Estatus   :'+row.estatus
 }
 </script>
-      
+
+
+
 </div>  
   
 </div>
@@ -81,7 +83,7 @@ function cedulaDetailFormatter(index, row) {
 
 
     
-    <form id="addColor">
+    <form id="addIntegrante">
       <div class=" content p-3 mb-2 bg-dar text-white "  rows="3"  >
         <div class="border">
           <center>
@@ -91,7 +93,7 @@ function cedulaDetailFormatter(index, row) {
       
           <div class="col-sm-12">
           <div class="form-group">
-            <label for="modal_codigo_color">Nombres </label>
+            <label >Nombres </label>
             <div class="input-group">
               <span class="input-group-addon">
                 <i class="fa fa-user"></i>
@@ -103,7 +105,7 @@ function cedulaDetailFormatter(index, row) {
           
           <div class="col-sm-12">
             <div class="form-group">
-              <label for="codigo_color">Apellido</label>
+              <label >Apellido</label>
               <div class="input-group">
                 <span class="input-group-addon">
                   <i class="fa fa-user"></i>
@@ -116,7 +118,7 @@ function cedulaDetailFormatter(index, row) {
 
           <div class="col-sm-12">
             <div class="form-group">
-              <label for="codigo_color">Cedula</label>
+              <label >Cedula</label>
               <div class="input-group">
                 <span class="input-group-addon">
                   <i class="fa fa-user"></i>
@@ -129,7 +131,7 @@ function cedulaDetailFormatter(index, row) {
 
           <div class="col-sm-12">
             <div class="form-group">
-              <label for="codigo_color">Telefono</label>
+              <label>Telefono</label>
               <div class="input-group">
                 <span class="input-group-addon">
                   <i class="fa fa-user"></i>
@@ -142,7 +144,7 @@ function cedulaDetailFormatter(index, row) {
 
           <div class="col-sm-12">
             <div class="form-group">
-              <label for="codigo_color">Correo</label>
+              <label >Correo</label>
               <div class="input-group">
                 <span class="input-group-addon">
                   <i class="fa fa-user"></i>
@@ -152,9 +154,35 @@ function cedulaDetailFormatter(index, row) {
             </div>
           </div>        
          
+
           <div class="col-sm-12">
             <div class="form-group">
-              <label for="codigo_color">Sexo</label>
+              <label >Direccion</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input class="form-control" placeholder="direccion" type="text" name="direccion"  required>
+              </div>
+            </div>
+          </div>    
+
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label >Abilidad</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input class="form-control" placeholder="abilidad" type="text" name="abilidad"  required>
+              </div>
+            </div>
+          </div>    
+
+
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label >Sexo</label>
               <div class="input-group">
                 <span class="input-group-addon">
                   <i class="fa fa-user"></i>
@@ -165,38 +193,27 @@ function cedulaDetailFormatter(index, row) {
           </div>        
          
 
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label for="codigo_color">Direccion</label>
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                <input class="form-control" placeholder="direccion" type="text" name="direccion"  required>
-              </div>
-            </div>
-          </div>        
+              
          
 
 
           <div class="col-sm-12">
             <div class="form-group">
-              <label for="codigo_color">Estatus</label>
+              <label for="apellidos">Estatus</label>
               <div class="input-group">
                 <span class="input-group-addon">
                   <i class="fa fa-user"></i>
                 </span>
-                <input class="form-control" placeholder="direccion" type="text" name="estatus"  required>
+                <input class="form-control" placeholder="estatus" type="text" name="estatus"  required>
               </div>
             </div>
           </div>        
-         
-
+    
 
 
           <div class="modal-footer">          
             <input type="number" hidden="True" name="empresaColor" value="{{ lastIdEmpresa }}">
-            <input type="number" hidden="True" name="idUserColor" value="{{ login_user_id}}">  
+            <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">  
             <button class="btn btn-outline-primary form-" type="submit" onclick="location.href='/'">Guardar</button>
           </div>
         </div>
@@ -206,6 +223,65 @@ function cedulaDetailFormatter(index, row) {
  
   
   
+  <!--create integrante-->
+<script>
+  $("form#addIntegrante").submit(function() { 
+
+
+var nombresInput      = $('input[name="nombres"]').val().trim();
+var sexo              = $('input[name="sexo"]').val().trim();
+var apellidos         = $('input[name="apellidos"]').val().trim();
+var cedula            = $('input[name="cedula"]').val().trim();
+var num_telefono      = $('input[name="num_telf"]').val().trim();
+var correo            = $('input[name="correo"]').val().trim();
+var direccion         = $('input[name="direccion"]').val().trim();
+var abilidad          = $('input[name="abilidad"]').val().trim();
+var estatus           = $('input[name="estatus"]').val().trim();
+var idEmpresa         = $('input[name="empresaColor"]').val().trim();
+var idUser            = $('input[name="idUser"]').val().trim();
+if (nombresInput && apellidos && cedula &&
+   sexo && num_telefono && correo &&  direccion && 
+   abilidad  && estatus && idEmpresa && idUser 
+    ) {
+    // Create Ajax Call
+    $.ajax({
+        url: '{% url "Integrante_ajax_create" %}',
+        data: {
+            
+            'nomIntegrante'     : nombresInput,
+            'apeIntegrante'     : apellidos,
+            'sexo'              : sexo,
+            'cedula'            : cedula,
+            'num_telefono'      : num_telefono,
+            'correo'            : correo,
+            'direccion'         : direccion,
+            'abilidad'          : abilidad,
+            'estatus'           : estatus,
+            'idEmpresa'         : idEmpresa,
+            'idUser'            : idUser
+            
+
+
+            
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.user) {
+              appendToUsrTable(data.user);
+            }
+        }
+    });
+
+} else {
+    alert("All fields must have a valid value.");
+}
+$('form#addIntegrante').trigger("reset");
+return false;
+});
+
+
+</script>
+
+
   
-  
-  </div>
+</div>

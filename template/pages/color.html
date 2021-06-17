@@ -359,13 +359,11 @@ return false;
 
 
 <script>
- 
- 
-  $("form#addColor").submit(function() {
+$("form#addColor").submit(function() {
 
 
-var nom_colorInput = $('input[name="nom_color"]').val().trim();
-var codigo_colorInput = $('input[name="codigo_color"]').val().trim();
+var nom_colorInput      = $('input[name="nom_color"]').val().trim();
+var codigo_colorInput   = $('input[name="codigo_color"]').val().trim();
 var idEmpresaColorInput = $('input[name="empresaColor"]').val().trim();
 var idUserColor   = $('input[name="idUserColor"]').val().trim();
 if (nom_colorInput && codigo_colorInput &&  idEmpresaColorInput && idUserColor) {
@@ -374,10 +372,10 @@ if (nom_colorInput && codigo_colorInput &&  idEmpresaColorInput && idUserColor) 
         url: '{% url "Color_ajax_create" %}',
         data: {
             
-            'nom_color': nom_colorInput,
+            'nom_color'   : nom_colorInput,
             'codigo_color': codigo_colorInput,
-            'empresaColor':idEmpresaColorInput,
-            'idUserColor':idUserColor
+            'empresaColor': idEmpresaColorInput,
+            'idUserColor' : idUserColor
             
             
         },
