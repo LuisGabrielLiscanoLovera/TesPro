@@ -187,7 +187,12 @@ function DetailFormatterButnNombre(index, row) {
                 <span class="input-group-addon">
                   <i class="fa fa-user"></i>
                 </span>
-                <input class="form-control" type="text" name="sexo" placeholder="Sexo" required>
+                <select class="form-control" id="sexo">
+                  <option value="select">Select estado</option>
+                  <option value="H">Hombre</option>
+                  <option value="M">Mujer</option>
+                  <option value="O">Otro</option>
+                </select>
               </div>
             </div>
           </div>        
@@ -239,7 +244,7 @@ function DetailFormatterButnNombre(index, row) {
 
 
 var nombresInput      = $('input[name="nombres"]').val().trim();
-var sexo              = $('input[name="sexo"]').val().trim();
+var sexo              = document.getElementById("sexo").value;
 var apellidos         = $('input[name="apellidos"]').val().trim();
 var cedula            = $('input[name="cedula"]').val().trim();
 var num_telefono      = $('input[name="num_telf"]').val().trim();
