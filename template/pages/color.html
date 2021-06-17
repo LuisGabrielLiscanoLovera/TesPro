@@ -100,15 +100,16 @@
 
 <div id="openModalHijoColor" class="modalDialogHijo">
     <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>            
-      <center>
-        <h1>Crear color {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
-      </center>
       <div class="">
         
       <form id="addColor">
-        <div class="content p-3 mb-2 bg-dark text-white ">
+        <div class="content p-3 mb-2 bg-dar text-white ">
           <div class="border">
-            <div class="col-sm-3">
+            <center>
+              <h1>Crear color {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
+            </center>
+         
+            <div class="col-sm-12">
             <div class="form-group">
               <label for="modal_codigo_color">Nombre Color</label>
               <div class="input-group">
@@ -119,7 +120,7 @@
               </div>
             </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-12">
               <div class="form-group">
                 <label for="codigo_color">Codigo color</label>
                 <div class="input-group">
@@ -157,7 +158,7 @@
           <div class="content text-light bg-dark">
             <div class="border">
               
-                <div class="col-sm-3">
+                <div class="col-sm-12">
                  
                  
                   <div class="form-group">
@@ -171,7 +172,7 @@
                   </div>
                 
                 </div>                    
-                <div class="col-sm-3">
+                <div class="col-sm-12">
                   <div class="form-group">
                     <label for="codigo_color">Codigo de color</label>
                     <div class="input-group">

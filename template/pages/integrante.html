@@ -3,7 +3,9 @@
     
     <center>
       <h1>Integrantes de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
-    </center>     
+    </center> 
+    
+    
 <table
 id="table"
 
@@ -19,21 +21,35 @@ data-show-fullscreen="true"
 data-show-refresh="true"
 data-show-export="true" 
 data-locale="es-SP"
+data-pagination="true"
+
 data-url="integrante/integrante-list/">
+<div class="row">
+  <div class="col-sm-2">
+    <a href="#openModalHijoAddIntegrante"> 
+      <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar </i>
+  </a>
+</div>
 <thead>
   <tr>
-  
     
-    <th data-field="nombres" data-detail-formatter="cedulaDetailFormatter">
-        
-  Nombres</th>
+    <th data-field="nombres" data-detail-formatter="cedulaDetailFormatter">Nombres</th>
     <th data-field="apellidos">Apellidos</th>
-    <th data-field="cedula" >Cedula</th>
+    <th data-field="cedula"   >Cedula</th>
     <th data-field="num_telf" >Telefono</th>
 
   </tr>
 </thead>
 </table>
+
+
+
+
+
+
+
+
+
 
 <script>
 
@@ -55,3 +71,140 @@ function cedulaDetailFormatter(index, row) {
 
 
 
+
+<div id="openModalHijoAddIntegrante" class="modalDialogHijo">
+  <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>            
+ 
+
+
+
+
+    
+    <form id="addColor">
+      <div class=" content p-3 mb-2 bg-dar text-white "  rows="3"  >
+        <div class="border">
+          <center>
+            <h1>Agregar nuevo integrante de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
+          </center>
+        
+      
+          <div class="col-sm-12">
+          <div class="form-group">
+            <label for="modal_codigo_color">Nombres </label>
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-user"></i>
+              </span>
+              <input class="form-control" type="text" name="nombres" placeholder="Nombres" required>
+            </div>
+          </div>
+          </div>
+          
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="codigo_color">Apellido</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input class="form-control" type="text" name="apellidos"  placeholder="apellidos" required>
+              </div>
+            </div>
+          </div>        
+         
+
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="codigo_color">Cedula</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input class="form-control" type="text" name="cedula" placeholder="Cedula de identidad" required>
+              </div>
+            </div>
+          </div>        
+         
+
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="codigo_color">Telefono</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input class="form-control" type="text" name="num_telf" placeholder="N° Telefono" required>
+              </div>
+            </div>
+          </div>        
+         
+
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="codigo_color">Correo</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input class="form-control" type="email" name="correo" placeholder="correo"  required>
+              </div>
+            </div>
+          </div>        
+         
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="codigo_color">Sexo</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input class="form-control" type="text" name="sexo" placeholder="Sexo" required>
+              </div>
+            </div>
+          </div>        
+         
+
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="codigo_color">Direccion</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input class="form-control" placeholder="direccion" type="text" name="direccion"  required>
+              </div>
+            </div>
+          </div>        
+         
+
+
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="codigo_color">Estatus</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input class="form-control" placeholder="direccion" type="text" name="estatus"  required>
+              </div>
+            </div>
+          </div>        
+         
+
+
+
+          <div class="modal-footer">          
+            <input type="number" hidden="True" name="empresaColor" value="{{ lastIdEmpresa }}">
+            <input type="number" hidden="True" name="idUserColor" value="{{ login_user_id}}">  
+            <button class="btn btn-outline-primary form-" type="submit" onclick="location.href='/'">Guardar</button>
+          </div>
+        </div>
+      </div>
+   </div>
+  </form>
+ 
+  
+  
+  
+  
+  </div>

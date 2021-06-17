@@ -1,10 +1,7 @@
 <div id="openModalPadre" class="modalDialogPadre">
     <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i>
     </a>            
-      <center>
-        <h1>Referencias {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
-      </center>
-
+   
       
 
 
@@ -68,16 +65,17 @@
 
 
     <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>            
-      <center>
-        
-        <h1>Crear referencia {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
-      </center>
       <div class="">
-        
+    
       <form id="addReferencia">
-        <div class="content p-3 mb-2 bg-dark text-white ">
+        <div class="content p-3 mb-2 bg-dar text-white ">
           <div class="border">
-            <div class="col-sm-3">
+            <center>        
+              <h1>Crear referencia {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
+            </center>
+              
+          
+            <div class="col-sm-12">
             <div class="form-group">
               <label for="modal_codigo_color">Nombre Referencia</label>
               <div class="input-group">
@@ -88,7 +86,7 @@
               </div>
             </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-12">
               <div class="form-group">
                 <label for="modal_codigo_color">Descripcion de Referencia</label>
                 <div class="input-group">
@@ -99,7 +97,7 @@
                 </div>
               </div>
             </div>        
-            <div class="col-sm-3">
+            <div class="col-sm-12">
               <div class="form-group">
                 <label for="modal_codigo_color">Img1</label>
                 <div class="input-group">
@@ -110,7 +108,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-12">
               <div class="form-group">
                 <label for="modal_codigo_color">Img2</label>
                 <div class="input-group">
@@ -138,16 +136,17 @@
 
 <div id="openModalHijoDos" class="modalDialogHijoDos">
   <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>            
-    <center>
-      <h1>Editar referencia {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
-    </center>
+  
     
       <div class="modal-dialo" role="document">
         <form id="editReferencia">
-          <div class="content text-light bg-dark">
+          <div class="content text-light bg-dar">
             <div class="border">
+              <center>
+                <h1>Editar referencia {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
+              </center>
               
-                <div class="col-sm-3">
+                <div class="col-sm-12">
                  
                  
                   <div class="form-group">
@@ -161,7 +160,7 @@
                   </div>
                 
                 </div>                    
-                <div class="col-sm-3">
+                <div class="col-sm-12">
                   <div class="form-group">
                     <label for="modal_codigo_color">Descripcion de Referencia</label>
                     <div class="input-group">
@@ -172,13 +171,13 @@
                     </div>
                   </div>
                 </div>
-                 <div class="col-sm-3">
+                 <div class="col-sm-12">
                   <div class="form-group">
                     <label for="img1">img1</label>                      
                       <input class="form-control-file" name="img1UP" type="file">                   
                   </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-12">
                   <div class="form-group">
                     <label for="img2">img2</label>                      
                       <input  class="form-control-file" name="img2UP" type="file">                   
