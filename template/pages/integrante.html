@@ -204,7 +204,17 @@ function DetailFormatterButnNombre(index, row) {
                 <span class="input-group-addon">
                   <i class="fa fa-user"></i>
                 </span>
-                <input class="form-control" placeholder="estatus" type="text" name="estatus"  required>
+              
+                <select class="form-control" id="estatus">
+                  <option value="select">Select estado</option>
+                  <option value="A">Activo</option>
+                  <option value="I">Inactivo</option>
+                  
+                </select>
+              
+              
+               
+              
               </div>
             </div>
           </div>        
@@ -236,7 +246,7 @@ var num_telefono      = $('input[name="num_telf"]').val().trim();
 var correo            = $('input[name="correo"]').val().trim();
 var direccion         = $('input[name="direccion"]').val().trim();
 var abilidad          = $('input[name="abilidad"]').val().trim();
-var estatus           = $('input[name="estatus"]').val().trim();
+var estatus           = document.getElementById("estatus").value;
 var idEmpresa         = $('input[name="empresaColor"]').val().trim();
 var idUser            = $('input[name="idUser"]').val().trim();
 if (nombresInput && apellidos && cedula &&
