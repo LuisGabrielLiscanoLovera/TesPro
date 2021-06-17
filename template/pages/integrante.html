@@ -31,12 +31,12 @@ data-url="integrante/integrante-list/">
 </div>
 <thead>
   <tr>
-    <th data-field="btnInfo" data-detail-formatter="DetailFormatterButnNombre"               class="text-center">Mas info</th>
+    <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfo"class="text-center">Mas info</th>
     <th data-field="nombres"   class="text-center">Nombres</th>
     <th data-field="apellidos" class="text-center">Apellidos</th>
     <th data-field="cedula"    class="text-center">Cedula</th>
     <th data-field="num_telf"  class="text-center">Telefono</th>
-    <th data-field="btnAcci"   class="text-center">Accion</th>
+    <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccion"class="text-center">Accion</th>
 
   </tr>
 </thead>
@@ -56,13 +56,16 @@ data-url="integrante/integrante-list/">
 
 
 
-function DetailFormatterButnNombre(index, row) {
+function DetailFormatterButInfo(index, row) {
 //crea y renderiza la tabla
   return '<br>Correo    :'+row.correo+
          '<br>Sexo      :'+row.sexo+
          '<br>Abilidad  :'+row.abilidad+
          '<br>Direccion :'+row.direccion+
          '<br>Estatus   :'+row.estatus
+}
+function DetailFormatterButAccion(index,row){
+  return row.id+'<button onclick="remove('+row.id+')"  id="buttonEliminarIntegrante" class="btn btn-outline-danger icofont-ui-remove"> Eliminar</button>';
 }
 </script>
 
@@ -298,5 +301,26 @@ return false;
 </script>
 
 
-  
+<!--Delete integrante-->
+
+
+<script>
+$bIntegrante = $('#buttonEliminarIntegrante');
+function remove (idIntegrante) {
+  $.ajax({
+            url: '{% url "Integrante_ajax_delete" %}',
+            data: {
+                'id': idIntegrante,
+            },
+            dataType: 'json',
+            success: function (data) {
+                alert("borrado")
+            }
+            });
+}
+
+
+
+
+</script>
 </div>
