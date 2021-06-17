@@ -8,7 +8,6 @@
     
 <table
 id="table"
-
 class="table"
 data-toggle="table"
 data-height="460"
@@ -32,11 +31,12 @@ data-url="integrante/integrante-list/">
 </div>
 <thead>
   <tr>
-    
-    <th data-field="nombres" data-detail-formatter="DetailFormatterButnNombre">Nombres</th>
-    <th data-field="apellidos">Apellidos</th>
-    <th data-field="cedula"   >Cedula</th>
-    <th data-field="num_telf" >Telefono</th>
+    <th data-field="btnInfo" data-detail-formatter="DetailFormatterButnNombre"               class="text-center">Mas info</th>
+    <th data-field="nombres"   class="text-center">Nombres</th>
+    <th data-field="apellidos" class="text-center">Apellidos</th>
+    <th data-field="cedula"    class="text-center">Cedula</th>
+    <th data-field="num_telf"  class="text-center">Telefono</th>
+    <th data-field="btnAcci"   class="text-center">Accion</th>
 
   </tr>
 </thead>
@@ -188,7 +188,7 @@ function DetailFormatterButnNombre(index, row) {
                   <i class="fa fa-user"></i>
                 </span>
                 <select class="form-control" id="sexo">
-                  <option value="select">Select estado</option>
+                  <option value="select">Select sexo</option>
                   <option value="H">Hombre</option>
                   <option value="M">Mujer</option>
                   <option value="O">Otro</option>

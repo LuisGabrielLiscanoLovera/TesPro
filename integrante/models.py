@@ -21,6 +21,8 @@ class Integrante(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+    btnInfo = models.CharField(max_length=30, blank=True ,default='<button type="button" class="btn btn-outline-light text-center btn-sm btn-block">Info</button>', null=True)
+    btnAcci = models.CharField(max_length=30, blank=True ,default='<button type="button" class="btn btn-outline-light text-center btn-sm btn-block ">Accion</button>' , null=True)
     class Meta:
             ordering = ["nombres"]
 
