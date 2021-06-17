@@ -82,21 +82,55 @@ function DetailFormatterButInfo(index, row) {
          '<br>Estatus   :'+row.estatus
 }
 function DetailFormatterButAccion(index,row){
-  return '<div class="col-sm-2">'+
-        '<form id="formEdtIntegrante" style="display: inline"  >'+
-        '<div class="form-group"><label>Nombres</label>'+
-        '<input    value="'+row.nombres+'" name="nombresUP"></div>'+
+  return '<form id="formEdtIntegrante" style="display: inline"  ><hr>'+
+        '<div class="row">'+
+        '<div class="col-sm-3">'+
+            '<div class="form-group"><label>Nombres</label>'+
+            '<input class="form-control"   value="'+row.nombres+'" name="nombresUP"></div>'+
+            '<div class="form-group"><label>Apellidos</label>'+
+            '<input class="form-control" value="'+row.apellidos+'" name="apellidosUP"></div>'+
+            '<div class="form-group"><label>Cedula.</label>'+
+            '<input class="form-control"   value="'+row.cedula+'" name="cedulaUP"></div>'+
+        '</div>'+
         
-        '<div class="form-group"><label>Apellidos</label>'+
-        '<input  value="'+row.apellidos+'" name="apellidosUP"></div>'+
+        '<div class="col-sm-3">'+
+            '<div class="form-group"><label>Telefono</label>'+
+            '<input class="form-control" value="'+row.num_telf+'" name="num_telfUP"></div>'+
+            '<div class="form-group"><label>Correo</label>'+
+            '<input class="form-control" value="'+row.correo+'" name="correoUP"></div>'+        
+            '<div class="form-group"><label>Direccion</label>'+
+            '<input class="form-control" value="'+row.direccion+'" name="direccionUP"></div>'+
+        '</div>'+
         
-        'Cedula:<input    value="'+row.cedula+'" name="cedulaUP"><br>'+
-        'Telefono:<input  value="'+row.num_telf+'" name="num_telfUP"><br>'+
-        '<input       class="btn-outline-warning "     value="actualizar" type="submit" >'+
-        
-        '</div>'+       
-        '</form></div>'+
-        '<button onclick="remove('+row.id+')"  id="buttonEliminarIntegrante" class="btn btn-outline-danger icofont-ui-remove"> Eliminar</button>';
+        '<div class="col-sm-3">'+
+            '<div class="form-group"><label>Abilidad</label>'+
+            '<input class="form-control" value="'+row.abilidad+'" name="abilidadUP"></div>'+       
+            '<div class="form-group"><label>Sexo</label>'+
+            '<select id="sexoUP">'+
+                '<option value="'+row.sexo+'">'+row.sexo+'</option>'+
+                '<option value="H">Hombre</option>'+
+                '<option value="M">Mujer</option>'+
+                '<option value="O">Otro</option>'+                 
+            '</select></div>'+
+            '<div class="form-group"><label>Estatus</label>'+
+            '<select id="estatusUP">'+
+                '<option value="'+row.estatus+'">'+row.estatus+'</option>'+
+                '<option value="A">Activo</option>'+
+                '<option value="I">Inactivo</option>'+
+            '</select></div>'+
+
+            
+        '</div>'+
+        '<div class="col-sm-1">'+
+              '<butto class=" btn-outline-warning btn icofont-ui-edit " type="submit" >Edit</butto>'+ 
+        '</div>'+
+        '<div class="col-sm-1">'+ 
+              '<button onclick="remove('+row.id+')"  id="buttonEliminarIntegrante" class="btn btn-outline-danger icofont-ui-remove ">Del</button>'+
+        '</div>'+
+
+
+        '</div>'+
+        '</form>';
 }
 
 
