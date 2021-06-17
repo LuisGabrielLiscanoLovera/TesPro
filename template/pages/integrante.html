@@ -9,6 +9,8 @@
     <center>
       <h1>Integrantes de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
     </center> 
+
+
     
 <!--
 
@@ -69,7 +71,7 @@ data-url="integrante/integrante-list/">
 
 <script>
 
-
+$('#table').SetEditable();
 
 function DetailFormatterButInfo(index, row) {
 //crea y renderiza la tabla
@@ -80,8 +82,26 @@ function DetailFormatterButInfo(index, row) {
          '<br>Estatus   :'+row.estatus
 }
 function DetailFormatterButAccion(index,row){
-  return '<button onclick="remove('+row.id+')"  id="buttonEliminarIntegrante" class="btn btn-outline-danger icofont-ui-remove"> Eliminar</button>';
+  return '<div class="col-sm-2">'+
+        '<form id="formEdtIntegrante" style="display: inline"  >'+
+        '<div class="form-group"><label>Nombres</label>'+
+        '<input    value="'+row.nombres+'" name="nombresUP"></div>'+
+        
+        '<div class="form-group"><label>Apellidos</label>'+
+        '<input  value="'+row.apellidos+'" name="apellidosUP"></div>'+
+        
+        'Cedula:<input    value="'+row.cedula+'" name="cedulaUP"><br>'+
+        'Telefono:<input  value="'+row.num_telf+'" name="num_telfUP"><br>'+
+        '<input       class="btn-outline-warning "     value="actualizar" type="submit" >'+
+        
+        '</div>'+       
+        '</form></div>'+
+        '<button onclick="remove('+row.id+')"  id="buttonEliminarIntegrante" class="btn btn-outline-danger icofont-ui-remove"> Eliminar</button>';
 }
+
+
+
+
 </script>
 
 
@@ -101,7 +121,7 @@ function DetailFormatterButAccion(index,row){
 
 
     
-    <form id="addIntegrante">
+    <form id="addIntegrante" class="">
       <div class=" content p-3 mb-2 bg-dar text-white "  rows="3"  >
         <div class="border">
           <center>
@@ -133,7 +153,6 @@ function DetailFormatterButAccion(index,row){
             </div>
           </div>        
          
-
           <div class="col-sm-12">
             <div class="form-group">
               <label >Cedula</label>
@@ -145,7 +164,6 @@ function DetailFormatterButAccion(index,row){
               </div>
             </div>
           </div>        
-         
 
           <div class="col-sm-12">
             <div class="form-group">
@@ -159,7 +177,6 @@ function DetailFormatterButAccion(index,row){
             </div>
           </div>        
          
-
           <div class="col-sm-12">
             <div class="form-group">
               <label >Correo</label>
@@ -172,7 +189,6 @@ function DetailFormatterButAccion(index,row){
             </div>
           </div>        
          
-
           <div class="col-sm-12">
             <div class="form-group">
               <label >Direccion</label>
@@ -197,7 +213,6 @@ function DetailFormatterButAccion(index,row){
             </div>
           </div>    
 
-
           <div class="col-sm-12">
             <div class="form-group">
               <label >Sexo</label>
@@ -214,12 +229,7 @@ function DetailFormatterButAccion(index,row){
               </div>
             </div>
           </div>        
-         
-
-              
-         
-
-
+     
           <div class="col-sm-12">
             <div class="form-group">
               <label for="apellidos">Estatus</label>
@@ -242,8 +252,6 @@ function DetailFormatterButAccion(index,row){
             </div>
           </div>        
     
-
-
           <div class="modal-footer">          
             <input type="number" hidden="True" name="empresaColor" value="{{ lastIdEmpresa }}">
             <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">  
