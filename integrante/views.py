@@ -114,6 +114,7 @@ class UpdateIntegrante(TemplateView):
         obj.direccion  = direccion
         obj.abilidad   = abilidad 
         
+        
 
         
         try:
