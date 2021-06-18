@@ -113,6 +113,7 @@ class UpdateIntegrante(TemplateView):
         obj.num_telf   = num_telf 
         obj.direccion  = direccion
         obj.abilidad   = abilidad 
+        
 
         
         try:
