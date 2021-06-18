@@ -27,14 +27,14 @@ urlpatterns = [
    
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')), #apis rest-framework urls
     
-    path('tarea/', include('tarea.urls')),
-    
-    path('patinador/', include('patinador.urls')),
+    path('tarea/', include('tarea.urls')),    
     path('prenda/', include('prenda.urls')),
     path('casino/', include('casino.urls')),
     
-    path('integrante/', include('integrante.urls')),
-    path('referencia/', include('referencia.urls')),            #crud creado
-    path('color/', include('color.urls')),                      #crud creado.    
+    
+    path('patinador/', include('patinador.urls')),
+    path('integrante/', include('integrante.urls')),            #listo
+    path('referencia/', include('referencia.urls')),            #listo
+    path('color/', include('color.urls')),                      #listo.    
     path('cambioEmpresa/',cambioEmpresa, name='cambioEmpresa'), #listo    
      ]

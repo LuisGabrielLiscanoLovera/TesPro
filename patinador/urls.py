@@ -1,11 +1,11 @@
 from django.urls import path
-from . import views
+from patinador.views import CreatePatinador,DeletePatinador,UpdatePatinador
+from .views import patinadorList
 
 urlpatterns = [
-	path('', views.apiOverview, name="api-overview"),
-	path('patinador-list/', views.patinadorList, name="patinador-list"),
-	path('patinador-detail/<str:pk>/', views.patinadorDetail, name="patinador-detail"),
-	path('patinador-create/', views.patinadorCreate, name="patinador-create"),
-	path('patinador-update/<str:pk>/', views.patinadorUpdate, name="patinador-update"),
-	path('patinador-delete/<str:pk>/', views.patinadorDelete, name="patinador-delete"),
+    path('patinador-list/', patinadorList, name="patinador-list"),
+    path('patinador/crud/create/', CreatePatinador.as_view(), name='Patinador_ajax_create'),
+    path('patinador/crud/delete/', DeletePatinador.as_view(), name='Patinador_ajax_delete'),
+    path('patinador/crud/Update/', UpdatePatinador.as_view(), name='Patinador_ajax_update'),
+
 ]
