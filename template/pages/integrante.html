@@ -125,19 +125,20 @@ function DetailFormatterButAccion(index,row){
             '<input type="number" hidden="True" name="idIntegranteUP" value="'+row.id+'"'+           
             
         '</div>'+
-        '<div class="col-sm-1">'+
-          '<input id="EditIntegranteBtn-'+row.id+'" value="Actualizar" type="submit" onclick="editIntegrante('+row.id+')" class="btn-sm btn btn-outline-warning btn-rounded mb-2" >'+ 
-        '</div>'+
-        '<div class="col-sm-"></div>'+ 
+        '<div class="col-sm-6">'+
+          '<input id="EditIntegranteBtn-'+row.id+'" value="Actualizar registro" type="submit" onclick="editIntegrante('+row.id+')" class="btn-lg  btn btn-outline-warning btn-rounded  " >'+ 
+      
+        
        
         
+          '</div>'+
 
         '</div>'+
-        '</form>'+
+        '<div class="col-sm-1">'+'<button value="" onclick="remove('+row.id+')"  id="buttonEliminarIntegrante" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>'+
+        '</div>'+
+        '</form>';
         
-        '<div class="col-sm-1">'+
-                      '<button onclick="remove('+row.id+')"  id="buttonEliminarIntegrante" class="btn btn-outline-danger icofont-ui-remove "></button>'+
-        '</div>';
+        
         
 }
 
