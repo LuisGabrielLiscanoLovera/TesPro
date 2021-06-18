@@ -1,6 +1,8 @@
 from referencia.models import Referencia
 from color.models import Color
 from integrante.models import Integrante
+from patinador.models import Patinador
+
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.views.generic.base import TemplateView as TVB
@@ -15,14 +17,15 @@ class Home(LoginRequiredMixin,TVB):
         
     def get_context_data(self, **kwargs):
         
-        REU=RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)
-        lastEm=CambioEmpres.objects.values('lastEm').last()
+        REU      = RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)
+        lastEm   = CambioEmpres.objects.values('lastEm').last()
         idlastEmpresa=lastEm.get("lastEm")
         #manejar el error  de last id
         RE=Empresa.objects.filter(id=int(idlastEmpresa))
         totalReferencia = Referencia.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
         totalColor      = Color.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
         totalIntegrante = Integrante.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
+        totalPatinador  = Patinador.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
         context = super(Home, self).get_context_data(**kwargs)        
         context['id']               = self.kwargs.get('id')
         context['login_user_id']    = self.request.user.pk  # aqui se obtiene el user id
@@ -31,7 +34,8 @@ class Home(LoginRequiredMixin,TVB):
         context['lastIdEmpresa']    = int(idlastEmpresa)    # ids empresas
         context['totalReferencia']  = totalReferencia       # total referencias
         context['totalColor']       = totalColor            # total color
-        context['totalIntegrante']  = totalIntegrante       # total color
+        context['totalIntegrante']  = totalIntegrante       # total integrante
+        context['totalPatinadores'] = totalPatinador        # total patinador
         return context
 
 def cambioEmpresa(request):

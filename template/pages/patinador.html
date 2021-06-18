@@ -1,0 +1,469 @@
+{% load static %}
+
+
+<div id="openModalPatinador" class="modalDialogPadre">
+  <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
+    
+    <center>
+      <h1>Integrantes de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
+    </center> 
+
+
+    
+<!--
+
+data-show-refresh="true"
+data-auto-refresh="true"
+data-auto-refresh-interval="30"
+data-auto-refresh-silent="true"
+data-auto-refresh-status="true"
+-->    
+<table
+id="table"
+data-id-field="id"
+class="table"
+data-toggle="table"
+data-height="460"
+data-detail-view="true"
+data-detail-view-by-click="true"
+data-detail-view-icon="false"
+data-show-columns="true"
+data-search="true"
+data-show-fullscreen="true"        
+
+data-show-refresh="true"
+
+data-always-use-formatter="true"
+data-show-export="true" 
+data-locale="es-SP"
+data-pagination="true"
+
+data-url="integrante/integrante-list/">
+<div class="row">
+  <div class="col-sm-2">
+    <a href="#openModalHijoAddIntegrante"> 
+      <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar </i>
+  </a>
+</div>
+<thead>
+  <tr>
+    <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfo"class="text-center">Mas info</th>
+    <th data-field="nombres"   class="text-center">Nombres</th>
+    <th data-field="apellidos" class="text-center">Apellidos</th>
+    <th data-field="cedula"    class="text-center">Cedula</th>
+    <th data-field="num_telf"  class="text-center">Telefono</th>
+    <th data-field="created_at" class="text-center">Fec Ingreso</th>
+    <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccion"class="text-center">Accion</th>
+
+  </tr>
+</thead>
+
+</table>
+
+
+
+
+
+
+
+
+
+
+<script>
+
+$('#table').SetEditable();
+
+function DetailFormatterButInfo(index, row) {
+//crea y renderiza la tabla
+  return '<br>Correo    :'+row.correo+
+         '<br>Sexo      :'+row.sexo+
+         '<br>Abilidad  :'+row.abilidad+
+         '<br>Direccion :'+row.direccion+
+         '<br>Estatus   :'+row.estatus
+}
+function DetailFormatterButAccion(index,row){
+  return '<form id="editarIntegrante" style="display: inline"  >{% csrf_token %}<hr>'+
+        '<div class="row">'+
+        '<div class="col-sm-3">'+
+            '<div class="form-group"><label>Nombres</label>'+
+            '<input class="form-control"   value="'+row.nombres+'" name="nombresUP"></div>'+
+            '<div class="form-group"><label>Apellidos</label>'+
+            '<input class="form-control" value="'+row.apellidos+'" name="apellidosUP"></div>'+
+            '<div class="form-group"><label>Cedula.</label>'+
+            '<input class="form-control"   value="'+row.cedula+'" name="cedulaUP"></div>'+
+        '</div>'+
+        
+        '<div class="col-sm-3">'+
+            '<div class="form-group"><label>Telefono</label>'+
+            '<input class="form-control" value="'+row.num_telf+'" name="num_telfUP"></div>'+
+            '<div class="form-group"><label>Correo</label>'+
+            '<input class="form-control" value="'+row.correo+'" name="correoUP"></div>'+        
+            '<div class="form-group"><label>Direccion</label>'+
+            '<input class="form-control" value="'+row.direccion+'" name="direccionUP"></div>'+
+        '</div>'+
+        
+        '<div class="col-sm-3">'+
+            '<div class="form-group"><label>Abilidad</label>'+
+            '<input class="form-control" value="'+row.abilidad+'" name="abilidadUP"></div>'+       
+            '<div class="form-group"><label>Sexo</label>'+
+            '<select id="sexoUP">'+
+                '<option value="'+row.sexo+'">'+row.sexo+'</option>'+
+                '<option value="H">Hombre</option>'+
+                '<option value="M">Mujer</option>'+
+                '<option value="O">Otro</option>'+                 
+            '</select></div>'+
+            '<div class="form-group"><label>Estatus</label>'+
+            '<select id="estatusUP">'+
+                '<option value="'+row.estatus+'">'+row.estatus+'</option>'+
+                '<option value="A">Activo</option>'+
+                '<option value="I">Inactivo</option>'+
+            '</select></div>'+
+            '<input type="number" hidden="True" name="idEmpresaUP" value="{{ lastIdEmpresa }}">'+
+            '<input type="number" hidden="True" name="idUserUP" value="{{ login_user_id}}">'+
+            '<input type="number" hidden="True" name="idIntegranteUP" value="'+row.id+'"'+           
+            
+        '</div>'+
+        '<div class="col-sm-6">'+
+          '<input id="EditIntegranteBtn-'+row.id+'" value="Actualizar registro" type="submit" onclick="editIntegrante('+row.id+')" class="btn-lg  btn btn-outline-warning btn-rounded  " >'+ 
+      
+        
+       
+        
+          '</div>'+
+
+        '</div>'+
+        '<div class="col-sm-1">'+'<button value="" onclick="remove('+row.id+')"  id="buttonEliminarIntegrante" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>'+
+        '</div>'+
+        '</form>';
+        
+        
+        
+}
+
+
+
+
+</script>
+
+
+
+</div>  
+  
+</div>
+
+
+
+
+<div id="openModalHijoAddIntegrante" class="modalDialogHijo">
+  <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>            
+ 
+
+
+
+
+    
+    <form id="addIntegrante" class="">
+      <div class=" content p-3 mb-2 bg-dar text-white "  rows="3"  >
+        <div class="border">
+          <center>
+            <h1>Agregar nuevo integrante de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
+          </center>
+        
+      
+          <div class="col-sm-12">
+          <div class="form-group">
+            <label >Nombres </label>
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-user"></i>
+              </span>
+              <input class="form-control" type="text" name="nombres" placeholder="Nombres" required>
+            </div>
+          </div>
+          </div>
+          
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label >Apellido</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input class="form-control" type="text" name="apellidos"  placeholder="apellidos" required>
+              </div>
+            </div>
+          </div>        
+         
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label >Cedula</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input class="form-control" type="text" name="cedula" placeholder="Cedula de identidad" required>
+              </div>
+            </div>
+          </div>        
+
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Telefono</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input class="form-control" type="text" name="num_telf" placeholder="N° Telefono" required>
+              </div>
+            </div>
+          </div>        
+         
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label >Correo</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input class="form-control" type="email" name="correo" placeholder="correo"  required>
+              </div>
+            </div>
+          </div>        
+         
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label >Direccion</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input class="form-control" placeholder="direccion" type="text" name="direccion"  required>
+              </div>
+            </div>
+          </div>    
+
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label >Abilidad</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input class="form-control" placeholder="abilidad" type="text" name="abilidad"  required>
+              </div>
+            </div>
+          </div>    
+
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label >Sexo</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <select class="form-control" id="sexo">
+                  <option value="select">Select sexo</option>
+                  <option value="H">Hombre</option>
+                  <option value="M">Mujer</option>
+                  <option value="O">Otro</option>
+                </select>
+              </div>
+            </div>
+          </div>        
+     
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="apellidos">Estatus</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+              
+                <select class="form-control" id="estatus">
+                  <option value="select">Select estado</option>
+                  <option value="A">Activo</option>
+                  <option value="I">Inactivo</option>
+                  
+                </select>
+              
+              
+               
+              
+              </div>
+            </div>
+          </div>        
+    
+          <div class="modal-footer">          
+            <input type="number" hidden="True" name="empresaColor" value="{{ lastIdEmpresa }}">
+            <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">  
+            <button class="btn btn-outline-primary form-" type="submit" onclick="location.href='/'">Guardar</button>
+          </div>
+        </div>
+      </div>
+   </div>
+  </form>
+ 
+  
+  
+  <!--create integrante-->
+<script>
+  $("form#addIntegrante").submit(function() { 
+
+
+var nombresInput      = $('input[name="nombres"]').val().trim();
+var sexo              = document.getElementById("sexo").value;
+var apellidos         = $('input[name="apellidos"]').val().trim();
+var cedula            = $('input[name="cedula"]').val().trim();
+var num_telefono      = $('input[name="num_telf"]').val().trim();
+var correo            = $('input[name="correo"]').val().trim();
+var direccion         = $('input[name="direccion"]').val().trim();
+var abilidad          = $('input[name="abilidad"]').val().trim();
+var estatus           = document.getElementById("estatus").value;
+var idEmpresa         = $('input[name="empresaColor"]').val().trim();
+var idUser            = $('input[name="idUser"]').val().trim();
+if (nombresInput && apellidos && cedula &&
+   sexo && num_telefono && correo &&  direccion && 
+   abilidad  && estatus && idEmpresa && idUser 
+    ) {
+    // Create Ajax Call
+    $.ajax({
+        url: '{% url "Integrante_ajax_create" %}',
+        data: {
+            
+            'nomIntegrante'     : nombresInput,
+            'apeIntegrante'     : apellidos,
+            'sexo'              : sexo,
+            'cedula'            : cedula,
+            'num_telefono'      : num_telefono,
+            'correo'            : correo,
+            'direccion'         : direccion,
+            'abilidad'          : abilidad,
+            'estatus'           : estatus,
+            'idEmpresa'         : idEmpresa,
+            'idUser'            : idUser
+            
+
+
+            
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.user) {
+              appendToUsrTable(data.user);
+            }
+        }
+    });
+
+} else {
+    alert("All fields must have a valid value.");
+}
+$('form#addIntegrante').trigger("reset");
+return false;
+});
+
+
+</script>
+
+
+<!--editar integrante-->
+
+<script>
+
+function editIntegrante  (id){
+
+  
+var nombresInputUP      = $('input[name="nombresUP"]').val().trim();
+var apellidosUP         = $('input[name="apellidosUP"]').val().trim();
+var sexoUP              = document.getElementById("sexoUP").value;
+var cedulaUP            = $('input[name="cedulaUP"]').val().trim();
+var num_telefonoUP      = $('input[name="num_telfUP"]').val().trim();
+var correoUP            = $('input[name="correoUP"]').val().trim();
+var direccionUP         = $('input[name="direccionUP"]').val().trim();
+var abilidadUP          = $('input[name="abilidadUP"]').val().trim();
+var estatusUP           = document.getElementById("estatusUP").value;
+var idEmpresaUP         = $('input[name="idEmpresaUP"]').val().trim();
+var idUserUP            = $('input[name="idUserUP"]').val().trim();
+
+
+
+if (nombresInputUP && apellidosUP && cedulaUP &&
+   sexoUP && num_telefonoUP && correoUP &&  direccionUP && 
+   abilidadUP  && estatusUP && idEmpresaUP && idUserUP  
+    ) {
+      alert("idUserUP");
+
+    // Create Ajax Call
+    $.ajax({
+        url: '{% url "Integrante_ajax_update" %}',
+        data: {
+            
+            'nombresInputUP'    : nombresInputUP,
+            'apellidosUP'       : apellidosUP,
+            'sexoUP'            : sexoUP,
+            'cedulaUP'          : cedulaUP,
+            'num_telefonoUP'    : num_telefonoUP,
+            'correoUP'          : correoUP,
+            'direccionUP'       : direccionUP,
+            'abilidadUP'        : abilidadUP,
+            'estatusUP'         : estatusUP,
+            'idEmpresaUP'       : idEmpresaUP,
+            'idUserUP'          : idUserUP,
+            'idIntegranteUP'    : id
+
+
+            
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.user) {
+              appendToUsrTable(data.user);
+            }
+        }
+    });
+
+} else {
+    alert("All fields must have a valid value.");
+}
+}
+
+
+      
+
+    
+   
+</script>
+
+
+
+
+
+
+
+<!--Delete integrante-->
+
+
+<script>
+ function remove (idIntegrante) {
+
+
+  $.ajax({
+            url: '{% url "Integrante_ajax_delete" %}',
+            data: {
+                'id': idIntegrante,
+            },
+            dataType: 'json',
+            success: function (data) {
+           
+              window.location.reload();
+
+
+              
+            }
+            });
+}
+
+
+
+
+</script>
+</div>
