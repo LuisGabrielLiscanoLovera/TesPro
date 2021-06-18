@@ -52,7 +52,6 @@ class CreateIntegrante(View):
         direccion        = request.GET.get('direccion', None)
         abilidad         = request.GET.get('abilidad', None)
   
-        print("idEmpresa:      >>>>",idEmpresa,idUser,apellido,sexo,estatus,correo,cedula,num_telf,direccion,abilidad)
         
         obj = Integrante.objects.create(
             empresa_id   = idEmpresa,
@@ -87,13 +86,12 @@ class DeleteIntegrante(View):
 
 
 class UpdateIntegrante(TemplateView):
-    def  get(self, request):        
-        
-        idEmpresa        = request.GET.get('empresaUP', None)
-        idUser           = request.GET.get('idUserUP', None)
+    def  get(self, request):
         idIntegrante     = request.GET.get('idIntegranteUP', None)
-        nombres          = request.GET.get('nomIntegranteUP', None)
-        apellido         = request.GET.get('apeIntegranteUP', None)
+        idEmpresa        = request.GET.get('idEmpresaUP', None)
+        idUser           = request.GET.get('idUserUP', None)
+        nombres          = request.GET.get('nombresInputUP', None)
+        apellido         = request.GET.get('apellidosUP', None)
         sexo             = request.GET.get('sexoUP', None)
         estatus          = request.GET.get('estatusUP', None)
         correo           = request.GET.get('correoUP', None)
@@ -102,6 +100,7 @@ class UpdateIntegrante(TemplateView):
         direccion        = request.GET.get('direccionUP', None)
         abilidad         = request.GET.get('abilidadUP', None)
         
+      
         obj = Integrante.objects.get(id=idIntegrante)
         obj.empresa_id = idEmpresa
         obj.usuario_id = idUser

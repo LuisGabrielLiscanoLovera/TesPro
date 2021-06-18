@@ -33,6 +33,7 @@ data-show-columns="true"
 data-search="true"
 data-show-fullscreen="true"        
 
+data-show-refresh="true"
 
 data-always-use-formatter="true"
 data-show-export="true" 
@@ -53,6 +54,7 @@ data-url="integrante/integrante-list/">
     <th data-field="apellidos" class="text-center">Apellidos</th>
     <th data-field="cedula"    class="text-center">Cedula</th>
     <th data-field="num_telf"  class="text-center">Telefono</th>
+    <th data-field="created_at" class="text-center">Fec Ingreso</th>
     <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccion"class="text-center">Accion</th>
 
   </tr>
@@ -82,7 +84,7 @@ function DetailFormatterButInfo(index, row) {
          '<br>Estatus   :'+row.estatus
 }
 function DetailFormatterButAccion(index,row){
-  return '<form id="formEdtIntegrante" style="display: inline"  ><hr>'+
+  return '<form id="editarIntegrante" style="display: inline"  >{% csrf_token %}<hr>'+
         '<div class="row">'+
         '<div class="col-sm-3">'+
             '<div class="form-group"><label>Nombres</label>'+
@@ -118,19 +120,25 @@ function DetailFormatterButAccion(index,row){
                 '<option value="A">Activo</option>'+
                 '<option value="I">Inactivo</option>'+
             '</select></div>'+
-
+            '<input type="number" hidden="True" name="idEmpresaUP" value="{{ lastIdEmpresa }}">'+
+            '<input type="number" hidden="True" name="idUserUP" value="{{ login_user_id}}">'+
+            '<input type="number" hidden="True" name="idIntegranteUP" value="'+row.id+'"'+           
             
         '</div>'+
         '<div class="col-sm-1">'+
-              '<butto class=" btn-outline-warning btn icofont-ui-edit " type="submit" >Edit</butto>'+ 
+          '<input id="EditIntegranteBtn-'+row.id+'" value="Actualizar" type="submit" onclick="editIntegrante('+row.id+')" class="btn-sm btn btn-outline-warning btn-rounded mb-2" >'+ 
         '</div>'+
-        '<div class="col-sm-1">'+ 
-              '<button onclick="remove('+row.id+')"  id="buttonEliminarIntegrante" class="btn btn-outline-danger icofont-ui-remove ">Del</button>'+
-        '</div>'+
+        '<div class="col-sm-"></div>'+ 
+       
+        
 
-
         '</div>'+
-        '</form>';
+        '</form>'+
+        
+        '<div class="col-sm-1">'+
+                      '<button onclick="remove('+row.id+')"  id="buttonEliminarIntegrante" class="btn btn-outline-danger icofont-ui-remove "></button>'+
+        '</div>';
+        
 }
 
 
@@ -356,6 +364,80 @@ return false;
 
 
 </script>
+
+
+<!--editar integrante-->
+
+<script>
+
+function editIntegrante  (id){
+
+  
+var nombresInputUP      = $('input[name="nombresUP"]').val().trim();
+var apellidosUP         = $('input[name="apellidosUP"]').val().trim();
+var sexoUP              = document.getElementById("sexoUP").value;
+var cedulaUP            = $('input[name="cedulaUP"]').val().trim();
+var num_telefonoUP      = $('input[name="num_telfUP"]').val().trim();
+var correoUP            = $('input[name="correoUP"]').val().trim();
+var direccionUP         = $('input[name="direccionUP"]').val().trim();
+var abilidadUP          = $('input[name="abilidadUP"]').val().trim();
+var estatusUP           = document.getElementById("estatusUP").value;
+var idEmpresaUP         = $('input[name="idEmpresaUP"]').val().trim();
+var idUserUP            = $('input[name="idUserUP"]').val().trim();
+
+
+
+if (nombresInputUP && apellidosUP && cedulaUP &&
+   sexoUP && num_telefonoUP && correoUP &&  direccionUP && 
+   abilidadUP  && estatusUP && idEmpresaUP && idUserUP  
+    ) {
+      alert("idUserUP");
+
+    // Create Ajax Call
+    $.ajax({
+        url: '{% url "Integrante_ajax_update" %}',
+        data: {
+            
+            'nombresInputUP'    : nombresInputUP,
+            'apellidosUP'       : apellidosUP,
+            'sexoUP'            : sexoUP,
+            'cedulaUP'          : cedulaUP,
+            'num_telefonoUP'    : num_telefonoUP,
+            'correoUP'          : correoUP,
+            'direccionUP'       : direccionUP,
+            'abilidadUP'        : abilidadUP,
+            'estatusUP'         : estatusUP,
+            'idEmpresaUP'       : idEmpresaUP,
+            'idUserUP'          : idUserUP,
+            'idIntegranteUP'    : id
+
+
+            
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.user) {
+              appendToUsrTable(data.user);
+            }
+        }
+    });
+
+} else {
+    alert("All fields must have a valid value.");
+}
+}
+
+
+      
+
+    
+   
+</script>
+
+
+
+
+
 
 
 <!--Delete integrante-->
