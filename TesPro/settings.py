@@ -1,6 +1,8 @@
 """https://wpdatatables.com/datatables-alternative/
 pillow
 
+pip install rest-framework-generic-relations
+
 django-cors-headers
 librerias 
 djangorestframework-3.12.1
@@ -43,9 +45,10 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     #'django_tables2',
     'rest_framework.authtoken',
-   
+#    'generic_relations',
 
-'django_seed',#borrrrrrarrrrr!
+
+#'django_seed',#borrrrrrarrrrr!
     
    # 'crudbuilder',
     'corsheaders',

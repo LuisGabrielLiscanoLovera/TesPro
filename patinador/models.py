@@ -15,12 +15,14 @@ class Patinador(models.Model):
     password       = models.CharField(max_length=100)
     created_at     = models.DateTimeField(auto_now_add=True)
     updated_at     = models.DateTimeField(auto_now=True)
+    
+    
+    btnAcci = models.CharField(max_length=97, blank=True ,default='<button type="button" class="btn btn-outline-light text-center btn-sm btn-block ">Accion</button>' , null=True)
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['id']
         indexes = [
             models.Index(fields=['created_at',]),
             
         ]
     def __str__(self):
         return '%s %s %s %s %s %s %s' % (self.id, self.usuario, self.empresa,self.nom_patinador,self.usuario,self.estatus,self.created_at)
- 

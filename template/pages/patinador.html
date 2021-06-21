@@ -5,7 +5,7 @@
   <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
     
     <center>
-      <h1>Integrantes de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
+      <h1>Patinadores de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
     </center> 
 
 
@@ -19,42 +19,32 @@ data-auto-refresh-silent="true"
 data-auto-refresh-status="true"
 -->    
 <table
-id="table"
+id="patinadorTable"
 data-id-field="id"
 class="table"
 data-toggle="table"
-data-height="460"
 data-detail-view="true"
 data-detail-view-by-click="true"
-data-detail-view-icon="false"
 data-show-columns="true"
 data-search="true"
 data-show-fullscreen="true"        
-
-data-show-refresh="true"
-
-data-always-use-formatter="true"
-data-show-export="true" 
 data-locale="es-SP"
 data-pagination="true"
+data-detail-view-icon="false"
 
-data-url="integrante/integrante-list/">
+data-url="patinador/patinador-list/">
 <div class="row">
   <div class="col-sm-2">
-    <a href="#openModalHijoAddIntegrante"> 
+    <a href="#openModalHijoAddPatinador"> 
       <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar </i>
   </a>
 </div>
 <thead>
   <tr>
-    <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfo"class="text-center">Mas info</th>
-    <th data-field="nombres"   class="text-center">Nombres</th>
-    <th data-field="apellidos" class="text-center">Apellidos</th>
-    <th data-field="cedula"    class="text-center">Cedula</th>
-    <th data-field="num_telf"  class="text-center">Telefono</th>
-    <th data-field="created_at" class="text-center">Fec Ingreso</th>
-    <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccion"class="text-center">Accion</th>
-
+    <th data-field="datosPatinador" class="text-center">datosPatinador</th>
+    <th data-field="nom_patinador" class="text-center">Nombre del patinador</th>
+    <th data-field="estatus" class="text-center">Estatus</th>   
+    <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionPatinador"class="text-center">Accion</th>
   </tr>
 </thead>
 
@@ -71,9 +61,9 @@ data-url="integrante/integrante-list/">
 
 <script>
 
-$('#table').SetEditable();
+$('#patinadorTable').SetEditable();
 
-function DetailFormatterButInfo(index, row) {
+function DetailFormatterButInfoPatinador(index, row) {
 //crea y renderiza la tabla
   return '<br>Correo    :'+row.correo+
          '<br>Sexo      :'+row.sexo+
@@ -81,58 +71,39 @@ function DetailFormatterButInfo(index, row) {
          '<br>Direccion :'+row.direccion+
          '<br>Estatus   :'+row.estatus
 }
-function DetailFormatterButAccion(index,row){
-  return '<form id="editarIntegrante" style="display: inline"  >{% csrf_token %}<hr>'+
+function DetailFormatterButAccionPatinador(index,row){
+  return '<form id="editarIpatinador" style="display: inline"  >{% csrf_token %}<hr>'+
         '<div class="row">'+
-        '<div class="col-sm-3">'+
-            '<div class="form-group"><label>Nombres</label>'+
-            '<input class="form-control"   value="'+row.nombres+'" name="nombresUP"></div>'+
-            '<div class="form-group"><label>Apellidos</label>'+
-            '<input class="form-control" value="'+row.apellidos+'" name="apellidosUP"></div>'+
-            '<div class="form-group"><label>Cedula.</label>'+
-            '<input class="form-control"   value="'+row.cedula+'" name="cedulaUP"></div>'+
-        '</div>'+
+        
         
         '<div class="col-sm-3">'+
             '<div class="form-group"><label>Telefono</label>'+
             '<input class="form-control" value="'+row.num_telf+'" name="num_telfUP"></div>'+
-            '<div class="form-group"><label>Correo</label>'+
-            '<input class="form-control" value="'+row.correo+'" name="correoUP"></div>'+        
-            '<div class="form-group"><label>Direccion</label>'+
-            '<input class="form-control" value="'+row.direccion+'" name="direccionUP"></div>'+
+            
+           
         '</div>'+
         
         '<div class="col-sm-3">'+
-            '<div class="form-group"><label>Abilidad</label>'+
-            '<input class="form-control" value="'+row.abilidad+'" name="abilidadUP"></div>'+       
-            '<div class="form-group"><label>Sexo</label>'+
-            '<select id="sexoUP">'+
-                '<option value="'+row.sexo+'">'+row.sexo+'</option>'+
-                '<option value="H">Hombre</option>'+
-                '<option value="M">Mujer</option>'+
-                '<option value="O">Otro</option>'+                 
-            '</select></div>'+
+            
             '<div class="form-group"><label>Estatus</label>'+
-            '<select id="estatusUP">'+
+            '<select class="form-group" id="estatusUP">'+
                 '<option value="'+row.estatus+'">'+row.estatus+'</option>'+
                 '<option value="A">Activo</option>'+
                 '<option value="I">Inactivo</option>'+
             '</select></div>'+
             '<input type="number" hidden="True" name="idEmpresaUP" value="{{ lastIdEmpresa }}">'+
             '<input type="number" hidden="True" name="idUserUP" value="{{ login_user_id}}">'+
-            '<input type="number" hidden="True" name="idIntegranteUP" value="'+row.id+'"'+           
+            '<input type="number" hidden="True" name="idIpatinadorUP" value="'+row.id+'"'+           
             
-        '</div>'+
-        '<div class="col-sm-6">'+
-          '<input id="EditIntegranteBtn-'+row.id+'" value="Actualizar registro" type="submit" onclick="editIntegrante('+row.id+')" class="btn-lg  btn btn-outline-warning btn-rounded  " >'+ 
+            '</div>'+
+          '<input id="EditIpatinadorBtn-'+row.id+'" value="Actualizar registro" type="submit" onclick="editIpatinador('+row.id+')" class="btn-md  btn btn-outline-warning btn-rounded  " >'+ 
       
         
        
         
-          '</div>'+
 
         '</div>'+
-        '<div class="col-sm-1">'+'<button value="" onclick="remove('+row.id+')"  id="buttonEliminarIntegrante" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>'+
+        '<div class="col-sm-1">'+'<button value="" onclick="remove('+row.id+')"  id="buttonEliminarIpatinador" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>'+
         '</div>'+
         '</form>';
         
@@ -145,16 +116,13 @@ function DetailFormatterButAccion(index,row){
 
 </script>
 
-
-
 </div>  
-  
 </div>
 
 
 
 
-<div id="openModalHijoAddIntegrante" class="modalDialogHijo">
+<div id="openModalHijoAddIpatinador" class="modalDialogHijo">
   <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>            
  
 
@@ -162,11 +130,11 @@ function DetailFormatterButAccion(index,row){
 
 
     
-    <form id="addIntegrante" class="">
+    <form id="addPatinador" class="">
       <div class=" content p-3 mb-2 bg-dar text-white "  rows="3"  >
         <div class="border">
           <center>
-            <h1>Agregar nuevo integrante de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
+            <h1>Agregar nuevo ipatinador de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
           </center>
         
       
@@ -305,9 +273,12 @@ function DetailFormatterButAccion(index,row){
  
   
   
-  <!--create integrante-->
+
+
+
+  <!--create ipatinador-->
 <script>
-  $("form#addIntegrante").submit(function() { 
+  $("form#addIpatinador").submit(function() { 
 
 
 var nombresInput      = $('input[name="nombres"]').val().trim();
@@ -327,11 +298,11 @@ if (nombresInput && apellidos && cedula &&
     ) {
     // Create Ajax Call
     $.ajax({
-        url: '{% url "Integrante_ajax_create" %}',
+        url: '{% url "Patinador_ajax_create" %}',
         data: {
             
-            'nomIntegrante'     : nombresInput,
-            'apeIntegrante'     : apellidos,
+            'nomIpatinador'     : nombresInput,
+            'apeIpatinador'     : apellidos,
             'sexo'              : sexo,
             'cedula'            : cedula,
             'num_telefono'      : num_telefono,
@@ -357,7 +328,7 @@ if (nombresInput && apellidos && cedula &&
 } else {
     alert("All fields must have a valid value.");
 }
-$('form#addIntegrante').trigger("reset");
+$('form#addIpatinador').trigger("reset");
 return false;
 });
 
@@ -365,11 +336,10 @@ return false;
 </script>
 
 
-<!--editar integrante-->
 
+<!--editar ipatinador-->
 <script>
-
-function editIntegrante  (id){
+function editIpatinador  (id){
 
   
 var nombresInputUP      = $('input[name="nombresUP"]').val().trim();
@@ -394,7 +364,7 @@ if (nombresInputUP && apellidosUP && cedulaUP &&
 
     // Create Ajax Call
     $.ajax({
-        url: '{% url "Integrante_ajax_update" %}',
+        url: '{% url "Patinador_ajax_update" %}',
         data: {
             
             'nombresInputUP'    : nombresInputUP,
@@ -408,7 +378,7 @@ if (nombresInputUP && apellidosUP && cedulaUP &&
             'estatusUP'         : estatusUP,
             'idEmpresaUP'       : idEmpresaUP,
             'idUserUP'          : idUserUP,
-            'idIntegranteUP'    : id
+            'idIpatinadorUP'    : id
 
 
             
@@ -425,31 +395,19 @@ if (nombresInputUP && apellidosUP && cedulaUP &&
     alert("All fields must have a valid value.");
 }
 }
-
-
-      
-
-    
-   
 </script>
 
 
 
-
-
-
-
-<!--Delete integrante-->
-
-
+<!--Delete patinador-->
 <script>
- function remove (idIntegrante) {
+ function remove (idIpatinador) {
 
 
   $.ajax({
-            url: '{% url "Integrante_ajax_delete" %}',
+            url: '{% url "Patinador_ajax_delete" %}',
             data: {
-                'id': idIntegrante,
+                'id': idIpatinador,
             },
             dataType: 'json',
             success: function (data) {

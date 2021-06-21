@@ -8,9 +8,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import PatinadorSerializer
 from empresa.models import CambioEmpres
-
+from integrante.serializers import IntegranteSerializer
 # Create your views here.
-
 
 
 
@@ -24,11 +23,16 @@ def apiOverview(request):
 from django.http import JsonResponse
 
 
-@api_view(['GET'])
+@api_view(['GET'])  
 def patinadorList(request):
     lastEm=CambioEmpres.objects.values('lastEm').last().get("lastEm")
-    ipatinador = Patinador.objects.all().filter(empresa_id=lastEm).order_by('-id')
-    serializer = PatinadorSerializer(ipatinador, many=True)
+    #patinador = Patinador.objects.all().filter(empresa_id=lastEm).order_by('-id')
+    patinador  = Patinador.objects.filter(empresa_id=lastEm).order_by('-id')
+    print(patinador)
+    #https://unipython.com/el-administrador-de-django/
+    serializer = PatinadorSerializer(patinador, many=True)
+    print(serializer.data)
+    
     return Response(serializer.data)
 
 

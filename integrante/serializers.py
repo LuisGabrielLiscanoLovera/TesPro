@@ -6,3 +6,6 @@ class IntegranteSerializer(serializers.ModelSerializer):
         model = Integrante
         fields = '__all__'
 
+
+
+

@@ -25,7 +25,6 @@ id="table"
 data-id-field="id"
 class="table"
 data-toggle="table"
-data-height="460"
 data-detail-view="true"
 data-detail-view-by-click="true"
 data-detail-view-icon="false"
@@ -49,13 +48,13 @@ data-url="integrante/integrante-list/">
 </div>
 <thead>
   <tr>
-    <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfo"class="text-center">Mas info</th>
+    <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoIntegrante"class="text-center">Mas info</th>
     <th data-field="nombres"   class="text-center">Nombres</th>
     <th data-field="apellidos" class="text-center">Apellidos</th>
     <th data-field="cedula"    class="text-center">Cedula</th>
     <th data-field="num_telf"  class="text-center">Telefono</th>
     <th data-field="created_at" class="text-center">Fec Ingreso</th>
-    <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccion"class="text-center">Accion</th>
+    <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionIntegrante"class="text-center">Accion</th>
 
   </tr>
 </thead>
@@ -75,7 +74,7 @@ data-url="integrante/integrante-list/">
 
 $('#table').SetEditable();
 
-function DetailFormatterButInfo(index, row) {
+function DetailFormatterButInfoIntegrante(index, row) {
 //crea y renderiza la tabla
   return '<br>Correo    :'+row.correo+
          '<br>Sexo      :'+row.sexo+
@@ -83,7 +82,7 @@ function DetailFormatterButInfo(index, row) {
          '<br>Direccion :'+row.direccion+
          '<br>Estatus   :'+row.estatus
 }
-function DetailFormatterButAccion(index,row){
+function DetailFormatterButAccionIntegrante(index,row){
   return '<form id="editarIntegrante" style="display: inline"  >{% csrf_token %}<hr>'+
         '<div class="row">'+
         '<div class="col-sm-3">'+
