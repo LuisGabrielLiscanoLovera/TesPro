@@ -41,8 +41,9 @@ data-url="patinador/patinador-list/">
 </div>
 <thead>
   <tr>
-    <th data-field="datosPatinador" class="text-center">datosPatinador</th>
-    <th data-field="nom_patinador" class="text-center">Nombre del patinador</th>
+<!--     <th data-field="datosPatinador" class="text-center">datosPatinador</th>
+ -->    <th data-field="nomPatinador" class="text-center">Nombre </th>
+ <th data-field="apellPatinador" class="text-center">Apellido </th>
     <th data-field="estatus" class="text-center">Estatus</th>   
     <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionPatinador"class="text-center">Accion</th>
   </tr>
@@ -63,25 +64,12 @@ data-url="patinador/patinador-list/">
 
 $('#patinadorTable').SetEditable();
 
-function DetailFormatterButInfoPatinador(index, row) {
-//crea y renderiza la tabla
-  return '<br>Correo    :'+row.correo+
-         '<br>Sexo      :'+row.sexo+
-         '<br>Abilidad  :'+row.abilidad+
-         '<br>Direccion :'+row.direccion+
-         '<br>Estatus   :'+row.estatus
-}
+
 function DetailFormatterButAccionPatinador(index,row){
   return '<form id="editarIpatinador" style="display: inline"  >{% csrf_token %}<hr>'+
         '<div class="row">'+
         
-        
-        '<div class="col-sm-3">'+
-            '<div class="form-group"><label>Telefono</label>'+
-            '<input class="form-control" value="'+row.num_telf+'" name="num_telfUP"></div>'+
-            
-           
-        '</div>'+
+     
         
         '<div class="col-sm-3">'+
             
@@ -96,14 +84,14 @@ function DetailFormatterButAccionPatinador(index,row){
             '<input type="number" hidden="True" name="idIpatinadorUP" value="'+row.id+'"'+           
             
             '</div>'+
-          '<input id="EditIpatinadorBtn-'+row.id+'" value="Actualizar registro" type="submit" onclick="editIpatinador('+row.id+')" class="btn-md  btn btn-outline-warning btn-rounded  " >'+ 
+          '<input id="EditPatinadorBtn-'+row.id+'" value="Actualizar registro" type="submit" onclick="editPatinador('+row.id+')" class="btn-md  btn btn-outline-warning btn-rounded  " >'+ 
       
         
        
         
 
         '</div>'+
-        '<div class="col-sm-1">'+'<button value="" onclick="remove('+row.id+')"  id="buttonEliminarIpatinador" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>'+
+        '<div class="col-sm-1">'+'<button value="" onclick="remove('+row.id+')"  id="buttonEliminarPatinador" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>'+
         '</div>'+
         '</form>';
         
@@ -339,26 +327,17 @@ return false;
 
 <!--editar ipatinador-->
 <script>
-function editIpatinador  (id){
+function editPatinador  (id){
 
   
-var nombresInputUP      = $('input[name="nombresUP"]').val().trim();
-var apellidosUP         = $('input[name="apellidosUP"]').val().trim();
-var sexoUP              = document.getElementById("sexoUP").value;
-var cedulaUP            = $('input[name="cedulaUP"]').val().trim();
-var num_telefonoUP      = $('input[name="num_telfUP"]').val().trim();
-var correoUP            = $('input[name="correoUP"]').val().trim();
-var direccionUP         = $('input[name="direccionUP"]').val().trim();
-var abilidadUP          = $('input[name="abilidadUP"]').val().trim();
+
 var estatusUP           = document.getElementById("estatusUP").value;
 var idEmpresaUP         = $('input[name="idEmpresaUP"]').val().trim();
 var idUserUP            = $('input[name="idUserUP"]').val().trim();
 
 
 
-if (nombresInputUP && apellidosUP && cedulaUP &&
-   sexoUP && num_telefonoUP && correoUP &&  direccionUP && 
-   abilidadUP  && estatusUP && idEmpresaUP && idUserUP  
+if ( estatusUP && idEmpresaUP && idUserUP  
     ) {
       alert("idUserUP");
 
@@ -366,15 +345,6 @@ if (nombresInputUP && apellidosUP && cedulaUP &&
     $.ajax({
         url: '{% url "Patinador_ajax_update" %}',
         data: {
-            
-            'nombresInputUP'    : nombresInputUP,
-            'apellidosUP'       : apellidosUP,
-            'sexoUP'            : sexoUP,
-            'cedulaUP'          : cedulaUP,
-            'num_telefonoUP'    : num_telefonoUP,
-            'correoUP'          : correoUP,
-            'direccionUP'       : direccionUP,
-            'abilidadUP'        : abilidadUP,
             'estatusUP'         : estatusUP,
             'idEmpresaUP'       : idEmpresaUP,
             'idUserUP'          : idUserUP,
@@ -401,13 +371,13 @@ if (nombresInputUP && apellidosUP && cedulaUP &&
 
 <!--Delete patinador-->
 <script>
- function remove (idIpatinador) {
+ function remove (idPatinador) {
 
 
   $.ajax({
             url: '{% url "Patinador_ajax_delete" %}',
             data: {
-                'id': idIpatinador,
+                'id': idPatinador,
             },
             dataType: 'json',
             success: function (data) {

@@ -26,10 +26,8 @@ from django.http import JsonResponse
 @api_view(['GET'])  
 def patinadorList(request):
     lastEm=CambioEmpres.objects.values('lastEm').last().get("lastEm")
-    #patinador = Patinador.objects.all().filter(empresa_id=lastEm).order_by('-id')
     patinador  = Patinador.objects.filter(empresa_id=lastEm).order_by('-id')
     print(patinador)
-    #https://unipython.com/el-administrador-de-django/
     serializer = PatinadorSerializer(patinador, many=True)
     print(serializer.data)
     
