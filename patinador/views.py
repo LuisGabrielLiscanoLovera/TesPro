@@ -1,5 +1,7 @@
 import json
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
+from patinador.forms import PatinadorCreationForm
+from integrante.models import Integrante
 from patinador.models import Patinador
 from django.views.generic import TemplateView, View
 from django.http import JsonResponse
@@ -8,8 +10,21 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import PatinadorSerializer
 from empresa.models import CambioEmpres
-from integrante.serializers import IntegranteSerializer
+from django.shortcuts import render
+from django.template.loader import render_to_string
+from django.http import JsonResponse
+
+
 # Create your views here.
+
+
+
+
+    
+
+
+
+
 
 
 
@@ -27,41 +42,25 @@ from django.http import JsonResponse
 def patinadorList(request):
     lastEm=CambioEmpres.objects.values('lastEm').last().get("lastEm")
     patinador  = Patinador.objects.filter(empresa_id=lastEm).order_by('-id')
-    print(patinador)
     serializer = PatinadorSerializer(patinador, many=True)
-    print(serializer.data)
     
     return Response(serializer.data)
 
 
 class CreatePatinador(View):
     
-    def  get(self, request):       
+    def  get(self, request):
         idEmpresa        = request.GET.get('idEmpresa', None)
         idUser           = request.GET.get('idUser', None)
-        nombres          = request.GET.get('nomIpatinador', None)
-        apellido         = request.GET.get('apeIpatinador', None)
-        sexo             = request.GET.get('sexo', None)
-        estatus          = request.GET.get('estatus', None)
-        correo           = request.GET.get('correo', None)
-        cedula           = request.GET.get('cedula', None)
-        num_telf         = request.GET.get('num_telefono', None)
-        direccion        = request.GET.get('direccion', None)
-        abilidad         = request.GET.get('abilidad', None)
-  
-        
+        idIntegrante     = int(request.GET.get('idIntegrante', None))
+        #estatus          = request.GET.get('estatus', None)
+        print("integrante",idIntegrante)     
         obj = Patinador.objects.create(
             empresa_id   = idEmpresa,
             usuario_id   = idUser,
-            nombres      = nombres, 
-            apellidos    = apellido, 
-            sexo         = sexo, 
-            estatus      = estatus, 
-            correo       = correo, 
-            cedula       = cedula, 
-            abilidad     = abilidad,
-            num_telf     = num_telf, 
-            direccion    = direccion, 
+            integrante_id= idIntegrante, 
+            #estatus      = estatus, 
+          
               
         )
   

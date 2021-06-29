@@ -49,7 +49,7 @@ INSTALLED_APPS = [
 
 
 #'django_seed',#borrrrrrarrrrr!
-    
+    'ajax_select',
    # 'crudbuilder',
     'corsheaders',
     'crispy_forms',

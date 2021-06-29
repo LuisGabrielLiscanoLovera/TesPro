@@ -1,0 +1,9 @@
+{% if integrantes %}
+    <ul>
+        {% for integrante in integrantes %}
+        <li>{{ integrante.nombres }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No integrantes found.</p>
+{% endif %}

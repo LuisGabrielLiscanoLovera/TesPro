@@ -36,7 +36,6 @@ class CreateColor(View):
         idEmpresa       = request.GET.get('empresaColor', None)
         idUser          = request.GET.get('idUserColor', None)
        # agregar empresa y usuario
-        print("idEmpresa:      >>>>",idEmpresa,idUser)
         obj = Color.objects.create(
             nom_color      = nom_color,
             codigo_color   = codigo_color,

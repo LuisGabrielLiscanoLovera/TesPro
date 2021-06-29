@@ -24,8 +24,9 @@ class Home(LoginRequiredMixin,TVB):
         RE=Empresa.objects.filter(id=int(idlastEmpresa))
         totalReferencia = Referencia.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
         totalColor      = Color.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
-        totalIntegrante = Integrante.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
+        totalIntegrante = Integrante.objects.all().filter(empresa_id=int(idlastEmpresa))
         totalPatinador  = Patinador.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
+       
         context = super(Home, self).get_context_data(**kwargs)        
         context['id']               = self.kwargs.get('id')
         context['login_user_id']    = self.request.user.pk  # aqui se obtiene el user id
@@ -34,8 +35,10 @@ class Home(LoginRequiredMixin,TVB):
         context['lastIdEmpresa']    = int(idlastEmpresa)    # ids empresas
         context['totalReferencia']  = totalReferencia       # total referencias
         context['totalColor']       = totalColor            # total color
-        context['totalIntegrante']  = totalIntegrante       # total integrante
-        context['totalPatinadores'] = totalPatinador        # total patinador
+        context['totalIntegrante']  = totalIntegrante.count()# total integrante
+        context['totalPatinadores'] = totalPatinador       # total patinador
+        context['allIntegrante']    = totalIntegrante       # all integrante
+
         return context
 
 def cambioEmpresa(request):

@@ -8,4 +8,5 @@ urlpatterns = [
     path('patinador/crud/delete/', DeletePatinador.as_view(), name='Patinador_ajax_delete'),
     path('patinador/crud/Update/', UpdatePatinador.as_view(), name='Patinador_ajax_update'),
 
+
 ]

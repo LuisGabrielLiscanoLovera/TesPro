@@ -3,12 +3,10 @@
 
 <div id="openModalPatinador" class="modalDialogPadre">
   <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
-    
+
     <center>
-      <h1>Patinadores de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
+            <h1>Patinadores de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
     </center> 
-
-
     
 <!--
 
@@ -26,7 +24,7 @@ data-toggle="table"
 data-detail-view="true"
 data-detail-view-by-click="true"
 data-show-columns="true"
-data-search="true"
+data-search="false"
 data-show-fullscreen="true"        
 data-locale="es-SP"
 data-pagination="true"
@@ -35,9 +33,32 @@ data-detail-view-icon="false"
 data-url="patinador/patinador-list/">
 <div class="row">
   <div class="col-sm-2">
-    <a href="#openModalHijoAddPatinador"> 
-      <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar </i>
-  </a>
+    <form id="addPatinador" class="">
+      <div class="" >
+        <div>
+          
+          
+                                  
+              
+            <input type="text" list="BuscarIntegrantes"  name="idIntegrante"  required Placeholder="Buscar integrante.." class="form-control" style="width:300px;">
+                    <datalist id="BuscarIntegrantes">
+                      {% for results in allIntegrante %}
+                              <option hidden="true" value="{{results.id}}">{{results.nombres}}</option>
+                      {% endfor %}
+                    </datalist>
+                    <input type="number" hidden="True" name="idEmpresa" value="{{ lastIdEmpresa }}">
+                    <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">  
+                    <button class="btn btn-outline-primary btn-" type="submit" onclick="location.href='/'">Agregar patinador</button>
+                  
+          
+                    
+     
+            
+         
+        </div>
+      </div>
+       
+   </form>
 </div>
 <thead>
   <tr>
@@ -59,7 +80,7 @@ data-url="patinador/patinador-list/">
 
 
 
-
+<!--table patinador-->
 <script>
 
 $('#patinadorTable').SetEditable();
@@ -110,194 +131,23 @@ function DetailFormatterButAccionPatinador(index,row){
 
 
 
-<div id="openModalHijoAddIpatinador" class="modalDialogHijo">
-  <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>            
- 
-
-
-
-
-    
-    <form id="addPatinador" class="">
-      <div class=" content p-3 mb-2 bg-dar text-white "  rows="3"  >
-        <div class="border">
-          <center>
-            <h1>Agregar nuevo ipatinador de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
-          </center>
-        
-      
-          <div class="col-sm-12">
-          <div class="form-group">
-            <label >Nombres </label>
-            <div class="input-group">
-              <span class="input-group-addon">
-                <i class="fa fa-user"></i>
-              </span>
-              <input class="form-control" type="text" name="nombres" placeholder="Nombres" required>
-            </div>
-          </div>
-          </div>
-          
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label >Apellido</label>
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                <input class="form-control" type="text" name="apellidos"  placeholder="apellidos" required>
-              </div>
-            </div>
-          </div>        
-         
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label >Cedula</label>
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                <input class="form-control" type="text" name="cedula" placeholder="Cedula de identidad" required>
-              </div>
-            </div>
-          </div>        
-
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label>Telefono</label>
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                <input class="form-control" type="text" name="num_telf" placeholder="N° Telefono" required>
-              </div>
-            </div>
-          </div>        
-         
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label >Correo</label>
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                <input class="form-control" type="email" name="correo" placeholder="correo"  required>
-              </div>
-            </div>
-          </div>        
-         
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label >Direccion</label>
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                <input class="form-control" placeholder="direccion" type="text" name="direccion"  required>
-              </div>
-            </div>
-          </div>    
-
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label >Abilidad</label>
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                <input class="form-control" placeholder="abilidad" type="text" name="abilidad"  required>
-              </div>
-            </div>
-          </div>    
-
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label >Sexo</label>
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                <select class="form-control" id="sexo">
-                  <option value="select">Select sexo</option>
-                  <option value="H">Hombre</option>
-                  <option value="M">Mujer</option>
-                  <option value="O">Otro</option>
-                </select>
-              </div>
-            </div>
-          </div>        
-     
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label for="apellidos">Estatus</label>
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-              
-                <select class="form-control" id="estatus">
-                  <option value="select">Select estado</option>
-                  <option value="A">Activo</option>
-                  <option value="I">Inactivo</option>
-                  
-                </select>
-              
-              
-               
-              
-              </div>
-            </div>
-          </div>        
-    
-          <div class="modal-footer">          
-            <input type="number" hidden="True" name="empresaColor" value="{{ lastIdEmpresa }}">
-            <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">  
-            <button class="btn btn-outline-primary form-" type="submit" onclick="location.href='/'">Guardar</button>
-          </div>
-        </div>
-      </div>
-   </div>
-  </form>
- 
-  
-  
-
-
-
-  <!--create ipatinador-->
+ <!--create ipatinador-->
 <script>
-  $("form#addIpatinador").submit(function() { 
+  $("form#addPatinador").submit(function() { 
 
 
-var nombresInput      = $('input[name="nombres"]').val().trim();
-var sexo              = document.getElementById("sexo").value;
-var apellidos         = $('input[name="apellidos"]').val().trim();
-var cedula            = $('input[name="cedula"]').val().trim();
-var num_telefono      = $('input[name="num_telf"]').val().trim();
-var correo            = $('input[name="correo"]').val().trim();
-var direccion         = $('input[name="direccion"]').val().trim();
-var abilidad          = $('input[name="abilidad"]').val().trim();
-var estatus           = document.getElementById("estatus").value;
-var idEmpresa         = $('input[name="empresaColor"]').val().trim();
+var idIntegrante       = $('input[name="idIntegrante"]').val().trim();
+var idEmpresa         = $('input[name="idEmpresa"]').val().trim();
 var idUser            = $('input[name="idUser"]').val().trim();
-if (nombresInput && apellidos && cedula &&
-   sexo && num_telefono && correo &&  direccion && 
-   abilidad  && estatus && idEmpresa && idUser 
+if (idIntegrante &&  idEmpresa && idUser 
     ) {
     // Create Ajax Call
     $.ajax({
         url: '{% url "Patinador_ajax_create" %}',
         data: {
             
-            'nomIpatinador'     : nombresInput,
-            'apeIpatinador'     : apellidos,
-            'sexo'              : sexo,
-            'cedula'            : cedula,
-            'num_telefono'      : num_telefono,
-            'correo'            : correo,
-            'direccion'         : direccion,
-            'abilidad'          : abilidad,
-            'estatus'           : estatus,
+            'idIntegrante'     : idIntegrante,
+         
             'idEmpresa'         : idEmpresa,
             'idUser'            : idUser
             
@@ -316,15 +166,12 @@ if (nombresInput && apellidos && cedula &&
 } else {
     alert("All fields must have a valid value.");
 }
-$('form#addIpatinador').trigger("reset");
+$('form#addPatinador').trigger("reset");
 return false;
 });
 
 
 </script>
-
-
-
 <!--editar ipatinador-->
 <script>
 function editPatinador  (id){
@@ -339,7 +186,6 @@ var idUserUP            = $('input[name="idUserUP"]').val().trim();
 
 if ( estatusUP && idEmpresaUP && idUserUP  
     ) {
-      alert("idUserUP");
 
     // Create Ajax Call
     $.ajax({
@@ -366,9 +212,6 @@ if ( estatusUP && idEmpresaUP && idUserUP
 }
 }
 </script>
-
-
-
 <!--Delete patinador-->
 <script>
  function remove (idPatinador) {
@@ -394,4 +237,4 @@ if ( estatusUP && idEmpresaUP && idUserUP
 
 
 </script>
-</div>
+

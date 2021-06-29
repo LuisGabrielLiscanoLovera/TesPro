@@ -45,7 +45,6 @@ class CreateIntegrante(View):
         nombres          = request.GET.get('nomIntegrante', None)
         apellido         = request.GET.get('apeIntegrante', None)
         sexo             = request.GET.get('sexo', None)
-        estatus          = request.GET.get('estatus', None)
         correo           = request.GET.get('correo', None)
         cedula           = request.GET.get('cedula', None)
         num_telf         = request.GET.get('num_telefono', None)
@@ -59,7 +58,6 @@ class CreateIntegrante(View):
             nombres      = nombres, 
             apellidos    = apellido, 
             sexo         = sexo, 
-            estatus      = estatus, 
             correo       = correo, 
             cedula       = cedula, 
             abilidad     = abilidad,

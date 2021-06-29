@@ -2,6 +2,7 @@ from django.db import models
 from empresa.models import Empresa
 from authapp.models import MyUser as User
 
+
 # Create your models here.
 class Integrante(models.Model):
     usuario    = models.ForeignKey(User, related_name='Integrante', null=False, blank=True,on_delete  = models.CASCADE)
@@ -21,10 +22,10 @@ class Integrante(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
-    btnInfo = models.CharField(max_length=30, blank=True ,default='<button type="button" class="btn btn-outline-light text-center btn-sm btn-block">Info</button>', null=True)
-    btnAcci = models.CharField(max_length=30, blank=True ,default='<button type="button" class="btn btn-outline-light text-center btn-sm btn-block ">Accion</button>' , null=True)
+    btnInfo = models.CharField(max_length=100, blank=True ,default='<button type="button" class="btn btn-outline-light text-center btn-sm btn-block">Info</button>', null=True)
+    btnAcci = models.CharField(max_length=100, blank=True ,default='<button type="button" class="btn btn-outline-light text-center btn-sm btn-block ">Accion</button>' , null=True)
     class Meta:
             ordering = ["nombres"]
 
-    def __str__(self):
-        return '%s %s %s %s %s %s %s %s %s %s %s %s %s' % (self.id, self.usuario, self.empresa,self.sexo,self.estatus,self.nombres,self.apellidos,self.correo,self.cedula,self.num_telf,self.direccion,self.abilidad,self.created_at)
+    def __str__(self):return f"{self.nombres}"
+        #return '%s %s %s %s %s %s %s %s %s %s %s %s %s' % (self.id, self.usuario, self.empresa,self.sexo,self.estatus,self.nombres,self.apellidos,self.correo,self.cedula,self.num_telf,self.direccion,self.abilidad,self.created_at)

@@ -272,28 +272,6 @@ function DetailFormatterButAccionIntegrante(index,row){
             </div>
           </div>        
      
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label for="apellidos">Estatus</label>
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-              
-                <select class="form-control" id="estatus">
-                  <option value="select">Select estado</option>
-                  <option value="A">Activo</option>
-                  <option value="I">Inactivo</option>
-                  
-                </select>
-              
-              
-               
-              
-              </div>
-            </div>
-          </div>        
-    
           <div class="modal-footer">          
             <input type="number" hidden="True" name="empresaColor" value="{{ lastIdEmpresa }}">
             <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">  
@@ -319,12 +297,11 @@ var num_telefono      = $('input[name="num_telf"]').val().trim();
 var correo            = $('input[name="correo"]').val().trim();
 var direccion         = $('input[name="direccion"]').val().trim();
 var abilidad          = $('input[name="abilidad"]').val().trim();
-var estatus           = document.getElementById("estatus").value;
 var idEmpresa         = $('input[name="empresaColor"]').val().trim();
 var idUser            = $('input[name="idUser"]').val().trim();
 if (nombresInput && apellidos && cedula &&
    sexo && num_telefono && correo &&  direccion && 
-   abilidad  && estatus && idEmpresa && idUser 
+   abilidad  &&  idEmpresa && idUser 
     ) {
     // Create Ajax Call
     $.ajax({
@@ -339,7 +316,7 @@ if (nombresInput && apellidos && cedula &&
             'correo'            : correo,
             'direccion'         : direccion,
             'abilidad'          : abilidad,
-            'estatus'           : estatus,
+          
             'idEmpresa'         : idEmpresa,
             'idUser'            : idUser
             

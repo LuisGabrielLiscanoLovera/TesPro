@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.urls import path,include
 from django.contrib.auth.models import User
-from rest_framework import serializers, viewsets, routers
 from segimientoOp.views import SegimientoOp
 from destajo.views import Destajo
 from casino.views import CasinoTemplate
@@ -10,6 +9,7 @@ from despacho.views import Despacho
 from xtarea.views import Xtarea
 from home.views import Home,cambioEmpresa
 from . import views
+
 
 urlpatterns = [
     
@@ -24,6 +24,7 @@ urlpatterns = [
     path('Despacho/', Despacho.as_view(), name='Despacho'),
     path('Xtarea/', Xtarea.as_view(), name='Xtarea'),
     
+
    
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')), #apis rest-framework urls
     
