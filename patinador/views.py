@@ -53,13 +53,13 @@ class CreatePatinador(View):
         idEmpresa        = request.GET.get('idEmpresa', None)
         idUser           = request.GET.get('idUser', None)
         idIntegrante     = int(request.GET.get('idIntegrante', None))
-        #estatus          = request.GET.get('estatus', None)
+        estatus          = 'A'
         print("integrante",idIntegrante)     
         obj = Patinador.objects.create(
             empresa_id   = idEmpresa,
             usuario_id   = idUser,
             integrante_id= idIntegrante, 
-            #estatus      = estatus, 
+            estatus      = estatus, 
           
               
         )
