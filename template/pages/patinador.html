@@ -43,7 +43,7 @@ data-url="patinador/patinador-list/">
             <input type="text" list="BuscarIntegrantes"  name="idIntegrante"  required Placeholder="Buscar integrante.." class="form-control" style="width:300px;">
                     <datalist id="BuscarIntegrantes">
                       {% for results in allIntegrante %}
-                              <option hidden="true" value="{{results.id}}">{{results.nombres}}</option>
+                              <option  value="{{results.id}}">{{results.nombres}}</option>
                       {% endfor %}
                     </datalist>
                     <input type="number" hidden="True" name="idEmpresa" value="{{ lastIdEmpresa }}">

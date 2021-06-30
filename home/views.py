@@ -16,8 +16,9 @@ class Home(LoginRequiredMixin,TVB):
     success_url = '/' 
         
     def get_context_data(self, **kwargs):
-        
         REU      = RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)
+        print("llllllllllllll",REU)
+
         lastEm   = CambioEmpres.objects.values('lastEm').last()
         idlastEmpresa=lastEm.get("lastEm")
         #manejar el error  de last id
@@ -40,7 +41,6 @@ class Home(LoginRequiredMixin,TVB):
         context['allIntegrante']    = totalIntegrante       # all integrante
 
         return context
-
 def cambioEmpresa(request):
     try:CambioEmpres.objects.order_by('-pk')[0].delete()
     except Exception as e:  print(str(e))

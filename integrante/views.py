@@ -50,14 +50,15 @@ class CreateIntegrante(View):
         num_telf         = request.GET.get('num_telefono', None)
         direccion        = request.GET.get('direccion', None)
         abilidad         = request.GET.get('abilidad', None)
-  
+        estatus          =('A')
         
         obj = Integrante.objects.create(
             empresa_id   = idEmpresa,
             usuario_id   = idUser,
             nombres      = nombres, 
             apellidos    = apellido, 
-            sexo         = sexo, 
+            sexo         = sexo,
+            estatus = estatus,
             correo       = correo, 
             cedula       = cedula, 
             abilidad     = abilidad,
