@@ -1,6 +1,7 @@
 from referencia.models import Referencia
 from color.models import Color
-from integrante.models import Integrantefrom patinador.models import Patinador
+from integrante.models import Integrante
+from patinador.models import Patinador
 
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
