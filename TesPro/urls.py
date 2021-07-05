@@ -19,7 +19,6 @@ urlpatterns = [
     path('auth/', include('authapp.urls')),   
     path('SegimientoOp/', SegimientoOp.as_view(), name='SegimientoOp'),
     path('Destajo/', Destajo.as_view(), name='Destajo'),
-    path('Casino/', CasinoTemplate.as_view(), name='Casino'),
     path('Acumulado/', Acumulado.as_view(), name='Acumulado'),
     path('Despacho/', Despacho.as_view(), name='Despacho'),
     path('Xtarea/', Xtarea.as_view(), name='Xtarea'),
@@ -33,7 +32,7 @@ urlpatterns = [
     path('casino/', include('casino.urls')),
     
     
-    path('patinador/', include('patinador.urls')),
+    path('patinador/', include('patinador.urls')),#casi listo 85%
     path('integrante/', include('integrante.urls')),            #listo
     path('referencia/', include('referencia.urls')),            #listo
     path('color/', include('color.urls')),                      #listo.    

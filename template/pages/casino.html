@@ -1,55 +1,174 @@
-{% extends 'base.html' %}
 {% load static %}
-{% block content %}
-<header class="mdc-top-app-bar">
-    <div class="mdc-top-app-bar__row">
-      <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-        
-        <span class="mdc-top-app-bar__title">Casino</span>
-        <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon search-text-field d-none d-md-flex">
-          <i class="material-icons mdc-text-field__icon">search</i>
-          <input class="mdc-text-field__input" id="text-field-hero-input">
-          <div class="mdc-notched-outline">
-            <div class="mdc-notched-outline__leading"></div>
-            <div class="mdc-notched-outline__notch">
-              <label for="text-field-hero-input" class="mdc-floating-label">Search..</label>
-            </div>
-            <div class="mdc-notched-outline__trailing"></div>
-          </div>
-        </div>
-      </div>
-      <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right">
-        <div class="menu-button-container menu-profile d-none d-md-block">
-        
-          <div class="mdc-menu mdc-menu-surface" tabindex="-1">
-            <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
-             
-              <li class="mdc-list-item" role="menuitem">
-                <div class="item-thumbnail item-thumbnail-icon-only">
-                  <i class="mdi mdi-settings-outline text-primary"></i>                      
-                </div>
-                
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="divider d-none d-md-block"></div> 
-       
-    
+<script  src="{% static 'js/bootstrap-table-auto-refresh.js' %}"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 
+<div id="openModalCasino" class="modalDialogPadre">
+  <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
+    
+    <center>
+      <h1>Casino {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1>
+    </center> 
+
+
+    
+<!--
+
+data-show-refresh="true"
+data-auto-refresh="true"
+data-auto-refresh-interval="30"
+data-auto-refresh-silent="true"
+data-auto-refresh-status="true"
+-->    
+<table
+id="table"
+data-id-field="id"
+class="table"
+data-toggle="table"
+data-detail-view="true"
+data-detail-view-by-click="true"
+data-detail-view-icon="false"
+data-show-columns="true"
+data-search="true"
+data-show-fullscreen="true"        
+
+data-show-refresh="true"
+
+data-always-use-formatter="true"
+data-show-export="true" 
+data-locale="es-SP"
+data-pagination="true"
+
+data-url="casino/casino-list/">
+<div class="row">
+
+  <div class="col-sm-2">
+    <form id="addIntegranteCasino" autocomplete="off" class="">
+      <div class="" >
+        <div>
+          
+          
+                                  
+              
+            <input type="text" list="BuscarIntegrantes"  name="idIntegranteCasino"  required Placeholder="Buscar integrante.." class="form-control" style="width:300px;">
+                    <datalist id="BuscarIntegrantes">
+                      {% for results in allIntegrante %}
+                              <option  value="{{results.id}}">{{results.nombres}}</option>
+                      {% endfor %}
+                    </datalist>
+                    <input type="number" hidden="True" name="idEmpresaCasino" value="{{ lastIdEmpresa }}">
+                    <input type="number" hidden="True" name="idUserCasino" value="{{ login_user_id}}">  
+                    
+                    <button class="btn btn-outline-primary btn-" type="submit" onclick="location.href='/'">Agregar integrante casino</button>
+                  
+          
+                    
+     
+            
+         
+        </div>
       </div>
-    </div>
-  </header>
-<div class="mdc-layout-grid">
-<div class="mdc-layout-grid__inner">   
-  
-   
-    
- 
-  
-    
-  </div>
+       
+   </form>
 </div>
 
+<thead>
+  <tr>
+    <!-- <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoCasino"class="text-center">Mas info</th> -->
+    <th data-field="nomIntegrante"   class="text-center">Nombres</th>
+    <th data-field="apelIntegrante" class="text-center">Apellidos</th>
+    <th data-field="deuda"    class="text-center">Gasto casino</th>
+    <!-- <th data-field="cedulaIntegrante"  class="text-center">Importe</th> -->
+    <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionCasino" class="text-center"> Accion</th>
 
-{% endblock %}
+  </tr>
+</thead>
+
+</table>
+
+
+
+
+
+
+
+
+
+
+<script>
+
+$('#table').SetEditable();
+
+function DetailFormatterButInfoCasino(index, row) {
+//crea y renderiza la tabla
+  return '<br>Correo    :'+row.correo+
+         '<br>Sexo      :'+row.sexo+
+         '<br>Abilidad  :'+row.abilidad+
+         '<br>Direccion :'+row.direccion+
+         '<br>Estatus   :'+row.estatus
+}
+function DetailFormatterButAccionCasino(index,row){
+  return '<form id="  " style="display: inline"  >{% csrf_token %}<hr>'+
+        '<div class="row">'+
+          '<div class="col-sm-3">'+
+              '<div class="form-group"><label class="h5">Importe</label>'+
+              '<input class="form-control" placeholder="Monto de recargo" name="importe"></div>'+
+              
+              '<input id="EditIcasinoBtn-'+row.id+'" value="Cargar importe" type="submit" onclick="editIcasino('+row.id+')" class="btn-lg  btn btn-outline-warning btn-rounded form-control " >'+             
+          '</div>'+
+        '</div>'+
+          
+      
+        '</form>';
+        
+        
+}
+
+
+
+
+</script>
+
+ <!--create integrante consumo casino-->
+ <script>
+  $("form#addIntegranteCasino").submit(function() { 
+
+
+var idIntegrante      = $('input[name="idIntegranteCasino"]').val().trim();
+var idEmpresa         = $('input[name="idEmpresaCasino"]').val().trim();
+var idUser            = $('input[name="idUserCasino"]').val().trim();
+
+if (idIntegrante &&  idEmpresa && idUser 
+    ) {
+    // Create Ajax Call
+    $.ajax({
+        url: '{% url "Casino_ajax_create" %}',
+        data: {
+            
+            'idIntegranteCasino'    : idIntegrante,
+            'idEmpresaCasino'       : idEmpresa,
+            'idUserCasino'          : idUser
+
+            
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.user) {
+              appendToUsrTable(data.user);
+            }
+        }
+    });
+
+} else {
+    alert("All fields must have a valid value.");
+}
+$('form#addPatinador').trigger("reset");
+return false;
+});
+
+
+</script>
+
+</div>  
+  
+

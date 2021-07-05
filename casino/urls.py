@@ -1,11 +1,11 @@
 from django.urls import path
-from . import views
+#from casino.views import CreateCasino,DeleteCasino,UpdateCasino
+from .views import casinoList,CreateCasino  
 
 urlpatterns = [
-	path('', views.apiOverview, name="api-overview"),
-	path('casino-list/', views.casinoList, name="casino-list"),
-	path('casino-detail/<str:pk>/', views.casinoDetail, name="casino-detail"),
-	path('casino-create/', views.casinoCreate, name="casino-create"),
-	path('casino-update/<str:pk>/', views.casinoUpdate, name="casino-update"),
-	path('casino-delete/<str:pk>/', views.casinoDelete, name="casino-delete"),
+    path('casino-list/', casinoList, name="casino-list"),
+    path('casino/crud/create/', CreateCasino.as_view(), name='Casino_ajax_create'),
+    #path('Casino/crud/delete/', DeleteCasino.as_view(), name='Casino_ajax_delete'),
+   # path('casino/crud/Update/', UpdateCasino.as_view(), name='Casino_ajax_update'),
+
 ]

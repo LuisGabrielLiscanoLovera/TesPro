@@ -3,6 +3,7 @@ from empresa.models import Empresa
 from authapp.models import MyUser as User
 
 
+
 # Create your models here.
 class Integrante(models.Model):
     usuario    = models.ForeignKey(User, related_name='Integrante', null=False, blank=True,on_delete  = models.CASCADE)
@@ -24,6 +25,7 @@ class Integrante(models.Model):
     
     btnInfo = models.CharField(max_length=100, blank=True ,default='<button type="button" class="btn btn-outline-light text-center btn-sm btn-block">Info</button>', null=True)
     btnAcci = models.CharField(max_length=100, blank=True ,default='<button type="button" class="btn btn-outline-light text-center btn-sm btn-block ">Accion</button>' , null=True)
+    
     class Meta:
             ordering = ["nombres"]
 

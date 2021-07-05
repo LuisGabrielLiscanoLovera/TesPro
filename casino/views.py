@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from .serializers import CasinoSerializer
 from django.contrib.auth.decorators import login_required
 from .models import Casino
+from django.views.generic import View
 
 from django.views.generic.base import TemplateView
 class CasinoTemplate(TemplateView):
@@ -16,10 +17,7 @@ class CasinoTemplate(TemplateView):
 def apiOverview(request):
 	api_urls = {
 		'List':'/Casino-list/',
-		'Detail View':'/Casino-detail/<str:pk>/',
-		'Create':'/Casino-create/',
-		'Update':'/Casino-update/<str:pk>/',
-		'Delete':'/Casino-delete/<str:pk>/',
+	
 		}
 	return Response(api_urls)
 #@login_required(login_url='signin')
@@ -29,7 +27,31 @@ def casinoList(request):
 	serializer = CasinoSerializer(casinos, many=True)
 	return Response(serializer.data)
 
-#@login_required(login_url='signin')
+
+
+
+class CreateCasino(View):
+    
+    def  get(self, request):
+        idEmpresa        = request.GET.get('idEmpresaCasino', None)
+        idUser           = request.GET.get('idUserCasino', None)
+        idIntegrante     = int(request.GET.get('idIntegranteCasino', None))
+        obj = Casino.objects.create(
+            empresa_id   = idEmpresa,
+            usuario_id   = idUser,
+            integrante_id= idIntegrante, 
+            
+          
+              
+        )
+  
+        data = {
+            'user': "user"
+        } 
+        return JsonResponse(data)
+
+
+"""#@login_required(login_url='signin')
 @api_view(['GET'])
 def casinoDetail(request, pk):
 	casinos = Casino.objects.get(id=pk)
@@ -59,3 +81,4 @@ def casinoDelete(request, pk):
 	casino = Casino.objects.get(id=pk)
 	casino.delete()
 	return Response('Item casino succsesfully delete!')
+"""
