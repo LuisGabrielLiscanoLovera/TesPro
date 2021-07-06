@@ -76,7 +76,7 @@ data-url="casino/casino-list/">
   <tr>
     <!-- <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoCasino"class="text-center">Mas info</th> -->
     <th data-field="nomIntegrante"   class="text-center">Nombres</th>
-    <th data-field="apelIntegrante" class="text-center">Apellidos</th>
+    <th data-field="apelIntegrante"  class="text-center">Apellidos</th>
     <th data-field="deuda"    class="text-center">Gasto casino</th>
     <!-- <th data-field="cedulaIntegrante"  class="text-center">Importe</th> -->
     <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionCasino" class="text-center"> Accion</th>
@@ -108,12 +108,13 @@ function DetailFormatterButInfoCasino(index, row) {
          '<br>Estatus   :'+row.estatus
 }
 function DetailFormatterButAccionCasino(index,row){
-  return '<form id="  " style="display: inline"  >{% csrf_token %}<hr>'+
+  return '<form id="editarIntegranteCasino" style="display: inline"  >{% csrf_token %}<hr>'+
         '<div class="row">'+
           '<div class="col-sm-3">'+
               '<div class="form-group"><label class="h5">Importe</label>'+
-              '<input class="form-control" placeholder="Monto de recargo" name="importe"></div>'+
-              
+              '<input class="form-control" type="number" placeholder="Monto de recargo" name="importes"></div>'+
+              '<input type="number" hidden="True" name="idEmpresaUPCasino" value="{{ lastIdEmpresa }}">'+
+              '<input type="number" hidden="True" name="idUserUPCasino" value="{{ login_user_id}}">'+
               '<input id="EditIcasinoBtn-'+row.id+'" value="Cargar importe" type="submit" onclick="editIcasino('+row.id+')" class="btn-lg  btn btn-outline-warning btn-rounded form-control " >'+             
           '</div>'+
         '</div>'+
@@ -168,6 +169,50 @@ return false;
 
 
 </script>
+
+
+
+<script>
+
+  function editIcasino(id){
+var importes                  = $('input[name="importes"]').val().trim();  
+var idEmpresaUPCasino         = $('input[name="idEmpresaUPCasino"]').val().trim();
+var idUserUPCasino            = $('input[name="idUserUPCasino"]').val().trim();
+  
+  alert(idUserUPCasino);
+  if (importes && idEmpresaUPCasino && idUserUPCasino  
+      ) {
+       
+        // Create Ajax Call
+      $.ajax({
+          url: '{% url "Casino_ajax_update" %}',
+          data: {
+              'idEmpresaUPCasino' : idEmpresaUPCasino,
+              'idUserUPCasino'    : idUserUPCasino,
+              'importes'          : importes,
+              'idCasino'          : id
+          },
+          dataType: 'json',
+          success: function (data) {
+              if (data.user) {
+                appendToUsrTable(data.user);
+              }
+          }
+      });
+  
+  } else {
+      alert("All fields must have a valid value.");
+  }
+  }
+  
+  
+        
+  
+      
+     
+  </script>
+  
+
 
 </div>  
   

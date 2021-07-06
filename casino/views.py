@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
@@ -49,6 +50,29 @@ class CreateCasino(View):
             'user': "user"
         } 
         return JsonResponse(data)
+
+
+class UpdateCasino(TemplateView):
+    def  get(self, request):
+        idCasino     = request.GET.get('idCasino', None)
+        idEmpresa    = request.GET.get('idEmpresaUPCasino', None)
+        idUser       = request.GET.get('idUserUPCasino', None)
+        deuda        = request.GET.get('importes',None)
+        print("222222222222222222222222222222222222222222222222",deuda,idCasino,idEmpresa,idUser)
+
+        obj = Casino.objects.get(id=idCasino)
+        obj.empresa_id = idEmpresa
+        obj.usuario_id = idUser       
+        obj.deuda      = deuda 
+        
+        
+
+        
+        try:
+            obj.save()
+            return redirect('home')
+        except Exception as e:  print("reparar peo de cors header crsf token")
+
 
 
 """#@login_required(login_url='signin')
