@@ -28,13 +28,10 @@ data-toggle="table"
 data-detail-view="true"
 data-detail-view-by-click="true"
 data-detail-view-icon="false"
-data-show-columns="true"
 data-search="true"
 data-show-fullscreen="true"        
 
-data-show-refresh="true"
 
-data-always-use-formatter="true"
 data-show-export="true" 
 data-locale="es-SP"
 data-pagination="true"
@@ -42,26 +39,22 @@ data-pagination="true"
 data-url="casino/casino-list/">
 <div class="row">
 
-  <div class="col-sm-2">
+  <div class="col-sm-2 form-group">
     <form id="addIntegranteCasino" autocomplete="off" class="">
+      <input type="number" hidden="True" name="idEmpresaCasino" value="{{ lastIdEmpresa }}">
+      <input type="number" hidden="True" name="idUserCasino" value="{{ login_user_id}}"> 
       <div class="" >
-        <div>
-          
-          
-                                  
-              
-            <input type="text" list="BuscarIntegrantesCasino"  name="idIntegranteCasino"  required Placeholder="Buscar integrante.." class="form-control" style="width:300px;">
+       
+              <input type="text" list="BuscarIntegrantesCasino"  name="idIntegranteCasino"  required Placeholder="Agregar integrante al casino..." class="form-control" style="width:300px;">
                     <datalist id="BuscarIntegrantesCasino">
                       {% for results in allIntegrante %}
                               <option  value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
                       {% endfor %}
                     </datalist>
-                    <input type="number" hidden="True" name="idEmpresaCasino" value="{{ lastIdEmpresa }}">
-                    <input type="number" hidden="True" name="idUserCasino" value="{{ login_user_id}}">  
-                    
-                    <button class="btn btn-outline-primary btn-" type="submit" onclick="location.href='/'">Agregar integrante casino</button>
+       
+                              
+                    <button class="btn btn-outline-primary form" type="submit" onclick="location.href='/'">Cargar integrante</button>
                   
-          
                     
      
             
@@ -77,7 +70,7 @@ data-url="casino/casino-list/">
     <!-- <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoCasino"class="text-center">Mas info</th> -->
     <th data-field="nomIntegrante"   class="text-center">Nombres</th>
     <th data-field="apelIntegrante"  class="text-center">Apellidos</th>
-    <th data-field="deuda"    class="text-center">Gasto casino</th>
+    <th data-field="deuda"    class="text-center">Importe</th>
     <!-- <th data-field="cedulaIntegrante"  class="text-center">Importe</th> -->
 <!--     <th data-field="updated_at" class="text-center">last</th>
  -->    <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionCasino" class="text-center"> Accion</th>
@@ -111,12 +104,16 @@ function DetailFormatterButInfoCasino(index, row) {
 function DetailFormatterButAccionCasino(index,row){
   return '<form id="editarIntegranteCasino" style="display: inline"  >{% csrf_token %}<hr>'+
         '<div class="row">'+
-          '<div class="col-sm-3">'+
-              '<div class="form-group"><label class="h5">Importe</label>'+
+          '<div class="col-sm-3">'+'</div>'+
+          '<div class="col-sm-3">'+'</div>'+
+          '<div class="col-sm-3">'+'</div>'+
+          
+            '<div class="col-sm-3">'+
+              '<div class="form-group"><label class="h5">Agregar Importe</label>'+
               '<input class="form-control" type="number" placeholder="Monto de recargo" name="importes"></div>'+
               '<input type="number" hidden="True" name="idEmpresaUPCasino" value="{{ lastIdEmpresa }}">'+
               '<input type="number" hidden="True" name="idUserUPCasino" value="{{ login_user_id}}">'+
-              '<input id="EditIcasinoBtn-'+row.id+'" value="Cargar importe" type="submit" onclick="editIcasino('+row.id+')" class="btn-lg  btn btn-outline-warning btn-rounded form-control " >'+             
+              '<input id="EditIcasinoBtn-'+row.id+'" value="Cargar importe" type="submit" onclick="editIcasino('+row.id+')" class="btn-lg  btn btn-outline-success btn-rounded form-control " >'+             
           '</div>'+
         '</div>'+
           

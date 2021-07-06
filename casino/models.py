@@ -4,9 +4,9 @@ from empresa.models import Empresa
 from integrante.models import Integrante
 # Create your models here.
 class Casino(models.Model):
-    btnInfoStrin="""<button type="button" class="btn btn-outline-info icofont-info-square text-center btn-sm btn-block"></button>"""
+    btnInfoStrin='<button type="button" class="btn btn-outline-info icofont-info-square text-center btn-sm btn-block"></button>'
     
-    formCasino ="""<button type="button" class="btn btn-outline-info icofont-dollar-true text-center btn-sm btn-block"></button>"""
+    formCasino ='<button type="button" class="btn btn-outline-info icofont-dollar-true text-center btn-sm btn-block"></button>'
     
     
     usuario    = models.ForeignKey(User, related_name='Casino', null=False, blank=True,on_delete  = models.CASCADE)

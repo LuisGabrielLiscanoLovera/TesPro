@@ -2,7 +2,7 @@ from referencia.models import Referencia
 from color.models import Color
 from integrante.models import Integrante
 from patinador.models import Patinador
-
+from casino.models import Casino
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.views.generic.base import TemplateView as TVB
@@ -10,6 +10,8 @@ from django.views.generic import TemplateView, View, DeleteView
 from empresa.models import Empresa,RelacionEmpresa,CambioEmpres
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
+from django.db.models import Sum
+import re
 class Home(LoginRequiredMixin,TVB):
     template_name = "home.html"
     login_url = 'auth/signin/'
@@ -17,7 +19,6 @@ class Home(LoginRequiredMixin,TVB):
         
     def get_context_data(self, **kwargs):
         REU      = RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)
-        print("llllllllllllll",REU)
 
         lastEm   = CambioEmpres.objects.values('lastEm').last()
         idlastEmpresa=lastEm.get("lastEm")
@@ -27,7 +28,10 @@ class Home(LoginRequiredMixin,TVB):
         totalColor      = Color.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
         totalIntegrante = Integrante.objects.all().filter(empresa_id=int(idlastEmpresa))
         totalPatinador  = Patinador.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
-       
+        totalCasino     = Casino.objects.all().filter(empresa_id=int(idlastEmpresa))
+        totalCasino     = totalCasino.aggregate(Sum('deuda'))
+        totalCasino=re.sub("[^0-9]","",str(totalCasino))     
+
         context = super(Home, self).get_context_data(**kwargs)        
         context['id']               = self.kwargs.get('id')
         context['login_user_id']    = self.request.user.pk  # aqui se obtiene el user id
@@ -39,6 +43,7 @@ class Home(LoginRequiredMixin,TVB):
         context['totalIntegrante']  = totalIntegrante.count()# total integrante
         context['totalPatinadores'] = totalPatinador       # total patinador
         context['allIntegrante']    = totalIntegrante       # all integrante
+        context['totalCasino']    = totalCasino       # all integrante
 
         return context
 def cambioEmpresa(request):
@@ -50,7 +55,6 @@ def cambioEmpresa(request):
             Usuario_id = idUser,
             lastEm = idEmpresa
             )
-    print(idUser,idEmpresa)
     return redirect('home')
 
     
