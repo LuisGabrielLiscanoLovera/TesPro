@@ -11,9 +11,9 @@ class Casino(models.Model):
     
     usuario    = models.ForeignKey(User, related_name='Casino', null=False, blank=True,on_delete  = models.CASCADE)
     empresa    = models.ForeignKey(Empresa, related_name='Casino', null=False, blank=False,on_delete=models.CASCADE)
-    integrante = models.ForeignKey(Integrante, related_name='Casino', null=False, blank=False,on_delete=models.CASCADE)
+    integrante = models.OneToOneField(Integrante, related_name='Casino', null=False, blank=False,on_delete=models.CASCADE)
     cantidad   = models.IntegerField(blank=True, null=True)
-    deuda      = models.IntegerField(blank=True, null=True)
+    deuda      = models.IntegerField(blank=True, null=True,default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

@@ -58,11 +58,9 @@ class UpdateCasino(TemplateView):
         idEmpresa    = request.GET.get('idEmpresaUPCasino', None)
         idUser       = request.GET.get('idUserUPCasino', None)
         deuda        = request.GET.get('importes',None)
-        #lasDeuda=Casino.objects.get(id=idCasino).values('deuda')
         lasDeuda=Casino.objects.filter(id=idCasino).values_list('deuda', flat=True)
-        
         lasDeuda=re.sub("[^0-9]","",str(lasDeuda))     
-        print(lasDeuda)
+        print("vvvvvvvvvvvvvvvvvvvvvvv",lasDeuda)
         obj = Casino.objects.get(id=idCasino)
         obj.empresa_id = idEmpresa
         obj.usuario_id = idUser       

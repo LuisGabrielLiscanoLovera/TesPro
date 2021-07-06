@@ -50,10 +50,10 @@ data-url="casino/casino-list/">
           
                                   
               
-            <input type="text" list="BuscarIntegrantes"  name="idIntegranteCasino"  required Placeholder="Buscar integrante.." class="form-control" style="width:300px;">
-                    <datalist id="BuscarIntegrantes">
+            <input type="text" list="BuscarIntegrantesCasino"  name="idIntegranteCasino"  required Placeholder="Buscar integrante.." class="form-control" style="width:300px;">
+                    <datalist id="BuscarIntegrantesCasino">
                       {% for results in allIntegrante %}
-                              <option  value="{{results.id}}">{{results.nombres}}</option>
+                              <option  value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
                       {% endfor %}
                     </datalist>
                     <input type="number" hidden="True" name="idEmpresaCasino" value="{{ lastIdEmpresa }}">
@@ -79,7 +79,8 @@ data-url="casino/casino-list/">
     <th data-field="apelIntegrante"  class="text-center">Apellidos</th>
     <th data-field="deuda"    class="text-center">Gasto casino</th>
     <!-- <th data-field="cedulaIntegrante"  class="text-center">Importe</th> -->
-    <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionCasino" class="text-center"> Accion</th>
+<!--     <th data-field="updated_at" class="text-center">last</th>
+ -->    <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionCasino" class="text-center"> Accion</th>
 
   </tr>
 </thead>
