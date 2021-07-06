@@ -7,7 +7,7 @@ from .serializers import CasinoSerializer
 from django.contrib.auth.decorators import login_required
 from .models import Casino
 from django.views.generic import View
-
+import re
 from django.views.generic.base import TemplateView
 class CasinoTemplate(TemplateView):
      template_name = "pages/casino.html"
@@ -58,12 +58,15 @@ class UpdateCasino(TemplateView):
         idEmpresa    = request.GET.get('idEmpresaUPCasino', None)
         idUser       = request.GET.get('idUserUPCasino', None)
         deuda        = request.GET.get('importes',None)
-        print("222222222222222222222222222222222222222222222222",deuda,idCasino,idEmpresa,idUser)
-
+        #lasDeuda=Casino.objects.get(id=idCasino).values('deuda')
+        lasDeuda=Casino.objects.filter(id=idCasino).values_list('deuda', flat=True)
+        
+        lasDeuda=re.sub("[^0-9]","",str(lasDeuda))     
+        print(lasDeuda)
         obj = Casino.objects.get(id=idCasino)
         obj.empresa_id = idEmpresa
         obj.usuario_id = idUser       
-        obj.deuda      = deuda 
+        obj.deuda      = int(deuda)+int(lasDeuda)
         
         
 
