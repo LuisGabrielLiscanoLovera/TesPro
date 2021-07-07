@@ -7,7 +7,7 @@ from casino.views import CasinoTemplate
 from acumulado.views import Acumulado
 from despacho.views import Despacho
 from xtarea.views import Xtarea
-from home.views import Home,cambioEmpresa
+from home.views import Home,cambioEmpresa,SinEmpresa
 from . import views
 
 
@@ -15,7 +15,9 @@ urlpatterns = [
     
     
     path('admin/', admin.site.urls),
-    path('', Home.as_view(), name='home'),    
+    path('', Home.as_view(), name='home'),
+    path('sinEmpresa', SinEmpresa.as_view(), name='sinEmpresa'),
+
     path('auth/', include('authapp.urls')),   
     path('SegimientoOp/', SegimientoOp.as_view(), name='SegimientoOp'),
     path('Destajo/', Destajo.as_view(), name='Destajo'),
