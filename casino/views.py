@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from .serializers import CasinoSerializer
 from django.contrib.auth.decorators import login_required
 from .models import Casino
+from empresa.models import CambioEmpres
 from django.views.generic import View
 import re
 from django.views.generic.base import TemplateView
@@ -24,11 +25,10 @@ def apiOverview(request):
 #@login_required(login_url='signin')
 @api_view(['GET'])
 def casinoList(request):
-	casinos = Casino.objects.all().order_by('-id')
-	serializer = CasinoSerializer(casinos, many=True)
-	return Response(serializer.data)
-
-
+    lastEm=CambioEmpres.objects.values('lastEm').last().get("lastEm")
+    casinos = Casino.objects.filter(empresa_id=lastEm).order_by('-id')
+    serializer = CasinoSerializer(casinos, many=True)
+    return Response(serializer.data)
 
 
 class CreateCasino(View):
