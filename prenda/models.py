@@ -17,7 +17,6 @@ class Prenda(models.Model):
     
     estutus       = models.CharField(max_length=1,choices=ESTATUS)
     nom_operacion = models.CharField(max_length=20, unique=True)
-    estado        = models.CharField(max_length=20)
     cant_total    = models.IntegerField(blank=True, null=True)
     cant_tallaS   = models.IntegerField(blank=True, null=True)
     cant_tallaM   = models.IntegerField(blank=True, null=True)

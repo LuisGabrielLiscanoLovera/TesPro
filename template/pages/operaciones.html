@@ -1,0 +1,241 @@
+{% load static %}
+
+
+<div id="openModalPoperaciones" class="modalDialogPadre">
+  <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
+
+    <center>
+            <h1>Poperacioneses de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
+    </center> 
+    
+<!--
+
+data-show-refresh="true"
+data-auto-refresh="true"
+data-auto-refresh-interval="30"
+data-auto-refresh-silent="true"
+data-auto-refresh-status="true"
+-->    
+<table
+id="operacionesTable"
+data-id-field="id"
+class="table"
+data-toggle="table"
+data-detail-view="true"
+data-detail-view-by-click="true"
+data-show-columns="true"
+data-search="True"
+data-show-fullscreen="true"        
+data-locale="es-SP"
+data-pagination="true"
+data-detail-view-icon="false"
+
+data-url="operaciones/operaciones-list/">
+<div class="row">
+  <div class="col-sm-2">
+    <form id="addPoperaciones" autocomplete="off" class="">
+      <div class="" >
+        <div>
+          
+          
+                                  
+              
+            <input type="text" list="BuscarIntegrantes"  name="idIntegrante"  required Placeholder="Buscar integrante.." class="form-control" style="width:300px;">
+                    <datalist id="BuscarIntegrantes">
+                      {% for results in allIntegrante %}
+                              <option  value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
+                      {% endfor %}
+                    </datalist>
+                    <input type="number" hidden="True" name="idEmpresa" value="{{ lastIdEmpresa }}">
+                    <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">  
+                    <button class="btn btn-outline-primary btn-" type="submit" onclick="location.href='/'">Agregar poperaciones</button>
+                  
+          
+                    
+     
+            
+         
+        </div>
+      </div>
+       
+   </form>
+</div>
+<thead>
+  <tr>
+<!--     <th data-field="datosPoperaciones" class="text-center">datosPoperaciones</th>
+ -->    <th data-field="nomPoperaciones" class="text-center">Nombre </th>
+ <th data-field="apellPoperaciones" class="text-center">Apellido </th>
+    <th data-field="estatus" class="text-center">Estatus</th>
+    <th data-field="created_at" class="text-center">Fecha </th>   
+    <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionPoperaciones"class="text-center">Accion</th>
+  </tr>
+</thead>
+
+</table>
+
+
+
+
+
+
+
+
+
+<!--table poperaciones-->
+<script>
+
+$('#poperacionesTable').SetEditable();
+
+
+function DetailFormatterButAccionPoperaciones(index,row){
+  return '<form id="editarIpoperaciones" style="display: inline"  >{% csrf_token %}<hr>'+
+        '<div class="row">'+
+        
+     
+        
+        '<div class="col-sm-3">'+
+            
+            '<div class="form-group"><label>Estatus</label>'+
+            '<select class="form-group" id="estatusUP">'+
+                '<option value="'+row.estatus+'">'+row.estatus+'</option>'+
+                '<option value="A">Activo</option>'+
+                '<option value="I">Inactivo</option>'+
+            '</select></div>'+
+            '<input type="number" hidden="True" name="idEmpresaUP" value="{{ lastIdEmpresa }}">'+
+            '<input type="number" hidden="True" name="idUserUP" value="{{ login_user_id}}">'+
+            '<input type="number" hidden="True" name="idIpoperacionesUP" value="'+row.id+'"'+           
+            
+            '</div>'+
+          '<input id="EditPoperacionesBtn-'+row.id+'" value="Actualizar registro" type="submit" onclick="editPoperaciones('+row.id+')" class="btn-md  btn btn-outline-warning btn-rounded  " >'+ 
+      
+        
+       
+        
+
+        '</div>'+
+        '<div class="col-sm-1">'+'<button value="" onclick="remove('+row.id+')"  id="buttonEliminarPoperaciones" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>'+
+        '</div>'+
+        '</form>';
+        
+        
+        
+}
+
+
+
+
+</script>
+
+</div>  
+</div>
+
+
+
+
+ <!--create ipoperaciones-->
+<script>
+  $("form#addOperaciones").submit(function() { 
+
+
+var idIntegrante      = $('input[name="idIntegrante"]').val().trim();
+var idEmpresa         = $('input[name="idEmpresa"]').val().trim();
+var idUser            = $('input[name="idUser"]').val().trim();
+if (idIntegrante &&  idEmpresa && idUser 
+    ) {
+    // Create Ajax Call
+    $.ajax({
+        url: '{% url "Operaciones_ajax_create" %}',
+        data: {
+            
+            'idIntegrante'     : idIntegrante,
+         
+            'idEmpresa'         : idEmpresa,
+            'idUser'            : idUser
+            
+
+
+            
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.user) {
+              appendToUsrTable(data.user);
+            }
+        }
+    });
+
+} else {
+    alert("All fields must have a valid value.");
+}
+$('form#addPoperaciones').trigger("reset");
+return false;
+});
+
+
+</script>
+<!--editar ipoperaciones-->
+<script>
+function editPoperaciones  (id){
+
+  
+
+var estatusUP           = document.getElementById("estatusUP").value;
+var idEmpresaUP         = $('input[name="idEmpresaUP"]').val().trim();
+var idUserUP            = $('input[name="idUserUP"]').val().trim();
+
+
+
+if ( estatusUP && idEmpresaUP && idUserUP  
+    ) {
+
+    // Create Ajax Call
+    $.ajax({
+        url: '{% url "Operaciones_ajax_update" %}',
+        data: {
+            'estatusUP'         : estatusUP,
+            'idEmpresaUP'       : idEmpresaUP,
+            'idUserUP'          : idUserUP,
+            'idIpoperacionesUP' : id
+
+
+            
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.user) {
+              appendToUsrTable(data.user);
+            }
+        }
+    });
+
+} else {
+    alert("All fields must have a valid value.");
+}
+}
+</script>
+<!--Delete poperaciones-->
+<script>
+ function remove (idOperaciones) {
+
+
+  $.ajax({
+            url: '{% url "Poperaciones_ajax_delete" %}',
+            data: {
+                'id': idOperaciones,
+            },
+            dataType: 'json',
+            success: function (data) {
+           
+              window.location.reload();
+
+
+              
+            }
+            });
+}
+
+
+
+
+</script>
+
