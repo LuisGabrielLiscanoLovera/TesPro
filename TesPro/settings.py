@@ -76,6 +76,7 @@ INSTALLED_APPS = [
     'integrante',
     'patinador',
     'prenda',
+    'operacion',
     'casino',
 ]
 

@@ -7,7 +7,7 @@ from authapp.models import MyUser as User
 # Create your models here.
 class Integrante(models.Model):
     usuario    = models.ForeignKey(User, related_name='Integrante', null=False, blank=True,on_delete  = models.CASCADE)
-    empresa    = models.ForeignKey(Empresa, related_name='Integrante', null=False, blank=False,on_delete=models.CASCADE)
+    empresa    = models.ForeignKey(Empresa, related_name='Integrante', null=False, blank=False,on_delete  = models.CASCADE)
     SEXO       = (('H','Hombre'),('M','Mujer'),('O','Otro'))
     ESTATUS    = (('A','Activo'),('I','Inactivo'))
     

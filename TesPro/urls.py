@@ -30,11 +30,11 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')), #apis rest-framework urls
     
     path('tarea/', include('tarea.urls')),    
-    path('prenda/', include('prenda.urls')),
-    path('casino/', include('casino.urls')),
+    #path('prenda/', include('prenda.urls')),
+    path('operacion/', include('operacion.urls')),
     
-    
-    path('patinador/', include('patinador.urls')),#casi listo 85%
+    path('casino/', include('casino.urls')),#casi listo 85%
+    path('patinador/', include('patinador.urls')),              #listo
     path('integrante/', include('integrante.urls')),            #listo
     path('referencia/', include('referencia.urls')),            #listo
     path('color/', include('color.urls')),                      #listo.    
