@@ -5,26 +5,31 @@ from referencia.models import Referencia
 from color.models import Color
 # Create your models here.
 class Operacion(models.Model):
+    btnAccion     = '<button type="button" class="btn btn-outline-info icofont-dollar-true text-center btn-sm btn-block"></button>'
     usuario       = models.ForeignKey(User, related_name='Operacion', null=True, blank=True,on_delete=models.CASCADE)
     empresa       = models.ForeignKey(Empresa, related_name='Operacion', null=False, blank=False,on_delete=models.CASCADE)
     referencia    = models.ForeignKey(Referencia, related_name='Operacion', null=True, blank=True,on_delete=models.CASCADE)
     color         = models.ForeignKey(Color, related_name='Operacion', null=False, blank=False,on_delete=models.CASCADE)
     nom_operacion = models.CharField(max_length=20, unique=True)
-    ESTATUS=(
-        ('A','Activo'),
-        ('C','Cerrado')
-    )
+    ESTATUS=(('A','Activo'),('I','Inactivo'))
+    nota      = models.CharField(max_length=50,blank=True, null=True)
     estatus       = models.CharField(max_length=1,choices=ESTATUS)
-    cant_total    = models.IntegerField(blank=True, null=True)
+    can_total    = models.IntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    btnAcci = models.CharField(max_length=500, blank=True ,default=btnAccion , null=True)
+
    
     class Meta:
-        ordering = ["nom_operacion"]
+        ordering = ['id']
+        indexes = [
+            models.Index(fields=['created_at',]),
+            
+        ]
 
     def __str__(self):
-        return '%s %s %s %s %s %s %s %s ' % (self.id, self.usuario, self.empresa,self.referencia,self.estatus,self.color,self.nom_operacion,self.created_at)
+        return '%s %s %s %s %s %s %s' % ( self.usuario, self.empresa,self.referencia,self.estatus,self.color,self.nom_operacion,self.created_at)
 
 class Talla(models.Model):
     usuario       = models.ForeignKey(User, related_name='Talla', null=True, blank=True,on_delete=models.CASCADE)
@@ -34,7 +39,11 @@ class Talla(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:
-            ordering = ["nom_talla"]
+        ordering = ['id']
+        indexes = [
+            models.Index(fields=['created_at',]),
+            
+        ]
 
     def __str__(self):
         return '%s %s %s %s %s %s ' % (self.id, self.usuario, self.empresa,self.nom_talla,self.nota,self.created_at)
@@ -49,7 +58,11 @@ class CanTalla(models.Model):
     created_at    = models.DateTimeField(auto_now_add=True)
     updated_at    = models.DateTimeField(auto_now=True)
     class Meta:
-            ordering = ["talla"]
+        ordering = ['id']
+        indexes = [
+            models.Index(fields=['created_at',]),
+            
+        ]
 
     def __str__(self):
         return '%s %s %s %s %s %s %s %s ' % (self.id, self.usuario, self.empresa,self.can_talla,self.res_talla,self.talla,self.operacion,self.created_at)

@@ -1,11 +1,11 @@
 from django.db import models
 from integrante.models import Integrante
 from tarea.models import Tarea
-from prenda.models import Prenda
+from operacion.models import Operacion
 # Create your models here.
-from django.contrib.auth.models import User
+from authapp.models import MyUser as User
 class Destajo(models.Model):
-    nom_operacion = models.ForeignKey(Prenda, related_name='Destajo',on_delete=models.CASCADE)
+    nom_operacion = models.ForeignKey(Operacion, related_name='Destajo',on_delete=models.CASCADE)
     tarea         = models.ForeignKey(Tarea, related_name='Destajo',on_delete=models.CASCADE)
     integrante    = models.ForeignKey(Integrante, related_name='Destajo',on_delete=models.CASCADE)
     cantidad      = models.IntegerField(blank=True, null=True)

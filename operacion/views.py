@@ -10,7 +10,7 @@ from django.http import JsonResponse
 from django.utils import (dateformat, formats)
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import *
+from .serializers import OperacionSerializer
 from empresa.models import CambioEmpres
 from django.shortcuts import render
 from django.template.loader import render_to_string
@@ -32,7 +32,7 @@ from django.template.loader import render_to_string
 @api_view(['GET'])
 def apiOverview(request):
 	api_urls = {
-		'List':'/poperacion-list/'
+		'List':'/operacion-list/'
 		}
 	return Response(api_urls)
 #@login_required(login_url='signin')
