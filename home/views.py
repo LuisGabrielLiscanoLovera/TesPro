@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-
+from operacion.models import Operacion,Talla
 from referencia.models import Referencia
 from color.models import Color
 from integrante.models import Integrante
@@ -26,34 +26,38 @@ class Home(LoginRequiredMixin,TVB):
     def get_context_data(self, **kwargs):
         REU      = RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)
         lastEm   = CambioEmpres.objects.values('lastEm').last()
-        print(lastEm,"pppppppppppppppppppppppppppppppp")
         idlastEmpresa=lastEm.get("lastEm")
         #if lastEm == None:return redirect('home')
 
         #else:idlastEmpresa=lastEm.get("lastEm")
         #manejar el error  de last id
         RE=Empresa.objects.filter(id=int(idlastEmpresa))
-        totalReferencia = Referencia.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
-        totalColor      = Color.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
+        totalReferencia = Referencia.objects.all().filter(empresa_id=int(idlastEmpresa))
+        totalColor      = Color.objects.all().filter(empresa_id=int(idlastEmpresa))
         totalIntegrante = Integrante.objects.all().filter(empresa_id=int(idlastEmpresa))
+        allTalla        = Talla.objects.all().filter(empresa_id=int(idlastEmpresa))
+
         totalPatinador  = Patinador.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
+        totalOperacion  = Operacion.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
         totalCasino     = Casino.objects.all().filter(empresa_id=int(idlastEmpresa))
         totalCasino     = totalCasino.aggregate(Sum('deuda'))
         totalCasino=re.sub("[^0-9]","",str(totalCasino))        
-
         context = super(Home, self).get_context_data(**kwargs)        
         context['id']               = self.kwargs.get('id')
         context['login_user_id']    = self.request.user.pk   # aqui se obtiene el user id
         context['nomEmpresa']       = REU                    # nombre de todas las empresa
         context['nomEmpresaU']      = RE                     # nombre de la empresa actual
         context['lastIdEmpresa']    = int(idlastEmpresa)     # ids empresas
-        context['totalReferencia']  = totalReferencia        # total referencias
-        context['totalColor']       = totalColor             # total color
+        context['totalReferencia']  = totalReferencia.count()# total referencias
+        context['totalColor']       = totalColor.count()     # total color
         context['totalIntegrante']  = totalIntegrante.count()# total integrante
         context['totalPatinadores'] = totalPatinador         # total patinador
         context['allIntegrante']    = totalIntegrante        # all integrante
-        context['totalCasino']      = totalCasino            # all integrante
-
+        context['allTalla']         = allTalla               # all talla
+        context['allReferencia']    = totalReferencia        # all referencia
+        context['allColor']         = totalColor             # all color
+        context['totalCasino']      = totalCasino            # total fondo casino
+        context['totalOperacion']   = totalOperacion         # total operacion
         return context
 def cambioEmpresa(request):
     try:CambioEmpres.objects.order_by('-pk')[0].delete()

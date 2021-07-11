@@ -50,20 +50,25 @@ def operacionList(request):
 class CreateOperacion(View):
     
     def  get(self, request):
-        idEmpresa        = request.GET.get('idEmpresa', None)
-        idUser           = request.GET.get('idUser', None)
-        idIntegrante     = int(request.GET.get('idIntegrante', None))
-        estatus          = 'A'
-        print("integrante",idIntegrante)     
+        can_totalOP    = request.GET.get('can_totalOP', None)
+        idReferenciaOP = request.GET.get('idReferenciaOP', None)
+        idEmpresaOP    = int(request.GET.get('idEmpresaOP', None))
+        idColorOP      = int(request.GET.get('idColorOP', None))
+        idUserOP       = int(request.GET.get('idUserOP', None))
+        nomOperacion   = request.GET.get('nomOperacion', None)
+        estatus = 'A'
         obj = Operacion.objects.create(
-            empresa_id   = idEmpresa,
-            usuario_id   = idUser,
-            integrante_id= idIntegrante, 
-            estatus      = estatus, 
+            empresa_id     = idEmpresaOP,
+            usuario_id     = idUserOP,
+            nom_operacion  = nomOperacion, 
+            estatus        = estatus,
+            color_id       = idColorOP,
+            referencia_id  = idReferenciaOP,
+            can_total      = can_totalOP
           
               
         )
-  
+    
         data = {
             'user': "user"
         } 

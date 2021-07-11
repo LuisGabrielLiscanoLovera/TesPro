@@ -5,7 +5,7 @@
   <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
 
     <center>
-            <h1>Poperaciones de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
+            <h1>Operaciones de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
     </center> 
     
 <!--
@@ -33,32 +33,9 @@ data-detail-view-icon="false"
 data-url="operacion/operacion-list/">
 <div class="row">
   <div class="col-sm-2">
-    <form id="addPoperacion" autocomplete="off" class="">
-      <div class="" >
-        <div>
-          
-          
-                                  
-              
-            <input type="text" list="BuscarIntegrantes"  name="idIntegrante"  required Placeholder="Buscar integrante.." class="form-control" style="width:300px;">
-                    <datalist id="BuscarIntegrantes">
-                      {% for results in allIntegrante %}
-                              <option  value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
-                      {% endfor %}
-                    </datalist>
-                    <input type="number" hidden="True" name="idEmpresa" value="{{ lastIdEmpresa }}">
-                    <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">  
-                    <button class="btn btn-outline-primary btn-" type="submit" onclick="location.href='/'">Agregar poperacion</button>
-                  
-          
-                    
-     
-            
-         
-        </div>
-      </div>
-       
-   </form>
+    <a href="#openModalHijoAddOperacion"> 
+      <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar OP </i>
+  </a>
 </div>
 <thead>
   <tr>
@@ -82,11 +59,137 @@ data-url="operacion/operacion-list/">
 
 
 
+</div>  
+</div>
 
 
 
 
-<!--table poperacion-->
+
+
+<div id="openModalHijoAddOperacion" class="modalDialogHijo">
+  <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>            
+ 
+   
+    <form id="addOperacion" autocomplete="off" class="">
+      <div class=" content p-3 mb-2 bg-dar text-white "  rows="3"  >
+        <div class="border">
+          <center>
+            <h1>Agregar nueva OP para {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
+          </center>
+        
+      
+          <div class="col-sm-12">
+          <div class="form-group">
+            <label >Nom. Operacion </label>
+            <div class="input-group">
+              <div class="02"></div>
+              <span class="input-group-addon">
+                <i class="fa fa-user"></i>
+              </span>
+              <input class="form-control" type="text" name="nombreOP" placeholder="Nombre Operacion" required>
+            </div>
+          </div>
+          </div>
+          
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label >Referencia</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+
+                <input type="text" list="ReferenciaSelect"  name="idReferenciaOP"  required Placeholder="Buscar Referencia..." class="form-control" style="width:300px;">
+                <datalist id="ReferenciaSelect">
+                  {% for results in allReferencia %}
+                          <option  value="{{results.id}}">{{results.nom_referencia}}</option>
+                  {% endfor %}
+                </datalist>
+
+
+
+              </div>
+            </div>
+          </div>        
+         
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label >Color</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+
+                <input type="text" list="Color"  name="idColorOp"  required Placeholder="Buscar Color..." class="form-control" style="width:300px;">
+                <datalist id="Color">
+                  {% for results in allColor %}
+                          <option  value="{{results.id}}">{{results.nom_color}}</option>
+                  {% endfor %}
+                </datalist>
+
+
+              </div>
+            </div>
+          </div>        
+
+       
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label >Can Total </label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input class="form-control" type="number" name="can_totalOP" placeholder="Can total Operacion" required>
+              </div>
+            </div>
+            </div>
+      
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label >Descripcion </label>
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="fa fa-user"></i>
+                  </span>
+                  <input class="form-control" type="text" name="NotaOp" placeholder="Nota/Descripcion"> 
+                </div>
+              </div>
+              </div>
+
+          <div class="modal-footer">          
+            <input type="number" hidden="True" name="idEmpresaOP" value="{{ lastIdEmpresa }}">
+            <input type="number" hidden="True" name="idUserOP" value="{{ login_user_id}}">  
+            <button class="btn btn-outline-primary form-" type="submit" onclick="location.href='/'">Guardar</button>
+          </div>
+        </div>
+      </div>
+   </div>
+  </form>
+ 
+  
+  
+  
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="Scripts">
+
+<!--table operacion-->
 <script>
 
 $('#poperacionTable').SetEditable();
@@ -106,9 +209,9 @@ function DetailFormatterButAccionPoperacion(index,row){
                 '<option value="A">Activo</option>'+
                 '<option value="I">Inactivo</option>'+
             '</select></div>'+
-            '<input type="number" hidden="True" name="idEmpresaUP" value="{{ lastIdEmpresa }}">'+
-            '<input type="number" hidden="True" name="idUserUP" value="{{ login_user_id}}">'+
-            '<input type="number" hidden="True" name="idIpoperacionUP" value="'+row.id+'"'+           
+            '<input type="number" hidden="True" name="idEmpresaUPOP" value="{{ lastIdEmpresa }}">'+
+            '<input type="number" hidden="True" name="idUserUPOP" value="{{ login_user_id}}">'+
+            '<input type="number" hidden="True" name="idIpoperacionUPOP" value="'+row.id+'"'+           
             
             '</div>'+
           '<input id="EditPoperacionBtn-'+row.id+'" value="Actualizar registro" type="submit" onclick="editPoperacion('+row.id+')" class="btn-md  btn btn-outline-warning btn-rounded  " >'+ 
@@ -130,32 +233,32 @@ function DetailFormatterButAccionPoperacion(index,row){
 
 
 </script>
-
-</div>  
-</div>
-
-
-
-
- <!--create ipoperacion-->
+ <!--create operacion-->
 <script>
   $("form#addOperacion").submit(function() { 
+var NotaOp       = $('input[name="NotaOp"]').val().trim();
+var can_totalOP       = $('input[name="can_totalOP"]').val().trim();
+var idReferenciaOP    = $('input[name="idReferenciaOP"]').val().trim();
+var idColorOP         = $('input[name="idColorOp"]').val().trim();
+var nomOperacion      = $('input[name="nombreOP"]').val().trim();
+var idEmpresaOP       = $('input[name="idEmpresaOP"]').val().trim();
+var idUserOP          = $('input[name="idUserOP"]').val().trim();
 
-
-var idIntegrante      = $('input[name="idIntegrante"]').val().trim();
-var idEmpresa         = $('input[name="idEmpresa"]').val().trim();
-var idUser            = $('input[name="idUser"]').val().trim();
-if (idIntegrante &&  idEmpresa && idUser 
+if (can_totalOP &&  idReferenciaOP && idColorOP && nomOperacion && idEmpresaOP && idUserOP && NotaOp
     ) {
     // Create Ajax Call
     $.ajax({
         url: '{% url "Operacion_ajax_create" %}',
         data: {
             
-            'idIntegrante'     : idIntegrante,
-         
-            'idEmpresa'         : idEmpresa,
-            'idUser'            : idUser
+            'can_totalOP'    : can_totalOP,
+            'idReferenciaOP' : idReferenciaOP,
+            'idColorOP'      : idColorOP,
+            'nomOperacion'   :nomOperacion,
+            'idEmpresaOP'    :idEmpresaOP,
+            'idUserOP'       :idUserOP,
+            'NotaOp':NotaOp
+
             
 
 
@@ -185,8 +288,8 @@ function editPoperacion  (id){
   
 
 var estatusUP           = document.getElementById("estatusUP").value;
-var idEmpresaUP         = $('input[name="idEmpresaUP"]').val().trim();
-var idUserUP            = $('input[name="idUserUP"]').val().trim();
+var idEmpresaUP         = $('input[name="idEmpresaUPOP"]').val().trim();
+var idUserUP            = $('input[name="idUserUPOP"]').val().trim();
 
 
 
@@ -244,3 +347,4 @@ if ( estatusUP && idEmpresaUP && idUserUP
 
 </script>
 
+</div>
