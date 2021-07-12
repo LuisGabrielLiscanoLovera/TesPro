@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     #usuario
     'authapp',
     #rest-framework crud
+    'talla',
     'color',
     'tarea',
     'referencia',

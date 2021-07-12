@@ -1,10 +1,12 @@
 from django.http import HttpResponseRedirect
-from operacion.models import Operacion,Talla
+from operacion.models import Operacion
+from talla.models import Talla
 from referencia.models import Referencia
 from color.models import Color
 from integrante.models import Integrante
 from patinador.models import Patinador
 from casino.models import Casino
+from tarea.models import Tarea
 from django.shortcuts import redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.views.generic.base import TemplateView as TVB
@@ -36,7 +38,7 @@ class Home(LoginRequiredMixin,TVB):
         totalColor      = Color.objects.all().filter(empresa_id=int(idlastEmpresa))
         totalIntegrante = Integrante.objects.all().filter(empresa_id=int(idlastEmpresa))
         allTalla        = Talla.objects.all().filter(empresa_id=int(idlastEmpresa))
-
+        allTarea        = Tarea.objects.all().filter(empresa_id=int(idlastEmpresa))
         totalPatinador  = Patinador.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
         totalOperacion  = Operacion.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
         totalCasino     = Casino.objects.all().filter(empresa_id=int(idlastEmpresa))
@@ -58,6 +60,9 @@ class Home(LoginRequiredMixin,TVB):
         context['allColor']         = totalColor             # all color
         context['totalCasino']      = totalCasino            # total fondo casino
         context['totalOperacion']   = totalOperacion         # total operacion
+        context['totalTallas']      = allTalla.count()       # total talla
+        context['totalTarea']       = allTarea.count()       # total tarea
+
         return context
 def cambioEmpresa(request):
     try:CambioEmpres.objects.order_by('-pk')[0].delete()

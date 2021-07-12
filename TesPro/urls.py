@@ -32,7 +32,7 @@ urlpatterns = [
     path('tarea/', include('tarea.urls')),    
     #path('prenda/', include('prenda.urls')),
     path('operacion/', include('operacion.urls')),
-    
+    path('talla/', include('talla.urls')),                      #listo.    
     path('casino/', include('casino.urls')),#casi listo 85%
     path('patinador/', include('patinador.urls')),              #listo
     path('integrante/', include('integrante.urls')),            #listo

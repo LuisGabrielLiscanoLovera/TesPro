@@ -31,7 +31,7 @@ from django.http import JsonResponse
 @api_view(['GET'])
 def apiOverview(request):
 	api_urls = {
-		'List':'/ipatinador-list/'
+		'List':'/patinador-list/'
 		}
 	return Response(api_urls)
 #@login_required(login_url='signin')

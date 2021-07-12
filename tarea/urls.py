@@ -1,11 +1,11 @@
 from django.urls import path
-from . import views
+from tarea.views import CreateTarea,DeleteTarea,UpdateTarea,TareaList
 
 urlpatterns = [
-	path('', views.apiOverview, name="api-overview"),
-	path('tarea-list/', views.tareaList, name="tarea-list"),
-	path('tarea-detail/<str:pk>/', views.tareaDetail, name="tarea-detail"),
-	path('tarea-create/', views.tareaCreate, name="tarea-create"),
-	path('tarea-update/<str:pk>/', views.tareaUpdate, name="tarea-update"),
-	path('tarea-delete/<str:pk>/', views.tareaDelete, name="tarea-delete"),
+    path('tarea-list/', TareaList, name="tarea-list"),
+    path('tarea/crud/create/', CreateTarea.as_view(), name='Tarea_ajax_create'),
+    path('tarea/crud/update/', UpdateTarea.as_view(), name='Tarea_ajax_update'),
+    path('tarea/crud/delete/', DeleteTarea.as_view(), name='Tarea_ajax_delete'),
+
+
 ]

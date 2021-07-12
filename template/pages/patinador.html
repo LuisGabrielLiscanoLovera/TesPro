@@ -46,6 +46,7 @@ data-url="patinador/patinador-list/">
                               <option  value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
                       {% endfor %}
                     </datalist>
+                    <input type="password" name="passwordP"   Placeholder="clave patinador" class="form-control" style="width:300px;">
                     <input type="number" hidden="True" name="idEmpresa" value="{{ lastIdEmpresa }}">
                     <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">  
                     <button class="btn btn-outline-primary btn-" type="submit" onclick="location.href='/'">Agregar patinador</button>
