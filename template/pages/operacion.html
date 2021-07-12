@@ -196,13 +196,29 @@ $('#poperacionTable').SetEditable();
 
 
 function DetailFormatterButAccionPoperacion(index,row){
-  return '<form id="editarIpoperacion" style="display: inline"  >{% csrf_token %}<hr>'+
-        '<div class="row">'+
-        
+  return '<div class="row">'+
+          '<div class="col-sm-3 ">'+
+                '<form id="addTallaOP" autocomplete="off" class="border">'+
+                    '<center><div class="">Agregar Talla: '+row.nom_operacion+'</div></center>'+
+                    '<input type="text" list="BuscarTalla"  name="idTalla"  required Placeholder="Buscar talla..." class="form-control" >'+
+                    '<datalist id="BuscarTalla">'+
+                      '{% for results in allTalla %}'+
+                              '<option  value="{{results.id}}">{{results.nom_talla}} {{results.num_talla}}</option>'+
+                      '{% endfor %}'+
+                    '</datalist>'+
+                            '<input type="number"  name="cantTalla"  class="form-control" Placeholder="Cantidad Talla..." >'+
+                            '<input type="number" hidden="True" name="idOperacionTalla" value="'+row.id+'">'+
+                            '<input type="number" hidden="True" name="idEmpresaOPTalla" value="{{ lastIdEmpresa }}">'+
+                            '<input type="number" hidden="True" name="idUserOPTalla" value="{{ login_user_id}}">'+
+                            '<button class="btn btn-outline-primary form-control btn_block" type="submit" onclick="">Guardar</button>'+
+          
+
+                '</form>'+
+           '</div>'+
      
         
         '<div class="col-sm-3">'+
-            
+          '<form id="editarIpoperacion" style="display: inline"  >{% csrf_token %}'+   
             '<div class="form-group"><label>Estatus</label>'+
             '<select class="form-group" id="estatusUP">'+
                 '<option value="'+row.estatus+'">'+row.estatus+'</option>'+
@@ -221,7 +237,7 @@ function DetailFormatterButAccionPoperacion(index,row){
         
 
         '</div>'+
-        '<div class="col-sm-1">'+'<button value="" onclick="remove('+row.id+')"  id="buttonEliminarPoperacion" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>'+
+        '<div class="col-sm-1">'+'<button value="" onclick="removeOP('+row.id+')"  id="buttonEliminarPoperacion" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>'+
         '</div>'+
         '</form>';
         
@@ -323,7 +339,7 @@ if ( estatusUP && idEmpresaUP && idUserUP
 </script>
 <!--Delete poperacion-->
 <script>
- function remove (idOperacion) {
+ function removeOP (idOperacion) {
 
 
   $.ajax({
