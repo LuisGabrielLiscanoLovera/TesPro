@@ -83,41 +83,25 @@ function DetailFormatterButAccionTarea(index,row){
   return '<form id="editarTarea" style="display: inline"  >{% csrf_token %}<hr>'+
         '<div class="row">'+
         '<div class="col-sm-3">'+
-            '<div class="form-group"><label>Nombres</label>'+
-            '<input class="form-control"   value="'+row.nombres+'" name="nombresUP"></div>'+
-            '<div class="form-group"><label>Apellidos</label>'+
-            '<input class="form-control" value="'+row.apellidos+'" name="apellidosUP"></div>'+
-            '<div class="form-group"><label>Cedula.</label>'+
-            '<input class="form-control"   value="'+row.cedula+'" name="cedulaUP"></div>'+
+            '<div class="form-group"><label>Nombre Tarea</label>'+
+            '<input class="form-control"   value="'+row.nom_tarea+'" name="nombreTareaUP"></div>'+
+            '<div class="form-group"><label>Cantidad x minuto</label>'+
+            '<input class="form-control" value="'+row.min_minuto+'" name="minutoXTareaUP"></div>'+
+            '<div class="form-group"><label>Cantidad x hora</label>'+
+            '<input class="form-control"   value="'+row.min_hora+'" name="horaXTareaUP"></div>'+
         '</div>'+
         
+
         '<div class="col-sm-3">'+
-            '<div class="form-group"><label>Telefono</label>'+
-            '<input class="form-control" value="'+row.num_telf+'" name="num_telfUP"></div>'+
-            '<div class="form-group"><label>Correo</label>'+
-            '<input class="form-control" value="'+row.correo+'" name="correoUP"></div>'+        
-            '<div class="form-group"><label>Direccion</label>'+
-            '<input class="form-control" value="'+row.direccion+'" name="direccionUP"></div>'+
-        '</div>'+
-        
-        '<div class="col-sm-3">'+
-            '<div class="form-group"><label>Abilidad</label>'+
-            '<input class="form-control" value="'+row.abilidad+'" name="abilidadUP"></div>'+       
-            '<div class="form-group"><label>Sexo</label>'+
-            '<select id="sexoUP">'+
-                '<option value="'+row.sexo+'">'+row.sexo+'</option>'+
-                '<option value="H">Hombre</option>'+
-                '<option value="M">Mujer</option>'+
-                '<option value="O">Otro</option>'+                 
-            '</select></div>'+
-            '<div class="form-group"><label>Estatus</label>'+
-            '<select id="estatusUP">'+
-                '<option value="'+row.estatus+'">'+row.estatus+'</option>'+
-                '<option value="A">Activo</option>'+
-                '<option value="I">Inactivo</option>'+
-            '</select></div>'+
-            '<input type="number" hidden="True" name="idEmpresaUP" value="{{ lastIdEmpresa }}">'+
-            '<input type="number" hidden="True" name="idUserUP" value="{{ login_user_id}}">'+
+            '<div class="form-group"><label>Precio x unidad</label>'+
+            '<input class="form-control" value="'+row.valor+'" name="valorTareaUP"></div>'+
+            '<div class="form-group"><label>Descripcion</label>'+
+            '<input class="form-control" value="'+row.detalle+'" name="detalleTareaUP"></div>'+        
+           
+           
+            
+            '<input type="number" hidden="True" name="empresaTareaUP" value="{{ lastIdEmpresa }}">'+
+            '<input type="number" hidden="True" name="idUserTareaUP" value="{{ login_user_id}}">'+
             '<input type="number" hidden="True" name="idTareaUP" value="'+row.id+'"'+           
             
         '</div>'+
@@ -218,7 +202,7 @@ function DetailFormatterButAccionTarea(index,row){
          
           <div class="col-sm-12">
             <div class="form-group">
-              <label >detalle</label>
+              <label >Descripcion</label>
               <div class="input-group">
                 <span class="input-group-addon">
                   <i class="fa fa-user"></i>
@@ -301,42 +285,32 @@ return false;
 function editTarea  (id){
 
   
-var nombresInputUP      = $('input[name="nombresUP"]').val().trim();
-var apellidosUP         = $('input[name="apellidosUP"]').val().trim();
-var sexoUP              = document.getElementById("sexoUP").value;
-var cedulaUP            = $('input[name="cedulaUP"]').val().trim();
-var num_telefonoUP      = $('input[name="num_telfUP"]').val().trim();
-var correoUP            = $('input[name="correoUP"]').val().trim();
-var direccionUP         = $('input[name="direccionUP"]').val().trim();
-var abilidadUP          = $('input[name="abilidadUP"]').val().trim();
-var estatusUP           = document.getElementById("estatusUP").value;
-var idEmpresaUP         = $('input[name="idEmpresaUP"]').val().trim();
-var idUserUP            = $('input[name="idUserUP"]').val().trim();
+var nombreTareaUP   = $('input[name="nombreTareaUP"]').val().trim();
+var minutoXTareaUP  = $('input[name="minutoXTareaUP"]').val().trim();
+var horaXTareaUP    = $('input[name="horaXTareaUP"]').val().trim();
+var valorTareaUP    = $('input[name="valorTareaUP"]').val().trim();
+var detalleTareaUP  = $('input[name="detalleTareaUP"]').val().trim();
+var empresaTareaUP  = $('input[name="empresaTareaUP"]').val().trim();
+var idUserTareaUP   = $('input[name="idUserTareaUP"]').val().trim();
 
 
-
-if (nombresInputUP && apellidosUP && cedulaUP &&
-   sexoUP && num_telefonoUP && correoUP &&  direccionUP && 
-   abilidadUP  && estatusUP && idEmpresaUP && idUserUP  
+if (nombreTareaUP && minutoXTareaUP && horaXTareaUP &&
+valorTareaUP && detalleTareaUP && empresaTareaUP &&  idUserTareaUP 
     ) {
-      alert("idUserUP");
+      alert(nombreTareaUP);
 
     // Create Ajax Call
     $.ajax({
         url: '{% url "Tarea_ajax_update" %}',
         data: {
             
-            'nombresInputUP'    : nombresInputUP,
-            'apellidosUP'       : apellidosUP,
-            'sexoUP'            : sexoUP,
-            'cedulaUP'          : cedulaUP,
-            'num_telefonoUP'    : num_telefonoUP,
-            'correoUP'          : correoUP,
-            'direccionUP'       : direccionUP,
-            'abilidadUP'        : abilidadUP,
-            'estatusUP'         : estatusUP,
-            'idEmpresaUP'       : idEmpresaUP,
-            'idUserUP'          : idUserUP,
+            'nombreTareaUP'  : nombreTareaUP,
+            'minutoXTareaUP' : minutoXTareaUP,
+            'horaXTareaUP'   : horaXTareaUP,
+            'valorTareaUP'   : valorTareaUP,
+            'detalleTareaUP' : detalleTareaUP,
+            'empresaTareaUP' : empresaTareaUP,
+            'idUserTareaUP'  : idUserTareaUP,
             'idTareaUP'    : id
 
 

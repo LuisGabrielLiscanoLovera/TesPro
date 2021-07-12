@@ -81,36 +81,23 @@ class DeleteTarea(View):
 
 class UpdateTarea(TemplateView):
     def  get(self, request):
-        idTarea     = request.GET.get('idTareaUP', None)
-        idEmpresa        = request.GET.get('idEmpresaUP', None)
-        idUser           = request.GET.get('idUserUP', None)
-        nombres          = request.GET.get('nombresInputUP', None)
-        apellido         = request.GET.get('apellidosUP', None)
-        sexo             = request.GET.get('sexoUP', None)
-        estatus          = request.GET.get('estatusUP', None)
-        correo           = request.GET.get('correoUP', None)
-        cedula           = request.GET.get('cedulaUP', None)
-        num_telf         = request.GET.get('num_telefonoUP', None)
-        direccion        = request.GET.get('direccionUP', None)
-        abilidad         = request.GET.get('abilidadUP', None)
+        nombreTarea 	 = request.GET.get('nombreTareaUP', None).upper()
+        minutoXTarea	 = int(request.GET.get('minutoXTareaUP', None))
+        horaXTarea  	 = int(request.GET.get('horaXTareaUP', None))
+        valorTarea  	 = int(request.GET.get('valorTareaUP', None))
+        detalleTarea	 = request.GET.get('detalleTareaUP', None)
+        idempresaTarea 	 = int(request.GET.get('empresaTareaUP', None))
+        idUserTarea      = int(request.GET.get('idUserTareaUP', None))
+        idTareaUP        = int(request.GET.get('idTareaUP', None))
         
-      
-        obj = Tarea.objects.get(id=idTarea)
-        obj.empresa_id = idEmpresa
-        obj.usuario_id = idUser
-        obj.nombres    = nombres  
-        obj.apellido   = apellido 
-        obj.sexo       = sexo     
-        obj.estatus    = estatus  
-        obj.correo     = correo   
-        obj.cedula     = cedula   
-        obj.num_telf   = num_telf 
-        obj.direccion  = direccion
-        obj.abilidad   = abilidad 
-        
-        
-
-        
+        obj = Tarea.objects.get(id=idTareaUP)
+        obj.empresa_id = idempresaTarea
+        obj.usuario_id = idUserTarea
+        obj.nom_tarea  = nombreTarea  
+        obj.min_minuto = minutoXTarea 
+        obj.min_hora   = horaXTarea     
+        obj.valor      = valorTarea
+        obj.detalle    = detalleTarea  
         try:
             obj.save()
             return redirect('home')
