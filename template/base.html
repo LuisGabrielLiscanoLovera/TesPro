@@ -495,9 +495,9 @@
 			<div class="mdc-top-app-bar__row">
 			  <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
 				<button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
-				<span class="border text-dark bar__title title ">				 
+				<span class="bar__title title ">				 
 					{% for i in nomEmpresaU %}
-					      {{ i }}
+					      <b><u class="text-dark  title  ">{{ i }}</u></b>
 					{% endfor %}
 					
 				</span>
@@ -527,7 +527,7 @@
 							                     
 						</div>
 						<div class="">
-							<a href="{% url 'signout' %}"><code class="text-danger">Cerrar seccion </code>
+							<a href="{% url 'signout' %}"><class class="text-danger"><u>Cerrar seccion</u>
 								<i class="btn-outline-danger material-icons">exit_to_app</i>              
 							</a>
 							
@@ -544,7 +544,17 @@
 			</div>
 		  </header>
 		  <!-- partial -->
+	
 		  <div class="page-wrapper mdc-toolbar-fixed-adjust">
+			
+			<div class="bg-image" style="
+			background-image: url('{% static 'images/BACKGROUND_14.JPG' %}');
+			height: 150vh;
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			background-size: cover;
+		  ">		
+			
 			<main class="content-wrapper">	  
 				
 
@@ -554,7 +564,7 @@
 		
 			</main>
 
-		
+		  </div>	
 			<!-- partial:partials/_footer.html -->
 			<footer>
 			  <div class="mdc-layout-grid">
