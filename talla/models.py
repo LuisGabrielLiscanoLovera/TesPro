@@ -14,14 +14,14 @@ class Talla(models.Model):
     updated_at    = models.DateTimeField(auto_now=True)
     btnAcci = models.CharField(max_length=150, blank=True ,default='<button type="button" class="btn btn-outline-light text-center btn-sm btn-block ">Accion</button>' , null=True)
     class Meta:
-        ordering = ['id']
+        ordering = ['created_at']
         indexes = [
             models.Index(fields=['created_at',]),
             
         ]
 
     def __str__(self):
-        return '%s %s %s %s %s %s ' % (self.id, self.usuario, self.empresa,self.nom_talla,self.nota,self.created_at)
+        return '%s %s %s %s %s %s ' % (self.id, self.usuario, self.empresa,self.nom_talla,self.num_talla,self.created_at)
     
 class CanTalla(models.Model):
     usuario       = models.ForeignKey(User, related_name='CanTalla', null=True, blank=True,on_delete=models.CASCADE)
@@ -33,7 +33,7 @@ class CanTalla(models.Model):
     created_at    = models.DateTimeField(auto_now_add=True)
     updated_at    = models.DateTimeField(auto_now=True)
     class Meta:
-        ordering = ['id']
+        ordering = ['created_at']
         indexes = [
             models.Index(fields=['created_at',]),
             

@@ -60,7 +60,7 @@ class CreateOperacion(View):
         obj = Operacion.objects.create(
             empresa_id     = idEmpresaOP,
             usuario_id     = idUserOP,
-            nom_operacion  = nomOperacion, 
+            nom_operacion  = "OP-"+nomOperacion, 
             estatus        = estatus,
             color_id       = idColorOP,
             referencia_id  = idReferenciaOP,

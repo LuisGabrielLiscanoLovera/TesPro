@@ -9,7 +9,7 @@ class TallaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CanTallaSerializer(serializers.ModelSerializer):
-    nomTalla=serializers.CharField(source = 'talla.nom_talla')
+#    nomTalla=serializers.CharField(source = 'talla.nom_talla')
 
     class Meta:
         model = CanTalla

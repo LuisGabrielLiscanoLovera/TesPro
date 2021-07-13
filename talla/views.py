@@ -1,13 +1,13 @@
 import json
 from django.shortcuts import render, redirect
 from integrante.models import Integrante
-from talla.models import Talla
+from talla.models import CanTalla, Talla
 from django.views.generic import TemplateView, View
 from django.http import JsonResponse
 from django.utils import (dateformat, formats)
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import TallaSerializer
+from .serializers import TallaSerializer,CanTallaSerializer
 from empresa.models import CambioEmpres
 from django.shortcuts import render
 from django.template.loader import render_to_string
@@ -30,22 +30,37 @@ from django.http import JsonResponse
 @api_view(['GET'])
 def apiOverview(request):
 	api_urls = {
-		'List':'/talla-list/'
+		'List':'/talla-list/',
+        'List':'/tallaOP-list/',
+  
 		}
 	return Response(api_urls)
+
+
+
+
+
 #@login_required(login_url='signin')
 from django.http import JsonResponse
 
-
+#talla
 @api_view(['GET'])  
 def TallaList(request):
     lastEm     = CambioEmpres.objects.values('lastEm').last().get("lastEm")
-    ptalla     = Talla.objects.filter(empresa_id=lastEm).order_by('-id')
-    serializer = TallaSerializer(ptalla, many=True)
+    cantalla   = Talla.objects.filter(empresa_id=lastEm).order_by('-id')
+    serializer = TallaSerializer(cantalla, many=True)
+    
+    return Response(serializer.data)
+#can talla op
+@api_view(['GET'])  
+def TallaOPList(request):
+    lastEm     = CambioEmpres.objects.values('lastEm').last().get("lastEm")
+    ptalla     = CanTalla.objects.filter(empresa_id=lastEm).order_by('-id')
+    serializer = CanTallaSerializer(ptalla, many=True)
     
     return Response(serializer.data)
  
- 
+#create talla 
 class CreateTalla(View):
     def  get(self, request):
         
@@ -67,6 +82,41 @@ class CreateTalla(View):
         } 
         return JsonResponse(data)
 
+#create talla op
+
+class CreateTallaOP(View):
+    def  get(self, request):
+        
+        idTalla          = int(request.GET.get('idTalla', None))
+        cantTalla        = int(request.GET.get('cantTalla', None))
+        idOperacionTalla = int(request.GET.get('idOperacionTalla', None))
+        idEmpresaOPTalla = int(request.GET.get('idEmpresaOPTalla', None))
+        idUserOPTalla    = int(request.GET.get('idUserOPTalla', None))
+        print(idTalla,cantTalla,idOperacionTalla,idEmpresaOPTalla,idUserOPTalla)
+
+        obj = CanTalla.objects.create(
+            empresa_id   = idEmpresaOPTalla,
+            usuario_id   = idUserOPTalla,
+            can_talla    = cantTalla, 
+            talla_id     = idTalla, 
+            operacion_id = idOperacionTalla
+              
+        )
+  
+        data = {
+            'user': "user"
+        } 
+        return JsonResponse(data)
+
+
+
+
+
+
+
+
+
+
 class DeleteTalla(View):
     def  get(self, request):
         id1 = request.GET.get('id', None)
@@ -77,6 +127,14 @@ class DeleteTalla(View):
         return JsonResponse(data)
 
 
+class DeleteTallaOP(View):
+    def  get(self, request):
+        id1 = request.GET.get('id', None)
+        CanTalla.objects.get(id=id1).delete()
+        data = {
+            'deleted': True
+        }
+        return JsonResponse(data)
 
 
 class UpdateTalla(TemplateView):

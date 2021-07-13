@@ -31,7 +31,7 @@ def referenciaList(request):
 class CreateReferencia(View):
     def  get(self, request):
         
-        nom_referencia1 = request.GET.get('nom_referencia', None)
+        nom_referencia1 = request.GET.get('nom_referencia', None).upper()
         descripcion1    = request.GET.get('descripcion', None)
         img1            = request.GET.get('img1', None)
         img2            = request.GET.get('img2', None)

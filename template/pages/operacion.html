@@ -198,12 +198,12 @@ $('#poperacionTable').SetEditable();
 function DetailFormatterButAccionPoperacion(index,row){
   return '<div class="row">'+
           '<div class="col-sm-3 ">'+
-                '<form id="addTallaOP" autocomplete="off" class="border">'+
+                '<form id="addTallaOP-'+row.id+'" autocomplete="off" class="border">{% csrf_token %}'+
                     '<center><div class="">Agregar Talla: '+row.nom_operacion+'</div></center>'+
                     '<input type="text" list="BuscarTalla"  name="idTalla"  required Placeholder="Buscar talla..." class="form-control" >'+
                     '<datalist id="BuscarTalla">'+
                       '{% for results in allTalla %}'+
-                              '<option  value="{{results.id}}">{{results.nom_talla}} {{results.num_talla}}</option>'+
+                              '<option  value="{{results.id}}">{{results.nom_talla}} #{{results.num_talla}}</option>'+
                       '{% endfor %}'+
                     '</datalist>'+
                             '<input type="number"  name="cantTalla"  class="form-control" Placeholder="Cantidad Talla..." >'+
@@ -239,16 +239,68 @@ function DetailFormatterButAccionPoperacion(index,row){
         '</div>'+
         '<div class="col-sm-1">'+'<button value="" onclick="removeOP('+row.id+')"  id="buttonEliminarPoperacion" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>'+
         '</div>'+
-        '</form>';
+        '</form>'+
         
         
         
+'<script>'+
+  ' $("form#addTallaOP-'+row.id+'").submit(function() { '+
+  'var idTalla          = $("input[name=\'idTalla\']").val().trim();'+
+  'var cantTalla        = $("input[name=\'cantTalla\']").val().trim();'+
+  'var idOperacionTalla = $("input[name=\'idOperacionTalla\']").val().trim();'+
+  'var idEmpresaOPTalla = $("input[name=\'idEmpresaOPTalla\']").val().trim();'+
+  'var idUserOPTalla    = $("input[name=\'idUserOPTalla\']").val().trim();'+
+
+'if (idTalla &&  cantTalla && idOperacionTalla && idEmpresaOPTalla && idUserOPTalla'+
+   ') {'+
+
+ '$.ajax({'+
+     'url: "{% url "TallaOP_ajax_create" %}",'+
+   'data: {'+
+
+        '\'idTalla\'    : idTalla,'+
+        '\'cantTalla\'  : cantTalla,'+
+        '\'idOperacionTalla\' : idOperacionTalla,'+
+        '\'idEmpresaOPTalla\' :idEmpresaOPTalla,'+
+        '\'idUserOPTalla\'    :idUserOPTalla'+
+          '},'+
+        
+      'dataType: \'json\','+
+    'success: function (data) {'+
+    'if (data.user) {'+
+    'appendToUsrTable(data.user);'+
+    '}'+
+    '}'+
+    '});'+    
+    '} else {'+
+ '   alert("All fields must have a valid value.");'+
+'}'+
+'$("form#addPoperacion").trigger("reset");'+
+ 'return false;'+
+'});'+
+'</'+'script>';
+      
 }
 
 
 
 
+
+
+
+
+
+
+
+
+
+
 </script>
+
+
+
+
+
  <!--create operacion-->
 <script>
   $("form#addOperacion").submit(function() { 
