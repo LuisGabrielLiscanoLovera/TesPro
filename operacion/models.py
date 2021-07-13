@@ -6,6 +6,7 @@ from color.models import Color
 # Create your models here.
 class Operacion(models.Model):
     btnAccion     = '<button type="button" class="btn btn-outline-light text-center btn-sm btn-block ">Accion</button>'
+    btnInfo     = '<button type="button" class="btn btn-outline-light text-center btn-sm btn-block ">Info</button>'
     usuario       = models.ForeignKey(User, related_name='Operacion', null=True, blank=True,on_delete=models.CASCADE)
     empresa       = models.ForeignKey(Empresa, related_name='Operacion', null=False, blank=False,on_delete=models.CASCADE)
     referencia    = models.ForeignKey(Referencia, related_name='Operacion', null=True, blank=True,on_delete=models.CASCADE)
@@ -19,6 +20,7 @@ class Operacion(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     btnAcci = models.CharField(max_length=300, blank=True ,default=btnAccion , null=True)
+    btnInfo = models.CharField(max_length=300, blank=True ,default=btnInfo , null=True)
 
 
 

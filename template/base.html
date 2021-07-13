@@ -495,10 +495,11 @@
 			<div class="mdc-top-app-bar__row">
 			  <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
 				<button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
-				<span class="mdc-top-app-bar__title title ">				 
+				<span class="border text-dark bar__title title ">				 
 					{% for i in nomEmpresaU %}
 					      {{ i }}
 					{% endfor %}
+					
 				</span>
 				
 							
@@ -526,7 +527,7 @@
 							                     
 						</div>
 						<div class="">
-							<a href="{% url 'signout' %}"><code class="text-light">Cerrar seccion </code>
+							<a href="{% url 'signout' %}"><code class="text-danger">Cerrar seccion </code>
 								<i class="btn-outline-danger material-icons">exit_to_app</i>              
 							</a>
 							
