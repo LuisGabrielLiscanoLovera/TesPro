@@ -85,7 +85,7 @@ function DetailFormatterButInfoIntegrante(index, row) {
 function DetailFormatterButAccionIntegrante(index,row){
   return '<form id="editarIntegrante" style="display: inline"  >{% csrf_token %}<hr>'+
         '<div class="row">'+
-        '<div class="col-sm-3">'+
+        '<div class="mx-sm-3">'+
             '<div class="form-group"><label>Nombres</label>'+
             '<input class="form-control"   value="'+row.nombres+'" name="nombresUP"></div>'+
             '<div class="form-group"><label>Apellidos</label>'+
@@ -94,7 +94,7 @@ function DetailFormatterButAccionIntegrante(index,row){
             '<input class="form-control"   value="'+row.cedula+'" name="cedulaUP"></div>'+
         '</div>'+
         
-        '<div class="col-sm-3">'+
+        '<div class="mx-sm-3">'+
             '<div class="form-group"><label>Telefono</label>'+
             '<input class="form-control" value="'+row.num_telf+'" name="num_telfUP"></div>'+
             '<div class="form-group"><label>Correo</label>'+
@@ -103,7 +103,7 @@ function DetailFormatterButAccionIntegrante(index,row){
             '<input class="form-control" value="'+row.direccion+'" name="direccionUP"></div>'+
         '</div>'+
         
-        '<div class="col-sm-3">'+
+        '<div class="mx-sm-3">'+
             '<div class="form-group"><label>Abilidad</label>'+
             '<input class="form-control" value="'+row.abilidad+'" name="abilidadUP"></div>'+       
             '<div class="form-group"><label>Sexo</label>'+
@@ -158,131 +158,105 @@ function DetailFormatterButAccionIntegrante(index,row){
 <div id="openModalHijoAddIntegrante" class="modalDialogHijo">
   <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>            
  
+<style>
 
+/* h1 {
+	margin: 1em 0 0.5em 0;
+	color: #343434;
+	font-weight: normal;
+	font-family: 'Ultra', sans-serif;   
+	font-size: 36px;
+	line-height: 42px;
+	text-transform: uppercase;
+	text-shadow: 0 2px blue, 0 3px #777;
+} 
+ */
+ h1 {
+text-align: left; 
+font-family: Arial Black; 
+font-weight: bold; font-size: 30px; 
+background: #202020; 
+-webkit-background-clip: text; 
+-moz-background-clip: text; 
+background-clip: text; 
+color: transparent; 
+text-shadow: 0px 3px 3px rgba(255,255,255,0.4),0px -1px 1px rgba(0,0,0,0.3);
+}
+</style>
+ 
+   <h1 name="heading" class="text-center text-muted">Agregar nuevo integrante de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
 
+<form  id="addIntegrante" class="border bg-secondary form-inline">
 
+     
+                
 
-    
-    <form id="addIntegrante" class="">
-      <div class=" content p-3 mb-2 bg-dar text-white "  rows="3"  >
-        <div class="border">
-          <center>
-            <h1>Agregar nuevo integrante de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
-          </center>
-        
-      
-          <div class="col-sm-12">
-          <div class="form-group">
-            <label >Nombres </label>
-            <div class="input-group">
-              <span class="input-group-addon">
-                <i class="fa fa-user"></i>
-              </span>
-              <input class="form-control" type="text" name="nombres" placeholder="Nombres" required>
-            </div>
-          </div>
-          </div>
-          
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label >Apellido</label>
-              <div class="input-group">
+   <div class="form-group mx-sm-3">
+       <label for="nombres" class="sr-only">Nombres</label>
+       <input type="nombres" class="form-control" id="nombres" name="nombres" placeholder="Nombres">
+   </div>
+   <br><br><br> 
+   <div class="form-group mx-sm-3">
+       <label for="apellidos" class="sr-only">Apellidos</label>
+       <input name="apellidos" type="apellidos" class="form-control" id="apellidos" placeholder="Apellidos">
+   </div>
+   <div class="form-group mx-sm-3">
+       <label for="cedula" class="sr-only">Cedula</label>
+      <input name="cedula" type="cedula" class="form-control" id="cedula" placeholder="Cedula">
+   </div>
+   <div class="form-group mx-sm-3">
+       <label for="Tlf" class="sr-only">Tlf</label>
+       <input name="num_telf" type="Tlf" class="form-control" id="Tlf" placeholder="Telefono">
+   </div>
+   <div class="form-group mx-sm-3">
+       <label for="Correo" class="sr-only">Correo</label>
+       <input type="email" name="correo" class="form-control" id="Correo" placeholder="Correo">
+   </div>
+  <div class="form-group mx-sm-3">
+       <label for="direccion" class="sr-only">Direccion</label>
+       <input type="text" name="direccion" class="form-control" id="direccion" placeholder="Direccion">
+   </div>
+   
+    <!--  <div class="form-group mx-sm-3">
+       <label for="abilidad" class="sr-only">Abilidad</label>
+       <input type="text" name="abilidad" class="form-control" id="abilidad" placeholder="Abilidad">
+   </div>
+ -->
+
+<div class="form-group mx-sm-3">
+       <label for="Genero" class="sr-only">Genero</label>
+ <div class="input-group">
                 <span class="input-group-addon">
                   <i class="fa fa-user"></i>
                 </span>
-                <input class="form-control" type="text" name="apellidos"  placeholder="apellidos" required>
-              </div>
-            </div>
-          </div>        
-         
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label >Cedula</label>
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                <input class="form-control" type="text" name="cedula" placeholder="Cedula de identidad" required>
-              </div>
-            </div>
-          </div>        
-
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label>Telefono</label>
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                <input class="form-control" type="text" name="num_telf" placeholder="N° Telefono" required>
-              </div>
-            </div>
-          </div>        
-         
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label >Correo</label>
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                <input class="form-control" type="email" name="correo" placeholder="correo"  required>
-              </div>
-            </div>
-          </div>        
-         
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label >Direccion</label>
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                <input class="form-control" placeholder="direccion" type="text" name="direccion"  required>
-              </div>
-            </div>
-          </div>    
-
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label >Abilidad</label>
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                <input class="form-control" placeholder="abilidad" type="text" name="abilidad"  required>
-              </div>
-            </div>
-          </div>    
-
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label >Sexo</label>
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                <select class="form-control" id="sexo">
+                <select class="form-control" id="Genero">
                   <option value="select">Select sexo</option>
                   <option value="H">Hombre</option>
                   <option value="M">Mujer</option>
                   <option value="O">Otro</option>
                 </select>
-              </div>
-            </div>
-          </div>        
-     
-          <div class="modal-footer">          
-            <input type="number" hidden="True" name="empresaColor" value="{{ lastIdEmpresa }}">
-            <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">  
-            <button class="btn btn-outline-primary form-" type="submit" onclick="location.href='/'">Guardar</button>
-          </div>
-        </div>
-      </div>
+    
+    </div>
+    <div class="form-group mx-sm-5">
+<button type="submit" class="btn btn-success btn-">Confirm</button>
+<br><br><br>
+</div>
    </div>
-  </form>
- 
-  
+<input type="number" hidden="True" name="empresaColor" value="{{ lastIdEmpresa }}">
+<input type="number" hidden="True" name="idUser" value="{{ login_user_id}}"> 
+
+
+
+</div>
+
+
+
+</form>
+
+
+
+
+    
   
   <!--create integrante-->
 <script>
