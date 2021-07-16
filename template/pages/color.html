@@ -2,8 +2,9 @@
     <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
 
       <center>
-        <h1>Colores {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
-      </center>
+<u>        <h1>Colores {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1>
+</u><hr>
+ </center>
 
       
      
@@ -18,7 +19,7 @@
       data-search-text=""
       data-page-size="5"
       data-show-fullscreen="true"        
-      data-show-refresh="true"
+      data-show-refresh="false"
       data-row-style="rowStyle"
       data-checkbox-header="false"
       data-click-to-select="true"
@@ -45,7 +46,7 @@
 
 
 
-        <thead>
+        <thead class="thead-dark">
           <tr>
             <th data-field="state" data-checkbox="true" class="bs-checkbox"></th>
             <th data-field="id">N°-ID</th>

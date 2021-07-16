@@ -6,7 +6,7 @@ from integrante.models import Integrante
 class Casino(models.Model):
     btnInfoStrin='<button type="button" class="btn btn-outline-info icofont-info-square text-center btn-sm btn-block"></button>'
     
-    formCasino ='<button type="button" class="btn btn-outline-light text-center btn-sm btn-block ">Accion</button>'
+    formCasino ='<button type="button" class="btn btn-outline-info text-center btn-sm btn-block ">Accion</button>'
     
     
     usuario    = models.ForeignKey(User, related_name='Casino', null=False, blank=True,on_delete  = models.CASCADE)

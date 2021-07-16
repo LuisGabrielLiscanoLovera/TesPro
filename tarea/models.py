@@ -17,8 +17,8 @@ class Tarea(models.Model):
     detalle       = models.CharField(max_length=150)   
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    btnInfo = models.CharField(max_length=100, blank=True ,default='<button type="button" class="btn    btn-outline-light text-center btn-sm btn-block">Info</button>', null=True)
-    btnAcci = models.CharField(max_length=100, blank=True ,default='<button type="button" class="btn btn-outline-light text-center btn-sm btn-block ">Accion</button>' , null=True)
+    btnInfo = models.CharField(max_length=100, blank=True ,default='<button type="button" class="btn    btn-outline-info text-center btn-sm btn-block">Info</button>', null=True)
+    btnAcci = models.CharField(max_length=100, blank=True ,default='<button type="button" class="btn btn-outline-info text-center btn-sm btn-block ">Accion</button>' , null=True)
 
     def __str__(self):
         return self.nom_tarea

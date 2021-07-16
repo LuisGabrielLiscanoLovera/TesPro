@@ -28,12 +28,12 @@
           </a>
         </div>
         
-        <div class="col-sm-2">
+        <!-- <div class="col-sm-2">
           <div id="">
             <button id="buttonEditar" class="btn btn-outline-warning icofont-ui-edit"><a href="#openModalHijoDos">Editar</a> </button>
           </div>
         </div>
-
+ -->
         <div class="col-sm-2">
           <div id="toolbar">
             <button id="button" class="btn btn-outline-danger icofont-ui-remove"> Eliminar</button>
@@ -42,19 +42,18 @@
         
     </div>
 
-        <thead>                    
+        <thead class="thead-dark">                    
             <tr>
                 <th class="text-center" data-field="state" data-checkbox="true"></th>
                 <!-- <th data-field="id">N°-ID</th> -->
                 <th class="text-center" data-field="nom_referencia">Nombre Referencia <i class="icofont-atom"></i></th>
                 <th class="text-center" data-field="descripcion">Descripcion de Referencia <i   class="icofont-brand-appstore"></i></th>
-                <th class="text-center">Imagen 1
-                  <img data-field="fotoPrendaUno">
-                  </th>
-
+             <!--   <th data-field="fotoPrendaUno" >Imagen 1
+                 
+                </th>
                
 
-                <th class="text-center" data-field="fotoPrendaDos">Imagen 1  <i class="icofont-image"></i></th>
+                <th class="text-center" data-field="fotoPrendaDos">Imagen 1  <i class="icofont-image"></i></th> -->
                 <th class="text-center" data-field="created_at">Fecha Creada <i class=""></i></th>
                 
             </tr>
@@ -104,7 +103,7 @@
                 </div>
               </div>
             </div>        
-            <div class="col-sm-12">
+     <!--          <div class="col-sm-12">
               <div class="form-group">
                 <label for="modal_codigo_color">Img1</label>
                 <div class="input-group">
@@ -115,7 +114,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-12">
+          <div class="col-sm-12">
               <div class="form-group">
                 <label for="modal_codigo_color">Img2</label>
                 <div class="input-group">
@@ -126,7 +125,7 @@
                 </div>
               </div>
             </div>
-          
+           -->
             <div class="modal-footer">          
               <input type="number" hidden="True" name="empresa" value="{{ lastIdEmpresa }}">
               <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">  
@@ -150,7 +149,7 @@
           <div class="content text-light bg-dar">
             <div class="border">
               <center>
-                <h1>Editar referencia {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
+                <u><h1>Editar referencia {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1></u><hr>
               </center>
               
                 <div class="col-sm-12">
@@ -178,19 +177,7 @@
                     </div>
                   </div>
                 </div>
-                 <div class="col-sm-12">
-                  <div class="form-group">
-                    <label for="img1">img1</label>                      
-                      <input class="form-control-file" name="img1UP" type="file">                   
-                  </div>
-                </div>
-                <div class="col-sm-12">
-                  <div class="form-group">
-                    <label for="img2">img2</label>                      
-                      <input  class="form-control-file" name="img2UP" type="file">                   
-                  </div>
-                </div>         
-              
+                
                   
 
                 
@@ -240,14 +227,12 @@
 $("form#editReferencia").submit(function() {
 var nom_referenciaInputUP = $('input[name="nom_referenciaUP"]').val().trim();
 var descripcionInputUP = $('input[name="descripcionUP"]').val().trim();
-var img1InputUP = $('input[name="img1UP"]').val().trim();
 
 
-var img2InputUP = $('input[name="img2UP"]').val().trim();
 var idEmpresaInputUP = $('input[name="empresaUP"]').val().trim();
 var idUserUP    = $('input[name="idUserUP"]').val().trim();
 
-if (nom_referenciaInputUP && descripcionInputUP && img1InputUP && img2InputUP && idEmpresaInputUP && idUserUP && idss) {
+if (nom_referenciaInputUP && descripcionInputUP   && idEmpresaInputUP && idUserUP && idss) {
     // Create Ajax Call
     $.ajax({
         url: '{% url "Referencia_ajax_update" %}',
@@ -255,8 +240,8 @@ if (nom_referenciaInputUP && descripcionInputUP && img1InputUP && img2InputUP &&
             'idReferencia':idss,
             'nom_referenciaUP': nom_referenciaInputUP,
             'descripcionUP': descripcionInputUP,
-            'img1UP': img1InputUP,
-            'img2UP': img2InputUP,
+          /*   'img1UP': img1InputUP,
+            'img2UP': img2InputUP, */
             'empresaUP':idEmpresaInputUP,
             'idUserUP':idUserUP
             
@@ -265,7 +250,7 @@ if (nom_referenciaInputUP && descripcionInputUP && img1InputUP && img2InputUP &&
         dataType: 'json',
         success: function (data) {
             if (data.editMsj) {
-              alert("passsssssssssssssssssssssssssssssss");
+              console.log("passsssssssssssssssssssssssssssssss");
             }
         }
     });
@@ -331,11 +316,10 @@ return false;
 
 var nom_referenciaInput = $('input[name="nom_referencia"]').val().trim();
 var descripcionInput = $('input[name="descripcion"]').val().trim();
-var img1Input = $('input[name="img1"]').val().trim();
-var img2Input = $('input[name="img2"]').val().trim();
+
 var idEmpresaInput = $('input[name="empresa"]').val().trim();
 var idUser    = $('input[name="idUser"]').val().trim();
-if (nom_referenciaInput && descripcionInput && img1Input && img2Input && idEmpresaInput && idUser) {
+if (nom_referenciaInput && descripcionInput  && idEmpresaInput && idUser) {
     // Create Ajax Call
     $.ajax({
         url: '{% url "Referencia_ajax_create" %}',
@@ -343,8 +327,7 @@ if (nom_referenciaInput && descripcionInput && img1Input && img2Input && idEmpre
             
             'nom_referencia': nom_referenciaInput,
             'descripcion': descripcionInput,
-            'img1': img1Input,
-            'img2': img2Input,
+            
             'empresa':idEmpresaInput,
             'idUser':idUser
             

@@ -33,8 +33,8 @@ class CreateReferencia(View):
         
         nom_referencia1 = request.GET.get('nom_referencia', None).upper()
         descripcion1    = request.GET.get('descripcion', None)
-        img1            = request.GET.get('img1', None)
-        img2            = request.GET.get('img2', None)
+        #img1            = request.GET.get('img1', None)
+        #img2            = request.GET.get('img2', None)
         idEmpresa       = request.GET.get('empresa', None)
         idUser          = request.GET.get('idUser', None)
        # agregar empresa y usuario
@@ -43,8 +43,8 @@ class CreateReferencia(View):
             
             nom_referencia = nom_referencia1,
             descripcion    = descripcion1,
-            fotoPrendaUno  = img1,
-            fotoPrendaDos  = img2,
+            #fotoPrendaUno  = img1,
+            #fotoPrendaDos  = img2,
             empresa_id     = idEmpresa,
             usuario_id     = idUser,            
         )
@@ -75,15 +75,13 @@ class UpdateReferencia(TemplateView):
         idReferencia    = request.GET.get('idReferencia', None)
         nom_referencia2 = request.GET.get('nom_referenciaUP', None)
         descripcion2    = request.GET.get('descripcionUP', None)
-        img1            = request.GET.get('img1UP', None)
-        img2            = request.GET.get('img2UP', None)
+      
         idEmpresa       = request.GET.get('empresaUP', None)
         idUser          = request.GET.get('idUserUP', None)
         obj = Referencia.objects.get(id=idReferencia)
         obj.nom_referencia = nom_referencia2
         obj.descripcion = descripcion2
-        obj.img1 = img1
-        obj.img2 = img2
+       
         obj.empresa_id = idEmpresa
         obj.usuario_id = idUser
         try:

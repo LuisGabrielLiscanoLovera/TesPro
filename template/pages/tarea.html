@@ -7,8 +7,8 @@
   <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
     
     <center>
-      <h1>Tareas {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
-    </center> 
+<u>      <h1>Tareas {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1>
+</u><hr> </center> 
 
 
     
@@ -46,7 +46,7 @@ data-url="tarea/tarea-list/">
       <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar </i>
   </a>
 </div>
-<thead>
+<thead class="thead-dark">
   <tr>
     <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoTarea"class="text-center">Mas info</th>
     <th data-field="nom_tarea"   class="text-center">Nombre Tarea</th>

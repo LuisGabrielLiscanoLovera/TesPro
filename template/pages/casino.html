@@ -1,4 +1,9 @@
 {% load static %}
+
+
+
+
+
 <script  src="{% static 'js/bootstrap-table-auto-refresh.js' %}"></script>
 <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
@@ -7,8 +12,9 @@
   <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
     
     <center>
-      <h1>Casino {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
-    </center> 
+     <u> <h1>Casino {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1></u><hr>
+    </center> <br>
+    <h6 class="" style="text-align: right;"><u>Importe total {{totalCasino}}</u></h5>
 
 
     
@@ -39,21 +45,21 @@ data-pagination="true"
 data-url="casino/casino-list/">
 <div class="row">
 
-  <div class="col-sm-2 form-group">
-    <form id="addIntegranteCasino" autocomplete="off" class="">
+  <div class="">
+    <form id="addIntegranteCasino" autocomplete="off" class="form-inline">
       <input type="number" hidden="True" name="idEmpresaCasino" value="{{ lastIdEmpresa }}">
       <input type="number" hidden="True" name="idUserCasino" value="{{ login_user_id}}"> 
-      <div class="" >
+      <div class="col-sm-12 form-group" >
        
-              <input type="text" list="BuscarIntegrantesCasino"  name="idIntegranteCasino"  required Placeholder="Agregar integrante al casino..." class="form-control" style="width:300px;">
+              <input type="text" list="BuscarIntegrantesCasino"  name="idIntegranteCasino"  required Placeholder="integrante al casino..." class="form-control " >
                     <datalist id="BuscarIntegrantesCasino">
                       {% for results in allIntegrante %}
                               <option  value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
                       {% endfor %}
                     </datalist>
-       
-                              
-                    <button class="btn btn-outline-primary form" type="submit" onclick="location.href='/'">Cargar integrante</button>
+      </div>
+            <div class="col-md-12">                  
+                    <button class="btn btn-outline-primary form-group" type="submit" onclick="location.href='/'">Cargar integrante</button>
                   
                     
      
@@ -61,11 +67,14 @@ data-url="casino/casino-list/">
          
         </div>
       </div>
-       
+  
+
+      
    </form>
+   
 </div>
 
-<thead>
+<thead class="thead-dark">
   <tr>
     <!-- <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoCasino"class="text-center">Mas info</th> -->
     <th data-field="nomIntegrante"   class="text-center">Nombres</th>
@@ -78,6 +87,7 @@ data-url="casino/casino-list/">
 
   </tr>
 </thead>
+
 
 </table>
 

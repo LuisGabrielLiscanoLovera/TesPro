@@ -5,7 +5,10 @@
   <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
 
     <center>
-            <h1>Patinadores de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
+<u>
+  <h1>Patinadores de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1>
+
+</u><hr>
     </center> 
     
 <!--
@@ -40,13 +43,13 @@ data-url="patinador/patinador-list/">
           
                                   
               
-            <input type="text" list="BuscarIntegrantes"  name="idIntegrante"  required Placeholder="Buscar integrante.." class="form-control" style="width:300px;">
+            <input type="text" list="BuscarIntegrantes"  name="idIntegrante"  required Placeholder="Integrante..." class="form-control" style="width:150px;">
                     <datalist id="BuscarIntegrantes">
                       {% for results in allIntegrante %}
                               <option  value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
                       {% endfor %}
                     </datalist>
-                    <input type="password" name="passwordP"   Placeholder="clave patinador" class="form-control" style="width:300px;">
+                    <input type="password" name="passwordP"   Placeholder="clave patinador" class="form-control" style="width:150px;">
                     <input type="number" hidden="True" name="idEmpresa" value="{{ lastIdEmpresa }}">
                     <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">  
                     <button class="btn btn-outline-primary btn-" type="submit" onclick="location.href='/'">Agregar patinador</button>
@@ -61,7 +64,7 @@ data-url="patinador/patinador-list/">
        
    </form>
 </div>
-<thead>
+<thead class="thead-dark">
   <tr>
 <!--     <th data-field="datosPatinador" class="text-center">datosPatinador</th>
  -->    <th data-field="nomPatinador" class="text-center">Nombre </th>

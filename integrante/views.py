@@ -72,7 +72,6 @@ class CreateIntegrante(View):
 
 class DeleteIntegrante(View):
     def  get(self, request):
-        print("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
         id1 = request.GET.get('id', None)
         Integrante.objects.get(id=id1).delete()
         data = {

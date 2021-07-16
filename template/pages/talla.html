@@ -5,7 +5,7 @@
   <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
 
     <center>
-            <h1>Talla registrada de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
+            <u><h1>Talla registrada de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1></u><hr><br><br>
     </center> 
     
 <!--
@@ -16,10 +16,27 @@ data-auto-refresh-interval="30"
 data-auto-refresh-silent="true"
 data-auto-refresh-status="true"
 -->    
+
+<div class="row">
+<div class="col-md-3">
+<form id="addTalla" autocomplete="off" class="">
+  <div class="col-sm-12" >
+    <div>
+      <input type="text" name="nomTalla"  required Placeholder="Nombre talla..." class="form-control" style="width:15;">
+      <input type="number" name="numTalla"   Placeholder="Numero de talla..." class="form-control" style="width:15;">      
+      <input type="number" hidden="True" name="idEmpresaTalla" value="{{ lastIdEmpresa }}">
+      <input type="number" hidden="True" name="idUserTalla" value="{{ login_user_id}}">  
+      <button class="btn form-control btn-outline-primary btn-" type="submit" onclick="location.href='/'">Agregar talla</button>
+    </div>
+  </div>
+   
+</form>
+</div>
+<div class="col-md-6">
 <table
 id="TallaTable"
 data-id-field="id"
-class="table"
+class="table table-sm"
 data-toggle="table"
 data-detail-view="true"
 data-detail-view-by-click="true"
@@ -32,21 +49,9 @@ data-detail-view-icon="false"
 
 data-url="talla/talla-list/">
 
-<div class="row">
-  <form id="addTalla" autocomplete="off" class="">
-    <div class="" >
-      <div>
-        <input type="text" name="nomTalla"  required Placeholder="Nombre talla..." class="form-control" style="width:300px;">
-        <input type="number" name="numTalla"   Placeholder="Numero de talla..." class="form-control" style="width:300px;">      
-        <input type="number" hidden="True" name="idEmpresaTalla" value="{{ lastIdEmpresa }}">
-        <input type="number" hidden="True" name="idUserTalla" value="{{ login_user_id}}">  
-        <button class="btn btn-outline-primary btn-" type="submit" onclick="location.href='/'">Agregar talla</button>
-      </div>
-    </div>
-     
- </form>
- 
-<thead>
+
+
+<thead class="thead-dark">
   <tr>
 <!--     <th data-field="datosTalla" class="text-center">datosTalla</th>
  --> 
@@ -58,7 +63,8 @@ data-url="talla/talla-list/">
 </thead>
 
 </table>
-
+</div>
+</div>
 
 
 
