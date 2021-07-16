@@ -42,14 +42,13 @@ class CreateIntegrante(View):
     def  get(self, request):       
         idEmpresa        = request.GET.get('idEmpresa', None)
         idUser           = request.GET.get('idUser', None)
-        nombres          = request.GET.get('nomIntegrante', None)
-        apellido         = request.GET.get('apeIntegrante', None)
-        sexo             = request.GET.get('sexo', None)
+        nombres          = request.GET.get('nomIntegrante', None).upper()
+        apellido         = request.GET.get('apeIntegrante', None).upper()
+        sexo             = request.GET.get('genero', None)
         correo           = request.GET.get('correo', None)
         cedula           = request.GET.get('cedula', None)
         num_telf         = request.GET.get('num_telefono', None)
-        direccion        = request.GET.get('direccion', None)
-        abilidad         = request.GET.get('abilidad', None)
+        direccion        = request.GET.get('direccion', None).upper()
         estatus          =('A')
         
         obj = Integrante.objects.create(
@@ -61,7 +60,6 @@ class CreateIntegrante(View):
             estatus = estatus,
             correo       = correo, 
             cedula       = cedula, 
-            abilidad     = abilidad,
             num_telf     = num_telf, 
             direccion    = direccion, 
               
@@ -74,6 +72,7 @@ class CreateIntegrante(View):
 
 class DeleteIntegrante(View):
     def  get(self, request):
+        print("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
         id1 = request.GET.get('id', None)
         Integrante.objects.get(id=id1).delete()
         data = {
@@ -86,18 +85,18 @@ class DeleteIntegrante(View):
 
 class UpdateIntegrante(TemplateView):
     def  get(self, request):
+        
         idIntegrante     = request.GET.get('idIntegranteUP', None)
         idEmpresa        = request.GET.get('idEmpresaUP', None)
         idUser           = request.GET.get('idUserUP', None)
         nombres          = request.GET.get('nombresInputUP', None)
         apellido         = request.GET.get('apellidosUP', None)
-        sexo             = request.GET.get('sexoUP', None)
+        sexo             = request.GET.get('generoUP', None)
         estatus          = request.GET.get('estatusUP', None)
         correo           = request.GET.get('correoUP', None)
         cedula           = request.GET.get('cedulaUP', None)
         num_telf         = request.GET.get('num_telefonoUP', None)
         direccion        = request.GET.get('direccionUP', None)
-        abilidad         = request.GET.get('abilidadUP', None)
         
       
         obj = Integrante.objects.get(id=idIntegrante)
@@ -111,7 +110,6 @@ class UpdateIntegrante(TemplateView):
         obj.cedula     = cedula   
         obj.num_telf   = num_telf 
         obj.direccion  = direccion
-        obj.abilidad   = abilidad 
         
         
 

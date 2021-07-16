@@ -19,7 +19,6 @@ class Integrante(models.Model):
     cedula     = models.IntegerField(blank=True, null=True,unique=True)
     num_telf   = models.IntegerField(blank=True, null=True)
     direccion  = models.CharField(max_length=250)
-    abilidad   = models.CharField(max_length=350)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

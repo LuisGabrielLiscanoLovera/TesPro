@@ -53,7 +53,6 @@ data-url="integrante/integrante-list/">
     <th data-field="apellidos" class="text-center">Apellidos</th>
     <th data-field="cedula"    class="text-center">Cedula</th>
     <th data-field="num_telf"  class="text-center">Telefono</th>
-    <th data-field="created_at" class="text-center">Fec Ingreso</th>
     <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionIntegrante"class="text-center">Accion</th>
 
   </tr>
@@ -76,9 +75,9 @@ $('#table').SetEditable();
 
 function DetailFormatterButInfoIntegrante(index, row) {
 //crea y renderiza la tabla
-  return '<br>Correo    :'+row.correo+
-         '<br>Sexo      :'+row.sexo+
-         '<br>Abilidad  :'+row.abilidad+
+  return '<br>genero    :'+row.sexo+
+         '<br>Fec. Ingreso:'+row.created_at+
+         '<br>Correo    :'+row.correo+        
          '<br>Direccion :'+row.direccion+
          '<br>Estatus   :'+row.estatus
 }
@@ -104,10 +103,10 @@ function DetailFormatterButAccionIntegrante(index,row){
         '</div>'+
         
         '<div class="mx-sm-3">'+
-            '<div class="form-group"><label>Abilidad</label>'+
-            '<input class="form-control" value="'+row.abilidad+'" name="abilidadUP"></div>'+       
-            '<div class="form-group"><label>Sexo</label>'+
-            '<select id="sexoUP">'+
+            
+                
+            '<div class="form-group"><label>Genero</label>'+
+            '<select id="generoUP">'+
                 '<option value="'+row.sexo+'">'+row.sexo+'</option>'+
                 '<option value="H">Hombre</option>'+
                 '<option value="M">Mujer</option>'+
@@ -133,7 +132,7 @@ function DetailFormatterButAccionIntegrante(index,row){
           '</div>'+
 
         '</div>'+
-        '<div class="col-sm-1">'+'<button value="" onclick="remove('+row.id+')"  id="buttonEliminarIntegrante" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>'+
+        '<div class="col-sm-1">'+'<button value="" onclick="removeIntegrante('+row.id+')"  id="buttonEliminarIntegrante" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>'+
         '</div>'+
         '</form>';
         
@@ -191,12 +190,7 @@ function DetailFormatterButAccionIntegrante(index,row){
        <label for="direccion" class="sr-only">Direccion</label>
        <input type="text" name="direccion" class="form-control" id="direccion" placeholder="Direccion">
    </div>
-   
-    <!--  <div class="form-group mx-sm-3">
-       <label for="abilidad" class="sr-only">Abilidad</label>
-       <input type="text" name="abilidad" class="form-control" id="abilidad" placeholder="Abilidad">
-   </div>
- -->
+
 
 <div class="form-group mx-sm-3">
        <label for="Genero" class="sr-only">Genero</label>
@@ -204,21 +198,21 @@ function DetailFormatterButAccionIntegrante(index,row){
                 <span class="input-group-addon">
                   <i class="fa fa-user"></i>
                 </span>
-                <select class="form-control" id="Genero">
-                  <option value="select">Select sexo</option>
+                <select class="form-control" id="genero">
+                  <option value="select">Select Genero</option>
                   <option value="H">Hombre</option>
                   <option value="M">Mujer</option>
                   <option value="O">Otro</option>
                 </select>
     
     </div>
+    <input type="number" hidden="True" name="empresaIntegrante" value="{{ lastIdEmpresa }}">
+<input type="number" hidden="True" name="idUser" value="{{ login_user_id}}"> 
+
     <div class="form-group mx-sm-5">
-<button type="submit" class="btn btn-success btn-">Confirm</button>
-<br><br><br>
+      <button class="btn btn-outline-success form-control " type="submit" onclick="location.href='/'">Guardar</button><br><br><br>
 </div>
    </div>
-<input type="number" hidden="True" name="empresaColor" value="{{ lastIdEmpresa }}">
-<input type="number" hidden="True" name="idUser" value="{{ login_user_id}}"> 
 
 
 
@@ -237,20 +231,20 @@ function DetailFormatterButAccionIntegrante(index,row){
 <script>
   $("form#addIntegrante").submit(function() { 
 
-
 var nombresInput      = $('input[name="nombres"]').val().trim();
-var sexo              = document.getElementById("sexo").value;
+var genero              = document.getElementById("genero").value;
 var apellidos         = $('input[name="apellidos"]').val().trim();
 var cedula            = $('input[name="cedula"]').val().trim();
 var num_telefono      = $('input[name="num_telf"]').val().trim();
 var correo            = $('input[name="correo"]').val().trim();
 var direccion         = $('input[name="direccion"]').val().trim();
-var abilidad          = $('input[name="abilidad"]').val().trim();
-var idEmpresa         = $('input[name="empresaColor"]').val().trim();
+/* var abilidad          = $('input[name="abilidad"]').val().trim();alert(idEmpresa);
+ */
+var idEmpresa         = $('input[name="empresaIntegrante"]').val().trim();
 var idUser            = $('input[name="idUser"]').val().trim();
 if (nombresInput && apellidos && cedula &&
-   sexo && num_telefono && correo &&  direccion && 
-   abilidad  &&  idEmpresa && idUser 
+   genero && num_telefono && correo &&  direccion && 
+     idEmpresa && idUser 
     ) {
     // Create Ajax Call
     $.ajax({
@@ -259,13 +253,11 @@ if (nombresInput && apellidos && cedula &&
             
             'nomIntegrante'     : nombresInput,
             'apeIntegrante'     : apellidos,
-            'sexo'              : sexo,
+            'genero'            : genero,
             'cedula'            : cedula,
             'num_telefono'      : num_telefono,
             'correo'            : correo,
             'direccion'         : direccion,
-            'abilidad'          : abilidad,
-          
             'idEmpresa'         : idEmpresa,
             'idUser'            : idUser
             
@@ -301,12 +293,11 @@ function editIntegrante  (id){
   
 var nombresInputUP      = $('input[name="nombresUP"]').val().trim();
 var apellidosUP         = $('input[name="apellidosUP"]').val().trim();
-var sexoUP              = document.getElementById("sexoUP").value;
+var generoUP            = document.getElementById("generoUP").value;
 var cedulaUP            = $('input[name="cedulaUP"]').val().trim();
 var num_telefonoUP      = $('input[name="num_telfUP"]').val().trim();
 var correoUP            = $('input[name="correoUP"]').val().trim();
 var direccionUP         = $('input[name="direccionUP"]').val().trim();
-var abilidadUP          = $('input[name="abilidadUP"]').val().trim();
 var estatusUP           = document.getElementById("estatusUP").value;
 var idEmpresaUP         = $('input[name="idEmpresaUP"]').val().trim();
 var idUserUP            = $('input[name="idUserUP"]').val().trim();
@@ -314,10 +305,9 @@ var idUserUP            = $('input[name="idUserUP"]').val().trim();
 
 
 if (nombresInputUP && apellidosUP && cedulaUP &&
-   sexoUP && num_telefonoUP && correoUP &&  direccionUP && 
-   abilidadUP  && estatusUP && idEmpresaUP && idUserUP  
+   generoUP && num_telefonoUP && correoUP &&  direccionUP && 
+   estatusUP && idEmpresaUP && idUserUP  
     ) {
-      alert("idUserUP");
 
     // Create Ajax Call
     $.ajax({
@@ -326,12 +316,11 @@ if (nombresInputUP && apellidosUP && cedulaUP &&
             
             'nombresInputUP'    : nombresInputUP,
             'apellidosUP'       : apellidosUP,
-            'sexoUP'            : sexoUP,
+            'generoUP'          : generoUP,
             'cedulaUP'          : cedulaUP,
             'num_telefonoUP'    : num_telefonoUP,
             'correoUP'          : correoUP,
             'direccionUP'       : direccionUP,
-            'abilidadUP'        : abilidadUP,
             'estatusUP'         : estatusUP,
             'idEmpresaUP'       : idEmpresaUP,
             'idUserUP'          : idUserUP,
@@ -370,21 +359,16 @@ if (nombresInputUP && apellidosUP && cedulaUP &&
 
 
 <script>
- function remove (idIntegrante) {
-
-
-  $.ajax({
+ function removeIntegrante (idIntegrante) {
+$.ajax({
             url: '{% url "Integrante_ajax_delete" %}',
             data: {
                 'id': idIntegrante,
             },
             dataType: 'json',
             success: function (data) {
-           
-              window.location.reload();
-
-
-              
+            window.location.reload();
+        
             }
             });
 }
