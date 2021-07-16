@@ -14,7 +14,7 @@
     <center>
      <u> <h1>Casino {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1></u><hr>
     </center> <br>
-    <h6 class="" style="text-align: right;"><u>Importe total {{totalCasino}}</u></h5>
+    <h6 class="" style="text-align: right;"><u>Importe total $ {{totalCasino}}</u></h5>
 
 
     
@@ -45,32 +45,30 @@ data-pagination="true"
 data-url="casino/casino-list/">
 <div class="row">
 
-  <div class="">
-    <form id="addIntegranteCasino" autocomplete="off" class="form-inline">
+  <div class="border border-secondary">
+    <br>
+    <h6 style="text-align: center;">Registar integrante casino</h6>
+    <form id="addIntegranteCasino" autocomplete="off" class="border bg-secondary form-inline">
       <input type="number" hidden="True" name="idEmpresaCasino" value="{{ lastIdEmpresa }}">
       <input type="number" hidden="True" name="idUserCasino" value="{{ login_user_id}}"> 
-      <div class="col-sm-12 form-group" >
-       
-              <input type="text" list="BuscarIntegrantesCasino"  name="idIntegranteCasino"  required Placeholder="integrante al casino..." class="form-control " >
+      <div class="form-group mx-sm-3" >
+        <label for="integrante" class="sr-only">Integrante</label>
+              <input type="text" list="BuscarIntegrantesCasino"  name="idIntegranteCasino"  required Placeholder="integrante al casino..." class="form-control" >
                     <datalist id="BuscarIntegrantesCasino">
                       {% for results in allIntegrante %}
                               <option  value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
                       {% endfor %}
                     </datalist>
       </div>
-            <div class="col-md-12">                  
-                    <button class="btn btn-outline-primary form-group" type="submit" onclick="location.href='/'">Cargar integrante</button>
-                  
-                    
-     
-            
-         
-        </div>
+      <div class="form-group mx-sm-3" >                
+          <button class="btn btn-outline-primary form-control" type="submit" onclick="location.href='/'">Cargar integrante</button>
       </div>
+    </form>
+    </div>
   
 
       
-   </form>
+   
    
 </div>
 

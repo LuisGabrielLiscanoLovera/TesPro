@@ -5,7 +5,7 @@
   <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
 
     <center>
-            <u><h1>Talla registrada de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1></u><hr><br><br>
+            <u><h1>Tallas registrada de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1></u><hr><br><br>
     </center> 
     
 <!--
@@ -13,25 +13,42 @@
 data-show-refresh="true"
 data-auto-refresh="true"
 data-auto-refresh-interval="30"
-data-auto-refresh-silent="true"
++data-auto-refresh-silent="true"
 data-auto-refresh-status="true"
 -->    
 
 <div class="row">
-<div class="col-md-3">
-<form id="addTalla" autocomplete="off" class="">
-  <div class="col-sm-12" >
-    <div>
-      <input type="text" name="nomTalla"  required Placeholder="Nombre talla..." class="form-control" style="width:15;">
-      <input type="number" name="numTalla"   Placeholder="Numero de talla..." class="form-control" style="width:15;">      
+<div class="col-md-3 ">
+<div class="">
+  <h6 style="text-align: center;">Registar Talla</h6><hr>
+
+<form id="addTalla" autocomplete="off" class=" form-inline ">
+
+    <div class="form-group mx-sm-3">
+      <label for="nom_talla" class="sr-only">Nombre de talla</label>
+
+      <input type="text" name="nomTalla"  required Placeholder="Nombre talla..." class="form-control">
+    </div>
+   
+    <div class="form-group mx-sm-3">
+      <label for="ntall" class="sr-only">Numero de talla</label>
+
+      <input type="number" name="numTalla"   Placeholder="Numero de talla..." class="form-control" >      
       <input type="number" hidden="True" name="idEmpresaTalla" value="{{ lastIdEmpresa }}">
       <input type="number" hidden="True" name="idUserTalla" value="{{ login_user_id}}">  
-      <button class="btn form-control btn-outline-primary btn-" type="submit" onclick="location.href='/'">Agregar talla</button>
+    </div> 
+    
+    <div class="form-group mx-md-3">
+      <button class="btn form-control btn-outline-primary btn-block " type="submit" onclick="location.href='/'">Agregar Talla</button>
     </div>
-  </div>
+   
    
 </form>
 </div>
+
+</div>
+
+
 <div class="col-md-6">
 <table
 id="TallaTable"
