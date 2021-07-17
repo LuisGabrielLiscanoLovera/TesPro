@@ -39,7 +39,7 @@ data-show-fullscreen="true"
 data-locale="es-SP"
 data-pagination="true"
 data-detail-view-icon="false"
-data-show-export="true" 
+data-show-export="false" 
 
 
 data-url="operacion/operacion-list/">
@@ -230,12 +230,14 @@ function tallas(idOp){
                 var canTalla = response[i].can_talla;
                 var nombreTalla = response[i].nom_talla;
                 var res_talla = response[i].res_talla;
-
+                if (res_talla ==null){
+                  res_talla=canTalla;
+                } 
 
                 var tr_str = "<tr>" +
-                  "<td align='center'>" + nombreTalla + "</td>" +                   
-                  "<td align='center'>" + canTalla + "</td>" +                   
-                  "<td align='center'>" + res_talla + "</td>" +
+                  "<td style='text-align:center'>" + nombreTalla + "</td>" +                   
+                  "<td style='text-align:center'>" + canTalla + "</td>" +                   
+                  "<td style='text-align:center'>" + res_talla + "</td>" +
                   "</tr>";
                 $('#listKill'+idOp).append(tr_str);
             }
