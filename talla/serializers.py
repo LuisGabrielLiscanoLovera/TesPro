@@ -9,6 +9,7 @@ class TallaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CanTallaSerializer(serializers.ModelSerializer):
+    nom_talla=serializers.CharField(source = 'talla.nom_talla')
     created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
 

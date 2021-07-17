@@ -26,8 +26,8 @@ class Talla(models.Model):
 class CanTalla(models.Model):
     usuario       = models.ForeignKey(User, related_name='CanTalla', null=True, blank=True,on_delete=models.CASCADE)
     empresa       = models.ForeignKey(Empresa, related_name='CanTalla', null=False, blank=False,on_delete=models.CASCADE)
-    can_talla     = models.IntegerField(blank=True, null=True)
-    res_talla     = models.IntegerField(blank=True, null=True)
+    can_talla     = models.IntegerField(blank=True, null=True,default=0)
+    res_talla     = models.IntegerField(blank=True, null=True,default=0)
     talla         = models.ForeignKey(Talla, related_name='CanTalla', null=False, blank=False,on_delete  =models.CASCADE)
     operacion     = models.ForeignKey(Operacion, related_name='CanTalla', null=False, blank=False,on_delete=models.CASCADE)
     created_at    = models.DateTimeField(auto_now_add=True)

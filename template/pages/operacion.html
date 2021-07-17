@@ -2,9 +2,19 @@
 
 
 <div id="openModalOperacion" class="modalDialogPadre">
+
+  
+
+
+
+
+
   <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
 
     <center>
+
+
+
 <u>            <h1>Operaciones de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1>
 </u> <hr>  </center> 
     
@@ -41,7 +51,7 @@ data-url="operacion/operacion-list/">
 </div>
 <thead class="thead-dark">
   <tr>
-    <th data-field="btnInfo" class="text-center">Info</th>    
+    <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoOperacion" class="text-center" >Info</th>    
     <th data-field="nom_operacion" class="text-center">OP</th>
     <th data-field="nomReferencia" class="text-center">Referencia</th>
     <th data-field="estatus" class="text-center">Estatus</th>
@@ -53,7 +63,6 @@ data-url="operacion/operacion-list/">
     <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionPoperacion"class="text-center">Accion</th>
   </tr>
 </thead>
-
 </table>
 
 
@@ -178,14 +187,7 @@ data-url="operacion/operacion-list/">
 
 
 
-
-
-
-
-
-
-
-
+ 
 
 
 <div id="Scripts">
@@ -194,6 +196,56 @@ data-url="operacion/operacion-list/">
 <script>
 
 $('#poperacionTable').SetEditable();
+function DetailFormatterButInfoOperacion(index, row) {
+//crea y renderiza la tabla
+  return '<table data-url="operacion/operacion-list/" class="table">'+
+
+  
+'<thead class="thead-dark">'+
+  '<tr>'+
+    '<th class="text-center">Talla</th>'+
+    '<th class="text-center">Can total</th>'+
+    '<th class="text-center">Can Restante</th>'+
+  '</tr>'+  
+'</thead><tbody id="listKill'+row.id+'"> </tbody>'+
+'</table>'+'<script>'+'tallas('+row.id+');</'+'script>';
+         
+}
+ 
+function tallas(idOp){
+  $.ajax({
+        url: '{% url "tallaOP-list" %}',
+        data: {
+            
+            'idOp'    : idOp,         
+        },
+        dataType: 'json',
+        success: function(response){
+
+
+          
+            var len = response.length;
+            for(var i=0; i<len; i++){
+                var id = response[i].id;
+                var canTalla = response[i].can_talla;
+                var nombreTalla = response[i].nom_talla;
+                var res_talla = response[i].res_talla;
+
+
+                var tr_str = "<tr>" +
+                  "<td align='center'>" + nombreTalla + "</td>" +                   
+                  "<td align='center'>" + canTalla + "</td>" +                   
+                  "<td align='center'>" + res_talla + "</td>" +
+                  "</tr>";
+                $('#listKill'+idOp).append(tr_str);
+            }
+
+        }
+    });
+
+
+
+}
 
 
 function DetailFormatterButAccionPoperacion(index,row){
