@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import CasinoSerializer
+from .serializers import CasinoSerializer,ImporteSerializer
 from django.contrib.auth.decorators import login_required
 from .models import Casino, Importe
 from empresa.models import CambioEmpres
@@ -35,7 +35,7 @@ def casinoListImporte(request):
     lastEm=CambioEmpres.objects.values('lastEm').last().get("lastEm")
     idCasinoImporte=int(request.GET.get('idCasinoImporte', None))
     casinos = Importe.objects.filter(empresa_id=lastEm,casino_id=idCasinoImporte).order_by('-id')
-    serializer = CasinoSerializer(casinos, many=True)
+    serializer = ImporteSerializer(casinos, many=True)
     return Response(serializer.data)
 
 
@@ -69,15 +69,12 @@ class UpdateCasino(TemplateView):
         deuda        = request.GET.get('importes',None)
         idIntegranteImporte = int(request.GET.get('idIntegranteImporte', None))
         
-     
         lasDeuda=Casino.objects.filter(id=idCasino).values_list('deuda', flat=True)
         lasDeuda=re.sub("[^0-9]","",str(lasDeuda))     
         
         obj = Importe.objects.create(
             cantidad      = deuda,          
             empresa_id    = idEmpresa,
-            usuario_id    = idUser,
-            integrante_id = idIntegranteImporte,
             casino_id     = idCasino
               
         )

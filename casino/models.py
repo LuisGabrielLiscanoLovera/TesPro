@@ -6,9 +6,9 @@ from integrante.models import Integrante
 class Casino(models.Model):
     
     
-    btnInfoStrin='<button type="button" class="btn btn-outline-info icofont-info-square text-center btn-sm btn-block"></button>'
+    btnInfoStrin='<button type="button" class="btn btn-outline-info icofont-info-squar text-center btn-md btn-block">Info</button>'
     
-    formCasino ='<button type="button" class="btn btn-outline-info text-center btn-sm btn-block ">Accion</button>'
+    formCasino ='<button type="button" class="btn btn-outline-warning icofont-settings-al text-center btn-md btn-block ">Accion</button>'
     
     
     usuario    = models.ForeignKey(User, related_name='Casino', null=False, blank=True,on_delete  = models.CASCADE)
@@ -34,8 +34,6 @@ class Casino(models.Model):
 class Importe(models.Model):
     empresa    = models.ForeignKey(Empresa, related_name='Importe', null=False, blank=False,on_delete=models.CASCADE)
     casino    = models.ForeignKey(Casino, related_name='Importe', null=False, blank=False,on_delete=models.CASCADE)
-    usuario    = models.ForeignKey(User, related_name='Importe', null=False, blank=True,on_delete  = models.CASCADE)
-    integrante = models.ForeignKey(Integrante, related_name='Importe', null=False, blank=False,on_delete=models.CASCADE)
     cantidad   = models.IntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -47,6 +45,6 @@ class Importe(models.Model):
             
         ]
     def __str__(self):
-        return '%s %s %s %s %s %s' % (self.id, self.integrante, self.cantidad,self.created_at,self.empresa,self.usuario)
+        return '%s %s %s' % (self.id, self.cantidad,self.created_at)
     
     
