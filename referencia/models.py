@@ -20,6 +20,3 @@ class Referencia(models.Model):
         ]
     def __str__(self):
         return '%s %s %s %s %s %s' % (self.id, self.nom_referencia, self.descripcion,self.created_at,self.usuario,self.empresa)
-
-
-

@@ -4,6 +4,8 @@ from empresa.models import Empresa
 from integrante.models import Integrante
 # Create your models here.
 class Casino(models.Model):
+    
+    
     btnInfoStrin='<button type="button" class="btn btn-outline-info icofont-info-square text-center btn-sm btn-block"></button>'
     
     formCasino ='<button type="button" class="btn btn-outline-info text-center btn-sm btn-block ">Accion</button>'
@@ -27,3 +29,24 @@ class Casino(models.Model):
         ]
     def __str__(self):
         return '%s %s %s %s %s' % (self.id, self.usuario, self.empresa,self.deuda,self.created_at)
+    
+    
+class Importe(models.Model):
+    empresa    = models.ForeignKey(Empresa, related_name='Importe', null=False, blank=False,on_delete=models.CASCADE)
+    casino    = models.ForeignKey(Casino, related_name='Importe', null=False, blank=False,on_delete=models.CASCADE)
+    usuario    = models.ForeignKey(User, related_name='Importe', null=False, blank=True,on_delete  = models.CASCADE)
+    integrante = models.ForeignKey(Integrante, related_name='Importe', null=False, blank=False,on_delete=models.CASCADE)
+    cantidad   = models.IntegerField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['id']
+        indexes = [
+            models.Index(fields=['created_at',]),
+            
+        ]
+    def __str__(self):
+        return '%s %s %s %s %s %s' % (self.id, self.integrante, self.cantidad,self.created_at,self.empresa,self.usuario)
+    
+    

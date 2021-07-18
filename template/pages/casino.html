@@ -74,10 +74,10 @@ data-url="casino/casino-list/">
 
 <thead class="thead-dark">
   <tr>
-    <!-- <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoCasino"class="text-center">Mas info</th> -->
+     <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoCasino"class="text-center">Mas info</th> 
     <th data-field="nomIntegrante"   class="text-center">Nombres</th>
     <th data-field="apelIntegrante"  class="text-center">Apellidos</th>
-    <th data-field="deuda"    class="text-center">Importe</th>
+    <th data-field="deuda"    class="text-center">Importe Total</th>
     <!-- <th data-field="cedulaIntegrante"  class="text-center">Importe</th> -->
     <th data-field="updated_at" class="text-center">Ultimo importe</th> 
     
@@ -104,12 +104,61 @@ $('#table').SetEditable();
 
 function DetailFormatterButInfoCasino(index, row) {
 //crea y renderiza la tabla
-  return '<br>Correo    :'+row.correo+
-         '<br>Sexo      :'+row.sexo+
-         '<br>Abilidad  :'+row.abilidad+
-         '<br>Direccion :'+row.direccion+
-         '<br>Estatus   :'+row.estatus
+return '<div class="row">'+
+            '<div class="col-sm-3">'+
+            '</div>'+
+            
+            '<div class="col-sm-6">'+
+                  '<table " class="table border border-info ">'+
+                    '<thead class="thead-dark">'+
+                      '<tr>'+
+                        '<th class="text-center">N°</th>'+
+                        '<th class="text-center">Importes</th>'+
+                        '<th class="text-center">Fecha importe</th>'+
+                      '</tr>'+  
+                    '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="importeTB'+row.id+'"> </tbody>'+
+                    '</table>'+'<script>'+'importes('+row.id+');</'+'script>'+
+              '</div>'+      
+          '</div>'
+  ; 
 }
+
+function importes(idCasinoImporte){
+  $.ajax({
+        url: '{% url "casinoImporte-list" %}',
+        data: {
+            
+            'idCasinoImporte'    : idCasinoImporte,         
+        },
+        dataType: 'json',
+        success: function(response){
+
+
+          
+            var len = response.length;
+            for(var i=0; i<len; i++){
+                var id = response[i].id;
+                var cantidad = response[i].cantidad;
+                var created_at = response[i].created_at;
+              
+
+                var tr_str = "<tr>" +
+                  "<td style='text-align:left'>" + (i+1) + "</td>" + 
+                  "<td style='text-align:center'>$ " + cantidad + "</td>" +                   
+                  "<td style='text-align:center'>" + created_at + "</td>" +                   
+                 
+                  "</tr>";
+                $('#importeTB'+idCasinoImporte).append(tr_str);
+            }
+
+        }
+    });
+
+ 
+}
+
+
+
 function DetailFormatterButAccionCasino(index,row){
   return '<form id="editarIntegranteCasino" style="display: inline"  >{% csrf_token %}<hr>'+
         '<div class="row">'+
@@ -122,8 +171,9 @@ function DetailFormatterButAccionCasino(index,row){
               '<input class="form-control" type="number" placeholder="Monto de recargo" name="importes"></div>'+
               '<input type="number" hidden="True" name="idEmpresaUPCasino" value="{{ lastIdEmpresa }}">'+
               '<input type="number" hidden="True" name="idUserUPCasino" value="{{ login_user_id}}">'+
+              '<input type="number" hidden="True" name="idIntegranteImporte" value="'+row.id+'">'+
               '<input id="EditIcasinoBtn-'+row.id+'" value="Cargar importe" type="submit" onclick="editIcasino('+row.id+')" class="btn-lg  btn btn-outline-success btn-rounded form-control " >'+             
-          '</div>'+
+          '</div>'+ 
         '</div>'+
           
       
@@ -136,6 +186,7 @@ function DetailFormatterButAccionCasino(index,row){
 
 
 </script>
+
 
  <!--create integrante consumo casino-->
  <script>
@@ -185,8 +236,8 @@ return false;
 var importes                  = $('input[name="importes"]').val().trim();  
 var idEmpresaUPCasino         = $('input[name="idEmpresaUPCasino"]').val().trim();
 var idUserUPCasino            = $('input[name="idUserUPCasino"]').val().trim();
-  
-  if (importes && idEmpresaUPCasino && idUserUPCasino  
+var idIntegranteImporte       = $('input[name="idIntegranteImporte"]').val().trim();
+  if (importes && idEmpresaUPCasino && idUserUPCasino && idIntegranteImporte
       ) {
        
         // Create Ajax Call
@@ -196,7 +247,8 @@ var idUserUPCasino            = $('input[name="idUserUPCasino"]').val().trim();
               'idEmpresaUPCasino' : idEmpresaUPCasino,
               'idUserUPCasino'    : idUserUPCasino,
               'importes'          : importes,
-              'idCasino'          : id
+              'idCasino'          : id,
+              'idIntegranteImporte':idIntegranteImporte
           },
           dataType: 'json',
           success: function (data) {
