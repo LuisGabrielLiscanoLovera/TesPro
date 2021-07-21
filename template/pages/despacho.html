@@ -3,75 +3,71 @@
 {% block content %}
 <header class="mdc-top-app-bar">
     <div class="mdc-top-app-bar__row">
-      <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-        
-        <span class="mdc-top-app-bar__title">Despacho</span>
-        <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon search-text-field d-none d-md-flex">
-          <i class="material-icons mdc-text-field__icon">search</i>
-          <input class="mdc-text-field__input" id="text-field-hero-input">
-          <div class="mdc-notched-outline">
-            <div class="mdc-notched-outline__leading"></div>
-            <div class="mdc-notched-outline__notch">
-              <label for="text-field-hero-input" class="mdc-floating-label">Search..</label>
-            </div>
-            <div class="mdc-notched-outline__trailing"></div>
-          </div>
-        </div>
-      </div>
-      <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right">
-        <div class="menu-button-container menu-profile d-none d-md-block">
-        
-          <div class="mdc-menu mdc-menu-surface" tabindex="-1">
-            <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
-             
-              <li class="mdc-list-item" role="menuitem">
-                <div class="item-thumbnail item-thumbnail-icon-only">
-                  <i class="mdi mdi-settings-outline text-primary"></i>                      
-                </div>
-                
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="divider d-none d-md-block"></div> 
-       
-    
+      
 
-      </div>
+<h5 style="text-align: center;"><u>Despacho de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1>
+</u> <hr> 
     </div>
   </header>
-<div class="mdc-layout-grid">
-<div class="mdc-layout-grid__inner">   
-  
-   
+
     
 
 
+  <table
+  id="despachoTable"
+  data-id-field="id"
+  class="table"
+  data-toggle="table"
+  data-detail-view="true"
+  data-detail-view-by-click="true"
+  data-show-columns="true"
+  data-search="True"
+  data-show-fullscreen="true"        
+  data-locale="es-SP"
+  data-pagination="true"
+  data-detail-view-icon="false"
+  data-show-export="false" 
+  
+  
+  data-url="operacion/operacion-list/">
+  
+  <thead class="thead-dark">
+    <tr>
+      <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoOperacion" class="text-center" >Info</th>    
+      <th data-field="nom_operacion" class="text-center">OP</th>
+      <th data-field="nomReferencia" class="text-center">Referencia</th>
+      <th data-field="nomColor" class="text-center">Color</th>
+      <th data-field="codColor" class="text-center">Cod. Color</th>
+      <th data-field="can_total" class="text-center">Total</th>
+      <th data-field="created_at" class="text-center">Fecha creada</th>   
+     </tr>
+  </thead>
+  </table>
+  
+  
+  
 
 
 
 
 
 
+  <script>
+
+    $('#despachoTable').SetEditable();
 
 
-
-
-
+</script>
 
 
 {% block javascript %}
+
 
 {% endblock javascript %}
 
 
 
 
-
-  
-    
-  </div>
-</div>
 
 
 {% endblock %}

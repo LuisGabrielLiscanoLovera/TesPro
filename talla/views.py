@@ -1,4 +1,5 @@
 import json
+from operacion.models import Operacion
 from django.shortcuts import render, redirect
 from integrante.models import Integrante
 from talla.models import CanTalla, Talla
@@ -91,21 +92,27 @@ class CreateTallaOP(View):
         idOperacionTalla = int(request.GET.get('idOperacionTalla', None))
         idEmpresaOPTalla = int(request.GET.get('idEmpresaOPTalla', None))
         idUserOPTalla    = int(request.GET.get('idUserOPTalla', None))
-        print(idTalla,cantTalla,idOperacionTalla,idEmpresaOPTalla,idUserOPTalla)
-
-        obj = CanTalla.objects.create(
-            empresa_id   = idEmpresaOPTalla,
-            usuario_id   = idUserOPTalla,
-            can_talla    = cantTalla, 
-            talla_id     = idTalla, 
-            operacion_id = idOperacionTalla
-              
+        
+        lastEm     = CambioEmpres.objects.values('lastEm').last().get("lastEm")
+        ptalla     = CanTalla.objects.filter(empresa_id=lastEm,talla_id=idTalla,operacion_id=idOperacionTalla)
+        if int(ptalla.count()) <= 0 :
+            obj = CanTalla.objects.create(
+                empresa_id   = idEmpresaOPTalla,
+                usuario_id   = idUserOPTalla,
+                can_talla    = cantTalla, 
+                talla_id     = idTalla, 
+                operacion_id = idOperacionTalla
+                
         )
   
-        data = {
-            'user': "user"
+            data = {
+                'user': "user"
         } 
-        return JsonResponse(data)
+            return JsonResponse(data)
+        else:
+            print("NO pasoooo",ptalla.count())
+            data = {'user': "user"} 
+            return JsonResponse(data)
 
 
 
