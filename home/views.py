@@ -24,7 +24,6 @@ class Home(LoginRequiredMixin,TVB):
     template_name = "home.html"
     login_url = 'auth/signin/'
     success_url = '/' 
-      
         
     def get_context_data(self, **kwargs):
         REU      = RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)
@@ -64,7 +63,6 @@ class Home(LoginRequiredMixin,TVB):
         context['totalTallas']      = allTalla.count()       # total talla
         context['totalTarea']       = allTarea.count()       # total tarea
 
-cara
         return context
 def cambioEmpresa(request):
     try:CambioEmpres.objects.order_by('-pk')[0].delete()
