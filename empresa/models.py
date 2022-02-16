@@ -13,10 +13,10 @@ class Empresa(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
    
     class Meta:
-        ordering = ["nom_empresa"]
+        ordering = ["id"]
 
     def __str__(self):
-        return '%s' % (self.nom_empresa)
+        return '%s ID=%s' % (self.nom_empresa, self.id)
 
 class RelacionEmpresa(models.Model):    
     Usuario = models.ForeignKey(User, null=True,blank=True,related_name='RelacionEmpresa',on_delete=models.CASCADE)
@@ -34,4 +34,7 @@ class CambioEmpres(models.Model):
     Usuario = models.ForeignKey(User, null=True,blank=True,related_name='CambioEmpres',on_delete=models.CASCADE)
     lastEm=models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
-    
+    class Meta:
+            ordering = ["id"]
+    def __str__(self):
+        return 'ID=%s lastEm=%s Usuario=%s ' % (self.id, self.lastEm, self.Usuario)

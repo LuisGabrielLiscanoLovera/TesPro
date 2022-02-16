@@ -1,3 +1,4 @@
+from pprint import pprint
 from django.http import HttpResponseRedirect
 from operacion.models import Operacion
 from talla.models import Talla
@@ -29,11 +30,16 @@ class Home(LoginRequiredMixin,TVB):
         REU      = RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)
         lastEm   = CambioEmpres.objects.values('lastEm').last()
         idlastEmpresa=lastEm.get("lastEm")
+        RE=Empresa.objects.filter(usuario=self.request.user.pk,id=int(idlastEmpresa))
+        
+        culo=RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)
+        print (RE,"eeeeeeeeeeeee")
+        
         #if lastEm == None:return redirect('home')
 
         #else:idlastEmpresa=lastEm.get("lastEm")
         #manejar el error  de last id
-        RE=Empresa.objects.filter(id=int(idlastEmpresa))
+        
         totalReferencia = Referencia.objects.all().filter(empresa_id=int(idlastEmpresa))
         totalColor      = Color.objects.all().filter(empresa_id=int(idlastEmpresa))
         totalIntegrante = Integrante.objects.all().filter(empresa_id=int(idlastEmpresa))
@@ -65,8 +71,8 @@ class Home(LoginRequiredMixin,TVB):
 
         return context
 def cambioEmpresa(request):
-    try:CambioEmpres.objects.order_by('-pk')[0].delete()
-    except Exception as e:  print(str(e))
+    #try:CambioEmpres.objects.order_by('-pk')[0].delete()
+    #except Exception as e:  print(str(e))
     idEmpresa = request.GET.get('idEmpresa', None)
     idUser    = request.GET.get('idUser', None)
     obj = CambioEmpres.objects.create(

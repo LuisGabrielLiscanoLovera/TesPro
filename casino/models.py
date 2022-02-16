@@ -33,7 +33,7 @@ class Casino(models.Model):
     
 class Importe(models.Model):
     empresa    = models.ForeignKey(Empresa, related_name='Importe', null=False, blank=False,on_delete=models.CASCADE)
-    casino    = models.ForeignKey(Casino, related_name='Importe', null=False, blank=False,on_delete=models.CASCADE)
+    casino     = models.ForeignKey(Casino, related_name='Importe', null=False, blank=False,on_delete=models.CASCADE)
     cantidad   = models.IntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
