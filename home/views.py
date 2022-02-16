@@ -24,6 +24,7 @@ class Home(LoginRequiredMixin,TVB):
     template_name = "home.html"
     login_url = 'auth/signin/'
     success_url = '/' 
+      
         
     def get_context_data(self, **kwargs):
         REU      = RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)
