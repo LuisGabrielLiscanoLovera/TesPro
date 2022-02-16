@@ -64,6 +64,7 @@ class Home(LoginRequiredMixin,TVB):
         context['totalTallas']      = allTalla.count()       # total talla
         context['totalTarea']       = allTarea.count()       # total tarea
 
+
         return context
 def cambioEmpresa(request):
     try:CambioEmpres.objects.order_by('-pk')[0].delete()
