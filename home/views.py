@@ -32,9 +32,6 @@ class Home(LoginRequiredMixin,TVB):
         idlastEmpresa=lastEm.get("lastEm")
         RE=Empresa.objects.filter(usuario=self.request.user.pk,id=int(idlastEmpresa))
         
-        culo=RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)
-        print (RE,"eeeeeeeeeeeee")
-        
         #if lastEm == None:return redirect('home')
 
         #else:idlastEmpresa=lastEm.get("lastEm")
