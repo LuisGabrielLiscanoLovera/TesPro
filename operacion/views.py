@@ -5,6 +5,7 @@ import json
 from django.shortcuts import render, redirect
 from integrante.models import Integrante
 from operacion.models import Operacion
+from authapp.models import MyUser
 from django.views.generic import TemplateView, View
 from django.http import JsonResponse
 from django.utils import (dateformat, formats)
@@ -14,20 +15,9 @@ from .serializers import OperacionSerializer
 from empresa.models import CambioEmpres
 from django.shortcuts import render
 from django.template.loader import render_to_string
-
+from django.contrib.sessions.backends.db import SessionStore
 
 # Create your views here.
-
-
-
-
-    
-
-
-
-
-
-
 
 @api_view(['GET'])
 def apiOverview(request):
@@ -40,10 +30,18 @@ def apiOverview(request):
 
 @api_view(['GET'])  
 def operacionList(request):
-    lastEm=CambioEmpres.objects.values('lastEm').last().get("lastEm")
+    #capturamos el inicio de session   
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+            
+    
+    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm=lastEm.lastEm   
     operacion  = Operacion.objects.filter(empresa_id=lastEm).order_by('-id')
     serializer = OperacionSerializer(operacion, many=True)
-    
+     
     return Response(serializer.data)
 
 

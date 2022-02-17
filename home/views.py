@@ -34,29 +34,14 @@ class Home(LoginRequiredMixin,TVB):
         s = SessionStore()
         s['last_login'] = self.request.user.pk
         s.create()
-        print (s['last_login'],"<---last_login usuario id")
         
-        REU      = RelacionEmpresa.objects.filter(Usuario_id=s['last_login'])       
-        
-        #lastEm   = CambioEmpres.objects.values('lastEm').last()        
-        lastEm    = CambioEmpres.objects.filter(Usuario_id=s['last_login']).last()
-        
-        #lastE=lastE
-        
-        #idlastEmpresa=lastEm.get("lastEm")
-        idlastEmpresa=lastEm.lastEm
-        
-
-        
+        REU             = RelacionEmpresa.objects.filter(Usuario_id=s['last_login'])       
+        lastEm          = CambioEmpres.objects.filter(Usuario_id=s['last_login']).last()
+        idlastEmpresa   = lastEm.lastEm
         RE=Empresa.objects.filter(usuario=s['last_login'],id=int(idlastEmpresa))
         
         
-        print (lastEm,idlastEmpresa,"nnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
-        #if lastEm == None:return redirect('home')
-
-        #else:idlastEmpresa=lastEm.get("lastEm")
-        #manejar el error  de last id
-        
+ 
         totalReferencia = Referencia.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
         totalColor      = Color.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
         totalIntegrante = Integrante.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
