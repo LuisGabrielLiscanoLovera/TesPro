@@ -30,11 +30,11 @@ class Home(LoginRequiredMixin,TVB):
     success_url = '/'
     
     
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs):        
         s = SessionStore()
         s['last_login'] = self.request.user.pk
         s.create()
-        
+               
         REU             = RelacionEmpresa.objects.filter(Usuario_id=s['last_login'])       
         lastEm          = CambioEmpres.objects.filter(Usuario_id=s['last_login']).last()
         idlastEmpresa   = lastEm.lastEm

@@ -3,7 +3,7 @@ from authapp.models import MyUser as User
 from empresa.models import Empresa
 from operacion.models import Operacion
 # Create your models here.
-
+# revisar la cuestion de modelo de tabla unica para nomretalla
 class Talla(models.Model):
     usuario       = models.ForeignKey(User, related_name='Talla', null=True, blank=True,on_delete=models.CASCADE)
     empresa       = models.ForeignKey(Empresa, related_name='Talla', null=False, blank=False,on_delete=models.CASCADE)

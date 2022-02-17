@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import ColorSerializer
 from empresa.models import CambioEmpres
+from authapp.models import MyUser
 
 # Create your views here.
 @api_view(['GET'])
@@ -18,7 +19,14 @@ def apiOverview(request):
 #@login_required(login_url='signin')
 @api_view(['GET'])
 def colorList(request):
-    lastEm=CambioEmpres.objects.values('lastEm').last().get("lastEm")
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+            
+    
+    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm=lastEm.lastEm
     colores = Color.objects.all().filter(empresa_id=lastEm).order_by('-id')    
     serializer = ColorSerializer(colores, many=True)
     serializer.data

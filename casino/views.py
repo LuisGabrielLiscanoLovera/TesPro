@@ -10,6 +10,8 @@ from empresa.models import CambioEmpres
 from django.views.generic import View
 import re
 from django.views.generic.base import TemplateView
+from authapp.models import MyUser
+
 class CasinoTemplate(TemplateView):
      template_name = "pages/casino.html"
 
@@ -25,14 +27,28 @@ def apiOverview(request):
 #@login_required(login_url='signin')
 @api_view(['GET'])
 def casinoList(request):
-    lastEm=CambioEmpres.objects.values('lastEm').last().get("lastEm")
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+            
+    
+    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm=lastEm.lastEm
     casinos = Casino.objects.filter(empresa_id=lastEm).order_by('-id')
     serializer = CasinoSerializer(casinos, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 def casinoListImporte(request):
-    lastEm=CambioEmpres.objects.values('lastEm').last().get("lastEm")
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+            
+    
+    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm=lastEm.lastEm
     idCasinoImporte=int(request.GET.get('idCasinoImporte', None))
     casinos = Importe.objects.filter(empresa_id=lastEm,casino_id=idCasinoImporte).order_by('-id')
     serializer = ImporteSerializer(casinos, many=True)

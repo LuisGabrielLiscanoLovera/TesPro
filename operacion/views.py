@@ -86,7 +86,7 @@ class DeleteOperacion(View):
 
 class UpdateOperacion(TemplateView):
     def  get(self, request):
-        idIpoperacion     = request.GET.get('idIpoperacionUP', None)
+        idIpoperacion    = request.GET.get('idIpoperacionUP', None)
         idEmpresa        = request.GET.get('idEmpresaUP', None)
         idUser           = request.GET.get('idUserUP', None)
         nombres          = request.GET.get('nombresInputUP', None)

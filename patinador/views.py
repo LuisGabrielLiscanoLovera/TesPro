@@ -13,6 +13,7 @@ from empresa.models import CambioEmpres
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.http import JsonResponse
+from authapp.models import MyUser
 
 
 # Create your views here.
@@ -40,7 +41,14 @@ from django.http import JsonResponse
 
 @api_view(['GET'])  
 def patinadorList(request):
-    lastEm=CambioEmpres.objects.values('lastEm').last().get("lastEm")
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+            
+    
+    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm=lastEm.lastEm
     patinador  = Patinador.objects.filter(empresa_id=lastEm).order_by('-id')
     serializer = PatinadorSerializer(patinador, many=True)
     

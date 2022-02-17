@@ -1,4 +1,5 @@
 import json
+from authapp.models import MyUser
 from operacion.models import Operacion
 from django.shortcuts import render, redirect
 from integrante.models import Integrante
@@ -47,7 +48,15 @@ from django.http import JsonResponse
 #talla
 @api_view(['GET'])  
 def TallaList(request):
-    lastEm     = CambioEmpres.objects.values('lastEm').last().get("lastEm")
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+            
+    
+    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm=lastEm.lastEm
+    
     cantalla   = Talla.objects.filter(empresa_id=lastEm).order_by('-id')
     serializer = TallaSerializer(cantalla, many=True)
     
@@ -55,7 +64,14 @@ def TallaList(request):
 #can talla op
 @api_view(['GET'])  
 def TallaOPList(request):
-    lastEm     = CambioEmpres.objects.values('lastEm').last().get("lastEm")
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+            
+    
+    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm=lastEm.lastEm
     ptalla     = CanTalla.objects.filter(empresa_id=lastEm,operacion_id=int(request.GET.get('idOp', None))).order_by('-id')
     serializer = CanTallaSerializer(ptalla, many=True)
     return Response(serializer.data)
@@ -93,8 +109,16 @@ class CreateTallaOP(View):
         idEmpresaOPTalla = int(request.GET.get('idEmpresaOPTalla', None))
         idUserOPTalla    = int(request.GET.get('idUserOPTalla', None))
         
-        lastEm     = CambioEmpres.objects.values('lastEm').last().get("lastEm")
+        if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username=username)
+                
+        
+        lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+        lastEm=lastEm.lastEm
         ptalla     = CanTalla.objects.filter(empresa_id=lastEm,talla_id=idTalla,operacion_id=idOperacionTalla)
+        
         if int(ptalla.count()) <= 0 :
             obj = CanTalla.objects.create(
                 empresa_id   = idEmpresaOPTalla,

@@ -8,6 +8,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import TareaSerializer
 from empresa.models import CambioEmpres
+from authapp.models import MyUser
 
 # Create your views here.
 
@@ -26,7 +27,14 @@ from django.http import JsonResponse
 
 @api_view(['GET'])
 def TareaList(request):
-    lastEm=CambioEmpres.objects.values('lastEm').last().get("lastEm")
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+            
+    
+    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm=lastEm.lastEm
     tarea = Tarea.objects.all().filter(empresa_id=lastEm).order_by('-id')
     serializer = TareaSerializer(tarea, many=True)
     return Response(serializer.data)
