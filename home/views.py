@@ -18,38 +18,58 @@ from django.db.models.functions import Lower
 from django.db.models import Sum
 import re
 from django.http import HttpResponse
+from django.contrib.sessions.backends.db import SessionStore
+
 
 class SinEmpresa(TVB):
     template_name = "pages/404.html"
+
 class Home(LoginRequiredMixin,TVB):
     template_name = "home.html"
     login_url = 'auth/signin/'
-    success_url = '/' 
-        
+    success_url = '/'
+    
+    
     def get_context_data(self, **kwargs):
-        REU      = RelacionEmpresa.objects.filter(Usuario_id=self.request.user.pk)
-        lastEm   = CambioEmpres.objects.values('lastEm').last()
-        idlastEmpresa=lastEm.get("lastEm")
-        RE=Empresa.objects.filter(usuario=self.request.user.pk,id=int(idlastEmpresa))
+        s = SessionStore()
+        s['last_login'] = self.request.user.pk
+        s.create()
+        print (s['last_login'],"<---last_login usuario id")
         
+        REU      = RelacionEmpresa.objects.filter(Usuario_id=s['last_login'])       
+        
+        #lastEm   = CambioEmpres.objects.values('lastEm').last()        
+        lastEm    = CambioEmpres.objects.filter(Usuario_id=s['last_login']).last()
+        
+        #lastE=lastE
+        
+        #idlastEmpresa=lastEm.get("lastEm")
+        idlastEmpresa=lastEm.lastEm
+        
+
+        
+        RE=Empresa.objects.filter(usuario=s['last_login'],id=int(idlastEmpresa))
+        
+        
+        print (lastEm,idlastEmpresa,"nnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
         #if lastEm == None:return redirect('home')
 
         #else:idlastEmpresa=lastEm.get("lastEm")
         #manejar el error  de last id
         
-        totalReferencia = Referencia.objects.all().filter(empresa_id=int(idlastEmpresa))
-        totalColor      = Color.objects.all().filter(empresa_id=int(idlastEmpresa))
-        totalIntegrante = Integrante.objects.all().filter(empresa_id=int(idlastEmpresa))
-        allTalla        = Talla.objects.all().filter(empresa_id=int(idlastEmpresa))
-        allTarea        = Tarea.objects.all().filter(empresa_id=int(idlastEmpresa))
-        totalPatinador  = Patinador.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
-        totalOperacion  = Operacion.objects.all().filter(empresa_id=int(idlastEmpresa)).count()
-        totalCasino     = Casino.objects.all().filter(empresa_id=int(idlastEmpresa))
+        totalReferencia = Referencia.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
+        totalColor      = Color.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
+        totalIntegrante = Integrante.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
+        allTalla        = Talla.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
+        allTarea        = Tarea.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
+        totalPatinador  = Patinador.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa)).count()
+        totalOperacion  = Operacion.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa)).count()
+        totalCasino     = Casino.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
         totalCasino     = totalCasino.aggregate(Sum('deuda'))
         totalCasino=re.sub("[^0-9]","",str(totalCasino))        
         context = super(Home, self).get_context_data(**kwargs)        
         context['id']               = self.kwargs.get('id')
-        context['login_user_id']    = self.request.user.pk   # aqui se obtiene el user id
+        context['login_user_id']    = s['last_login']   # aqui se obtiene el user id
         context['nomEmpresa']       = REU                    # nombre de todas las empresa
         context['nomEmpresaU']      = RE                     # nombre de la empresa actual
         context['lastIdEmpresa']    = int(idlastEmpresa)     # ids empresas
