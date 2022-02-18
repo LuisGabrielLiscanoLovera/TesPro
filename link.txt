@@ -10,7 +10,8 @@ git commit -m "commit numero 6"
 
 
     774  git init 
-  775  git clone https://github.com/LuisGabrielLiscanoLovera/TesPro.git
+ 
+   git clone https://github.com/LuisGabrielLiscanoLovera/TesPro.git
   776  git push origin master
   777  git remote -v
   778  git remote

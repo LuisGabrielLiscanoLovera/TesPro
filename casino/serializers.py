@@ -10,7 +10,7 @@ class CasinoSerializer(serializers.ModelSerializer):
     
 
 #    category_name = serializers.RelatedField(source='category', read_only=True)
-  
+
     class Meta:
         model = Casino
         fields = '__all__' #all fields
@@ -22,7 +22,7 @@ class ImporteSerializer(serializers.ModelSerializer):
 
 
 #    category_name = serializers.RelatedField(source='category', read_only=True)
-  
+
     class Meta:
         model = Importe
         fields = '__all__' #all fields

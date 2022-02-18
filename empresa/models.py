@@ -16,7 +16,7 @@ class Empresa(models.Model):
         ordering = ["id"]
 
     def __str__(self):
-        return '%s ID=%s' % (self.nom_empresa, self.id)
+        return '%s ' % (self.nom_empresa)
 
 class RelacionEmpresa(models.Model):    
     Usuario = models.ForeignKey(User, null=True,blank=True,related_name='RelacionEmpresa',on_delete=models.CASCADE)

@@ -7,7 +7,7 @@ from operacion.models import Operacion
 class Talla(models.Model):
     usuario       = models.ForeignKey(User, related_name='Talla', null=True, blank=True,on_delete=models.CASCADE)
     empresa       = models.ForeignKey(Empresa, related_name='Talla', null=False, blank=False,on_delete=models.CASCADE)
-    nom_talla     = models.CharField(max_length=20, unique=True)
+    nom_talla     = models.CharField(max_length=10)
     num_talla     = models.IntegerField(blank=True, null=True) 
 
     created_at    = models.DateTimeField(auto_now_add=True)
@@ -41,4 +41,4 @@ class CanTalla(models.Model):
 
     def __str__(self):
         return '%s %s %s %s %s %s %s %s ' % (self.id, self.usuario, self.empresa,self.can_talla,self.res_talla,self.talla,self.operacion,self.created_at)
-    
+
