@@ -87,8 +87,7 @@ class CreateTalla(View):
         existeTallaUser    =  Talla.objects.extra(where=["nom_talla='%s' AND usuario_id = '%s'" %(nomTalla,idUser[0].get('id')) ])
 
        
-        if existeTallaUser.count()==0:print("pasa")
-        else:print("no pasa")
+        if existeTallaUser.count()==0:print("exelexte")
         
         
         numTalla           = int(request.GET.get('numTalla', None))

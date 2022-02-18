@@ -82,13 +82,17 @@ class CreateTalla(View):
             if 'username' in request.session:
                 username = request.session['username']     
                 idUser   = MyUser.objects.filter(username=username).values('id')
-                
+                dIdUser=idUser[0]
+            
         nomTalla           = request.GET.get('nomTalla', None).upper()
-        existeTallaUser    =  Talla.objects.extra(where=["nom_talla='%s' AND usuario_id = '%s'" %(nomTalla,idUser[0].get('id')) ])
+        
+        
+        #q = Talla.objects.filter(criterion1 & criterion2)
+        existeTallaUser   =  Talla.objects.extra(where=["nom_talla='%s' AND usuario_id = '%s'" %(nomTalla,3) ])
 
-       
-        if existeTallaUser.count()==0:print("pasa")
-        else:print("no pasa")
+        ifNtallaExist      = Talla.objects.filter(nom_talla__contains=nomTalla)
+        
+        print(dIdUser[0],"gggggggg")
         
         
         numTalla           = int(request.GET.get('numTalla', None))

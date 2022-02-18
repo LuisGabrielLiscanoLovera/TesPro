@@ -88,7 +88,6 @@ class CreateTalla(View):
 
        
         if existeTallaUser.count()==0:print("pasa")
-        else:print("no pasa")
         
         
         numTalla           = int(request.GET.get('numTalla', None))
