@@ -96,24 +96,20 @@ class CreateTalla(View):
         
         existeTallaUser    =  Talla.objects.extra(where=["nom_talla='%s' AND usuario_id = '%s' AND empresa_id = '%s'" %(nomTalla,idUser[0].get('id'),idEmpresaTalla) ])
         if existeTallaUser.count()==0:
-                
-            obj = Talla.objects.create(
-                empresa_id   = idEmpresaTalla,
-                usuario_id   = idUserTalla,
-                nom_talla    = nomTalla, 
-                num_talla    = numTalla, 
+        
+        
+        obj = Talla.objects.create(
+            empresa_id   = idEmpresaTalla,
+            usuario_id   = idUserTalla,
+            nom_talla    = nomTalla, 
+            num_talla    = numTalla, 
+          
               
-                  
-            )
-      
-            data = {
+        )
+  
+        data = {
             'user': "user"
-        }
-        else:
-            data = {
-            'user': "enviar un mensaje de error talla repetida"
-        }
-            print("enviar un mensaje de error talla repetida")
+        } 
         return JsonResponse(data)
 
 #create talla op

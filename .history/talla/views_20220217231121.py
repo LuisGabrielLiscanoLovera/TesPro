@@ -110,9 +110,6 @@ class CreateTalla(View):
             'user': "user"
         }
         else:
-            data = {
-            'user': "enviar un mensaje de error talla repetida"
-        }
             print("enviar un mensaje de error talla repetida")
         return JsonResponse(data)
 
