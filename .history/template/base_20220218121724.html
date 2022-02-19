@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+	{% load static %}
+	
+<head>
+	<title>T3xPro</title>
+	<meta charset="UTF-8">
+
+
+	
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css">
+ 
+
+
+
+<!--datatable.net-->
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/jqui.css' %}">
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/jqdtm.css' %}">
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/dTyuri.min.css' %}">
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/all-all.css' %}">
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+
+
+
+
+
+
+<!-- animate  -->
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/demo/animate.min-animate.min.css' %}">
+<!--material disigner-->
+  <!-- plugins:css -->
+
+  	
+	<link rel="stylesheet" type="text/css" href="{% static 'css/icofont.css' %}">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'vendors/mdi/css/materialdesignicons.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
+
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  	<link rel="stylesheet" type="text/css" href="{% static 'vendors/flag-icon-css/css/flag-icon.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'vendors/jvectormap/jquery-jvectormap.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/demo/style.css' %}">
+	<link rel="shortcut icon" href="{% static 'images/favicon.png' %}">
+  <!-- End plugin css for this page -->
+  <!-- Layout styles -->
+  
+  <!-- End layout styles -->
+	 <link rel="stylesheet" type="text/css" href="{% static 'css/demo/bootstrap.min.css' %}"> 
+     <link rel="stylesheet" type="text/css" href="{% static 'css/demo/font-awesome.min.css' %}">     
+	 <link rel="stylesheet" type="text/css" href="{% static 'css/demo/custom.css' %}">
+	 <link rel="stylesheet" type="text/css" href="{% static 'css/demo/open-iconic-bootstrap.min.css' %}">	
+	 <link rel="stylesheet" type="text/css" href="{% static 'css/demo/styles.css' %}">
+
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+
+	
+
+<!--===============================================================================================-->
+	<!-- <link rel="stylesheet" type="text/css" href="{% static 'vendors/bootstrap/css/bootstrap.min.css' %}"> -->
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'fonts/iconic/css/material-design-iconic-font.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendors/animate/animate.css' %}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static 'vendors/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendors/animsition/css/animsition.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendors/select2/select2.min.css' %}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static 'vendors/daterangepicker/daterangepicker.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+<!--===============================================================================================-->
+
+
+<!----------------------------------------------------------------------
+
+	                              modal padre
+----------------------------------------------------------------------------->
+
+
+
+<style type="text/css">
+
+
+
+.modalDialogPadre {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+	background-image: url('{% static "images/BACKGROUND_14.JPG" %}');
+
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: #fff; 
+    overflow: auto;
+/*    background: rgba(0, 0, 0, 0.8);*/
+    z-index: 99999;
+    opacity:0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+}
+.modalDialogPadre:target {
+    opacity:1;
+    pointer-events: auto;
+}
+.modalDialogPadre > div {
+    width: 1000px;
+    position: relative;
+    margin: 10% auto;
+    padding: 5px 20px 13px 20px;
+    border-radius: 10px;
+    background: #fff;
+    background: -moz-linear-gradient(#fff, #999);
+    background: -webkit-linear-gradient(#fff, #999);
+    background: -o-linear-gradient(#fff, #999);
+}
+.closeM {
+    background: #b6b6e0;
+    color: #FFFFFF;
+    line-height: 25px;
+    position: absolute;
+    right: -12px;
+    text-align: center;
+    top: -10px;
+    width: 24px;
+    text-decoration: none;
+    font-weight: bold;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+}
+
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.closeM:hover,
+.closeM:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+
+</style>
+ 
+
+<!----------------------------------------------------------------------
+
+	                              modal hijo
+----------------------------------------------------------------------------->
+
+
+
+<style type="text/css">
+
+
+
+	.modalDialogHijo {
+		position: fixed;
+		font-family: Arial, Helvetica, sans-serif;
+		top: 0;
+		background-image: url('{% static "images/BACKGROUND_14.JPG" %}');
+
+		right: 0;
+		bottom: 0;
+		left: 0;
+		
+		background-color: rgb(93, 93, 93); 
+		overflow: auto;
+	/*    background: rgba(0, 0, 0, 0.8);*/
+		z-index: 99999;
+		opacity:0;
+		-webkit-transition: opacity 400ms ease-in;
+		-moz-transition: opacity 400ms ease-in;
+		transition: opacity 400ms ease-in;
+		pointer-events: none;
+	}
+	.modalDialogHijo:target {
+		opacity:1;
+		pointer-events: auto;
+	}
+	.modalDialogHijo > div {
+		width: 1000px;
+		position: relative;
+		margin: 10% auto;
+		padding: 5px 20px 13px 20px;
+		border-radius: 10px;
+		/* background: #fff;
+		background: -moz-linear-gradient(#fff, #999);
+		background: -webkit-linear-gradient(#fff, #999);
+		background: -o-linear-gradient(#fff, #999);
+	 */}
+	
+	</style>
+
+
+
+
+
+<style type="text/css">
+
+
+
+	.modalDialogHijoDos {
+		position: fixed;
+		font-family: Arial, Helvetica, sans-serif;
+		top: 0;
+	
+		right: 0;
+		bottom: 0;
+		left: 0;
+		
+		background-color: rgb(93, 93, 93); 
+		overflow: auto;
+	/*    background: rgba(0, 0, 0, 0.8);*/
+		z-index: 99999;
+		opacity:0;
+		-webkit-transition: opacity 400ms ease-in;
+		-moz-transition: opacity 400ms ease-in;
+		transition: opacity 400ms ease-in;
+		pointer-events: none;
+	}
+	.modalDialogHijoDos:target {
+		opacity:1;
+		pointer-events: auto;
+	}
+	.modalDialogHijoDos > div {
+		width: 1000px;
+		position: relative;
+		margin: 10% auto;
+		padding: 5px 20px 13px 20px;
+		border-radius: 10px;
+		/* background: #fff;
+		background: -moz-linear-gradient(#fff, #999);
+		background: -webkit-linear-gradient(#fff, #999);
+		background: -o-linear-gradient(#fff, #999); */
+	}
+	
+	</style>
+
+
+<!-- Titulo -->
+
+
+
+
+<style>
+
+	/* h1 {
+		margin: 1em 0 0.5em 0;
+		color: #343434;
+		font-weight: normal;
+		font-family: 'Ultra', sans-serif;   
+		font-size: 36px;
+		line-height: 42px;
+		text-transform: uppercase;
+		text-shadow: 0 2px blue, 0 3px #777;
+	} 
+	 */
+	 h1 {
+		text-align: center;
+
+	font-family: Arial Black; 
+	font-weight: bold; font-size: 30px; 
+	background: #202020; 
+	-webkit-background-clip: text; 
+	-moz-background-clip: text; 
+	background-clip: text; 
+	color: transparent; 
+	text-shadow: 0px 3px 3px rgba(255,255,255,0.4),0px -1px 1px rgba(0,0,0,0.3);
+	}
+	</style>
+
+
+
+
+<style>
+	.select {
+  
+	width: 100%;
+	min-width: 15ch;
+	max-width: 30ch;
+	border: 1px solid var(--select-border) ;
+	border-radius: 0.25em;
+	padding: 0.25em 0.5em;
+	font-size: 1.25rem;
+	cursor: pointer;
+	line-height: 1.1;
+  }
+
+
+body{font-family: 'Open Sans';}
+a{color: #000; text-decoration: none;}
+.select{
+	/* background-image: url('{% static 'images/BACKGROUND_14.JPG' %}'); */
+	opacity: 0.8;
+   
+    text-align: center;
+    color:rgb(24, 22, 22);
+    line-height: 50px;
+}
+
+ 
+  </style>
+
+
+
+
+
+ {% block stylesheet %}{% endblock stylesheet %}
+</head>
+<body>
+	<script src="{% static 'js/preloader.js' %}"></script>
+	
+	
+
+
+
+	<div class="body-wrapper">
+		<!-- partial:partials/_sidebar.html -->
+		<aside class="mdc-drawer mdc-drawer--dismissible mdc-drawer--open">
+		  <div class="mdc-drawer__header">
+			<a href="{% url 'home'%}" class="brand-logo">
+			 <img src="{% static 'images/logo.svg' %}" alt="logo"> 
+			 			  
+			</a>
+		  </div>
+		  <div class="mdc-drawer__content">
+			<div class="user-info">
+			  <!-- <p class="name">Usuario  {Jefe}</p>
+			  <p class="email">Casa del Polo</p> -->
+			</div>
+			<div class="mdc-list-group">
+			  <nav class="mdc-list mdc-drawer-menu">
+
+
+			  	<div class="mdc-list-item mdc-drawer-item">
+				  <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-Empresas">
+					<i class="material-icons mdc-list-item__start-detai mdc-drawer-item-ico" aria-hidden="true">account_balance</i>
+					Empresas
+					<i class="mdc-drawer-arrow material-icons">chevron_right</i>
+				  </a>
+				  <div class="mdc-expansion-panel" id="ui-sub-menu-Empresas">
+					
+					
+	
+						    
+						    
+
+
+					{% for i in nomEmpresa %}
+					<nav class="mdc-list mdc-drawer-submenu">
+					  <div class="mdc-list-item mdc-drawer-item">
+						<form id="CambioEmpresa" action="cambioEmpresa/">
+							{% csrf_token %}
+						    <input type="number" hidden="True" name="idEmpresa" value="{{ i.id }}">
+							<input type="number" hidden="True" name="idUser" value="{{ login_user_id }}"> 
+							<button class="btn btn-underline text-white" type="submit">{{ i.Empresa }}</button>
+							   
+						</form>
+					  </div>
+					</nav>
+					{% endfor %}
+					
+
+				  
+				  </div>
+				</div>
+	
+	
+				
+
+
+
+				<!-- <div class="mdc-list-item mdc-drawer-item">
+				  <a class="mdc-drawer-link" href="{ url 'home'}">
+					<i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i>
+					Inicio
+				  </a>
+				</div> 
+				
+				<div class="mdc-list-item mdc-drawer-item">
+				  <a class="mdc-drawer-link" href="#"  data-toggle="modal" data-target="#modal_crearOP">
+					<i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">track_changes</i>
+					Crear Operacion
+				  </a>
+				</div>
+						-->	
+	
+				<div class="mdc-list-item mdc-drawer-item">
+				  <a class="mdc-drawer-link"  href="{% url 'SegimientoOp' %}">
+					<i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">zoom_in</i>
+					Seguimiento de OP </a>
+				</div>
+				
+	
+	 			<div class="mdc-list-item mdc-drawer-item">
+				  <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-contabilidad">
+					<i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i>
+					Contabilidad
+					<i class="mdc-drawer-arrow material-icons">chevron_right</i>
+				  </a>
+				  <div class="mdc-expansion-panel" id="ui-sub-menu-contabilidad">
+					<nav class="mdc-list mdc-drawer-submenu">
+					  <div class="mdc-list-item mdc-drawer-item">
+						<a class="mdc-drawer-link" href="{% url 'Destajo'%}"
+						data-toggle="modazxl" data-target="destajo">
+						   Destajo
+						</a>
+					  </div>
+	
+					  
+				  </div>
+				</div>
+	
+	
+				
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+				<div class="mdc-list-item mdc-drawer-item">
+				  <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-act">
+					<i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i>
+					Actividad
+					<i class="mdc-drawer-arrow material-icons">chevron_right</i>
+				  </a>
+				  <div class="mdc-expansion-panel" id="ui-sub-menu-act">
+					<nav class="mdc-list mdc-drawer-submenu">
+					  <div class="mdc-list-item mdc-drawer-item">
+						<a class="mdc-drawer-link" href="{% url 'Acumulado' %}"
+						 data-toggle="modazxl" data-target="acumulado">
+						   Acumulado
+						</a>
+					  </div>
+	
+					  <nav class="mdc-list mdc-drawer-submenu">
+						<div class="mdc-list-item mdc-drawer-item">
+						  <a class="mdc-drawer-link" href="{% url 'Xtarea'%}"
+						   data-toggle="modazxl" data-target="act_tarea">
+							 Tarea
+						  </a>
+						</div>
+	
+					   
+	  
+						
+	
+						<nav class="mdc-list mdc-drawer-submenu">
+						  <div class="mdc-list-item mdc-drawer-item">
+							<a class="mdc-drawer-link" href="{% url 'Despacho'%}" data-toggle="modazxl" data-target="act">
+							 Depacho
+							</a>
+						  </div>
+					</nav>
+				  </div>
+				</div>
+	
+	
+				<!--
+	
+				 <div class="mdc-list-item mdc-drawer-item">
+				  <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-elm">
+					<i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i>
+					Elementos
+					<i class="mdc-drawer-arrow material-icons">chevron_right</i>
+				  </a>
+				  <div class="mdc-expansion-panel" id="ui-sub-menu-elm">
+					<nav class="mdc-list mdc-drawer-submenu">
+					  <div class="mdc-list-item mdc-drawer-item">
+						<a class="mdc-drawer-link" href="#" data-toggle="modal" data-target="#modal_integrante">
+						  + Integrante
+						</a>
+					  </div>
+	
+					  <div class="mdc-list-item mdc-drawer-item">
+						<a class="mdc-drawer-link" href="#" data-toggle="modal" data-target="#modal_patinador">
+						  + Patinador
+						</a>
+					  </div>
+	
+					
+	
+	
+					  <div class="mdc-list-item mdc-drawer-item">
+						<a class="mdc-drawer-link" href="#" data-toggle="modal" data-target="#modal_tarea">
+						  + Tarea
+						</a>
+										
+					  </div>
+	
+					  <div class="mdc-list-item mdc-drawer-item">
+						<a class="mdc-drawer-link" href="#" data-toggle="modal" data-target="#modal_color">
+						  + Color
+						</a>
+					  </div>
+					  
+					  
+					  <div class="mdc-list-item mdc-drawer-item">
+						<a class="mdc-drawer-link" href="url 'Referencia_ajax">
+						  + Referencia
+						</a>
+					  </div>
+					  
+					</nav>
+				  </div>
+				</div> -->
+	
+			  </nav>  
+			</div>
+			
+			
+			
+		  </div>
+		</aside>
+		<!-- partial -->
+		<div class="main-wrapper mdc-drawer-app-content">
+		  <!-- partial:partials/_navbar.html -->
+		  <header class="mdc-top-app-bar">
+			<div class="mdc-top-app-bar__row">
+			  <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+				<button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
+				<span class="bar__title title ">				 
+					{% for iNU in nomEmpresaU %}
+					      <b><u class="text-dark  title  ">{{ iNU }}</u></b>
+					{% endfor %}
+					
+				</span>
+				
+							
+							
+			  </div>
+			  <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right">
+				<div class="menu-button-container menu-profile d-none d-md-block">
+				  <button class="mdc-button mdc-menu-button">
+					<span class="d-flex align-items-center">
+					  <span class="figure">
+	<!--     ---------------------------------------------------------------   face              -->
+						
+					  <img src="{% static 'images/faces/face9.jpg' %}" alt="user" class="user">
+					  </span>
+					  <span class="user-name">{{ request.user.first_name }} {{ request.user.last_name }}</span>
+				   </button>
+	
+				  <div class="mdc-menu mdc-menu-surface" tabindex="-1">
+					<ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
+					 
+					  
+	
+					  <li class="btn-outline-secondary mdc-list-item" role="menuitem">
+						<div class="">
+							                     
+						</div>
+						<div class="">
+							<a href="{% url 'signout' %}"><class class="text-danger"><u>Cerrar seccion</u>
+								<i class="btn-outline-danger material-icons">exit_to_app</i>              
+							</a>
+							
+							
+						</div>
+					  </li>
+					</ul>
+				  </div>
+				</div>
+				<div class="divider d-none d-md-block"></div>
+			  
+	
+			  </div>
+			</div>
+		  </header>
+		  <!-- partial -->
+	
+		  <div class="page-wrapper mdc-toolbar-fixed-adjust">
+			
+			<div class="bg-image" style="
+			background-image: url('{% static 'images/BACKGROUND_14.JPG' %}');
+			height: 150vh;
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			background-size: cover;
+		  ">		
+			
+			<main class="content-wrapper">	  
+				
+
+				
+				{% block content %}
+				{% endblock %}
+		
+			</main>
+
+		  </div>	
+			<!-- partial:partials/_footer.html -->
+			<footer>
+			  <div class="mdc-layout-grid">
+				<div class="mdc-layout-grid__inner">
+				  <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+					<span class="text-center text-sm-left d-block d-sm-inline-block tx-14">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">Corprod3s </a>2021</span>
+				  </div>
+				  <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop d-flex justify-content-end">
+					<span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center tx-14">Sistema de control y registro para la produccion</span>
+				  </div>
+				</div>
+			  </div>
+			</footer>
+			<!-- partial -->
+		
+		  </div>      
+		</div>
+	</div>
+	
+	
+
+	<div id="modalOperaciones ">
+		<!-- modal patinador -->
+		<div class="modal fade" id="modal_patinador" tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+			  <form id="modal_form_signup" novalidate="novalidate">
+				  <div class="modal-content">
+					  <div class="modal-header">
+						  <h5 class="modal-title">
+							  <i class="fa fa-lock mr-1"></i>PATINADOR
+						  </h5>
+						  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							  <span>&times;</span>
+						  </button>
+					  </div>
+					  <div class="modal-body">
+						  <div class="form-row">
+							  <div class="col-sm-6">
+								  <div class="form-group">
+									  <label for="modal_patinador_firstname">Nombres</label>
+									  <div class="input-group">
+										  <span class="input-group-addon">
+											  <i class="fa fa-user"></i>
+										  </span>
+										  <input type="text" id="modal_patinador_nombres" name="modal_patinador_nombres" class="form-control" placeholder="nombres" />
+									  </div>
+								  </div>
+							  </div>
+							  <div class="col-sm-6">
+								  <div class="form-group">
+									  <label for="modal_patinador_apellidos">Apellidos</label>
+									  <div class="input-group">
+										  <span class="input-group-addon">
+											  <i class="fa fa-user"></i>
+										  </span>
+										  <input type="text" id="modal_patinador_lastname" name="modal_patinador_lastname" class="form-control" placeholder="apellidos" />
+									  </div>
+								  </div>
+							  </div>
+						  </div>
+						  <div class="form-group">
+							  <label for="modal_patinador_correo">Correo</label>
+							  <div class="input-group">
+								  <span class="input-group-addon">
+									  <i class="fa fa-envelope"></i>
+								  </span>
+								  <input type="email" id="modal_patinador_correo" name="modal_patinador_email" class="form-control" placeholder="Correo" />
+							  </div>
+						  </div>
+		
+						  <div class="form-group">
+							<label for="modal_patinador_cedula">Cedula</label>
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="fa fa-unlock-alt"></i>
+								</span>
+								<input type="cedula" id="modal_patinador_cedula" name="modal_patinador_confirm_password" class="form-control" placeholder="Cedula" />
+							</div>
+						</div> 
+		
+						  <div class="form-group">
+							  <label for="modal_patinador_clave">Clave</label>
+							  <div class="input-group">
+								  <span class="input-group-addon">
+									  <i class="fa fa-unlock-alt"></i>
+								  </span>
+								  <input type="clave" id="modal_patinador_clave" name="modal_patinador_clave" class="form-control" placeholder="Clave" />
+							  </div>
+						  </div>  
+						  
+					  </div>
+					  <div class="modal-footer">
+						  <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELLAR</button>
+						  <button type="submit" class="btn btn-primary">GUARDAR</button>
+					  </div>
+				  </div>
+			  </form>
+		  </div>
+		</div>
+		<!-- modal color -->
+		<div class="modal fade" id="modal_color" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<form id="modal_form_signup" novalidate="novalidate">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">
+								<i class="fa fa-lock mr-1"></i>COLOR
+							</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span>&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="form-row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="modal_codigo_color">Nombre Color</label>
+										<div class="input-group">
+											<span class="input-group-addon">
+												<i class="fa fa-user"></i>
+											</span>
+											<input type="text" id="modal_codigo_color" name="modal_codigo_color" class="form-control" placeholder="Nombre Color" />
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="modal_codigo_color">Codigo Color</label>
+										<div class="input-group">
+											<span class="input-group-addon">
+												<i class="fa fa-user"></i>
+											</span>
+											<input type="text" id="modal_codigo_color" name="modal_codigo_color" class="form-control" placeholder="Codigo Color" />
+										</div>
+									</div>
+								</div>
+							</div>
+						
+							
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELLAR</button>
+							<button type="submit" class="btn btn-primary">GUARDAR</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!-- modal referencia -->
+
+
+
+
+
+
+
+
+										<!--Referencia form-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		<div class="modal fade" id="modal_tarea" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+					<form id="modal_form_signup" novalidate="novalidate">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">
+									<i class="fa fa-lock mr-1"></i>TAREA
+								</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span>&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="form-row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label for="modal_tarea_color">Nombre Tarea</label>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="fa fa-user"></i>
+												</span>
+												<input type="text" id="modal_tarea_color" name="modal_tarea_color" class="form-control" placeholder="Nombre Tarea" />
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label for="modal_tarea_lastname">Valor Tarea</label>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="fa fa-user"></i>
+												</span>
+												<input type="text" id="modal_tarea_lastname" name="modal_tarea_lastname" class="form-control" placeholder="Valor Tarea" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="modal_tarea_duracion_min">Duracion por Min</label>
+									<div class="input-group">
+										<span class="input-group-addon">
+											<i class="fa fa-envelope"></i>
+										</span>
+										<input type="number" id="modal_tarea_email" name="modal_tarea_duracion_min" class="form-control" placeholder="Duracion por Min" />
+									</div>
+								</div>
+		
+								<div class="form-group">
+									<label for="modal_tarea_can_hora">Cantidad por Hora</label>
+									<div class="input-group">
+										<span class="input-group-addon">
+											<i class="fa fa-unlock-alt"></i>
+										</span>
+										<input type="number" id="modal_tarea_can_hora" name="modal_tarea_can_hora" class="form-control" placeholder="Cantidad por Hora" />
+									</div>
+								</div>  
+								  
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+								<button type="submit" class="btn btn-primary">GUARDAR</button>
+							</div>
+						</div>
+					</form>
+				</div>
+		</div>
+		<!-- modal integrante -->
+		<div class="modal fade" id="modal_integrante" tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+			  <form id="modal_form_integrante" novalidate="novalidate">
+				  <div class="modal-content">
+					  <div class="modal-header">
+						  <h5 class="modal-title">
+							  <i class="fa fa-lock mr-1"></i>INTEGRANTE
+						  </h5>
+						  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							  <span>&times;</span>
+						  </button>
+					  </div>
+					  <div class="modal-body">
+						  <div class="form-row">
+							  <div class="col-sm-6">
+								  <div class="form-group">
+									  <label for="_nombres">Nombres</label>
+									  <div class="input-group">
+										  <span class="input-group-addon">
+											  <i class="fa fa-user"></i>
+										  </span>
+										  <input type="text" id="_nombres" name="_nombre" class="form-control" placeholder="Nombres" />
+									  </div>
+								  </div>
+							  </div>
+							  <div class="col-sm-6">
+								  <div class="form-group">
+									  <label for="_apellida">Apellidos</label>
+									  <div class="input-group">
+										  <span class="input-group-addon">
+											  <i class="fa fa-user"></i>
+										  </span>
+										  <input type="text" id="_apellida" name="_apellida" class="form-control" placeholder="Apellido" />
+									  </div>
+								  </div>
+							  </div>
+						  </div>
+						  <div class="form-group">
+							<label for="_abilidad">Abilidad</label>
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="fa fa-unlock-alt"></i>
+								</span>
+								<input type="text" id="_abilidad" name="_abilidad" class="form-control" placeholder="abilidad" />
+							</div>
+						</div>  
+		
+						  <div class="form-group">
+							  <label for="_email">Correo</label>
+							  <div class="input-group">
+								  <span class="input-group-addon">
+									  <i class="fa fa-envelope"></i>
+								  </span>
+								  <input type="email" id="_email" name="_email" class="form-control" placeholder="Correo" />
+							  </div>
+						  </div>
+						  <div class="form-group">
+							  <label for="_cedula">Cedula</label>
+							  <div class="input-group">
+								  <span class="input-group-addon">
+									  <i class="fa fa-unlock-alt"></i>
+								  </span>
+								  <input type="text" id="_cedula" name="_cedula" class="form-control" placeholder="cedula" />
+							  </div>
+						  </div>  
+						 
+						  <div class="form-group">
+							<label for="_telefono">Numero de Telefono</label>
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="fa fa-unlock-alt"></i>
+								</span>
+								<input type="number" id="_cedula" name="_cedula" class="form-control" placeholder="Numero de Telefono" />
+							</div>
+						</div>  
+					  
+						<div class="form-group">
+						  <label for="_telefono">Direccion</label>
+						  <div class="input-group">
+							  <span class="input-group-addon">
+								  <i class="fa fa-unlock-alt"></i>
+							  </span>
+							  <input type="number" id="_direccion" name="_cedula" class="form-control" placeholder="Direccion" />
+						  </div>
+					  </div>  
+					 
+						 
+						 
+							 
+					  </div>
+					  <div class="modal-footer">
+						  <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+						  <button type="submit" class="btn btn-primary">GUARDAR</button>
+					  </div>
+				  </div>
+			  </form>
+		  </div>
+		</div>
+		<!-- modal crear operacion -->
+		  <div class="modal fade" id="modal_crearOP" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<form id="modal_form_integrante" novalidate="novalidate">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">
+								<i class="fa fa-lock mr-1"></i>Crear Operacion
+							</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span>&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="form-row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="modal_crearOP_nombre">Codigo Operacion</label>
+										<div class="input-group">
+											<span class="input-group-addon">
+												<i class="fa fa-user"></i>
+											</span>
+											<input type="text" id="modal_crearOP_nombre" name="modal_crearOP_nombre" class="form-control" placeholder="Codigo Operacion" />
+										</div>
+									</div>
+								</div>
+								
+								
+								
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="modal_crearOP_referencia">Referencia</label>
+										<div class="input-group">
+											<span class="input-group-addon">
+												<i class="fa fa-user"></i>
+											</span>
+											<input type="text" id="modal_crearOP_referencia" name="modal_crearOP_referencia" class="form-control" placeholder="Referencia" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="modal_crearOP_email">Color</label>
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-envelope"></i>
+									</span>
+									<input type="email" id="modal_crearOP_color" name="modal_crearOP_email" class="form-control" placeholder="Enter email" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="modal_crearOP_can_total">Cantidad Total</label>
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-unlock-alt"></i>
+									</span>
+									<input type="text" id="modal_crearOP_can_total" name="modal_crearOP_can_total" class="form-control" placeholder="Cantidad Total" />
+								</div>
+							</div>  
+						
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+							<button type="submit" class="btn btn-primary">GUARDAR</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		</div>
+
+
+
+		
+</head>
+<body>
+
+
+
+
+		<script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %}"></script>
+		<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+
+
+<!-- datatable:js -->
+<!-- <script src=" static 'js/jquery.dataTables.min.js'"></script>
+<script src=" static 'js/dTablesgrou.min.js'"></script>
+ -->
+
+
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/plugins/jquery-validation/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/app.js' %}"></script>
+
+<!-- plugins:js -->
+<script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<script  src="{% static 'vendors/chartjs/Chart.min.js' %}"></script>
+
+<script  src="{% static 'vendors/jvectormap/jquery-jvectormap.min.js' %}"></script>
+<script  src="{% static 'vendors/jvectormap/jquery-jvectormap-world-mill-en.js' %}"></script>
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script  src="{% static 'js/material.js' %}"></script>
+<script  src="{% static 'js/misc.js' %}"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script  src="{% static 'js/dashboard.js' %}"></script>
+<!-- End custom js for this page-->
+
+
+
+
+<!--===============================================================================================-->
+
+<!--===============================================================================================-->
+	<script src="{% static 'vendors/animsition/js/animsition.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendors/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'vendors/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendors/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendors/daterangepicker/moment.min.js' %}"></script>
+	<script src="{% static 'vendors/daterangepicker/daterangepicker.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendors/countdowntime/countdowntime.js' %}"></script>
+<!--===============================================================================================-->
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+
+	<script src="{% static 'js/main.js' %}"></script>
+	{% block javascript %}
+    {% endblock javascript%}
+</body>
+</html>
