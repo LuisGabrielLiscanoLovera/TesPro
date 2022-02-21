@@ -386,7 +386,7 @@ a{color: #000; text-decoration: none;}
 							{% csrf_token %}
 						    <input type="number" hidden="True" name="idEmpresa" value="{{ i.id }}">
 							<input type="number" hidden="True" name="idUser" value="{{ login_user_id }}"> 
-							<button class="btn btn-underline text-white" type="submit">{{ i.Empresa|title }}</button>
+							<button class="btn btn-underline text-white" type="submit">{{ i.Empresa }}</button>
 							   
 						</form>
 					  </div>
@@ -562,7 +562,7 @@ a{color: #000; text-decoration: none;}
 				<button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
 				<span class="bar__title title ">				 
 					{% for i in nomEmpresaU %}
-					      <h4><b><u class="text-dark  title  ">{{ i|title }}</u></b></h4>
+					      <h4><b><u class="text-dark  title  ">{{ i.tit }}</u></b></h4>
 					{% endfor %}
 					
 				</span>
@@ -579,7 +579,7 @@ a{color: #000; text-decoration: none;}
 						
 					  <img src="{% static 'images/faces/face9.jpg' %}" alt="user" class="user">
 					  </span>
-					  <span class="user-name">{{ request.user.first_name|title }} {{ request.user.last_name|title }}</span>
+					  <span class="user-name">{{ request.user.first_name }} {{ request.user.last_name }}</span>
 				   </button>
 	
 				  <div class="mdc-menu mdc-menu-surface" tabindex="-1">

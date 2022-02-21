@@ -5,7 +5,7 @@
     <div class="mdc-top-app-bar__row">
       
 
-<h5 style="text-align: center;"><u>Despacho </h1>
+<h5 style="text-align: center;"><u>Despacho de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1>
 </u> <hr> 
     </div>
   </header>
@@ -42,6 +42,7 @@
       <th data-field="can_total" class="text-center">Cant. Faltante</th>
       <th data-field="can_total" class="text-center">Cant. Total</th>
       <th data-field="created_at" class="text-center">Fecha creada</th>
+      <th data-field="can_total" class="text-center">E</th>
       
      </tr>
   </thead>

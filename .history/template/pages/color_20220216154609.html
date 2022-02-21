@@ -2,7 +2,7 @@
     <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
 
       <center>
-<u>        <h1>Colores de {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
+<u>        <h1>Colores de {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1>
 </u><hr>
  </center>
 
@@ -82,7 +82,7 @@
         <div class="content p-3 mb-2 bg-dar text-white ">
           <div class="border">
             <center>
-              <h1>Crear color {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1><hr>
+              <h1>Crear color {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
             </center>
          
             <div class="col-sm-12">
@@ -126,7 +126,7 @@
 <div id="openModalHijoColorDos" class="modalDialogHijoDos">
   <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>            
     <center>
-      <h1>Editar color {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1><hr>
+      <h1>Editar color {% for i in nomEmpresaU %}{{ i }}{% endfor %}</h1><hr>
     </center>
     
       <div class="modal-dialo" role="document">
