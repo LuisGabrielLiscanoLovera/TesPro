@@ -10,33 +10,35 @@
 
 <div class="modalBase">
 
- 
+ <div class="row">
+  <div class="col-s">
         
     <br>
     
     <form id="addDespacho" autocomplete="off" class="form-inline">
     
-      <input class="form-control" type="text" list="BuscarIntegrantes" name="idIntegrante" required Placeholder="Patinador..."
+      <input type="text" list="BuscarIntegrantes" name="idIntegrante" required Placeholder="Patinador..."
       class="form-control" style="width:150px;">
-   
+  
     <datalist id="BuscarIntegrantes">
       {% for results in allIntegrante %}
       <option value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
       {% endfor %}
     </datalist>    
     
-      <input class="form-control" type="text" list="BuscarIntegrantes" name="idIntegrante" required Placeholder="Operacio..."
+      <input type="text" list="BuscarIntegrantes" name="idIntegrante" required Placeholder="Operacio..."
         class="form-control" style="width:150px;">
-
+    
       <datalist id="BuscarIntegrantes">
         {% for results in allIntegrante %}
         <option value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
         {% endfor %}
       </datalist>    
-      
-      <input class="form-control" type="text" list="BuscarIntegrantes" name="idIntegrante" required Placeholder="Talla..."
+    
+      <input type="text" list="BuscarIntegrantes" name="idIntegrante" required Placeholder="Talla..."
       class="form-control" style="width:150px;">
-     <datalist id="BuscarIntegrantes">
+  
+    <datalist id="BuscarIntegrantes">
       {% for results in allIntegrante %}
       <option value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
       {% endfor %}
@@ -44,15 +46,83 @@
     
     <input type="number" name="idIntegrante" required Placeholder="Cantidad..."
       class="form-control" style="width:150px;">
-     <input type="number" hidden="True" name="idEmpresa" value="{{ lastIdEmpresa }}">
+    
+      <input type="number" hidden="True" name="idEmpresa" value="{{ lastIdEmpresa }}">
       <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">
       <button class="btn btn-outline-primary btn-" type="submit" onclick="location.href='/'">Agregar Despacho</button>
   
-    </form><hr><br>
+    </form>
+
+
+
+
+  </div>
+
+ </div>
+
+
+
+
+
+
+
+
+
+<div id="openModalHijoAddDespacho" class="modalDialogHijo">
+  <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>
+
+
+    <form id="addOperacion" autocomplete="off" class="">
+      <div class=" content p-3 mb-2 bg-dar text-white " rows="3">
+        <div class="border">
+          <center>
+            <h1>Agregar despacho  {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
+            <hr>
+          </center>
+
+
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Cantidad Total </label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input class="form-control" type="number" name="can_totalOP" placeholder="Can total Operacion" required>
+              </div>
+            </div>
+          </div>
+
   
+          
+        
+
+          <div class="modal-footer">
+            <input type="number" hidden="True" name="idEmpresaOP" value="{{ lastIdEmpresa }}">
+            <input type="number" hidden="True" name="idUserOP" value="{{ login_user_id}}">
+            <button class="btn btn-outline-primary form-" type="submit" onclick="location.href='/'">Guardar</button>
+          </div>
+        </div>
+      </div>
+  </div>
+  </form>
 
 
 
+
+
+
+</div>
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  
  

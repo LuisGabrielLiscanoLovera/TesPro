@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style type="text/css">
+
+
+
+</style>
+
+<div class="modalBase">
+
+ <div class="row">
+  <div class="col-sm-3">
+        
+    <br>
+    
+    <form id="addPatinador" autocomplete="off" class=" ">
+    
+      <input type="text" list="BuscarIntegrantes" name="idIntegrante" required Placeholder="Operacio..."
+        class="form-control" style="width:150px;">
+    
+      <datalist id="BuscarIntegrantes">
+        {% for results in allIntegrante %}
+        <option value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
+        {% endfor %}
+      </datalist>    
+    
+      <input type="text" list="BuscarIntegrantes" name="idIntegrante" required Placeholder="Integrante..."
+      class="form-control" style="width:150px;">
+  
+    <datalist id="BuscarIntegrantes">
+      {% for results in allIntegrante %}
+      <option value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
+      {% endfor %}
+    </datalist>    
+    
+    
+    
+      <input type="number" hidden="True" name="idEmpresa" value="{{ lastIdEmpresa }}">
+      <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">
+      <button class="btn btn-outline-primary btn-" type="submit" onclick="location.href='/'">Agregar patinador</button>
+  
+    </form>
+
+
+
+
+  </div>
+
+ </div>
+
+
+
+
+
+
+
+
+
+<div id="openModalHijoAddDespacho" class="modalDialogHijo">
+  <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>
+
+
+    <form id="addOperacion" autocomplete="off" class="">
+      <div class=" content p-3 mb-2 bg-dar text-white " rows="3">
+        <div class="border">
+          <center>
+            <h1>Agregar despacho  {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
+            <hr>
+          </center>
+
+
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Cantidad Total </label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                <input class="form-control" type="number" name="can_totalOP" placeholder="Can total Operacion" required>
+              </div>
+            </div>
+          </div>
+
+  
+          
+        
+
+          <div class="modal-footer">
+            <input type="number" hidden="True" name="idEmpresaOP" value="{{ lastIdEmpresa }}">
+            <input type="number" hidden="True" name="idUserOP" value="{{ login_user_id}}">
+            <button class="btn btn-outline-primary form-" type="submit" onclick="location.href='/'">Guardar</button>
+          </div>
+        </div>
+      </div>
+  </div>
+  </form>
+
+
+
+
+
+
+</div>
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+<table id="despachoTable" 
+data-id-field="id"
+class=""
+data-toggle="table"
+data-detail-view="true"
+data-detail-view-by-click="true"
+data-detail-view-icon="false"
+data-show-columns="true"
+data-search="true"
+data-show-fullscreen="true"        
+data-show-refresh="true"
+data-always-use-formatter="true"
+data-show-export="true" 
+data-locale="es-SP"
+
+data-url="/despacho/despacho-list/">
+
+  <thead class="thead-dark ">
+  
+    <tr>
+      
+      <th data-field="nom_operacion" class="text-center ">OP</th>
+      <th data-field="nomReferencia" class="text-center">Referencia</th>
+      <th data-field="nomColor" class="text-center">Color</th>
+      <th data-field="can_total" class="text-center">Cant. Faltante</th>
+      <th data-field="can_total" class="text-center">Cant. Total</th>
+      <th data-field="created_at" class="text-center">Fecha creada</th>
+
+    </tr>
+  </thead>
+</table>
+
+
+
+
+
+
+<script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-table.js' %}"></script>
+
+
+</div>
+
+
+
+{% block javascript %}
+
+{% endblock javascript%}
+{% endblock %}
+
+
+
+
+
+

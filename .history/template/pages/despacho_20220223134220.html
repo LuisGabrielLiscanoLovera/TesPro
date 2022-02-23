@@ -18,7 +18,8 @@
     
       <input class="form-control" type="text" list="BuscarIntegrantes" name="idIntegrante" required Placeholder="Patinador..."
       class="form-control" style="width:150px;">
-   
+    </div>
+    
     <datalist id="BuscarIntegrantes">
       {% for results in allIntegrante %}
       <option value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
@@ -27,7 +28,7 @@
     
       <input class="form-control" type="text" list="BuscarIntegrantes" name="idIntegrante" required Placeholder="Operacio..."
         class="form-control" style="width:150px;">
-
+      </div>
       <datalist id="BuscarIntegrantes">
         {% for results in allIntegrante %}
         <option value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
@@ -36,7 +37,8 @@
       
       <input class="form-control" type="text" list="BuscarIntegrantes" name="idIntegrante" required Placeholder="Talla..."
       class="form-control" style="width:150px;">
-     <datalist id="BuscarIntegrantes">
+    </div>
+    <datalist id="BuscarIntegrantes">
       {% for results in allIntegrante %}
       <option value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
       {% endfor %}
@@ -44,7 +46,8 @@
     
     <input type="number" name="idIntegrante" required Placeholder="Cantidad..."
       class="form-control" style="width:150px;">
-     <input type="number" hidden="True" name="idEmpresa" value="{{ lastIdEmpresa }}">
+    </div>
+      <input type="number" hidden="True" name="idEmpresa" value="{{ lastIdEmpresa }}">
       <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">
       <button class="btn btn-outline-primary btn-" type="submit" onclick="location.href='/'">Agregar Despacho</button>
   
