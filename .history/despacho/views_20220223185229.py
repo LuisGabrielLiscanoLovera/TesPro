@@ -52,7 +52,7 @@ class Despacho(TemplateView):
           s.create()
           AllEmpresa      = RelacionEmpresa.objects.filter(Usuario_id=s['last_login'])       
           lastEm          = CambioEmpres.objects.filter(Usuario_id=s['last_login']).last()
-          
+          lastEm.lastEm   = lastEm.lastEm
           EmpresaActual   = Empresa.objects.filter(usuario=s['last_login'],id=int(lastEm.lastEm))
           Operaciones     = Operacion.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm),estatus='A').values('nom_operacion','id')
           patinadores     = Patinador.objects.all().filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm)).values('integrante_id')

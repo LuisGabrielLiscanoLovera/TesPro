@@ -50,20 +50,19 @@ class Despacho(TemplateView):
           s = SessionStore()
           s['last_login'] = self.request.user.pk
           s.create()
-          AllEmpresa      = RelacionEmpresa.objects.filter(Usuario_id=s['last_login'])       
+          REU             = RelacionEmpresa.objects.filter(Usuario_id=s['last_login'])       
           lastEm          = CambioEmpres.objects.filter(Usuario_id=s['last_login']).last()
+          idlastEmpresa   = lastEm.lastEm
+          RE              = Empresa.objects.filter(usuario=s['last_login'],id=int(idlastEmpresa))
           
-          EmpresaActual   = Empresa.objects.filter(usuario=s['last_login'],id=int(lastEm.lastEm))
-          Operaciones     = Operacion.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm),estatus='A').values('nom_operacion','id')
-          patinadores     = Patinador.objects.all().filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm)).values('integrante_id')
-          allPatinadores  = Integrante.objects.all().filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm),id=int(patinadores[0].get('integrante_id'))).values('nombres','apellidos','id')
-          
-          
-          context = super(Despacho, self).get_context_data(**kwargs)          
-          context['allOperaciones']   = Operaciones     #todaslas operaciones 
-          context['allPatinador']     = allPatinadores  #todos los patinadores de la empresa
-          context['nomEmpresa']       = AllEmpresa      #nombre de todas las empresa
-          context['nomEmpresaU']      = EmpresaActual   # nombre de la empresa actual
+          Operaciones     = Operacion.objects.filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa),estatus='A').values('nom_operacion','id')
+          patinadores     = Patinador.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa)).values('integrante_id')
+          allPatinadores  = Integrante.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa),id=int(patinadores[0].get('integrante_id'))).values('nombres','apellidos','id')
+          context = super(Despacho, self).get_context_data(**kwargs)
+          context['allOperaciones']   = Operaciones  #todaslas operaciones 
+          context['allPatinador']     = allPatinadores      # todos los patinadores de la empresa
+          context['nomEmpresa']       = REU  # nombre de todas las empresa
+          context['nomEmpresaU']      = RE   # nombre de la empresa actual
           
           
           

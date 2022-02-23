@@ -26,13 +26,16 @@
       {% endfor %}
     </datalist>    
     
-       
-      <input class="form-control" type="text" list="BuscarOperaciones" name="idOperacion" required Placeholder="Operacion..."
+    
+    
+    
+    
+      <input class="form-control" type="text" list="BuscarIntegrantes" name="idIntegrante" required Placeholder="Operacion..."
         class="form-control" style="width:150px;">
 
-      <datalist id="BuscarOperaciones">
+      <datalist id="BuscarIntegrantes">
         {% for results in allOperaciones %}
-        <option value="{{results.id}}">{{results.nom_operacion}} </option>
+        <option value="{{results.id}}">{{results.nom_operacion}} {{results.apellidos}}</option>
         {% endfor %}
       </datalist>    
       
