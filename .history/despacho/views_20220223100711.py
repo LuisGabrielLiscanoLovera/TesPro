@@ -30,7 +30,7 @@ def despachoList(request):
     
     lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
     lastEm=lastEm.lastEm   
-    despacho  = Operacion.objects.filter(empresa_id=lastEm,estatus='A').order_by('-id')
+    despacho  = Operacion.objects.filter(empresa_id=lastEm,).order_by('-id')
     serializer = DespachoSerializer(despacho, many=True)
      
     return Response(serializer.data)
