@@ -22,7 +22,7 @@ urlpatterns = [
     path('SegimientoOp/', SegimientoOp.as_view(), name='SegimientoOp'),
     path('Destajo/', Destajo.as_view(), name='Destajo'),
     path('Acumulado/', Acumulado.as_view(), name='Acumulado'),
-    path('Despacho/', Despacho.as_view(), name='Despacho'),
+    path('Despacho/', Despacho.as_view(), name='Despacho'), include('despacho.urls'),
     path('Xtarea/', Xtarea.as_view(), name='Xtarea'),
     
 

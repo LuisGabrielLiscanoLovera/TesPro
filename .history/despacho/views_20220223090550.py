@@ -3,24 +3,19 @@ from django.contrib.sessions.backends.db import SessionStore
 from django.views.generic.base import TemplateView
 from django.views.generic.base import TemplateView as TVB
 from empresa.models import Empresa,RelacionEmpresa,CambioEmpres
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from authapp.models import MyUser
-from .serializers import DespachoSerializer
-from operacion.models import Operacion
 
 
 @api_view(['GET'])
 def apiOverview(request):
 	api_urls = {
-		'List':'/despacho-list/'
+		'List':'/operacion-list/'
 		}
 	return Response(api_urls)
 #@login_required(login_url='signin')
 
 
 @api_view(['GET'])  
-def despachoList(request):
+def operacionList(request):
     #capturamos el inicio de session   
     if request.session.has_key('username'):        
         if 'username' in request.session:
@@ -30,8 +25,8 @@ def despachoList(request):
     
     lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
     lastEm=lastEm.lastEm   
-    despacho  = Operacion.objects.filter(empresa_id=lastEm).order_by('-id')
-    serializer = DespachoSerializer(despacho, many=True)
+    operacion  = Operacion.objects.filter(empresa_id=lastEm).order_by('-id')
+    serializer = OperacionSerializer(operacion, many=True)
      
     return Response(serializer.data)
 
@@ -49,7 +44,6 @@ class Despacho(TemplateView):
           s.create()
           REU             = RelacionEmpresa.objects.filter(Usuario_id=s['last_login'])       
           lastEm          = CambioEmpres.objects.filter(Usuario_id=s['last_login']).last()
-          print(lastEm,"222222222222222222222222222222222222222222222222222222222222222222222222222")
           idlastEmpresa   = lastEm.lastEm
           RE=Empresa.objects.filter(usuario=s['last_login'],id=int(idlastEmpresa))
           context = super(Despacho, self).get_context_data(**kwargs)

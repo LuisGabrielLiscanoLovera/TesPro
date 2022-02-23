@@ -39,7 +39,6 @@ urlpatterns = [
     path('referencia/', include('referencia.urls')),            #listo
     path('color/', include('color.urls')),                      #listo.    
     path('cambioEmpresa/',cambioEmpresa, name='cambioEmpresa'), #listo 
-    path('despacho/',  include('despacho.urls')),
-     
+    path('cambioE/',cambioEmpresa, name='cambioEmpresa'), #listo 
      
      ]

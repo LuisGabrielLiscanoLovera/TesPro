@@ -7,7 +7,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from authapp.models import MyUser
 from .serializers import DespachoSerializer
-from operacion.models import Operacion
 
 
 @api_view(['GET'])
@@ -30,7 +29,7 @@ def despachoList(request):
     
     lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
     lastEm=lastEm.lastEm   
-    despacho  = Operacion.objects.filter(empresa_id=lastEm).order_by('-id')
+    despacho  = O.objects.filter(empresa_id=lastEm).order_by('-id')
     serializer = DespachoSerializer(despacho, many=True)
      
     return Response(serializer.data)

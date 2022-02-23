@@ -7,7 +7,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from authapp.models import MyUser
 from .serializers import DespachoSerializer
-from operacion.models import Operacion
 
 
 @api_view(['GET'])
