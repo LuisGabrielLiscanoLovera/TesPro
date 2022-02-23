@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<header class="mdc-top-app-bar">
+  <div class="mdc-top-app-bar__row">
+       <a href="#openModalHijoAddOperacion">
+        <i class="btn text-center btn-outline-success icofont-ui-add"> Registrar despacho </i>
+      </a>  
+   </div>
+</header>
+
+<table id="despachoTable" data-id-field="id" class="table" data-toggle="table" data-detail-view="true"
+  data-detail-view-by-click="true" data-show-columns="true" data-search="True" data-show-fullscreen="true"
+  data-locale="es-SP" data-pagination="true" data-detail-view-icon="false" data-show-export="false"
+  data-url="operacion/operacion-list/">
+
+  <thead class="thead-dark">
+    <tr>
+      <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoOperacion" class="text-center">Info</th>
+      <th data-field="nom_operacion" class="text-center">OP</th>
+      <th data-field="nomReferencia" class="text-center">Referencia</th>
+      <th data-field="nomColor" class="text-center">Color</th>
+      <th data-field="codColor" class="text-center">Cod. Color</th>
+      <th data-field="can_total" class="text-center">Cant. Faltante</th>
+      <th data-field="can_total" class="text-center">Cant. Total</th>
+      <th data-field="created_at" class="text-center">Fecha creada</th>
+
+    </tr>
+  </thead>
+</table>
+
+
+<script>
+
+  $('#despachoTable').SetEditable();
+  function DetailFormatterButInfoOperacion(index, row) {
+      //crea y renderiza la tabla
+      return '<div class="row">' +
+        '<div class="col-sm-3">' +
+        '</div>' +
+
+        '<div class="col-sm-6">' +
+        '<table " class="table border border-info ">' +
+        '<thead class="thead-dark">' +
+        '<tr>' +
+        '<th class="text-center">Talla</th>' +
+        '<th class="text-center">Can total</th>' +
+        '<th class="text-center">Can Restante</th>' +
+        '<th class="text-center">Eliminar talla</th>' +
+
+        '</tr>' +
+        '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '"> </tbody>' +
+        '</table>' + '<script>' + 'tallas(' + row.id + ');</' + 'script>' +
+        '</div>' +
+        '</div>'
+        ;
+
+    }
+
+
+</script>
+
+
+{% block javascript %}
+
+{% endblock javascript %}
+
+{% endblock %}
