@@ -54,28 +54,3 @@ https://examples.bootstrap-table.com/index.html#methods/update-row.html#view-sou
 
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %}"></script>
-<script src="{% static 'vendors/bootstrap/js/popper.js' %}"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-<script src="{% static 'js/bootstrap-table.js' %}"></script>
-<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
-<script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
-
