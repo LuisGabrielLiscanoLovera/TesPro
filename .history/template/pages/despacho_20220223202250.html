@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style type="text/css">
+
+
+
+</style>
+
+<div class="modalBase">
+
+ 
+        
+    <br>
+    <div class="ro">
+    <div class="tex-center"> <h6>Registrar Despacho</h6>
+    <form id="addDespacho" autocomplete="off" class="form-inline">
+    
+      <input class="form-control" type="text" list="BuscarPatinador" name="idPatinador" required Placeholder="Patinador..."
+      class="form-control" style="width:150px;">
+   
+    <datalist id="BuscarPatinador">
+      {% for results in allPatinador %}
+      <option value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
+      {% endfor %}
+    </datalist>    
+    
+       
+      <input class="form-control" type="text" list="BuscarOperaciones" name="idOperacion" required Placeholder="Operacion..."
+        class="form-control" style="width:150px;">
+
+      <datalist id="BuscarOperaciones">
+        {% for results in allOperaciones %}
+        <option value="{{results.id}}">{{results.nom_operacion}} </option>
+        {% endfor %}
+      </datalist>    
+      
+      
+      
+      
+      <input class="form-control" type="text" list="BuscarTalla" name="idTalla" required Placeholder="Talla..."
+      class="form-control" style="width:150px;">
+     <datalist id="BuscarTalla">
+      {% for results in allTalla %}
+      <option value="{{results.id}}">{{results.nom_talla}} medida {{results.num_talla}}</option>
+      {% endfor %}
+    </datalist> 
+    
+    
+    
+    
+    <input type="number" name="cantidadRegistar" required Placeholder="Cantidad..."
+      class="form-control" style="width:150px;">
+     <input type="number" hidden="True" name="idEmpresa" value="{{ lastIdEmpresa }}">
+      <input type="number" hidden="True" name="idUser" value="{{ last_login}}">
+      <button class="btn btn-outline-primary btn-" type="submit" onclick="location.href='/'">Agregar Despacho</button>
+  
+    </form><hr><br>
+  </div>
+  </div>
+
+
+ 
+ 
+ 
+ 
+  <script>
+  $("form#addDespacho").submit(function() { 
+  
+  
+  var idPatinador        = $('input[name="idPatinador"]').val().trim();
+  var idOperacion        = $('input[name="idOperacion"]').val().trim();
+  var idTalla            = $('input[name="idTalla"]').val().trim();
+  var idEmpresa          = $('input[name="idEmpresa"]').val().trim();
+  var idUser             = $('input[name="idUser"]').val().trim();
+  var cantidadRegistar   = $('input[name="cantidadRegistar"]').val().trim();
+
+  alert("Hello! I am an alert box!!");
+  
+  
+  
+  if (idPatinador &&  idOperacion && idTalla && idEmpresa && idUser && cantidadRegistar
+      ) {
+      // Create Ajax Call
+      $.ajax({
+          url: '{% url "Despacho_ajax_create" %}',
+          data: {
+              
+              'idPatinador'      : idPatinador,
+              'idOperacion'      : idOperacion,
+              'idTalla'          : idTalla,
+              'idEmpresa'        : idEmpresa,
+              'idUser'           : idUser,
+              'cantidadRegistar' :cantidadRegistar
+               
+               },
+          dataType: 'json',
+          success: function (data) {
+              if (data.user) {
+                appendToUsrTable(data.user);
+              }
+          }
+      });
+  
+  } else {
+      alert("All fields must have a valid value.");
+  }
+  $('form#addDespacho').trigger("reset");
+  return false;
+  });
+  
+  
+  </script>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+<table id="despachoTable" 
+data-id-field="id"
+class=""
+data-toggle="table"
+data-detail-view="true"
+data-detail-view-by-click="true"
+data-detail-view-icon="false"
+data-show-columns="true"
+data-search="true"
+data-show-fullscreen="true"        
+data-show-refresh="true"
+data-always-use-formatter="true"
+data-show-export="true" 
+data-locale="es-SP"
+
+data-url="/despacho/despacho-list/">
+
+  <thead class="thead-dark ">
+  
+    <tr>
+      <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoOperacion" class="text-center">Info
+      </th>
+      <th data-field="nom_operacion" class="text-center ">OP</th>
+      <th data-field="nomReferencia" class="text-center">Referencia</th>
+      <th data-field="nomColor" class="text-center">Color</th>
+      <th data-field="can_total" class="text-center">Cant. Faltante</th>
+      <th data-field="can_total" class="text-center">Cant. Total</th>
+      <th data-field="created_at" class="text-center">Fecha creada</th>
+      <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionPoperacion" class="text-center">
+        Accion</th>
+    </tr>
+  </thead>
+</table>
+
+
+
+
+
+
+<script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-table.js' %}"></script>
+
+
+</div>
+
+
+
+{% block javascript %}
+
+{% endblock javascript%}
+{% endblock %}
+
+
+
+
+
+
