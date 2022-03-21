@@ -136,8 +136,20 @@ class Despachos(TemplateView):
           
           
           return context
-"""
-class CreateDespacho(View):
+
+
+
+@api_view(['POST'])
+def createDespacho(request):
+    serializer = DespachoSerializer(data = request.data)
+    print(request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    else:
+        return HttpResponse('Some Error Occured')
+        
+''' class createDespacho(View):
     
     def get(self, request):
         idPatinador      = int(request.GET.get('idPatinador', None))
@@ -164,7 +176,4 @@ class CreateDespacho(View):
         data = {
             'user': "user"
         } 
-        return JsonResponse(data)
-
-
-"""
+        return JsonResponse(data) '''

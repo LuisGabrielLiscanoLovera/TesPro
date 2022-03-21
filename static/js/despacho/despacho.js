@@ -36,16 +36,16 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '<div class="col-sm-3"><div id="FormuTallaOP"><template>' +
 
 
-        '<form @submit.prevent="submitForm" class="form dark">' +
+        '<form @submit.prevent="submitFormDespacho" class="form dark">' +
 
 
         '<div>' +
         '<select  class="form-control" v-model="selectedPatinador"><option disabled value="">Selecciones Patinador</option>' +
-        '<option  v-for="option in allPatinadoresOPs" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]]</option></select>' +
+        '<option id="id_pantinador"  v-for="option in allPatinadoresOPs" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]]</option></select>' +
 
         '<select  class="form-control" v-model="selectedTalla"><option disabled value="">Selecciones Talla</option>' +
-        '<option  v-for="optionTalla in allTallasOPs" :value="optionTalla.id">[[optionTalla.nom_talla]]</option></select>' +
-        '<input class="form-control" autocomplete="off" placeholder="Cantidad terminada" id="name" type="number" v-model="name" required/>' +
+        '<option id="id_talla" v-for="optionTalla in allTallasOPs" :value="optionTalla.id">[[optionTalla.nom_talla]]</option></select>' +
+        '<input class="form-control" autocomplete="off" placeholder="Cantidad terminada" id="cant" type="number" v-model="name" required/>' +
 
         '<br><input class="form-control btn btn-block" type="submit" value="Guardar"></div></div>' + '</div>' +
 
@@ -73,7 +73,17 @@ function formOP(idOp) {
                 selectedTalla: '',
                 allPatinadoresOPs: [],
                 allTallasOPs: [],
-                name: ''
+                name: '',
+                id_OP: idOp,
+                id_talla: '',
+                id_pantinador: '',
+                cant: '',
+
+
+
+
+
+
 
             }
 
@@ -90,11 +100,31 @@ function formOP(idOp) {
                     })
                     .catch(error => console.log(error));
                 axios
-                    .get('/talla/talla-list/')
+                    .get('/talla/tallaOP-list/?idOp=' + idOp)
                     .then((resp) => {
                         this.allTallasOPs = resp.data
                     })
                     .catch(error => console.log(error));
+
+
+
+            },
+
+            submitFormDespacho() {
+                axios.post('/despacho/create/', {
+                    id_OP: this.id_OP,
+                    id_talla: this.id_talla,
+                    id_pantinador: this.id_pantinador,
+                    cant: this.cant
+
+                }).then(response => {
+                    // console.log(response);
+                    // this.response = response.data
+                    this.success = 'Data saved successfully';
+                    this.response = JSON.stringify(response, null, 2)
+                }).catch(error => {
+                    this.response = 'Error: ' + error.response.status
+                })
 
             }
 

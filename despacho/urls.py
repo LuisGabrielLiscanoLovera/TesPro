@@ -4,7 +4,7 @@ from django.urls import path
 
 #from .views import despacho_list # ,createDespacho, get_despacho, updateDespacho, deleteDespacho
 
-from .views import despacho_list,Despachos,deleteDespacho,operacionesList,patinadoresAct
+from .views import despacho_list,Despachos,deleteDespacho,operacionesList,patinadoresAct,createDespacho
 
 #from .views import TasksView
 
@@ -22,7 +22,7 @@ urlpatterns = [
     #original
     path('', Despachos.as_view(), name='despacho'),
     path('list', despacho_list, name="despachos"),
-    #path('create', createDespacho, name="newDespacho"),
+    path('create/', createDespacho, name="newDespacho"),
     #path('<str:id>', get_despacho, name='get_despacho'),
     #path('update/<str:id>', updateDespacho, name="update"),
     path('delete/<str:id>/', deleteDespacho, name="delete")
