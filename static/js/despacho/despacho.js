@@ -33,7 +33,13 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '</table>' + '<script type="application/javascript">' + 'tallasOP(' + row.id + '); formOP(' + row.id + ');' +
         '</' + 'script>' +
         '</div>' +
-        '<div class="col-sm-3"><div id="FormuTallaOP"><template><form @submit.prevent="submitForm"><div><label for="name">Name:</label><br><input id="name" type="text" v-model="name" required/></div></div><pre>[[allPatinadoresOPs]]</pre>' + '</div>' +
+        '<div class="col-sm-3"><div id="FormuTallaOP"><template><form @submit.prevent="submitForm">' +
+        '<div>' +
+        '<select v-model="selected"><option disabled value="">Selecciones Patinador</option>' +
+        '<option v-for="option in allPatinadoresOPs" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]]</option></select>' +
+
+        '<label for="name">Name:</label><br><input id="name" type="text" v-model="name" required/>' +
+        '</div></div>' + '</div>' +
 
         '</div></template>' +
 
@@ -55,7 +61,9 @@ function formOP(idOp) {
 
         data: function() {
             return {
+                selected: '',
                 allPatinadoresOPs: [],
+                name: 'ingrese patinador'
 
             }
 
@@ -67,7 +75,7 @@ function formOP(idOp) {
                 axios
                     .get('/despacho/lista_patinadoresAct/')
                     .then((resp) => {
-                        this.allTallaOPs = resp.data
+                        this.allPatinadoresOPs = resp.data
                     })
                     .catch(error => console.log(error))
             }

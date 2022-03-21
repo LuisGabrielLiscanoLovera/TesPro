@@ -11,7 +11,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from authapp.models import MyUser
 from .serializers import DespachoSerializer,OperacionSerializer
-from integrante.serializers import IntegranteSerializer
+from patinador.serializers import PatinadorSerializer
 from operacion.models import Operacion
 from django.views.generic import View
 from django.http import JsonResponse, Http404, HttpResponse
@@ -73,7 +73,7 @@ def operacionesList(request):
             
     
     lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
-    lastEm=lastEm.lastEm   
+    lastEm=lastEm.lastEm
     
     despacho  = Operacion.objects.filter(empresa_id=lastEm,estatus='A').order_by('-id')
     serializer = OperacionSerializer(despacho, many=True)
@@ -92,15 +92,14 @@ def patinadoresAct(request):
     lastEm = lastEm.lastEm
     
     try:        
-        patinadores     = Patinador.objects.all().filter(usuario=idUser,estatus='A',empresa_id=int(lastEm)).values('integrante_id')
-        allPatinadores  = Integrante.objects.all().filter(usuario=idUser,empresa_id=int(lastEm),id=int(patinadores[0].get('integrante_id')))#.values('nombres','apellidos','id','created_at','updated_at','estatus','sexo','correo','direccion')
-        serializer = IntegranteSerializer(allPatinadores, many=True)
-        print(allPatinadores)  
+        patinadores     = Patinador.objects.all().filter(usuario=idUser,estatus='A',empresa_id=int(lastEm))
+        serializer      = PatinadorSerializer(patinadores, many=True)
         return Response(serializer.data)
     except Exception as e:    
         print("no tienes patinadores activos")  
     
         return Response("no tienes patinadores activos")
+        
 
 class Despachos(TemplateView):
      
