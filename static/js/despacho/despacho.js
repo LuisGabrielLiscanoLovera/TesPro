@@ -33,12 +33,16 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '</table>' + '<script type="application/javascript">' + 'tallasOP(' + row.id + '); formOP(' + row.id + ');' +
         '</' + 'script>' +
         '</div>' +
-        '<div class="col-sm-3"><div id="FormuTallaOP"><template><form @submit.prevent="submitForm">' +
+        '<div class="col-sm-3"><div id="FormuTallaOP"><template><form @submit.prevent="submitForm" class="form-inlin">' +
         '<div>' +
-        '<select v-model="selected"><option disabled value="">Selecciones Patinador</option>' +
-        '<option v-for="option in allPatinadoresOPs" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]]</option></select>' +
+        '<select  class="form-control" v-model="selectedPatinador"><option disabled value="">Selecciones Patinador</option>' +
+        '<option  v-for="option in allPatinadoresOPs" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]]</option></select>' +
 
-        '<label for="name">Name:</label><br><input id="name" type="text" v-model="name" required/>' +
+        '<select  class="form-control" v-model="selectedTalla"><option disabled value="">Selecciones Talla</option>' +
+        '<option  v-for="optionTalla in allTallasOPs" :value="optionTalla.id">[[optionTalla.nom_talla]]</option></select>' +
+
+
+        '<input class="form-control" placeholder="Cantidad terminada" id="name" type="number" v-model="name" required/>' +
         '</div></div>' + '</div>' +
 
         '</div></template>' +
@@ -61,14 +65,17 @@ function formOP(idOp) {
 
         data: function() {
             return {
-                selected: '',
+                selectedPatinador: '',
+                selectedTalla: '',
                 allPatinadoresOPs: [],
-                name: 'ingrese patinador'
+                allTallasOPs: [],
+                name: ''
 
             }
 
         },
         methods: {
+
 
             getDespachoPatinadores: function() {
 
@@ -77,7 +84,14 @@ function formOP(idOp) {
                     .then((resp) => {
                         this.allPatinadoresOPs = resp.data
                     })
-                    .catch(error => console.log(error))
+                    .catch(error => console.log(error));
+                axios
+                    .get('/talla/talla-list/')
+                    .then((resp) => {
+                        this.allTallasOPs = resp.data
+                    })
+                    .catch(error => console.log(error));
+
             }
 
 
