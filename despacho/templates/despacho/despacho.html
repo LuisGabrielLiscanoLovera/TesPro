@@ -10,17 +10,14 @@
 
 
 <div class="modalBase">
-   
-    <main id="despachoVue">
-       
-        <input type="text" v-model="message">
-        <pre>[[  $data ]]</pre>
-              
+ 
+{% comment %}         <pre>[[  $data ]]</pre> 
+ {% endcomment %}              
         <center>
             <h6 class="title">Despacho</h6>
             
         </center>
-        
+  
         
               
               
@@ -43,6 +40,7 @@
                 <tr>
                 <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoOperacionDespacho" class="text-center">Info
                 </th>
+                {% comment %} <th data-field="id" class="text-center ">id</th> {% endcomment %}
                 <th data-field="nom_operacion" class="text-center ">OP</th>
                 <th data-field="nomReferencia" class="text-center">Referencia</th>
                 <th data-field="nomColor" class="text-center">Color</th>
@@ -55,8 +53,8 @@
         </thead>
     </table>
 
-</main>
 </div>
+
 
 
 

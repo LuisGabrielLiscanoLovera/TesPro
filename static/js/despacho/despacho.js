@@ -4,122 +4,6 @@ axios.defaults.xsrfCookieName = "csrftoken";
 
 
 
-const mv = new Vue({
-    el: '#despachoVue',
-    delimiters: ['[[', ']]'],
-
-    data: function() {
-        return {
-            allDespachos: [],
-            newDespacho: false,
-            newDespachoValue: "",
-            editId: null,
-            oldDespacho: {}
-        }
-
-
-
-    },
-
-
-    methods: {
-        getDespachofromId: function(id) {
-            for (var i = 0; i < this.allDespachos.length; i++) {
-                if (this.allDespachos[i].id == id) {
-                    return this.allDespachos[i];
-                }
-            }
-        },
-        getDespachosTallas: function() {
-            axios
-                .get('/talla/tallaOP-list/?idOp=4')
-                .then((resp) => {
-                    this.allDespachos = resp.data
-                })
-                .catch(error => console.log(error))
-        },
-
-
-
-
-
-        editMode: function(id) {
-            this.editId = id;
-            this.oldDespacho = Object.assign({}, this.getDespachofromId(id));
-        },
-        deleteDespacho: function(id) {
-            var despacchoList = [];
-            axios
-                .delete('/delete/' + id + '/')
-                .then(() => {
-                    for (var i = 0; i < this.allDespachos.length; i++) {
-                        if (this.allDespachos[i].id !== id) {
-                            despachoList.push(this.allDespachos[i]);
-                        }
-                    }
-                    this.allDespachos = despachoList;
-                })
-                .catch(error => {
-                    console.log(error);
-                    alert("Unable to delete task. Some error occured!", error);
-                })
-        },
-        save: function(id) {
-            var newDespacho = this.getDespachofromId(id);
-            axios
-                .post('/update/' + id, newDespacho)
-                .then(() => {
-                    this.editId = null;
-                    this.oldDespacho = {};
-                })
-                .catch(error => {
-                    console.log("Error", error);
-                })
-        },
-
-        cancel: function(id) {
-            this.editId = null;
-            for (var i = 0; i < this.allDespachos.length; i++) {
-                if (this.allDespachos[i].id == id) {
-                    this.allDespachos[i] = this.oldDespacho;
-                    this.oldDespacho = {};
-                    return
-                }
-            }
-        },
-        toggleAddDespacho: function() {
-            this.newDespacho = !this.newDespacho;
-            this.newDespachoValue = "";
-        },
-        submitNewDespacho: function() {
-            var newDespacho = {
-                'id': this.newDespachoValue,
-                'completed': false
-            }
-            axios
-                .post('create', newDespacho)
-                .then(resp => {
-                    this.newDespacho = false;
-                    this.allDespachos.push(resp.data)
-                })
-                .catch(error => {
-                    console.log("Error", error);
-                })
-        }
-    },
-
-
-
-
-    mounted: function() {
-
-        this.getDespachosTallas();
-
-
-    }
-
-});
-
 
 //script datatable
 
@@ -133,18 +17,70 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '<div class="col-sm-3">' +
         '</div>' +
 
-        '<div class="col-sm-6">' +
-        '<table " class="table border border-info ">' +
+        '<div class="col-sm-6"><div id="despachoVue"><template>' +
+        '<table class="table border border-info ">' +
         '<thead class="thead-dark">' +
         '<tr>' +
         '<th class="text-center">Talla</th>' +
         '<th class="text-center">Can total</th>' +
-        '<th class="text-center">Can Restante</th>' + row.id + '-' + row.nom_operacion +
+        '<th class="text-center">Can Restante</th>' +
         '</tr>' +
-        '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '"> </tbody>' +
-        '</table>' + '<script>alert(2);</script > ' +
+        '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '">' +
+        '<tr v-for="allTallaOP in allTallaOPs" :key="allTallaOP.id">' +
+        '<td>[[allTallaOP.nom_talla]]</td><td>[[allTallaOP.can_talla]]' +
+        '</td><td>[[allTallaOP.res_talla]]</td></tr>' +
+        '</tbody></template></div>' +
+        '</table>' + '<script type="application/javascript">' + 'tallasOP(' + row.id + ');</' + 'script>' + +
         '</div>' +
 
         '</div>';
+
+}
+
+function tallasOP(idOp) {
+
+
+    new Vue({
+        el: '#despachoVue',
+        delimiters: ['[[', ']]'],
+
+        data: function() {
+            return {
+                allTallaOPs: [],
+
+            }
+
+
+
+        },
+
+
+        methods: {
+
+            getDespachosTallas: function() {
+
+                axios
+                    .get('/talla/tallaOP-list/?idOp=' + idOp)
+                    .then((resp) => {
+                        this.allTallaOPs = resp.data
+                    })
+                    .catch(error => console.log(error))
+            }
+
+
+
+        },
+
+        mounted: function() {
+
+            this.getDespachosTallas()
+
+
+        }
+
+    });
+
+
+
 
 }
