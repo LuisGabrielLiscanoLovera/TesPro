@@ -4,7 +4,7 @@ axios.defaults.xsrfCookieName = "csrftoken";
 
 
 
-const mv = new Vue({
+new Vue({
     el: '#despachoVue',
     delimiters: ['[[', ']]'],
 
@@ -30,7 +30,7 @@ const mv = new Vue({
                 }
             }
         },
-        getDespachosTallas: function() {
+        getDespachos: function() {
             axios
                 .get('/talla/tallaOP-list/?idOp=4')
                 .then((resp) => {
@@ -113,7 +113,9 @@ const mv = new Vue({
 
     mounted: function() {
 
-        this.getDespachosTallas();
+        this.getDespachos();
+
+
 
 
     }
@@ -139,10 +141,11 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '<tr>' +
         '<th class="text-center">Talla</th>' +
         '<th class="text-center">Can total</th>' +
-        '<th class="text-center">Can Restante</th>' + row.id + '-' + row.nom_operacion +
+        '<th class="text-center">Can Restante</th>' + row.id + '-' + row.nom_operacion
+
         '</tr>' +
         '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '"> </tbody>' +
-        '</table>' + '<script>alert(2);</script > ' +
+        '</table>' + '<script>' + 'tallas(' + row.id + ');</' + 'script>' +
         '</div>' +
 
         '</div>';

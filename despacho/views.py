@@ -23,17 +23,16 @@ from django.forms.models import model_to_dict
 @api_view(['GET'])
 def despacho_list(request):
     if request.session.has_key('username'):
-     #capturamos el inicio de session 
+         #capturamos el inicio de session 
         if 'username' in request.session:
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
     
     lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
-    lastEm=lastEm.lastEm
-    despachos  = Operacion.objects.filter(empresa_id=lastEm,estatus='A').order_by('-id')
-    
-    
+    lastEm = lastEm
+    despachos = Operacion.objects.filter(empresa_id=lastEm,estatus='A').order_by('-id')
     despachos = Despacho.objects.all();
+    print(despachos)
    
     
     tSerializer = DespachoSerializer(despachos, many = True)
