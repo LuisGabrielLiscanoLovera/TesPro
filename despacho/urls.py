@@ -4,7 +4,7 @@ from django.urls import path
 
 #from .views import despacho_list # ,createDespacho, get_despacho, updateDespacho, deleteDespacho
 
-from .views import despacho_list,Despachos,deleteDespacho,operacionesList
+from .views import despacho_list,Despachos,deleteDespacho,operacionesList,patinadoresAct
 
 #from .views import TasksView
 
@@ -13,7 +13,9 @@ urlpatterns = [
     #path('d/', TasksView.as_view(), name='task_list_url'),   
     #path('', Despachos.as_view(), name='despacho'),
     path('lista_operaciones/', operacionesList, name="operaciones-list"),
- #   path('despacho/create/', CreateDespacho.as_view(), name='Despacho_ajax_create'),
+    path('lista_patinadoresAct/', patinadoresAct, name="patinadoresAct-list"),
+    
+    #path('despacho/create/', CreateDespacho.as_view(), name='Despacho_ajax_create'),
 
 
 
