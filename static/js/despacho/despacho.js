@@ -30,7 +30,7 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '<td>[[allTallaOP.nom_talla]]</td><td>[[allTallaOP.can_talla]]' +
         '</td><td>[[allTallaOP.res_talla]]</td></tr>' +
         '</tbody></template></div>' +
-        '</table>' + '<script type="application/javascript">' + 'tallasOP(' + row.id + ');</' + 'script>' + +
+        '</table>' + '<script type="application/javascript">' + 'tallasOP(' + row.id + ');</' + 'script>' +
         '</div>' +
 
         '</div>';
