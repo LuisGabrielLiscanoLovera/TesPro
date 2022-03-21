@@ -20,3 +20,16 @@ class Despacho(models.Model):
     def __str__(self):
         return 'id {} can_termin {} usuario {} empresa {}'.format(self.id, self.can_terminada,self.usuario,self.empresa)
 
+
+
+
+class Task(models.Model):
+    title = models.CharField(max_length=140)
+    date  = models.DateField(auto_now_add=True)
+    completed = models.BooleanField(default=False)
+    
+    class Meta:
+        ordering=['completed','date']
+        
+        
+        

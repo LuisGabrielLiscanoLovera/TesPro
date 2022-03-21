@@ -1,0 +1,109 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<script src="{% static 'js/despacho/despachoVue.js' %}"></script>
+<script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-table.js' %}"></script>
+
+
+{% verbatim  %}
+
+<div class="modalBase">
+    
+    
+    <div id="despachoVue">
+        <center>
+            <h6 class="title">Despacho</h6>
+            <hr><br>
+        </center>
+        
+      
+              
+              
+              
+        <hr><br>      
+              
+              
+     
+    <table id="despachoTable" data-id-field="id"
+    class="" data-toggle="table" 
+    data-detail-view="true" 
+    data-detail-view-by-click="true" 
+    data-detail-view-icon="false" 
+    data-show-columns="true" 
+    data-search="true" 
+    data-show-fullscreen="true" 
+    data-show-refresh="true"
+    data-always-use-formatter="true" 
+    data-show-export="true"
+    data-locale="es-SP"
+    data-url='lista_operaciones/'>
+
+    <thead class="thead-dark ">
+
+        <tr>
+            <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoOperacionDespacho" class="text-center">Info
+            </th>
+            <th data-field="nom_operacion" class="text-center ">OP</th>
+            <th data-field="nomReferencia" class="text-center">Referencia</th>
+            <th data-field="nomColor" class="text-center">Color</th>
+            <th data-field="can_total" class="text-center">Cant. Faltante</th>
+            <th data-field="can_total" class="text-center">Cant. Total</th>
+            <th data-field="created_at" class="text-center">Fecha creada</th>
+            <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionPoperacion" class="text-center">
+                Accion</th>
+        </tr>
+    </thead>
+</table>
+
+<Script>
+
+
+    $('#despachoTable').SetEditable();
+
+   function DetailFormatterButInfoOperacionDespacho(index, row) {
+      //crea y renderiza la tabla
+      return '<div class="row">' +
+        '<div class="col-sm-3">' +
+        '</div>' +
+
+        '<div class="col-sm-6">' +
+        '<table " class="table border border-info ">' +
+        '<thead class="thead-dark">' +
+        '<tr>' +
+        '<th class="text-center">Talla</th>' +
+        '<th class="text-center">Can total</th>' +
+        '<th class="text-center">Can Restante</th>' + row.id +
+
+        '</tr>' +
+        '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '"> </tbody>' +
+        '</table>' + '<script>' + 'tallas(' + row.id + ');</' + 'script>' +
+        '</div>' +
+        '</div>'
+        
+        
+        
+        
+        
+        ;
+
+    }
+
+</script>
+      
+    
+              
+    
+    </div>
+
+
+
+
+
+
+
+
+</div>
+
+{% endverbatim  %}
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+<header class="mdc-top-app-bar">
+    <div class="mdc-top-app-bar__row">
+      <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+        
+        <span class="mdc-top-app-bar__title">Despachos</span>
+        
+      </div>
+      <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right">
+        <div class="menu-button-container menu-profile d-none d-md-block">
+        
+          <div class="mdc-menu mdc-menu-surface" tabindex="-1">
+            <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
+             
+              <li class="mdc-list-item" role="menuitem">
+                <div class="item-thumbnail item-thumbnail-icon-only">
+                  <i class="mdi mdi-settings-outline text-primary"></i>                      
+                </div>
+                
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="divider d-none d-md-block"></div> 
+
+</head>
+
+
+</div>
+</div>
+
+
+<center>
+
+{% verbatim  %}
+
+
+<div id="app">
+
+    
+    <div class="box">
+        <table v-if="allTasks.length" class="table">
+            <thead>
+              <tr>
+                
+                  <th>Task Description</th>
+                  <th></th>
+              </tr>
+            </thead>
+            
+            
+            
+            <tbody>
+                <tr v-for='task in allTasks' :id="task.id">
+                    
+                    <td v-if="editId !== task.id" :class="task.completed ? 'strike': ''">[[task.title]]{% endverbatim  %} </td>
+                    <td v-else><input type="text" v-model="task.title"></td>
+                    
+                    <td>
+                        <div v-if="editId !== task.id">
+                         <div hidden=True > {% csrf_token %}</div>
+                         
+                          <img class="options" src="{% static 'images/edit.png' %}" @click="editMode(task.id)">
+                          <img class="options" src="{% static 'images/trash.png' %}" @click="deleteTask(task.id)">
+                        </div>
+                        
+
+                        <div v-else>
+                          <img class="options" src="{% static 'images/checked.png' %}" @click="save(task.id)">
+                          <img class="options" src="{% static 'images/close.png' %}" @click="cancel(task.id)">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        
+        <span v-else class="title is-3">No hay despachos activos pendientes</span>
+          <hr>
+          <span v-if="!newTask" class="button is-light" @click="toggleAddTask()"><strong>+ADD</strong></span>
+          <span v-if="newTask" class="button is-danger" @click="toggleAddTask()" style="border-radius: 24px;"><strong>X</strong></span>
+          <input v-if="newTask" type="text" placeholder="Add new Todo!" v-model="newTaskValue" style="width: 30%; height: 40px; margin-left: 2%; border-radius: 24px;">
+          <span v-if="newTask" class="button is-light is-success" @click="submitNewTask()">Submit</span>
+    </div>
+
+
+
+
+
+    
+</div>
+
+
+
+</center>
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,1 +1,0 @@
-shutdown.exe -t 5 /h

@@ -228,3 +228,13 @@ def add_items(request):
   
   </script>
  
+ 
+ 
+api
+https://www.techiediaries.com/django-tutorial/
+
+
+vue django
+https://www.codigojs.com/django-framework/integrar-django-3-con-vue-3/
+
+Django Vue Tutorial: TODO app (AJAX via Axios.js)

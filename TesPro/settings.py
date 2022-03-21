@@ -2,7 +2,7 @@
 pillow
 
 pip install rest-framework-generic-relations
-
+                                            # pip install django-webpack-loader
 django-cors-headers
 librerias 
 djangorestframework-3.12.1
@@ -43,6 +43,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    
     #'django_tables2',
     'rest_framework.authtoken',
 #    'generic_relations',
@@ -50,7 +51,7 @@ INSTALLED_APPS = [
 
 #'django_seed',#borrrrrrarrrrr!
     'ajax_select',
-   # 'crudbuilder',
+   #'crudbuilder',
     'corsheaders',
     'crispy_forms',
     'django.contrib.admin',
@@ -176,6 +177,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
+
 
 
 SESSION_COOKIE_AGE = 3000

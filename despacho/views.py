@@ -1,5 +1,6 @@
 # Create your views here
 from django.contrib.sessions.backends.db import SessionStore
+from django.shortcuts import redirect, render
 from django.views.generic.base import TemplateView
 from empresa.models import Empresa,RelacionEmpresa,CambioEmpres
 from despacho.models import Despacho
@@ -9,26 +10,65 @@ from talla.models import Talla
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from authapp.models import MyUser
-from .serializers import DespachoSerializer
+from .serializers import DespachoSerializer,OperacionSerializer
 from operacion.models import Operacion
 from django.views.generic import View
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404, HttpResponse
+from .models import Task
+from .forms import TaskForms
+from django.forms.models import model_to_dict
+
+#original
 
 @api_view(['GET'])
-def apiOverview(request):
-	api_urls = {
-		'List':'/despacho-list/',
-	    'creata':'/crear_despacho/',
-		}
-	return Response(api_urls)
+def despacho_list(request):
+    if request.session.has_key('username'):
+     #capturamos el inicio de session 
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+    
+    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm=lastEm.lastEm
+    despachos  = Operacion.objects.filter(empresa_id=lastEm,estatus='A').order_by('-id')
+    
+    
+    despachos = Despacho.objects.all();
+   
+    
+    tSerializer = DespachoSerializer(despachos, many = True)
+    #return JsonResponse(tSerializer.data, safe=False)
+    return Response(tSerializer.data)
+    
+#
 
+
+@api_view(['GET'])
+def get_despacho(request, id):
+    print(33333333333)
+
+    try: 
+        despacho = Despacho.objects.get(id = id)
+    except Exception as e:
+        raise Http404
+    tSerializer = DespachoSerializer(despacho)
+    return Response(tSerializer.data)
+
+@api_view(['DELETE'])
+def deleteDespacho(request, id):
+    despacho = Despacho.objects.get(id = id)
+    try:
+        despacho.delete()
+    except Exception as e:
+        Response("Unable to Delete Task!")
+    return Response("Task Deleted Sucessfully")
 
 
 
 
 @api_view(['GET'])  
-def despachoList(request):
-    #capturamos el inicio de session   
+def operacionesList(request):
+     
     if request.session.has_key('username'):        
         if 'username' in request.session:
             username = request.session['username']     
@@ -38,7 +78,7 @@ def despachoList(request):
     lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
     lastEm=lastEm.lastEm   
     despacho  = Operacion.objects.filter(empresa_id=lastEm,estatus='A').order_by('-id')
-    serializer = DespachoSerializer(despacho, many=True)
+    serializer = OperacionSerializer(despacho, many=True)
      
     return Response(serializer.data)
 
@@ -46,8 +86,10 @@ def despachoList(request):
 
 
 
+
 class Despachos(TemplateView):
-     template_name = "pages/despacho.html"
+     
+     template_name = "despacho/despacho.html"
      success_url = '/'
      
      def get_context_data(self, **kwargs):
@@ -80,7 +122,7 @@ class Despachos(TemplateView):
           
           
           return context
-
+"""
 class CreateDespacho(View):
     
     def get(self, request):
@@ -111,3 +153,4 @@ class CreateDespacho(View):
         return JsonResponse(data)
 
 
+"""
