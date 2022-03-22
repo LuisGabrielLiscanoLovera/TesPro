@@ -30,7 +30,7 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '<td>[[allTallaOP.nom_talla]]</td><td>[[allTallaOP.can_talla]]' +
         '</td><td>[[allTallaOP.res_talla]]</td></tr>' +
         '</tbody></template></div>' +
-        '</table>' + '<script type="application/javascript">' + 'tallasOP(' + row.id + '); formOP(' + row.id + ');' +
+        '</table>' + '<script type="application/javascript">' + 'tallasOP(' + row.id + '); formOP(' + row.id + ',' + row.empresa + ');' +
         '</' + 'script>' +
         '</div>' +
         '<div class="col-sm-3"><div id="FormuTallaOP"><template>' +
@@ -44,8 +44,10 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '<option id="id_pantinador"  v-for="option in allPatinadoresOPs" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]]</option></select>' +
 
         '<select  class="form-control" v-model="selectedTalla"><option disabled value="">Selecciones Talla</option>' +
-        '<option id="id_talla" v-for="optionTalla in allTallasOPs" :value="optionTalla.id">[[optionTalla.nom_talla]]</option></select>' +
-        '<input class="form-control" autocomplete="off" placeholder="Cantidad terminada" id="cant" type="number" v-model="name" required/>' +
+        '<option id="id_talla"  v-for="(optionTalla,index) in allTallasOPs"  v-bind:value="optionTalla.id"  >[[optionTalla.nom_talla]]-[[optionTalla.id]]</option></select>' +
+        '<input class="form-control" autocomplete="off" placeholder="Cantidad terminada" id="cant" type="number" v-model="cant" required/>' +
+        '<input class="form-control" id="empresa"   value="' + row.empresa + '" type="number" required/>' +
+
 
         '<br><input class="form-control btn btn-block" type="submit" value="Guardar"></div></div>' + '</div>' +
 
@@ -60,7 +62,7 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
 
 
 
-function formOP(idOp) {
+function formOP(idOp, empresa) {
 
 
     new Vue({
@@ -75,9 +77,10 @@ function formOP(idOp) {
                 allTallasOPs: [],
                 name: '',
                 id_OP: idOp,
-                id_talla: '',
-                id_pantinador: '',
+                selectedTalla: '',
+                empresa: empresa,
                 cant: '',
+
 
 
 
@@ -111,10 +114,12 @@ function formOP(idOp) {
             },
 
             submitFormDespacho() {
+
                 axios.post('/despacho/create/', {
                     id_OP: this.id_OP,
-                    id_talla: this.id_talla,
-                    id_pantinador: this.id_pantinador,
+                    selectedTalla: this.selectedTalla,
+                    selectedPatinador: this.selectedPatinador,
+                    empresa: this.empresa,
                     cant: this.cant
 
                 }).then(response => {

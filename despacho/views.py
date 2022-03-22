@@ -142,7 +142,12 @@ class Despachos(TemplateView):
 @api_view(['POST'])
 def createDespacho(request):
     serializer = DespachoSerializer(data = request.data)
+    print(request.data['id_OP'])
     print(request.data)
+    
+    
+    
+    
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
