@@ -46,7 +46,7 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '<select  class="form-control" v-model="selectedTalla"><option disabled value="">Selecciones Talla</option>' +
         '<option id="id_talla"  v-for="(optionTalla,index) in allTallasOPs"  v-bind:value="optionTalla.id"  >[[optionTalla.nom_talla]]-[[optionTalla.id]]</option></select>' +
         '<input class="form-control" autocomplete="off" placeholder="Cantidad terminada" id="cant" type="number" v-model="cant" required/>' +
-        '<input class="form-control" id="empresa"   value="' + row.empresa + '" type="number" required/>' +
+        '<input hidden=True id="empresa"   value="' + row.empresa + '" type="number" required/>' +
 
 
         '<br><input class="form-control btn btn-block" type="submit" value="Guardar"></div></div>' + '</div>' +

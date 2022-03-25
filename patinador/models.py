@@ -7,12 +7,13 @@ from authapp.models import MyUser as User
 
 class Patinador(models.Model):
     usuario        = models.ForeignKey(User, related_name='Patinador', null=True, blank=True,on_delete=models.CASCADE)
-    empresa         = models.ForeignKey(Empresa, related_name='Patinador', null=False, blank=False,on_delete=models.CASCADE)
-    integrante      = models.OneToOneField(Integrante, related_name='Patinador', null=False, blank=False,on_delete=models.CASCADE)
-    ESTATUS=(('A','Activo'),('I','Inactivo'))
+    empresa        = models.ForeignKey(Empresa, related_name='Patinador', null=False, blank=False,on_delete=models.CASCADE)
+    integrante     = models.OneToOneField(Integrante, related_name='Patinador', null=False, blank=False,on_delete=models.CASCADE)
+    ESTATUS        = (('A','Activo'),('I','Inactivo'))
     estatus        = models.CharField(max_length=1,choices=ESTATUS)
     password       = models.CharField(max_length=100)
     created_at     = models.DateTimeField(auto_now_add=True)
+    created_atv    = models.DateTimeField(auto_now_add=True)
     updated_at     = models.DateTimeField(auto_now=True)
     
     

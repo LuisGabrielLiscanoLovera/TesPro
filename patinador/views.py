@@ -56,23 +56,38 @@ def patinadorList(request):
 
 class CreatePatinador(View):
     
+    
     def  get(self, request):
+        if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username=username)
+                
         idEmpresa        = request.GET.get('idEmpresa', None)
-        idUser           = request.GET.get('idUser', None)
         idIntegrante     = int(request.GET.get('idIntegrante', None))
         estatus          = 'A'
-        obj = Patinador.objects.create(
-            empresa_id   = idEmpresa,
-            usuario_id   = idUser,
-            integrante_id= idIntegrante, 
-            estatus      = estatus, 
+        
+        #puede existir pero no repetido en la misma empresa
+        existeIntPat    =  Patinador.objects.extra(where=["integrante_id='%s' AND usuario_id = '%s' AND empresa_id = '%s'" %(idIntegrante,idUser.id,idEmpresa) ])
+        if existeIntPat.count()==0:
           
-              
-        )
-  
-        data = {
+            obj = Patinador.objects.create(
+                empresa_id   = idEmpresa,
+                usuario_id   = idUser.id,
+                integrante_id= idIntegrante, 
+                estatus      = estatus,    
+            )
+           
+            data = {
             'user': "user"
-        } 
+        }
+        
+        else:
+            data = {
+            'user': "enviar un mensaje de error patinador repetido"
+        }
+            print("enviar un mensaje de error patinador repetida") 
+        
         return JsonResponse(data)
 
 class DeletePatinador(View):

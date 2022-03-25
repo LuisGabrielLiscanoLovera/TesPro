@@ -11,7 +11,7 @@ from . import views
 
 
 urlpatterns = [
-    
+     path('__debug__/', include('debug_toolbar.urls')),#borarrrar menu debuguer
     
     path('admin', admin.site.urls),
     path('', Home.as_view(), name='home'),

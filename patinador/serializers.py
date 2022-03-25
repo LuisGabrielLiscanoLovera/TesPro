@@ -6,6 +6,7 @@ class PatinadorSerializer(serializers.ModelSerializer):
     updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     nomPatinador   = serializers.CharField(source='integrante.nombres')
     apellPatinador = serializers.CharField(source='integrante.apellidos')
+    #idpatinador    = serializers.CharField(source='integrante.id')
 #    category_name = serializers.RelatedField(source='category', read_only=True)
 
     class Meta:

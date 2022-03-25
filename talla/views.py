@@ -70,7 +70,7 @@ def TallaOPList(request):
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
  
-    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser[0].get('id')).last()
     lastEm=lastEm.lastEm
     ptalla     = CanTalla.objects.filter(empresa_id=lastEm,operacion_id=int(request.GET.get('idOp', None))).order_by('-id')
     serializer = CanTallaSerializer(ptalla, many=True)
@@ -83,24 +83,20 @@ class CreateTalla(View):
         if request.session.has_key('username'):        
             if 'username' in request.session:
                 username = request.session['username']     
-                idUser   = MyUser.objects.filter(username=username).values('id')
-    
+                idUser   = MyUser.objects.get(username=username)
     
         nomTalla           = request.GET.get('nomTalla', None).upper()
         numTalla           = int(request.GET.get('numTalla', None))
         idEmpresaTalla     = int(request.GET.get('idEmpresaTalla', None))
-        idUserTalla        = int(request.GET.get('idUserTalla', None))
         
-        existeTallaUser    =  Talla.objects.extra(where=["nom_talla='%s' AND usuario_id = '%s' AND empresa_id = '%s'" %(nomTalla,idUser[0].get('id'),idEmpresaTalla) ])
+        existeTallaUser    =  Talla.objects.extra(where=["nom_talla='%s' AND usuario_id = '%s' AND empresa_id = '%s'" %(nomTalla,idUser.id,idEmpresaTalla) ])
         if existeTallaUser.count()==0:
                 
             obj = Talla.objects.create(
                 empresa_id   = idEmpresaTalla,
-                usuario_id   = idUserTalla,
+                usuario_id   = idUser.id,
                 nom_talla    = nomTalla, 
-                num_talla    = numTalla, 
-              
-                  
+                num_talla    = numTalla,                   
             )
       
             data = {
