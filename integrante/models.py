@@ -16,7 +16,7 @@ class Integrante(models.Model):
     apellidos  = models.CharField(max_length=30)
     sexo       = models.CharField(max_length=1,choices=SEXO)   
     correo     = models.EmailField('Correo')
-    cedula     = models.IntegerField(blank=True, null=True,unique=True)
+    cedula     = models.IntegerField(blank=True, null=True)
     num_telf   = models.IntegerField(blank=True, null=True)
     direccion  = models.CharField(max_length=250)
     created_at = models.DateTimeField(auto_now_add=True)

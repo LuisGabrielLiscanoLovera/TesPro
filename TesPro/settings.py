@@ -43,7 +43,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    "debug_toolbar",#botarrrar menu debuguer
+ #   "debug_toolbar",#botarrrar menu debuguer
     #'django_tables2',
     'rest_framework.authtoken',
 #    'generic_relations',
@@ -98,7 +98,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "debug_toolbar.middleware.DebugToolbarMiddleware",#borarrar menu debuger
+  #  "debug_toolbar.middleware.DebugToolbarMiddleware",#borarrar menu debuger
     
 ]
 MIDDLEWARE_CLASSES = [
@@ -191,8 +191,8 @@ APPEND_SLASH=False
 
 CORS_ORIGIN_ALLOW_ALL = True
 AUTH_USER_MODEL = 'authapp.MyUser'
-INTERNAL_IPS = [
+''' INTERNAL_IPS = [
     # ...
     "127.0.0.1",#borarrar menu debuger
     # ...
-]
+] '''

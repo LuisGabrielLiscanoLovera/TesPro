@@ -6,7 +6,7 @@ from empresa.models import Empresa
 class Referencia(models.Model):
     usuario        = models.ForeignKey(User, related_name='Referencia', null=True, blank=True,on_delete=models.CASCADE)
     empresa        = models.ForeignKey(Empresa, related_name='Referencia', null=True, blank=True,on_delete=models.CASCADE)
-    nom_referencia = models.CharField(max_length=20, unique=True)
+    nom_referencia = models.CharField(max_length=30)
     descripcion    = models.CharField(max_length=50)
    # fotoPrendaUno  = models.ImageField(upload_to='uploads/',null=False,blank=True ,height_field=None, width_field=None, max_length=100)
     #fotoPrendaDos  = models.ImageField(upload_to='uploads/',null=False,blank=True ,height_field=None, width_field=None, max_length=100)

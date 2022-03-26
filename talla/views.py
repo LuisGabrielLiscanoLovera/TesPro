@@ -87,13 +87,15 @@ class CreateTalla(View):
     
         nomTalla           = request.GET.get('nomTalla', None).upper()
         numTalla           = int(request.GET.get('numTalla', None))
-        idEmpresaTalla     = int(request.GET.get('idEmpresaTalla', None))
-        
-        existeTallaUser    =  Talla.objects.extra(where=["nom_talla='%s' AND usuario_id = '%s' AND empresa_id = '%s'" %(nomTalla,idUser.id,idEmpresaTalla) ])
+        #idEmpresaTalla     = int(request.GET.get('idEmpresaTalla', None))
+        lastEm             = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
+
+        existeTallaUser    =  Talla.objects.extra(where=["nom_talla='%s' AND usuario_id = '%s' AND empresa_id = '%s'" %(nomTalla,idUser.id,lastEm.lastEm)])
         if existeTallaUser.count()==0:
                 
             obj = Talla.objects.create(
-                empresa_id   = idEmpresaTalla,
+               #empresa_id   = idEmpresaTalla,
+                empresa_id   = lastEm.lastEm,
                 usuario_id   = idUser.id,
                 nom_talla    = nomTalla, 
                 num_talla    = numTalla,                   

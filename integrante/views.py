@@ -47,9 +47,15 @@ def integranteList(request):
 
 class CreateIntegrante(View):
     
-    def  get(self, request):       
-        idEmpresa        = request.GET.get('idEmpresa', None)
-        idUser           = request.GET.get('idUser', None)
+    
+    def  get(self, request):
+        if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username=username)
+        
+        lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()    
+    
         nombres          = request.GET.get('nomIntegrante', None).upper()
         apellido         = request.GET.get('apeIntegrante', None).upper()
         sexo             = request.GET.get('genero', None)
@@ -57,25 +63,38 @@ class CreateIntegrante(View):
         cedula           = request.GET.get('cedula', None)
         num_telf         = request.GET.get('num_telefono', None)
         direccion        = request.GET.get('direccion', None).upper()
-        estatus          =('A')
+        estatus          = ('A')
         
-        obj = Integrante.objects.create(
-            empresa_id   = idEmpresa,
-            usuario_id   = idUser,
-            nombres      = nombres, 
-            apellidos    = apellido, 
-            sexo         = sexo,
-            estatus = estatus,
-            correo       = correo, 
-            cedula       = cedula, 
-            num_telf     = num_telf, 
-            direccion    = direccion, 
+        #puede existir pero no repetido en la misma empresa
+        existeIntegrante =  Integrante.objects.extra(where=["cedula = '%s' AND usuario_id = '%s' AND empresa_id = '%s'" %(cedula,idUser.id,lastEm.lastEm) ])
+
+        if existeIntegrante.count()==0:
+    
+        
+            obj = Integrante.objects.create(
+                empresa_id   = lastEm.lastEm,
+                usuario_id   = idUser.id,
+                nombres      = nombres, 
+                apellidos    = apellido, 
+                sexo         = sexo,
+                estatus = estatus,
+                correo       = correo, 
+                cedula       = cedula, 
+                num_telf     = num_telf, 
+                direccion    = direccion, 
               
         )
   
-        data = {
+            data = {
             'user': "user"
-        } 
+        }
+        else:
+            data = {
+            'user': "enviar un mensaje de error Integrante repetido"
+        }
+            print("enviar un mensaje de error Integrante repetidao") 
+        
+        
         return JsonResponse(data)
 
 class DeleteIntegrante(View):

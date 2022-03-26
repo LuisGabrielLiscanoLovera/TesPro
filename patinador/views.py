@@ -62,17 +62,21 @@ class CreatePatinador(View):
             if 'username' in request.session:
                 username = request.session['username']     
                 idUser   = MyUser.objects.get(username=username)
-                
-        idEmpresa        = request.GET.get('idEmpresa', None)
+        
+        lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
+      
+        #idEmpresa        = request.GET.get('idEmpresa', None)
         idIntegrante     = int(request.GET.get('idIntegrante', None))
         estatus          = 'A'
         
         #puede existir pero no repetido en la misma empresa
-        existeIntPat    =  Patinador.objects.extra(where=["integrante_id='%s' AND usuario_id = '%s' AND empresa_id = '%s'" %(idIntegrante,idUser.id,idEmpresa) ])
+        existeIntPat    =  Patinador.objects.extra(where=["integrante_id='%s' AND usuario_id = '%s' AND empresa_id = '%s'" %(idIntegrante,idUser.id,lastEm.lastEm) ])
+        
+               
         if existeIntPat.count()==0:
           
             obj = Patinador.objects.create(
-                empresa_id   = idEmpresa,
+                empresa_id   = lastEm.lastEm,
                 usuario_id   = idUser.id,
                 integrante_id= idIntegrante, 
                 estatus      = estatus,    

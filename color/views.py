@@ -39,27 +39,37 @@ def colorList(request):
 
 class CreateColor(View):
     def  get(self, request):
+        
+        if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username=username)
+        
+        
+        lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
         nom_color = request.GET.get('nom_color', None)
         codigo_color    = request.GET.get('codigo_color', None)
-        idEmpresa       = request.GET.get('empresaColor', None)
-        idUser          = request.GET.get('idUserColor', None)
+        existeColor   =  Color.objects.extra(where=["nom_color='%s' AND usuario_id = '%s' AND empresa_id = '%s'" %(nom_color,idUser.id,lastEm.lastEm) ])
+        if existeColor.count()==0:    
        # agregar empresa y usuario
-        obj = Color.objects.create(
+            obj = Color.objects.create(
             nom_color      = nom_color,
             codigo_color   = codigo_color,
-            empresa_id     = idEmpresa,
-            usuario_id     = idUser,            
+            empresa_id     = lastEm.lastEm,
+            usuario_id     = idUser.id,            
         )
-        obj = Color.objects.latest('id')
-
-        
-
-
-        user = {'id':obj.id,'nom_color':obj.nom_color,'codigo_color':obj.codigo_color,'created_at':obj.created_at.strftime("%Y-%m-%d %H:%M:%S")}
-
-        data = {
+            obj = Color.objects.latest('id')
+            user = {'id':obj.id,'nom_color':obj.nom_color,'codigo_color':obj.codigo_color,'created_at':obj.created_at.strftime("%Y-%m-%d %H:%M:%S")}
+            data = {
             'user': user
         }
+        else:
+            data = {
+            'user': "enviar un mensaje de error color repetido"
+        }
+            print("enviar un mensaje de error color repetida") 
+        
+        
         return JsonResponse(data)
 
 
