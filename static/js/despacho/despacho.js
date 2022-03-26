@@ -38,13 +38,13 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '<form @submit.prevent="submitFormDespacho" class="form dark">' +
 
         '<div>' +
-        '<select  class="form-control" v-model="selectedPatinador"><option disabled value="">Selecciones Patinador</option>' +
+        '<select  class="form-control" v-model="selectIDPatinador"><option disabled value="">Selecciones Patinador</option>' +
         '<option id="id_pantinador"  v-for="option in allPatinadoresOPs" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]]</option></select>' +
 
-        '<select  class="form-control" v-model="selectedTalla"><option  value="">Selecciones Talla</option>' +
-        '<option id="id_talla"  v-for="(optionTalla) in allTallasOPs"  v-bind:value="optionTalla.id"  >[[optionTalla.nom_talla]]-[[optionTalla.num_talla]]</option></select>' +
+        '<select  class="form-control" v-model="selectIdTalla"><option  value="">Selecciones Talla</option>' +
+        '<option id="id_talla"  v-for="(optionTalla) in allTallasOPs"  v-bind:value="optionTalla.id"  >[[optionTalla.num_talla]] / [[optionTalla.nom_talla]]</option></select>' +
         '<input class="form-control" autocomplete="off" placeholder="Cantidad terminada" id="cant" type="number" v-model="cant" required/>' +
-        '<input hidden=True id="empresa"   value="' + row.empresa + '" type="number" required/>' +
+        '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number" required/>' +
 
 
         '<br><input class="form-control btn btn-block" type="submit" value="Guardar"></div></div>' + '</div>' +
@@ -60,7 +60,7 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
 
 
 
-function formOP(idOp, empresa) {
+function formOP(idOp, usuario) {
 
 
     new Vue({
@@ -69,14 +69,13 @@ function formOP(idOp, empresa) {
 
         data: function() {
             return {
-                selectedPatinador: '',
-                selectedTalla: '',
+                selectIDPatinador: '',
                 allPatinadoresOPs: [],
                 allTallasOPs: [],
                 name: '',
                 id_OP: idOp,
-                selectedTalla: '',
-                empresa: empresa,
+                selectIdTalla: '',
+                usuario: usuario,
                 cant: '',
 
             }
@@ -108,9 +107,9 @@ function formOP(idOp, empresa) {
 
                 axios.post('/despacho/create/', {
                     id_OP: this.id_OP,
-                    selectedTalla: this.selectedTalla,
-                    selectedPatinador: this.selectedPatinador,
-                    empresa: this.empresa,
+                    selectIdTalla: this.selectIdTalla,
+                    selectIDPatinador: this.selectIDPatinador,
+                    usuario: this.usuario,
                     cant: this.cant
 
                 }).then(response => {

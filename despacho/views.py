@@ -139,44 +139,32 @@ class Despachos(TemplateView):
 
 @api_view(['POST'])
 def createDespacho(request):
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+        
+    lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
+    #{'id_OP': 6, 'selectIdTalla': 11, 'selectIDPatinador': 4, 'usuario': 3, 'cant': '12'}
+    
     serializer = DespachoSerializer(data = request.data)
     print(request.data['id_OP'])
     print(request.data)
     
     
-    
-    
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-    else:
-        return HttpResponse('Some Error Occured')
         
-''' class createDespacho(View):
-    
-    def get(self, request):
-        idPatinador      = int(request.GET.get('idPatinador', None))
-        idOperacion      = int(request.GET.get('idOperacion', None))
-        idTalla          = int(request.GET.get('idTalla', None))
-        idEmpresaOP      = int(request.GET.get('idEmpresa', None))
-        idUserOP         = int(request.GET.get('idUser', None))
-        cantidadRegistar = int(request.GET.get('cantidadRegistar', None))   
-        
-        
-        print(idPatinador,idOperacion,idTalla,idEmpresaOP,idUserOP,cantidadRegistar)
-        
-        obj = Despacho.objects.create(
-            empresa_id     = idEmpresaOP,
-            usuario_id     = idUserOP,
-            operacion_id   = idOperacion, 
-            talla_id       = idTalla,
-            patinador_id   = idPatinador,
-            can_terminada  = cantidadRegistar
+    obj = Despacho.objects.create(
+        empresa_id     = lastEm.lastEm,
+        usuario_id     = idUser.id,
+        operacion_id   = request.data['id_OP'], 
+        talla_id       = request.data['selectIdTalla'],
+        patinador_id   = request.data['selectIDPatinador'],
+        can_terminada  = request.data['cant']
           
               
         )
     
-        data = {
-            'user': "user"
-        } 
-        return JsonResponse(data) '''
+    data = {
+        'user': "user"
+    } 
+    return JsonResponse(data)
