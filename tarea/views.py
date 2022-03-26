@@ -48,19 +48,24 @@ def TareaList(request):
 class CreateTarea(View):
 
     def get(self, request):
+        if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username=username)
+        
+        lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
+      
                
         nombreTarea  = request.GET.get('nombreTarea', None).upper()
         minutoXTarea = int(request.GET.get('minutoXTarea', None))
         horaXTarea   = int(request.GET.get('horaXTarea', None))
         valorTarea   = int(request.GET.get('valorTarea', None))
         detalleTarea = request.GET.get('detalleTarea', None)
-        empresaTarea = request.GET.get('empresaTarea', None)
-        idUserTarea  = request.GET.get('idUserTarea', None)
       
         
         obj = Tarea.objects.create(
-            empresa_id = empresaTarea,
-            usuario_id = idUserTarea,
+            empresa_id = lastEm.lastEm,
+            usuario_id = idUser.id,
             nom_tarea  = nombreTarea, 
             min_minuto = minutoXTarea, 
             min_hora   = horaXTarea,
