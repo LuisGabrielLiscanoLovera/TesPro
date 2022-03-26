@@ -35,7 +35,7 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '<div class="col-sm-3"><div id="FormuTallaOP"><template>' +
 
 
-        '<form @submit.prevent="submitFormDespacho" class="form dark">' +
+        '<form @submit.prevent="submitFormDespacho" class="form dark">{% csrf_token %}' +
 
         '<div>' +
         '<select  class="form-control" v-model="selectIDPatinador"><option disabled value="">Selecciones Patinador</option>' +

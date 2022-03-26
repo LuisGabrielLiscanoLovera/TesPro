@@ -145,21 +145,25 @@ def createDespacho(request):
             idUser   = MyUser.objects.get(username=username)
         
     lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
-    #{'id_OP': 6, 'selectIdTalla': 11, 'selectIDPatinador': 4, 'usuario': 3, 'cant': '12'}
+    #serializer = DespachoSerializer(data = request.data)
     
-    serializer = DespachoSerializer(data = request.data)
     print(request.data['id_OP'])
     print(request.data)
     
-    
+    print("empresa=",lastEm.lastEm,
+    "iduser=",idUser.id,
+    "idop=",request.data['id_OP'],
+    "idtalla=",request.data['selectIdTalla'],
+    "idpatinador=",request.data['selectIDPatinador'],
+    "cantidad=",int(request.data['cant']) )
         
     obj = Despacho.objects.create(
-        empresa_id     = lastEm.lastEm,
         usuario_id     = idUser.id,
+        patinador_id   = request.data['selectIDPatinador'],
+        empresa_id     = lastEm.lastEm,
         operacion_id   = request.data['id_OP'], 
         talla_id       = request.data['selectIdTalla'],
-        patinador_id   = request.data['selectIDPatinador'],
-        can_terminada  = request.data['cant']
+        can_terminada  = int(request.data['cant'])
           
               
         )
