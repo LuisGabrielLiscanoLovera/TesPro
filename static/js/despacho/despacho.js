@@ -9,7 +9,6 @@ axios.defaults.xsrfCookieName = "csrftoken";
 
 
 
-$('#despachoTable').SetEditable();
 
 function DetailFormatterButInfoOperacionDespacho(index, row) {
     //crea y renderiza la tabla
@@ -80,13 +79,6 @@ function formOP(idOp, empresa) {
                 selectedTalla: '',
                 empresa: empresa,
                 cant: '',
-
-
-
-
-
-
-
 
             }
 

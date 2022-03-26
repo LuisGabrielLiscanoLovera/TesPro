@@ -122,8 +122,6 @@ class Despachos(TemplateView):
           
           context = super(Despachos, self).get_context_data(**kwargs)
           
-          
-          
           context['lastIdEmpresa']    = int(lastEm.lastEm) # ids empresas
           context['allTalla']         = Tallas             #todaslas las tallas
           context['allOperaciones']   = Operaciones        #todaslas operaciones 
