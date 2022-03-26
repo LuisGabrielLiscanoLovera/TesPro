@@ -32,9 +32,24 @@ class RelacionEmpresa(models.Model):
 
 class CambioEmpres(models.Model):
     Usuario = models.ForeignKey(User, null=True,blank=True,related_name='CambioEmpres',on_delete=models.CASCADE)
-    lastEm=models.IntegerField()
+    lastEm=models.IntegerField(default=+1)
     created_at = models.DateTimeField(auto_now_add=True)
     class Meta:
             ordering = ["id"]
     def __str__(self):
         return 'ID=%s lastEm=%s Usuario=%s ' % (self.id, self.lastEm, self.Usuario)
+    
+    
+    
+    """
+    '''class MyModel(models.Model):
+        title = models.CharField(max_length=120)
+    text = models.TextField()
+    auto_inc_and_filled = models.IntegerField()
+
+    def save(self, *args, **kwargs):
+        self.auto_inc_and_filled = MyModel.objects.count()
+        super(MyModel, self).save(*args, **kwargs) '''
+    """
+    
+    
