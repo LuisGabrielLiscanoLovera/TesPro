@@ -13,7 +13,7 @@ class Operacion(models.Model):
     empresa       = models.ForeignKey(Empresa, related_name='Operacion', null=False, blank=False,on_delete=models.CASCADE)
     referencia    = models.ForeignKey(Referencia, related_name='Operacion', null=True, blank=True,on_delete=models.CASCADE)
     color         = models.ForeignKey(Color, related_name='Operacion', null=False, blank=False,on_delete=models.CASCADE)
-    nom_operacion = models.CharField(max_length=20, unique=True)
+    nom_operacion = models.CharField(max_length=35)
     nota          = models.CharField(max_length=50,blank=True, null=True)
     estatus       = models.CharField(max_length=1,choices=ESTATUS)
     can_total     = models.IntegerField(blank=True, null=True)

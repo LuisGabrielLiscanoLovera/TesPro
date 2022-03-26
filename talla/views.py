@@ -66,13 +66,12 @@ def TallaList(request):
 @api_view(['GET'])  
 def TallaOPList(request):
     if request.session.has_key('username'):        
-        if 'username' in request.session:
-            username = request.session['username']     
-            idUser   = MyUser.objects.get(username=username)
- 
-    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser[0].get('id')).last()
-    lastEm=lastEm.lastEm
-    ptalla     = CanTalla.objects.filter(empresa_id=lastEm,operacion_id=int(request.GET.get('idOp', None))).order_by('-id')
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username=username)
+                
+    lastEm   = CambioEmpres.objects.filter(Usuario_id=idUser.id).last() 
+    ptalla     = CanTalla.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(request.GET.get('idOp', None))).order_by('-id')
     serializer = CanTallaSerializer(ptalla, many=True)
    
     return Response(serializer.data)

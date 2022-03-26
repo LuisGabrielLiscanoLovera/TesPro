@@ -47,28 +47,45 @@ def operacionList(request):
 class CreateOperacion(View):
     
     def get(self, request):
+        if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username=username)
+        
+        lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
+      
+        
         can_totalOP    = request.GET.get('can_totalOP', None)
         idReferenciaOP = request.GET.get('idReferenciaOP', None)
-        idEmpresaOP    = int(request.GET.get('idEmpresaOP', None))
         idColorOP      = int(request.GET.get('idColorOP', None))
-        idUserOP       = int(request.GET.get('idUserOP', None))
         nomOperacion   = request.GET.get('nomOperacion', None)
         estatus = 'A'
-        obj = Operacion.objects.create(
-            empresa_id     = idEmpresaOP,
-            usuario_id     = idUserOP,
-            nom_operacion  = "OP"+nomOperacion, 
-            estatus        = estatus,
-            color_id       = idColorOP,
-            referencia_id  = idReferenciaOP,
-            can_total      = can_totalOP
-          
-              
+        
+        
+        #puede existir pero no repetido en la misma empresa
+        existOperacion    =  Operacion.objects.extra(where=["nom_operacion='%s' AND usuario_id = '%s' AND empresa_id = '%s'" %(nomOperacion,idUser.id,lastEm.lastEm) ])
+
+        if existOperacion.count()==0:
+    
+            obj = Operacion.objects.create(
+                empresa_id     = lastEm.lastEm,
+                usuario_id     = idUser.id,
+                nom_operacion  = "OP-"+nomOperacion, 
+                estatus        = estatus,
+                color_id       = idColorOP,
+                referencia_id  = idReferenciaOP,
+                can_total      = can_totalOP
         )
     
-        data = {
+            data = {
             'user': "user"
-        } 
+        }
+        else:
+            data = {
+            'user': "enviar un mensaje de error operacion repetida"
+        }
+            print("enviar un mensaje de error operacion repetida") 
+        
         return JsonResponse(data)
 
 class DeleteOperacion(View):
