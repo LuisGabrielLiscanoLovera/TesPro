@@ -37,13 +37,12 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
 
         '<form @submit.prevent="submitFormDespacho" class="form dark">' +
 
-
         '<div>' +
         '<select  class="form-control" v-model="selectedPatinador"><option disabled value="">Selecciones Patinador</option>' +
         '<option id="id_pantinador"  v-for="option in allPatinadoresOPs" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]]</option></select>' +
 
         '<select  class="form-control" v-model="selectedTalla"><option  value="">Selecciones Talla</option>' +
-        '<option id="id_talla"  v-for="(optionTalla,index) in allTallasOPs"  v-bind:value="optionTalla.id"  >[[optionTalla.nom_talla]]-[[optionTalla.id]]</option></select>' +
+        '<option id="id_talla"  v-for="(optionTalla) in allTallasOPs"  v-bind:value="optionTalla.id"  >[[optionTalla.nom_talla]]-[[optionTalla.num_talla]]</option></select>' +
         '<input class="form-control" autocomplete="off" placeholder="Cantidad terminada" id="cant" type="number" v-model="cant" required/>' +
         '<input hidden=True id="empresa"   value="' + row.empresa + '" type="number" required/>' +
 

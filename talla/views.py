@@ -118,23 +118,19 @@ class CreateTallaOP(View):
         idTalla          = int(request.GET.get('idTalla', None))
         cantTalla        = int(request.GET.get('cantTalla', None))
         idOperacionTalla = int(request.GET.get('idOperacionTalla', None))
-        idEmpresaOPTalla = int(request.GET.get('idEmpresaOPTalla', None))
-        idUserOPTalla    = int(request.GET.get('idUserOPTalla', None))
         
         if request.session.has_key('username'):        
             if 'username' in request.session:
                 username = request.session['username']     
                 idUser   = MyUser.objects.get(username=username)
                 
-        
-        lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
-        lastEm=lastEm.lastEm
-        ptalla     = CanTalla.objects.filter(empresa_id=lastEm,talla_id=idTalla,operacion_id=idOperacionTalla)
+        lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()   
+        ptalla           = CanTalla.objects.filter(empresa_id=lastEm.lastEm,talla_id=idTalla,operacion_id=idOperacionTalla)
         
         if int(ptalla.count()) <= 0 :
             obj = CanTalla.objects.create(
-                empresa_id   = idEmpresaOPTalla,
-                usuario_id   = idUserOPTalla,
+                empresa_id   = lastEm.lastEm,
+                usuario_id   = idUser.id,
                 can_talla    = cantTalla, 
                 talla_id     = idTalla, 
                 operacion_id = idOperacionTalla
