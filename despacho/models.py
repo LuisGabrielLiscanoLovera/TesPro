@@ -1,6 +1,6 @@
 from django.db import models
 from operacion.models import Operacion
-from integrante.models import Integrante
+from patinador.models import Patinador
 from empresa.models import Empresa
 from authapp.models import MyUser as User
 from talla.models import Talla
@@ -8,10 +8,10 @@ from talla.models import Talla
 
 class Despacho(models.Model):
     usuario           = models.ForeignKey(User, null=True,blank=True,related_name='Despacho',on_delete=models.CASCADE)
-    patinador         = models.ForeignKey(Integrante, related_name='DespachoPP', null=False, blank=False,on_delete=models.CASCADE)
-    empresa           = models.ForeignKey(Empresa, related_name='DespachoE', null=False, blank=False,on_delete=models.CASCADE)
-    operacion         = models.ForeignKey(Operacion,related_name='DespachoO',on_delete=models.CASCADE)
-    talla             = models.ForeignKey(Talla,related_name='DespachoT',null=True, blank=False,on_delete=models.CASCADE)
+    patinador         = models.ForeignKey(Patinador, related_name='Despacho', null=False, blank=False,on_delete=models.CASCADE)
+    empresa           = models.ForeignKey(Empresa, related_name='Despacho', null=False, blank=False,on_delete=models.CASCADE)
+    operacion         = models.ForeignKey(Operacion,related_name='Despacho',on_delete=models.CASCADE)
+    talla             = models.ForeignKey(Talla,related_name='Despacho',null=True, blank=False,on_delete=models.CASCADE,db_constraint=False)
     can_terminada     = models.IntegerField(blank=True, null=True)
     
     #integrante = models.ForeignKey(Integrante,related_name='DespachoI', null=False, blank=False,on_delete=models.CASCADE)

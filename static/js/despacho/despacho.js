@@ -1,7 +1,8 @@
 //script vue y axios
+
+
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
-
 
 
 
@@ -35,7 +36,7 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '<div class="col-sm-3"><div id="FormuTallaOP"><template>' +
 
 
-        '<form @submit.prevent="submitFormDespacho" class="form dark">{% csrf_token %}' +
+        '<form @submit.prevent="submitFormDespacho" class="form dark"><div hidden=True>{% csrf_token %}</div>' +
 
         '<div>' +
         '<select  class="form-control" v-model="selectIDPatinador"><option disabled value="">Selecciones Patinador</option>' +

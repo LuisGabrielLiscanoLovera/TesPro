@@ -138,7 +138,7 @@ class Despachos(TemplateView):
 
 
 @api_view(['POST'])
-def createDespacho(request):
+def createDespacho(request,):
     if request.session.has_key('username'):        
         if 'username' in request.session:
             username = request.session['username']     
@@ -158,11 +158,11 @@ def createDespacho(request):
     "cantidad=",int(request.data['cant']) )
         
     obj = Despacho.objects.create(
-        usuario_id     = idUser.id,
-        patinador_id   = request.data['selectIDPatinador'],
-        empresa_id     = lastEm.lastEm,
-        operacion_id   = request.data['id_OP'], 
-        talla_id       = request.data['selectIdTalla'],
+        usuario_id     = int(idUser.id),
+        patinador_id   = int(request.data['selectIDPatinador']),
+        empresa_id     = int(lastEm.lastEm),
+        operacion_id   = int(request.data['id_OP']), 
+        talla_id       = int(request.data['selectIdTalla']),
         can_terminada  = int(request.data['cant'])
           
               

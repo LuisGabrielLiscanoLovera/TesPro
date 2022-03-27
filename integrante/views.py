@@ -52,8 +52,7 @@ class CreateIntegrante(View):
                 username = request.session['username']     
                 idUser   = MyUser.objects.get(username=username)
         
-        lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()    
-    
+        lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
         nombres          = request.GET.get('nomIntegrante', None).upper()
         apellido         = request.GET.get('apeIntegrante', None).upper()
         sexo             = request.GET.get('genero', None)
