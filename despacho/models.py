@@ -11,7 +11,7 @@ class Despacho(models.Model):
     patinador         = models.ForeignKey(Patinador, related_name='Despacho', null=False, blank=False,on_delete=models.CASCADE)
     empresa           = models.ForeignKey(Empresa, related_name='Despacho', null=False, blank=False,on_delete=models.CASCADE)
     operacion         = models.ForeignKey(Operacion,related_name='Despacho',on_delete=models.CASCADE)
-    talla             = models.ForeignKey(Talla,related_name='Despacho',null=True, blank=False,on_delete=models.CASCADE,db_constraint=False)
+    talla             = models.ForeignKey(Talla,related_name='Despacho',null=True, blank=False,on_delete=models.CASCADE)
     can_terminada     = models.IntegerField(blank=True, null=True)
     
     #integrante = models.ForeignKey(Integrante,related_name='DespachoI', null=False, blank=False,on_delete=models.CASCADE)
