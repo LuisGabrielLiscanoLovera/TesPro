@@ -85,7 +85,7 @@ function DetailFormatterButAccionDespacho(index, row) {
         '<div>' +
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number" required/>' +
         '<br><input class="form-control btn btn-block" type="submit" value="Eliminar"></form></div></div>' + '</div>' +
-        '<pre>{{data}}</pre>' +
+        '<pre>{{$data}}</pre>' +
         '</div></template>' +
 
         '</div>';

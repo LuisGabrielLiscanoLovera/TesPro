@@ -29,9 +29,9 @@ def despacho_list(request):
             idUser   = MyUser.objects.get(username=username)
             
     #crear registro de despacho
-    
+    idOp        = request.GET.get('idOp', None)
     lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()   
-    despachos  = Despacho.objects.filter(empresa_id=lastEm.lastEm,operacion_id=1,patinador_id=1).order_by('-id')
+    despachos  = Despacho.objects.filter(empresa_id=lastEm.lastEm,operacion_id=idOp).order_by('-id')
     print(lastEm,despachos)
     
     
