@@ -82,7 +82,7 @@ function DetailFormatterButAccionDespacho(index, row) {
 
         '<div class="col-md- offset-" id="despachoVueDelete">' +
         '<form @submit.prevent="" ><div hidden=True>{% csrf_token %}</div>' +
-        '<div><label class="form-control text-center text-warning">Eliminar procesos</label>' +
+        '<div><label class="form-control text-center text-warning">Eliminar procesos operacion </label>' +
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number" required/>' +
         '<input class="form-control btn btn-block btn-danger" type="submit" value="Eliminar"></div>' +
         '</form></template></div>' +
