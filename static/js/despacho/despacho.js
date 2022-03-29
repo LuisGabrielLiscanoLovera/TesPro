@@ -72,20 +72,21 @@ function DetailFormatterButAccionDespacho(index, row) {
         '<th class="text-center">Can Restante</th>' +
         '</tr>' +
         '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '">' +
-        '<tr v-for="allDespachoOPs in allTallaOPs" :key="allDespachoOPs.id">' +
-        '<td>[[allDespachoOPs.nom_talla]]</td><td>[[allDespachoOPs.can_talla]]' +
-        '</td><td>[[allDespachoOPs.res_talla]]</td></tr>' +
+        '<tr v-for="allDespach in allDespachoOPs" :key="allDespach.id">' +
+        '<td>[[allDespach.nom_talla]]</td><td>[[allDespach.can_talla]]' +
+        '</td><td>[[allDespach.id]]</td></tr>' +
         '</tbody></template></div>' +
         '</table>' + '<script type="application/javascript">' +
         'despachoOP(' + row.id + ',' + row.usuario + ');' +
         '</script>' +
         '</div>' +
+        '<pre{{$allDespachoOPs}}</pre>' +
         '<div class="col-sm-3"><div id="FormuTallaOP"><template>' +
         '<form @submit.prevent="submitFormDespacho" class="form dark"><div hidden=True>{% csrf_token %}</div>' +
         '<div>' +
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number" required/>' +
         '<br><input class="form-control btn btn-block" type="submit" value="Eliminar"></form></div></div>' + '</div>' +
-        '<pre>{{$data}}</pre>' +
+
         '</div></template>' +
 
         '</div>';
