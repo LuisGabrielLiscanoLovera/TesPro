@@ -67,14 +67,19 @@ function DetailFormatterButAccionDespacho(index, row) {
         '<table class="table border border-info ">' +
         '<thead class="thead-dark">' +
         '<tr>' +
-        '<th class="text-center">Nombre Talla</th>' +
-        '<th class="text-center">Can Tallas</th>' +
-        '<th class="text-center">Can Restante</th>' +
+        '<th class="text-center">Patinador</th>' +
+        '<th class="text-center">Tallas</th>' +
+        '<th class="text-center">Cantidad</th>' +
+        '<th class="text-center">Fecha</th>' +
         '</tr>' +
+
         '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '">' +
         '<tr v-for="allDespach in allDespachoOPs" :key="allDespach.id">' +
-        '<td>[[allDespach.nom_talla]]</td><td>[[allDespach.can_talla]]' +
-        '</td><td>[[allDespach.id]]</td></tr>' +
+        '<td>[[allDespach.nom_patinador]] [[allDespach.apell_patinador]]</td>' +
+        '<td>[[allDespach.nom_talla]]</td>' +
+        '<td>[[allDespach.can_terminada]]</td>' +
+        '<td>[[allDespach.created_at]]</td>' +
+        '</tr>' +
         '</tbody></template></div>' +
         '</table>' + '<script type="application/javascript">' +
         'despachoOP(' + row.id + ',' + row.usuario + ');' +
@@ -82,7 +87,7 @@ function DetailFormatterButAccionDespacho(index, row) {
         '</div>' +
 
         '<div class="col-sm-3"><div id="FormuTallaOP"><template>' +
-        '<pre>{$allDespachoOPs}</pre>' +
+        '<code>d{{$allDespachoOPs}}</pre>' +
         '<form @submit.prevent="submitFormDespacho" class="form dark"><div hidden=True>{% csrf_token %}</div>' +
         '<div>' +
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number" required/>' +
