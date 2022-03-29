@@ -21,7 +21,8 @@ urlpatterns = [
 
     #original
     path('', Despachos.as_view(), name='despacho'),
-    path('list', despacho_list, name="despachos"),
+    path('list/', despacho_list, name="despachos"),
+    
     path('create/', createDespacho, name="newDespacho"),
     #path('<str:id>', get_despacho, name='get_despacho'),
     #path('update/<str:id>', updateDespacho, name="update"),

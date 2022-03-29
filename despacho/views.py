@@ -23,33 +23,23 @@ from django.forms.models import model_to_dict
 
 @api_view(['GET'])
 def despacho_list(request):
-    if request.session.has_key('username'):
-         #capturamos el inicio de session 
+    if request.session.has_key('username'):        
         if 'username' in request.session:
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
+            
+    #crear registro de despacho
     
-    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
-    lastEm = lastEm
-    despachos = Operacion.objects.filter(empresa_id=lastEm,estatus='A').order_by('-id')
-    despachos = Despacho.objects.all();   
+    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()   
+    despachos  = Despacho.objects.filter(empresa_id=lastEm.lastEm,operacion_id=1,patinador_id=1).order_by('-id')
+    print(lastEm,despachos)
+    
+    
     tSerializer = DespachoSerializer(despachos, many = True)
     #return JsonResponse(tSerializer.data, safe=False)
     return Response(tSerializer.data)
     
 #
-
-
-@api_view(['GET'])
-def get_despacho(request, id):
-    
-
-    try: 
-        despacho = Despacho.objects.get(id = id)
-    except Exception as e:
-        raise Http404
-    tSerializer = DespachoSerializer(despacho)
-    return Response(tSerializer.data)
 
 @api_view(['DELETE'])
 def deleteDespacho(request, id):
@@ -59,6 +49,14 @@ def deleteDespacho(request, id):
     except Exception as e:
         Response("Unable to Delete Task!")
     return Response("Task Deleted Sucessfully")
+    
+    
+    
+    
+    
+    
+
+
 
 
 
@@ -72,13 +70,12 @@ def operacionesList(request):
             idUser   = MyUser.objects.get(username=username)
             
     
-    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
-    lastEm=lastEm.lastEm
-    
-    despacho  = Operacion.objects.filter(empresa_id=lastEm,estatus='A').order_by('-id')
+    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()   
+    despacho  = Operacion.objects.filter(empresa_id=lastEm.lastEm,estatus='A').order_by('-id')
     serializer = OperacionSerializer(despacho, many=True)
      
     return Response(serializer.data)
+
 
 
 @api_view(['GET'])  
@@ -89,8 +86,7 @@ def patinadoresAct(request):
             idUser   = MyUser.objects.get(username=username)
             
     lastEm = CambioEmpres.objects.filter(Usuario_id=idUser).last()
-    lastEm = lastEm.lastEm
-    
+    lastEm = lastEm.lastEm    
     try:        
         patinadores     = Patinador.objects.all().filter(usuario=idUser,estatus='A',empresa_id=int(lastEm))
         serializer      = PatinadorSerializer(patinadores, many=True)
@@ -147,15 +143,8 @@ def createDespacho(request,):
     lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
     #serializer = DespachoSerializer(data = request.data)
     
-    print(request.data['id_OP'])
-    print(request.data)
-    
-    print("empresa=",lastEm.lastEm,
-    "iduser=",idUser.id,
-    "idop=",request.data['id_OP'],
-    "idtalla=",request.data['selectIdTalla'],
-    "idpatinador=",request.data['selectIDPatinador'],
-    "cantidad=",int(request.data['cant']) )
+    #print(request.data['id_OP'])
+    #print(request.data)
         
     obj = Despacho.objects.create(
         usuario_id     = int(idUser.id),

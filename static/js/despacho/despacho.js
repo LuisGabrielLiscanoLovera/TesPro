@@ -47,7 +47,7 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '<option id="id_talla"  v-for="(optionTalla) in allTallasOPs"  v-bind:value="optionTalla.talla"  >[[optionTalla.num_talla]] / [[optionTalla.nom_talla]]</option></select>' +
         '<input class="form-control" autocomplete="off" placeholder="Cantidad terminada" id="cant" type="number" v-model="cant" required/>' +
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number" required/>' +
-        '<br><input class="form-control btn btn-block" type="submit" value="Guardar"></div></div>' + '</div>' +
+        '<br><input class="form-control btn btn-block" type="submit" value="Guardar"></form></div></div>' + '</div>' +
 
         '</div></template>' +
 
@@ -55,6 +55,42 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
 
 }
 
+
+
+function DetailFormatterButAccionDespacho(index, row) {
+    //crea y renderiza la tabla
+    return '<div class="row">' +
+        '<div class="col-sm-1">' +
+        '</div>' +
+
+        '<div class="col-sm-6"><div id="despachoVue"><template>' +
+        '<table class="table border border-info ">' +
+        '<thead class="thead-dark">' +
+        '<tr>' +
+        '<th class="text-center">Nombre Talla</th>' +
+        '<th class="text-center">Can Tallas</th>' +
+        '<th class="text-center">Can Restante</th>' +
+        '</tr>' +
+        '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '">' +
+        '<tr v-for="allDespachoOPs in allTallaOPs" :key="allDespachoOPs.id">' +
+        '<td>[[allDespachoOPs.nom_talla]]</td><td>[[allDespachoOPs.can_talla]]' +
+        '</td><td>[[allDespachoOPs.res_talla]]</td></tr>' +
+        '</tbody></template></div>' +
+        '</table>' + '<script type="application/javascript">' +
+        'despachoOP(' + row.id + ',' + row.usuario + ');' +
+        '</script>' +
+        '</div>' +
+        '<div class="col-sm-3"><div id="FormuTallaOP"><template>' +
+        '<form @submit.prevent="submitFormDespacho" class="form dark"><div hidden=True>{% csrf_token %}</div>' +
+        '<div>' +
+        '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number" required/>' +
+        '<br><input class="form-control btn btn-block" type="submit" value="Eliminar"></form></div></div>' + '</div>' +
+        '<pre>{{data}}</pre>' +
+        '</div></template>' +
+
+        '</div>';
+
+}
 
 
 
@@ -84,7 +120,7 @@ function formOP(idOp, usuario) {
         methods: {
 
 
-            getDespachoPatinadores: function() {
+            getDespachoData: function() {
 
                 axios
                     .get('/despacho/lista_patinadoresAct/')
@@ -127,30 +163,65 @@ function formOP(idOp, usuario) {
 
         },
 
-
-
-
         mounted: function() {
-            this.getDespachoPatinadores();
+            this.getDespachoData();
 
 
         }
 
     });
 
-
-
-
-
 };
 
 
+
+function despachoOP(idOp, usuario) {
+
+    new Vue({
+        el: '#despachoVue',
+        delimiters: ['[[', ']]'],
+
+        data: function() {
+            return {
+                allDespachoOPs: [],
+
+            }
+
+        },
+
+
+        methods: {
+
+            getDespachoS: function() {
+
+                axios
+                    .get('list/?idOp=' + idOp + '&usuario=' + usuario)
+                    .then((resp) => {
+                        this.allDespachoOPs = resp.data
+                    })
+                    .catch(error => console.log(error))
+            }
+
+        },
+
+        mounted: function() {
+
+            this.getDespachoS()
+
+
+        }
+
+    });
+
+}
+
+
+
+
+
+
+
 function tallasOP(idOp) {
-
-
-
-
-
 
     new Vue({
         el: '#despachoVue',
@@ -177,8 +248,6 @@ function tallasOP(idOp) {
                     .catch(error => console.log(error))
             }
 
-
-
         },
 
         mounted: function() {
@@ -189,9 +258,5 @@ function tallasOP(idOp) {
         }
 
     });
-
-
-
-
 
 }
