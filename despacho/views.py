@@ -31,11 +31,12 @@ def despacho_list(request):
     #crear registro de despacho
     idOp        = request.GET.get('idOp', None)
     lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()   
-    despachos  = Despacho.objects.filter(empresa_id=lastEm.lastEm,operacion_id=idOp).order_by('-id')
-    print(lastEm,despachos)
+    despachos  = Despacho.objects.all().filter(empresa_id=lastEm.lastEm,operacion_id=idOp).order_by('-id')
+    
     
     
     tSerializer = DespachoSerializer(despachos, many = True)
+    
     #return JsonResponse(tSerializer.data, safe=False)
     return Response(tSerializer.data)
     

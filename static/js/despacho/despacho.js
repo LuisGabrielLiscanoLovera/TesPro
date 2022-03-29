@@ -80,8 +80,9 @@ function DetailFormatterButAccionDespacho(index, row) {
         'despachoOP(' + row.id + ',' + row.usuario + ');' +
         '</script>' +
         '</div>' +
-        '<pre{{$allDespachoOPs}}</pre>' +
+
         '<div class="col-sm-3"><div id="FormuTallaOP"><template>' +
+        '<pre>{$allDespachoOPs}</pre>' +
         '<form @submit.prevent="submitFormDespacho" class="form dark"><div hidden=True>{% csrf_token %}</div>' +
         '<div>' +
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number" required/>' +

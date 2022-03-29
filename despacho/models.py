@@ -18,7 +18,7 @@ class Despacho(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):
-        return 'id {} can_termin {} usuario {} empresa {}'.format(self.id, self.can_terminada,self.usuario,self.empresa)
+        return 'patinador {} id {} can_termin {} usuario {} empresa {}'.format(self.patinador,self.id, self.can_terminada,self.usuario,self.empresa)
 
 
 
