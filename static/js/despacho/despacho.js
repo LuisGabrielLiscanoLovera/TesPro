@@ -61,31 +61,31 @@ function DetailFormatterButAccionDespacho(index, row) {
     //crea y renderiza la tabla
     return '<div class="row">' +
 
-        '<div class="col-sm-6 offset-" id="despachoVue"><template>' +
+        '<div class="col-sm-12 offset-12 " id="despachoVue"><template>' +
         '<table class="table border border-info ">' +
         '<thead class="thead-dark">' +
         '<tr>' +
         '<th class="text-center">Patinador</th>' +
         '<th class="text-center">Tallas</th>' +
-        '<th class="text-center">Cantidad</th>' +
+        '<th class="text-center">Cantida de producto</th>' +
         '<th class="text-center">Fecha</th>' +
         '</tr>' +
 
         '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '">' +
-        '<tr v-for="allDespach in allDespachoOPs" :key="allDespach.id">' +
-        '<td>[[allDespach.nom_patinador]] [[allDespach.apell_patinador]]</td>' +
-        '<td>[[allDespach.nom_talla]]</td>' +
-        '<td>[[allDespach.can_terminada]]</td>' +
-        '<td>[[allDespach.created_at]]</td>' +
+        '<tr v-for="allDespach in allDespachoOPs" :key="allDespach.id" >' +
+        '<td class="text-left">[[allDespach.nom_patinador]] [[allDespach.apell_patinador]]</td>' +
+        '<td class="text-center">[[allDespach.nom_talla]]</td>' +
+        '<td class="text-center">[[Number(allDespach.can_terminada).toLocaleString()]]</td>' +
+        '<td class="text-center">[[allDespach.created_at]]</td>' +
         '</tr>' +
-        '</tbody></table></template></div>' +
-        '<div class="col-md-3 offset-12" id="despachoVueDelete">' +
+        '</tbody></table></div>' +
 
+        '<div class="col-md- offset-" id="despachoVueDelete">' +
         '<form @submit.prevent="" ><div hidden=True>{% csrf_token %}</div>' +
-        '<div><label class="form-control text-center text-button--danger">Eliminar procesos</label>' +
+        '<div><label class="form-control text-center text-warning">Eliminar procesos</label>' +
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number" required/>' +
         '<input class="form-control btn btn-block btn-danger" type="submit" value="Eliminar"></div>' +
-        '</form></div>' +
+        '</form></template></div>' +
 
 
 
