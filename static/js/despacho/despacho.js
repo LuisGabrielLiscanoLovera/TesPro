@@ -60,10 +60,8 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
 function DetailFormatterButAccionDespacho(index, row) {
     //crea y renderiza la tabla
     return '<div class="row">' +
-        '<div class="col-sm-1">' +
-        '</div>' +
 
-        '<div class="col-sm-6"><div id="despachoVue"><template>' +
+        '<div class="col-sm-6" id="despachoVue"><template>' +
         '<table class="table border border-info ">' +
         '<thead class="thead-dark">' +
         '<tr>' +
@@ -80,20 +78,29 @@ function DetailFormatterButAccionDespacho(index, row) {
         '<td>[[allDespach.can_terminada]]</td>' +
         '<td>[[allDespach.created_at]]</td>' +
         '</tr>' +
-        '</tbody></template></div>' +
-        '</table>' + '<script type="application/javascript">' +
-        'despachoOP(' + row.id + ',' + row.usuario + ');' +
-        '</script>' +
+        '</tbody></table></template></div>' +
+
+
+
+
+        '<div class="col-md-3" id=""><template>' +
+        '<form @submit.prevent="" class="form dark"><div hidden=>{% csrf_token %}</div>' +
+        '<div class="form-control "> Eliminar procesos' +
+        '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number" required/>' +
+        '<input class="form-control btn btn-block btn-danger" type="submit" value="Eliminar"></div>' +
+        '</form></template>' +
+
+
         '</div>' +
 
-        '<div class="col-sm-3"><div id="FormuTallaOP"><template>' +
-        '<code>d{{$allDespachoOPs}}</pre>' +
-        '<form @submit.prevent="submitFormDespacho" class="form dark"><div hidden=True>{% csrf_token %}</div>' +
-        '<div>' +
-        '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number" required/>' +
-        '<br><input class="form-control btn btn-block" type="submit" value="Eliminar"></form></div></div>' + '</div>' +
 
-        '</div></template>' +
+
+        '<script type="application/javascript">' +
+        'despachoOP(' + row.id + ',' + row.usuario + ');' +
+        '</script>' +
+
+
+
 
         '</div>';
 
