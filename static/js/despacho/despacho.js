@@ -61,7 +61,7 @@ function DetailFormatterButAccionDespacho(index, row) {
     //crea y renderiza la tabla
     return '<div class="row">' +
 
-        '<div class="col-sm-6" id="despachoVue"><template>' +
+        '<div class="col-sm-6 offset-" id="despachoVue"><template>' +
         '<table class="table border border-info ">' +
         '<thead class="thead-dark">' +
         '<tr>' +
@@ -79,19 +79,14 @@ function DetailFormatterButAccionDespacho(index, row) {
         '<td>[[allDespach.created_at]]</td>' +
         '</tr>' +
         '</tbody></table></template></div>' +
+        '<div class="col-md-3 offset-12" id="despachoVueDelete">' +
 
-
-
-
-        '<div class="col-md-3" id=""><template>' +
-        '<form @submit.prevent="" class="form dark"><div hidden=>{% csrf_token %}</div>' +
-        '<div class="form-control "> Eliminar procesos' +
+        '<form @submit.prevent="" ><div hidden=True>{% csrf_token %}</div>' +
+        '<div><label class="form-control text-center text-button--danger">Eliminar procesos</label>' +
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number" required/>' +
         '<input class="form-control btn btn-block btn-danger" type="submit" value="Eliminar"></div>' +
-        '</form></template>' +
+        '</form></div>' +
 
-
-        '</div>' +
 
 
 
