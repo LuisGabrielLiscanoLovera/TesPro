@@ -26,5 +26,5 @@ urlpatterns = [
     path('create/', createDespacho, name="newDespacho"),
     #path('<str:id>', get_despacho, name='get_despacho'),
     #path('update/<str:id>', updateDespacho, name="update"),
-    path('delete/<str:id>/', deleteDespacho, name="delete")
+    path('eliminar_despachos/<str:id>/', deleteDespacho, name="delete-despacho")
 ]

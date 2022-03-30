@@ -81,10 +81,11 @@ function DetailFormatterButAccionDespacho(index, row) {
         '</tbody></table></div>' +
 
         '<div class="col-md- offset-" id="despachoVueDelete">' +
-        '<form @submit.prevent="" ><div hidden=True>{% csrf_token %}</div>' +
+        '<form @submit.prevent="submitFormDespachoEliminar" ><div hidden=True>{% csrf_token %}</div>' +
         '<div><label class="form-control text-center text-warning">Eliminar procesos operacion </label>' +
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number" required/>' +
-        '<input class="form-control btn btn-block btn-danger" type="submit" value="Eliminar"></div>' +
+        '<input class="form-control btn btn-block btn-danger" type="submit" onclick="EliminarDEspachos(' + row.id +
+        ')" value = "Eliminar" > </div>' +
         '</form></template></div>' +
 
 
@@ -102,6 +103,60 @@ function DetailFormatterButAccionDespacho(index, row) {
 }
 
 
+function EliminarDEspachos(id_OP) {
+
+
+    new Vue({
+        el: '#despachoVueDelete',
+        delimiters: ['[[', ']]'],
+        data: function() {
+            return {
+                id_OP: id_OP,
+            }
+
+        },
+
+        methods: {
+
+
+
+            submitFormDespachoEliminar() {
+                axios.delete('eliminar_despachos/' + id_OP + '/').then(response => {
+                    // console.log(response);
+                    // this.response = response.data
+                    this.success = 'Data eliminada';
+                    this.response = JSON.stringify(response, null, 2)
+                }).catch(error => {
+                    this.response = 'Error: ' + error.response.status
+                });
+
+            }
+
+
+
+        },
+        mounted: function() {
+            this.submitFormDespachoEliminar();
+            window.location.reload();
+
+
+        }
+
+
+
+
+
+    })
+
+
+
+
+
+
+
+
+
+};
 
 
 
