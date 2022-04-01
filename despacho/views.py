@@ -44,21 +44,19 @@ def despacho_list(request):
 
 @api_view(['DELETE'])
 def deleteDespacho(request,id):
-    
-    id1 = request.GET.get('id_despacho', None)
-    
-    print("id_despacho  =",id   ,"<<<<<<<<<<<<<<<<<<<<<<") 
-    #Despacho.objects.get(id=id1).delete()
-    
-    
-    
-    try:   
+
+    #id_despacho = request.GET.get('id_despacho', None)
+    try:
+        Despacho.objects.get(id=id).delete()    
+        data = {
+            'deleted': True
+        }
         
-        print("id_despacho  =",id1   ,"<<<<<<<<<<<<<<<<<<<<<<")   
     except Exception as e:
         Response("Unable to Delete Task!")
-    return Response("Task Deleted Sucessfully")
-    
+    return JsonResponse(data)
+    #return Response("Task Deleted Sucessfully")
+        
     
     
     

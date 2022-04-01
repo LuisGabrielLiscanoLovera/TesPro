@@ -82,9 +82,9 @@ function DetailFormatterButAccionDespacho(index, row) {
         '<td class="text-center">' +
 
         '<div class="col-md- offset-" id="despachoVueDelete">' +
-        '<form  @submit.prevent="submitFormDespachoEliminar"><div hidden=True>{% csrf_token %}</div>' +
+        '<form  @submit.prevent="saludar"><div hidden=True>{% csrf_token %}</div>' +
 
-        '<button class="btn btn-danger" type="submit"  v-on:click="submitFormDespachoEliminar()">' +
+
         '<button class="btn btn-danger" type="submit"  v-on:click="saludar([[allDespach.id]])">' +
 
         '</button>' +
@@ -232,10 +232,10 @@ function despachoOP(idOp, usuario) {
 
         methods: {
 
-            saludar: function(name) {
+            saludar: function(id_despacho) {
 
 
-                axios.delete('eliminar_despachos/' + name + '/').then(response => {
+                axios.delete('eliminar_despachos/' + id_despacho + '/').then(response => {
                     // console.log(response);
                     // this.response = response.data
                     this.success = 'Data eliminada';
@@ -243,12 +243,10 @@ function despachoOP(idOp, usuario) {
                 }).catch(error => {
                     this.response = 'Error: ' + error.response.status
                 });
-            },
-
-            submitFormDespachoEliminar: function(id_despacho) {
-
+                this.getDespachoS();
 
             },
+
 
 
             getDespachoS: function() {
@@ -267,6 +265,7 @@ function despachoOP(idOp, usuario) {
         mounted: function() {
 
             this.getDespachoS();
+
 
 
 
