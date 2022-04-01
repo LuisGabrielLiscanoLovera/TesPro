@@ -69,6 +69,8 @@ function DetailFormatterButAccionDespacho(index, row) {
         '<th class="text-center">Tallas</th>' +
         '<th class="text-center">Cantida de producto</th>' +
         '<th class="text-center">Fecha</th>' +
+        '<th class="text-center">Eliminar</th>' +
+
         '</tr>' +
 
         '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '">' +
@@ -77,16 +79,34 @@ function DetailFormatterButAccionDespacho(index, row) {
         '<td class="text-center">[[allDespach.nom_talla]]</td>' +
         '<td class="text-center">[[Number(allDespach.can_terminada).toLocaleString()]]</td>' +
         '<td class="text-center">[[allDespach.created_at]]</td>' +
+        '<td class="text-center">' +
+
+        '<div class="col-md- offset-" id="despachoVueDelete">' +
+        '<form  @submit.prevent="submitFormDespachoEliminar"><div hidden=True>{% csrf_token %}</div>' +
+
+        '<button class="btn btn-danger" type="submit"  v-on:click="submitFormDespachoEliminar()">' +
+        '<button class="btn btn-danger" type="submit"  v-on:click="saludar([[allDespach.id]])">' +
+
+        '</button>' +
+
+
+
+        '</form>' +
+        '</td>' +
+
+        '</div>' +
+        '</template>' +
+
+
+
+
+
         '</tr>' +
         '</tbody></table></div>' +
 
-        '<div class="col-md- offset-" id="despachoVueDelete">' +
-        '<form @submit.prevent="submitFormDespachoEliminar" ><div hidden=True>{% csrf_token %}</div>' +
-        '<div><label class="form-control text-center text-warning">Eliminar procesos operacion </label>' +
-        '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number" required/>' +
-        '<input class="form-control btn btn-block btn-danger" type="submit" onclick="EliminarDEspachos(' + row.id +
-        ')" value = "Eliminar" > </div>' +
-        '</form></template></div>' +
+
+
+
 
 
 
@@ -103,50 +123,6 @@ function DetailFormatterButAccionDespacho(index, row) {
 }
 
 
-function EliminarDEspachos(id_OP) {
-
-
-    new Vue({
-        el: '#despachoVueDelete',
-        delimiters: ['[[', ']]'],
-        data: function() {
-            return {
-                id_OP: id_OP,
-            }
-
-        },
-
-        methods: {
-
-
-
-            submitFormDespachoEliminar() {
-                axios.delete('eliminar_despachos/' + id_OP + '/').then(response => {
-                    // console.log(response);
-                    // this.response = response.data
-                    this.success = 'Data eliminada';
-                    this.response = JSON.stringify(response, null, 2)
-                }).catch(error => {
-                    this.response = 'Error: ' + error.response.status
-                });
-
-            }
-
-
-
-        },
-        mounted: function() {
-            this.submitFormDespachoEliminar();
-            window.location.reload();
-
-
-        }
-
-
-
-
-
-    })
 
 
 
@@ -156,7 +132,7 @@ function EliminarDEspachos(id_OP) {
 
 
 
-};
+
 
 
 
@@ -256,6 +232,25 @@ function despachoOP(idOp, usuario) {
 
         methods: {
 
+            saludar: function(name) {
+
+
+                axios.delete('eliminar_despachos/' + name + '/').then(response => {
+                    // console.log(response);
+                    // this.response = response.data
+                    this.success = 'Data eliminada';
+                    this.response = JSON.stringify(response, null, 2)
+                }).catch(error => {
+                    this.response = 'Error: ' + error.response.status
+                });
+            },
+
+            submitFormDespachoEliminar: function(id_despacho) {
+
+
+            },
+
+
             getDespachoS: function() {
 
                 axios
@@ -266,11 +261,13 @@ function despachoOP(idOp, usuario) {
                     .catch(error => console.log(error))
             }
 
+
         },
 
         mounted: function() {
 
-            this.getDespachoS()
+            this.getDespachoS();
+
 
 
         }

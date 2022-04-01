@@ -20,6 +20,7 @@ class DespachoSerializer(serializers.ModelSerializer):
     nom_talla   = serializers.CharField(source='talla.nom_talla')
     created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    id = serializers.IntegerField()
    
     class Meta:
         model = Despacho
