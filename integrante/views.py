@@ -112,14 +112,14 @@ class UpdateIntegrante(TemplateView):
         idIntegrante     = request.GET.get('idIntegranteUP', None)
         idEmpresa        = request.GET.get('idEmpresaUP', None)
         idUser           = request.GET.get('idUserUP', None)
-        nombres          = request.GET.get('nombresInputUP', None)
-        apellido         = request.GET.get('apellidosUP', None)
+        nombres          = request.GET.get('nombresInputUP', None).upper()
+        apellido         = request.GET.get('apellidosUP', None).upper()
         sexo             = request.GET.get('generoUP', None)
         estatus          = request.GET.get('estatusUP', None)
         correo           = request.GET.get('correoUP', None)
         cedula           = request.GET.get('cedulaUP', None)
         num_telf         = request.GET.get('num_telefonoUP', None)
-        direccion        = request.GET.get('direccionUP', None)
+        direccion        = request.GET.get('direccionUP', None).upper()
         
       
         obj = Integrante.objects.get(id=idIntegrante)
