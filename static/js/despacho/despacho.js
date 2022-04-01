@@ -85,7 +85,7 @@ function DetailFormatterButAccionDespacho(index, row) {
         '<form  @submit.prevent="saludar"><div hidden=True>{% csrf_token %}</div>' +
 
 
-        '<button class="btn btn-danger" type="submit"  v-on:click="saludar([[allDespach.id]])">' +
+        '<button class="btn btn-sm btn-block btn-outline-danger  icofont-ui-remove" type="submit"  v-on:click="saludar([[allDespach.id]])">' +
 
         '</button>' +
 

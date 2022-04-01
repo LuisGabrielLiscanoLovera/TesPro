@@ -126,7 +126,7 @@ class UpdateIntegrante(TemplateView):
         obj.empresa_id = idEmpresa
         obj.usuario_id = idUser
         obj.nombres    = nombres  
-        obj.apellido   = apellido 
+        obj.apellidos  = apellido 
         obj.sexo       = sexo     
         obj.estatus    = estatus  
         obj.correo     = correo   

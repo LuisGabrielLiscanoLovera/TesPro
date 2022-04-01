@@ -192,8 +192,8 @@ data-auto-refresh-status="true"
                     '<thead class="thead-dark">' +
                     '<tr>' +
                     '<th class="text-center">Talla</th>' +
-                    '<th class="text-center">Can total</th>' +
-                    '<th class="text-center">Can Restante</th>' +
+                    '<th class="text-center">Total</th>' +
+                    '<th class="text-center">Talla restante</th>' +
                     '<th class="text-center">Eliminar talla</th>' +
 
                     '</tr>' +
@@ -230,7 +230,7 @@ data-auto-refresh-status="true"
                                 "<td style='text-align:center'>" + nombreTalla + "</td>" +
                                 "<td style='text-align:center'>" + canTalla + "</td>" +
                                 "<td style='text-align:center'>" + res_talla + "</td>" +
-                                "<td style='text-align:center'>" + "<button class='btn btn-sm btn-block btn-outline-danger  icofont-ui-remov' onclick='reoveCanTalla(" + id + ")'>Eliminar " + "</td>" +
+                                "<td style='text-align:center'>" + "<button class='btn btn-sm btn-block btn-outline-danger  icofont-ui-remove' onclick='reoveCanTalla(" + id + ")'> " + "</td>" +
                                 "</tr>";
                             $('#listKill' + idOp).append(tr_str);
                         }
