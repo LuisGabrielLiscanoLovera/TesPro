@@ -2,4 +2,5 @@
 # tomar en cuenta los temas de db on cascade
 # hacer reactivo los formularios
 # deicdir la estructura de los template
+# crear opccion en operacion sin talla automatico
 

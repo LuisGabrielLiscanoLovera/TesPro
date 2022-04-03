@@ -152,19 +152,28 @@ def createDespacho(request,):
     
     #print(request.data['id_OP'])
     #print(request.data)
-        
-    obj = Despacho.objects.create(
+    
+    
+    tallaId       = int(request.data['selectIdTalla'])
+    can_terminada = int(request.data['cant'])
+    try:
+        obj = Despacho.objects.create(
         usuario_id     = int(idUser.id),
         patinador_id   = int(request.data['selectIDPatinador']),
         empresa_id     = int(lastEm.lastEm),
         operacion_id   = int(request.data['id_OP']), 
-        talla_id       = int(request.data['selectIdTalla']),
-        can_terminada  = int(request.data['cant'])
-          
-              
-        )
+        talla_id       = tallaId,
+        can_terminada  = can_terminada
     
-    data = {
-        'user': "user"
-    } 
-    return JsonResponse(data)
+        )      
+        data = {
+            'despacho': True
+        }
+        
+        return Response("despacho cargado")
+    except Exception as e:    
+        print("no tienes patinadores activos")  
+    
+        return Response("no tienes patinadores activos")
+ 
+   
