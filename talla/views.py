@@ -131,7 +131,8 @@ class CreateTallaOP(View):
             obj = CanTalla.objects.create(
                 empresa_id   = lastEm.lastEm,
                 usuario_id   = idUser.id,
-                can_talla    = cantTalla, 
+                can_talla    = cantTalla,
+                res_talla    = cantTalla,
                 talla_id     = idTalla, 
                 operacion_id = idOperacionTalla
                 

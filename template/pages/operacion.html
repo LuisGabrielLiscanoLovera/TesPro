@@ -39,8 +39,9 @@ data-auto-refresh-status="true"
                         <th data-field="nomReferencia" class="text-center">Referencia</th>
                         <th data-field="estatus" class="text-center">Estatus</th>
                         <th data-field="nomColor" class="text-center">Color</th>
-                        <th data-field="codColor" class="text-center">Cod. Color</th>
-                        <th data-field="can_total" class="text-center">Total</th>
+                        <!-- <th data-field="codColor" class="text-center">Cod. Color</th> -->
+                        <th data-field="can_restante" class="text-center">Cant. Faltante</th>
+                        <th data-field="can_total" class="text-center">Cant. Total</th>
 
                         <th data-field="created_at" class="text-center">Fecha creada</th>
                         <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionPoperacion" class="text-center">
@@ -222,6 +223,7 @@ data-auto-refresh-status="true"
                             var canTalla = response[i].can_talla;
                             var nombreTalla = response[i].nom_talla;
                             var res_talla = response[i].res_talla;
+
                             if (res_talla == null) {
                                 res_talla = canTalla;
                             }

@@ -106,7 +106,7 @@ def patinadoresAct(request):
 
 class Despachos(TemplateView):
      
-     template_name = "despacho/despacho.html"
+     template_name = "pages/despacho.html"
      success_url = '/'
      
      def get_context_data(self, **kwargs):

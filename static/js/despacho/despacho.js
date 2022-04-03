@@ -22,13 +22,13 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '<thead class="thead-dark">' +
         '<tr>' +
         '<th class="text-center">Nombre Talla</th>' +
-        '<th class="text-center">Can Tallas</th>' +
-        '<th class="text-center">Can Restante</th>' +
+        '<th class="text-center">Talla Restante</th>' +
+        '<th class="text-center">Talla Total</th>' +
         '</tr>' +
         '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '">' +
         '<tr v-for="allTallaOP in allTallaOPs" :key="allTallaOP.id">' +
-        '<td>[[allTallaOP.nom_talla]]</td><td>[[allTallaOP.can_talla]]' +
-        '</td><td>[[allTallaOP.res_talla]]</td></tr>' +
+        '<td>[[allTallaOP.nom_talla]]</td><td>[[allTallaOP.res_talla]]' +
+        '</td><td>[[allTallaOP.can_talla]]</td></tr>' +
         '</tbody></template></div>' +
         '</table>' + '<script type="application/javascript">' + 'tallasOP(' + row.id + '); formOP(' + row.id + ',' + row.empresa + ');' +
         '</' + 'script>' +

@@ -72,7 +72,8 @@ class CreateOperacion(View):
                 estatus        = estatus,
                 color_id       = idColorOP,
                 referencia_id  = idReferenciaOP,
-                can_total      = can_totalOP
+                can_total      = can_totalOP,
+                can_restante   = can_totalOP
         )
     
             data = {

@@ -1,1 +1,5 @@
-# Crear en el boton de eliminar en operacios con advertencia de tallas
+# Crear en el boton de eliminar en operacios con advertencia de tallas y en los dodos los delete
+# tomar en cuenta los temas de db on cascade
+# hacer reactivo los formularios
+# deicdir la estructura de los template
+
