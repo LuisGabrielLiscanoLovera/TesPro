@@ -57,6 +57,7 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
 
 
 
+
 function DetailFormatterButAccionDespacho(index, row) {
     //crea y renderiza la tabla
     return '<div class="row">' +
