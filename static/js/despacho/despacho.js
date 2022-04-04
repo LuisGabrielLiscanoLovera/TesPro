@@ -57,7 +57,6 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
 
 
 
-
 function DetailFormatterButAccionDespacho(index, row) {
     //crea y renderiza la tabla
     return '<div class="row">' +
@@ -196,7 +195,7 @@ function formOP(idOp, usuario) {
                     this.response = JSON.stringify(response, null, 2)
                 }).catch(error => {
                     this.response = 'Error: ' + error.response.status
-                })
+                }), this.getDespachoS();
 
             }
 

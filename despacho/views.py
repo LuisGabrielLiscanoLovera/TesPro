@@ -6,7 +6,8 @@ from empresa.models import Empresa,RelacionEmpresa,CambioEmpres
 from despacho.models import Despacho
 from integrante.models import Integrante
 from patinador.models import Patinador
-from talla.models import Talla
+from talla.models import Talla,CanTalla
+from django.db.models import Sum, F 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from authapp.models import MyUser
@@ -154,26 +155,31 @@ def createDespacho(request,):
     #print(request.data)
     
     
-    tallaId       = int(request.data['selectIdTalla'])
-    can_terminada = int(request.data['cant'])
+    canTerminada = int(request.data['cant'])
     try:
         obj = Despacho.objects.create(
         usuario_id     = int(idUser.id),
         patinador_id   = int(request.data['selectIDPatinador']),
         empresa_id     = int(lastEm.lastEm),
         operacion_id   = int(request.data['id_OP']), 
-        talla_id       = tallaId,
-        can_terminada  = can_terminada
+        talla_id       = int(request.data['selectIdTalla']),
+        can_terminada  = canTerminada
     
         )      
         data = {
             'despacho': True
         }
         
+        
+        CanTallaOP      = CanTalla.objects.all().filter(talla_id=int(request.data['selectIdTalla'])).update(res_talla= F('res_talla') - canTerminada)
+        OpTallaRestante = Operacion.objects.all().filter(id=int(request.data['id_OP'])).update(can_restante= F('can_restante') - canTerminada)
+        print(OpTallaRestante)
+        
+        
+        
         return Response("despacho cargado")
-    except Exception as e:    
-        print("no tienes patinadores activos")  
-    
-        return Response("no tienes patinadores activos")
+    except Exception as e:
+        print(str(e))
+        return Response("despacho no cargado")
  
    
