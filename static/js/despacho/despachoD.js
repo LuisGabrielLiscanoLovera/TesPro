@@ -186,8 +186,8 @@ function formOP(idOp, usuario) {
 
 
                                         console.log(response.status); * /
-                                        /*
-                                          console.log(response.data);
+                                        /*console.log(response.data);
+                                          
                                           console.log(response.statusText);
                                           console.log(response.headers);
                                           console.log(response.config); */

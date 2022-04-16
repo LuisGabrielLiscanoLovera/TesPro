@@ -86,7 +86,7 @@ function DetailFormatterButAccionDespacho(index, row) {
         '<td class="text-center">' +
 
         '<div class="col-md- offset-" id="despachoVueDelete">' +
-        '<form  @submit.prevent="delDespacho"><div hidden=True>{% csrf_token %}</div>' +
+        '<form  @submit.prevent="getDespachoS"><div hidden=True>{% csrf_token %}</div>' +
 
 
         '<button class="btn btn-sm btn-block btn-outline-danger  icofont-ui-remove" type="submit"  v-on:click="delDespacho([[allDespach.id]])">' +
@@ -255,8 +255,8 @@ function despachoOP(idOp, usuario) {
                     this.response = JSON.stringify(response, null, 2)
                 }).catch(error => {
                     this.response = 'Error: ' + error.response.status
-                });
-                this.getDespachoS();
+                })
+
 
             },
 
@@ -314,6 +314,13 @@ function tallasOP(idOp) {
                     .get('/talla/tallaOP-list/?idOp=' + idOp)
                     .then((resp) => {
                         this.allTallaOPs = resp.data;
+                        if (resp.data == '') {
+                            //alert("no hay un coño");
+                            document.getElementById('despachoVue').innerHTML = '<h3>No hay tallas cargada</h3>';
+
+                        }
+                        console.log(resp.data);
+
 
 
                     })

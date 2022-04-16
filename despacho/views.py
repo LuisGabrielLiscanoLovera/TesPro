@@ -49,7 +49,11 @@ def deleteDespacho(request,id):
     #id_despacho = request.GET.get('id_despacho', None)
     
     try:
-        Despacho.objects.get(id=id).delete()    
+        
+       
+       
+        Despacho.objects.get(id=id).delete()
+        
         data = {
             'deleted': True
         }
