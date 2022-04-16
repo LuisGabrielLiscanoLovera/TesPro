@@ -3,4 +3,4 @@
 # hacer reactivo los formularios
 # deicdir la estructura de los template
 # crear opccion en operacion sin talla automatico
-
+# tadas las data tables pasara a vue

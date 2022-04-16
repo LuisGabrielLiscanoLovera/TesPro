@@ -73,7 +73,7 @@ def TallaOPList(request):
     lastEm   = CambioEmpres.objects.filter(Usuario_id=idUser.id).last() 
     ptalla     = CanTalla.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(request.GET.get('idOp', None))).order_by('-id')
     serializer = CanTallaSerializer(ptalla, many=True)
-   
+
     return Response(serializer.data)
  
 #create talla 

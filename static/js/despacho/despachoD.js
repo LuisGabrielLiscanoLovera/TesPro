@@ -6,7 +6,8 @@ axios.defaults.xsrfCookieName = "csrftoken";
 
 
 
-//script datatable
+//script datatable convert to vue
+
 
 
 
@@ -16,8 +17,8 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
     return '<div class="row">' +
         '<div class="col-sm-1">' +
         '</div>' +
-        '<div class="col-sm-6">' +
-        '<div id="despachoVue"><template>' +
+
+        '<div class="col-sm-6"><div id="despachoVue"><template>' +
         '<table class="table border border-info ">' +
         '<thead class="thead-dark">' +
         '<tr>' +
@@ -30,12 +31,11 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '<td>[[allTallaOP.nom_talla]]</td><td>[[allTallaOP.res_talla]]' +
         '</td><td>[[allTallaOP.can_talla]]</td></tr>' +
         '</tbody></template></div>' +
-        '</table>' + '<script type="application/javascript">' + 'formOP(' + row.id + ',' + row.empresa + ');' +
+        '</table>' + '<script type="application/javascript">' + 'tallasOP(' + row.id + '); formOP(' + row.id + ',' + row.empresa + ');' +
         '</' + 'script>' +
-
         '</div>' +
-
         '<div class="col-sm-3"><div id="FormuTallaOP"><template>' +
+
 
         '<form @submit.prevent="submitFormDespacho" class="form dark"><div hidden=True>{% csrf_token %}</div>' +
 
@@ -48,16 +48,13 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '<option id="id_talla"  v-for="(optionTalla) in allTallasOPs"  v-bind:value="optionTalla.talla"  >[[optionTalla.num_talla]] / [[optionTalla.nom_talla]]</option></select>' +
         '<input class="form-control" autocomplete="off" placeholder="Cantidad terminada" id="cant" type="number" v-model="cant" required/>' +
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number" required/>' +
-        '<br><input class="form-control btn btn-block" type="submit"  value="Guardar"></form></div></div>' + '</div>' +
+        '<br><input class="form-control btn btn-block" type="submit" value="Guardar"></form></div></div>' + '</div>' +
 
         '</div></template>' +
 
         '</div>';
 
 }
-
-
-
 
 
 
@@ -86,12 +83,14 @@ function DetailFormatterButAccionDespacho(index, row) {
         '<td class="text-center">' +
 
         '<div class="col-md- offset-" id="despachoVueDelete">' +
-        '<form  @submit.prevent="delDespacho"><div hidden=True>{% csrf_token %}</div>' +
+        '<form  @submit.prevent="eliminarDespacho"><div hidden=True>{% csrf_token %}</div>' +
 
 
-        '<button class="btn btn-sm btn-block btn-outline-danger  icofont-ui-remove" type="submit"  v-on:click="delDespacho([[allDespach.id]])">' +
+        '<button class="btn btn-sm btn-block btn-outline-danger  icofont-ui-remove" type="submit"  v-on:click="eliminarDespacho([[allDespach.id]])">' +
 
         '</button>' +
+
+
 
         '</form>' +
         '</td>' +
@@ -99,8 +98,20 @@ function DetailFormatterButAccionDespacho(index, row) {
         '</div>' +
         '</template>' +
 
+
+
+
+
         '</tr>' +
         '</tbody></table></div>' +
+
+
+
+
+
+
+
+
         '<script type="application/javascript">' +
         'despachoOP(' + row.id + ',' + row.usuario + ');' +
         '</script>' +
@@ -111,7 +122,6 @@ function DetailFormatterButAccionDespacho(index, row) {
         '</div>';
 
 }
-
 
 
 
@@ -127,10 +137,12 @@ function formOP(idOp, usuario) {
                 selectIDPatinador: '',
                 allPatinadoresOPs: [],
                 allTallasOPs: [],
+                name: '',
                 id_OP: idOp,
                 selectIdTalla: '',
                 usuario: usuario,
                 cant: '',
+                allTallaOPs: [],
 
             }
 
@@ -139,7 +151,6 @@ function formOP(idOp, usuario) {
 
 
             getDespachoData: function() {
-                tallasOP(idOp);
 
                 axios
                     .get('/despacho/lista_patinadoresAct/')
@@ -151,12 +162,52 @@ function formOP(idOp, usuario) {
                     .get('/talla/tallaOP-list/?idOp=' + idOp)
                     .then((resp) => {
                         this.allTallasOPs = resp.data
-                    })
-                    .catch(error => console.log(error));
+                    }).catch(error => console.log(error));
 
 
 
             },
+
+            getDespachosTallas: function(id_OP) {
+
+                tallasOP(id_OP);
+
+
+
+                /*     axios.get('/talla/tallaOP-list/?idOp=' + id_OP)
+                            .then((response) => {
+
+                                    this.allTallaOPs = response.data;
+ */
+
+                /* 
+
+                                        console.log(response.data);
+
+
+                                        console.log(response.status); * /
+                                        /*
+                                          console.log(response.data);
+                                          console.log(response.statusText);
+                                          console.log(response.headers);
+                                          console.log(response.config); */
+                /*      }).catch(function(error) {
+                        console.log(error.toJSON());
+                    });
+ */
+
+                /*      axios
+                    .get('/talla/tallaOP-list/?idOp=' + id_OP)
+                    .then((resp) => {
+                        this.allTallaOPs = resp.data;
+
+                    })
+                    .catch(error => console.log(error))
+ */
+
+
+            },
+
 
             submitFormDespacho() {
 
@@ -172,46 +223,13 @@ function formOP(idOp, usuario) {
                     // console.log(response);
                     // this.response = response.data
                     this.success = 'Data saved successfully';
-                    this.response = JSON.stringify(response, null, 2);
-
-                    document.getElementById('despachoVue').innerHTML =
-                        '<table class="table animated fadeIn border border-info ">' +
-                        '<thead class="thead-dark">' +
-                        '<tr>' +
-                        '<th class="text-center">Nombre Talla</th>' +
-                        '<th class="text-center">Talla Restante</th>' +
-                        '<th class="text-center">Talla Total</th>' +
-                        '</tr>' +
-                        '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + idOp + '">' +
-                        '<tr v-for="allTallaOP in allTallaOPs" :key="allTallaOP.id">' +
-
-                        '<td>[[allTallaOP.nom_talla]]</td>' +
-                        '<td>[[allTallaOP.res_talla]]' +
-                        '</td><td>[[allTallaOP.can_talla]]</td></tr>' +
-                        '</tbody></table>';
+                    this.getDespachosTallas(this.id_OP);
 
 
-                    tallasOP(idOp);
-
-
-
-
-
-
-
-
-
-
-                }).catch(error => {
-                    this.response = 'Error: ' + error.response.status
+                    /*                     this.response = 'Error: ' + error.response.status
+                     */
                 })
-
-
-
-
-
-            }
-
+            },
 
 
         },
@@ -220,12 +238,13 @@ function formOP(idOp, usuario) {
             this.getDespachoData();
 
 
-
-
         }
+
     });
 
 };
+
+
 
 function despachoOP(idOp, usuario) {
 
@@ -237,7 +256,6 @@ function despachoOP(idOp, usuario) {
             return {
                 allDespachoOPs: [],
 
-
             }
 
         },
@@ -245,7 +263,7 @@ function despachoOP(idOp, usuario) {
 
         methods: {
 
-            delDespacho: function(id_despacho) {
+            eliminarDespacho: function(id_despacho) {
 
 
                 axios.delete('eliminar_despachos/' + id_despacho + '/').then(response => {
@@ -263,8 +281,6 @@ function despachoOP(idOp, usuario) {
 
 
             getDespachoS: function() {
-
-
 
                 axios
                     .get('list/?idOp=' + idOp + '&usuario=' + usuario)
@@ -290,16 +306,21 @@ function despachoOP(idOp, usuario) {
 
 }
 
-function tallasOP(idOp) {
+
+
+
+
+function tes(idOp) {
+
+
 
     new Vue({
-        el: '#despachoVue',
+        el: '#despachoVueTes',
         delimiters: ['[[', ']]'],
 
         data: function() {
             return {
                 allTallaOPs: [],
-
 
             }
 
@@ -309,6 +330,7 @@ function tallasOP(idOp) {
         methods: {
 
             getDespachosTallas: function() {
+
 
                 axios
                     .get('/talla/tallaOP-list/?idOp=' + idOp)
@@ -325,7 +347,6 @@ function tallasOP(idOp) {
         mounted: function() {
 
             this.getDespachosTallas()
-
 
 
         }

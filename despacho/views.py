@@ -47,6 +47,7 @@ def despacho_list(request):
 def deleteDespacho(request,id):
 
     #id_despacho = request.GET.get('id_despacho', None)
+    
     try:
         Despacho.objects.get(id=id).delete()    
         data = {
@@ -54,6 +55,9 @@ def deleteDespacho(request,id):
         }
         
     except Exception as e:
+        data = {
+            'deleted': False
+        }
         Response("Unable to Delete Task!")
     return JsonResponse(data)
     #return Response("Task Deleted Sucessfully")
@@ -173,11 +177,11 @@ def createDespacho(request,):
         
         CanTallaOP      = CanTalla.objects.all().filter(talla_id=int(request.data['selectIdTalla'])).update(res_talla= F('res_talla') - canTerminada)
         OpTallaRestante = Operacion.objects.all().filter(id=int(request.data['id_OP'])).update(can_restante= F('can_restante') - canTerminada)
-        print(OpTallaRestante)
         
         
         
-        return Response("despacho cargado")
+        
+        return Response(data)
     except Exception as e:
         print(str(e))
         return Response("despacho no cargado")
