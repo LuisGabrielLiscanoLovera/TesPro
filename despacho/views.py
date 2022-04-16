@@ -55,14 +55,8 @@ def deleteDespacho(request,id):
         for event in canTerminada:
             canTerminada=(event['can_terminada'])
             operacion_id=(event['operacion_id'])
-           
-        
-        
-        
-
         CanTalla.objects.all().filter(operacion_id=operacion_id).update(res_talla= F('res_talla') + canTerminada)
         Operacion.objects.all().filter(id=operacion_id).update(can_restante= F('can_restante') + canTerminada)
-        
         Despacho.objects.get(id=id).delete()
         
         data = {
