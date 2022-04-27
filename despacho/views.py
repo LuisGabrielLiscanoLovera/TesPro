@@ -1,4 +1,5 @@
 # Create your views here
+from django import views
 from django.contrib.sessions.backends.db import SessionStore
 from django.shortcuts import redirect, render
 from django.views.generic.base import TemplateView
@@ -16,12 +17,77 @@ from patinador.serializers import PatinadorSerializer
 from operacion.models import Operacion
 from django.views.generic import View
 from django.http import JsonResponse, Http404, HttpResponse
-from .models import Task
-from .forms import TaskForms
-from django.forms.models import model_to_dict
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+from pprint import pprint
+
+
+from django.db.models import F
+
+from django_serverside_datatable.views import ServerSideDatatableView
+
+class ItemListView(ServerSideDatatableView):   
+    columns = ['id', 'can_terminada','created_at','patinador_id','empresa','talla']    
+    
+    def get_queryset(self):
+        if self.request.method == 'GET':           
+            idOp = self.request.GET.get('idOp', None)
+            idUser = self.request.GET.get('usuario', None)            
+            
+            if idOp and idUser is not None:
+                lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()      
+                queryset   = Despacho.objects.filter(empresa_id=lastEm.lastEm,operacion_id=idOp)#.order_by('-id') #.select_related('patinador')#.filter(type=Integrante.objects.get(id=))               
+                
+                #m =  Despacho.objects.filter(empresa_id=lastEm.lastEm,operacion_id=idOp).filter(Despacho__published=True)
+               # m  = Talla.objects.filter(Despacho__talla=True)
+                
+                # a=DespachoSerializer(queryset)
+                #queryset=a                #>>> Book.objects.select_related('author').get(id=1).author.first_name  FOO.objects.filter(<your filter>).values_list( * FOO._meta.get_all_field_names(), flat=True)
+                #querysetdd = Despacho.objects.all().filter(empresa_id=lastEm.lastEm,operacion_id=idOp).values_list( * Integrante._meta.get_all_field_names('nombres'))
+                #m = Despacho.objects.select_related().all().filter(empresa_id=lastEm.lastEm,operacion_id=idOp).order_by('-id')
+                
+               # pprint(m)
+            return queryset
+    
+
+
+
+
+        
+
+
+
+
+
+
+
+
 
 #original
-
 @api_view(['GET'])
 def despacho_list(request):
     if request.session.has_key('username'):        
@@ -30,43 +96,52 @@ def despacho_list(request):
             idUser   = MyUser.objects.get(username=username)
             
     #crear registro de despacho
-    idOp        = request.GET.get('idOp', None)
+    idOp       = request.GET.get('idOp', None)
     lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()   
     despachos  = Despacho.objects.all().filter(empresa_id=lastEm.lastEm,operacion_id=idOp).order_by('-id')
     
-    
-    
     tSerializer = DespachoSerializer(despachos, many = True)
     
-    #return JsonResponse(tSerializer.data, safe=False)
-    return Response(tSerializer.data)
+    return JsonResponse(tSerializer.data, safe=False)
+    #return Response(tSerializer.data)
     
 #
 
 @api_view(['DELETE'])
 def deleteDespacho(request,id):
 
-    #id_despacho = request.GET.get('id_despacho', None)
-    
+    id_despacho = request.GET.get('id', None)
+
     try:
-        
+        id= request.GET.get('id_despacho', None)
+      
+        r=Despacho.objects.all().filter(id=id)
        
-        canTerminada =  Despacho.objects.filter(id=id).values('can_terminada','operacion_id')
+        r.delete()
+        
+        
+        
+        
+        '''  canTerminada =  Despacho.objects.filter(id=id).values('can_terminada','operacion_id')
         for event in canTerminada:
             canTerminada=(event['can_terminada'])
             operacion_id=(event['operacion_id'])
         CanTalla.objects.all().filter(operacion_id=operacion_id).update(res_talla= F('res_talla') + canTerminada)
         Operacion.objects.all().filter(id=operacion_id).update(can_restante= F('can_restante') + canTerminada)
-        Despacho.objects.get(id=id).delete()
+        Despacho.objects.get(id=id).delete() '''
         
         data = {
             'deleted': True
         }
         
     except Exception as e:
+        print(str(e))
+        
         data = {
             'deleted': False
+            
         }
+        
         Response("Unable to Delete Task!")
     return JsonResponse(data)
     #return Response("Task Deleted Sucessfully")
@@ -94,7 +169,7 @@ def operacionesList(request):
     lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()   
     despacho  = Operacion.objects.filter(empresa_id=lastEm.lastEm,estatus='A').order_by('-id')
     serializer = OperacionSerializer(despacho, many=True)
-     
+   
     return Response(serializer.data)
 
 

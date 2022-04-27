@@ -13,7 +13,8 @@ class Despacho(models.Model):
     operacion         = models.ForeignKey(Operacion,related_name='Despacho',on_delete=models.CASCADE)
     talla             = models.ForeignKey(Talla,related_name='Despacho',null=True, blank=False,on_delete=models.CASCADE)
     can_terminada     = models.IntegerField(blank=True, null=True)
-    
+    nomTallaDespacho  = models.CharField(max_length=140)
+    nomPatinadorDespacho = models.CharField(max_length=140)
     #integrante = models.ForeignKey(Integrante,related_name='DespachoI', null=False, blank=False,on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -6,7 +6,11 @@ axios.defaults.xsrfCookieName = "csrftoken";
 
 
 
+
+
+
 //script datatable
+
 
 
 
@@ -22,13 +26,13 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '<thead class="thead-dark">' +
         '<tr>' +
         '<th class="text-center">Nombre Talla</th>' +
-        '<th class="text-center">Talla Restante</th>' +
         '<th class="text-center">Talla Total</th>' +
+        '<th class="text-center">Talla Restante</th>' +
         '</tr>' +
         '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '">' +
         '<tr v-for="allTallaOP in allTallaOPs" :key="allTallaOP.id">' +
-        '<td>[[allTallaOP.nom_talla]]</td><td>[[allTallaOP.res_talla]]' +
-        '</td><td>[[allTallaOP.can_talla]]</td></tr>' +
+        '<td>[[allTallaOP.nom_talla]]</td><td>[[allTallaOP.can_talla]]' +
+        '</td><td>[[allTallaOP.res_talla]]</td></tr>' +
         '</tbody></template></div>' +
         '</table>' + '<script type="application/javascript">' + 'formOP(' + row.id + ',' + row.empresa + ');' +
         '</' + 'script>' +
@@ -65,53 +69,53 @@ function DetailFormatterButAccionDespacho(index, row) {
     //crea y renderiza la tabla
     return '<div class="row">' +
 
-        '<div class="col-sm-12 offset-12 " id="despachoVue"><template>' +
-        '<table class="table border border-info ">' +
-        '<thead class="thead-dark">' +
-        '<tr>' +
-        '<th class="text-center">Patinador</th>' +
-        '<th class="text-center">Tallas</th>' +
-        '<th class="text-center">Cantida de producto</th>' +
-        '<th class="text-center">Fecha</th>' +
-        '<th class="text-center">Eliminar</th>' +
-
-        '</tr>' +
-
-        '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '">' +
-        '<tr v-for="allDespach in allDespachoOPs" :key="allDespach.id" >' +
-        '<td class="text-left">[[allDespach.nom_patinador]] [[allDespach.apell_patinador]]</td>' +
-        '<td class="text-center">[[allDespach.nom_talla]]</td>' +
-        '<td class="text-center">[[Number(allDespach.can_terminada).toLocaleString()]]</td>' +
-        '<td class="text-center">[[allDespach.created_at]]</td>' +
-        '<td class="text-center">' +
-
-        '<div class="col-md- offset-" id="despachoVueDelete">' +
-        '<form  @submit.prevent="getDespachoS"><div hidden=True>{% csrf_token %}</div>' +
 
 
-        '<button class="btn btn-sm btn-block btn-outline-danger  icofont-ui-remove" type="submit"  v-on:click="delDespacho([[allDespach.id]])">' +
+        '<div class="col-md-10">' +
+        '<table id="items-table' + row.id +
+        '"><thead><tr>' +
 
-        '</button>' +
-
-        '</form>' +
-        '</td>' +
+        '<th>id</th>' +
+        '<th>Can terminada</th>' +
+        '<th>Fecha</th>' +
+        '<th>patinador</th>' +
+        '</tr></thead><tbody></tbody></table>' +
 
         '</div>' +
-        '</template>' +
 
-        '</tr>' +
-        '</tbody></table></div>' +
+
+
+        '<center><div class="col-md-2 col-md-offset-4 align-self-center">' +
+        '<button class="btn btn-sm btn-block btn-outline-danger  icofont-ui-remove" type="submit" onclick="deleteDespacho(' + row.id + ')">' +
+        '</div></center>' +
         '<script type="application/javascript">' +
-        'despachoOP(' + row.id + ',' + row.usuario + ');' +
+        '$(document).ready(function() {' +
+        '$("#items-table' + row.id +
+        '").dataTable({' +
+        'serverSide: true,' +
+        'sAjaxSource:' +
+        '"data/?idOp= ' + row.id + ' &usuario=' + row.usuario + '",' +
+        'columns: [{' +
+
+        'name: "id",' +
+        'data: 0' +
+        '}, {' +
+        'name: "can_terminada",' +
+        'data: 1' +
+        '}, {' +
+        'name: "created_at",' +
+        'data: 2' +
+
+
+
+        '}, {name:"",data:3} ],' +
+        '});' +
+        '});' +
+
         '</script>' +
-
-
-
-
         '</div>';
 
 }
-
 
 
 
@@ -179,15 +183,15 @@ function formOP(idOp, usuario) {
                         '<thead class="thead-dark">' +
                         '<tr>' +
                         '<th class="text-center">Nombre Talla</th>' +
-                        '<th class="text-center">Talla Restante</th>' +
                         '<th class="text-center">Talla Total</th>' +
+                        '<th class="text-center">Talla Restante</th>' +
                         '</tr>' +
                         '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + idOp + '">' +
                         '<tr v-for="allTallaOP in allTallaOPs" :key="allTallaOP.id">' +
 
                         '<td>[[allTallaOP.nom_talla]]</td>' +
-                        '<td>[[allTallaOP.res_talla]]' +
-                        '</td><td>[[allTallaOP.can_talla]]</td></tr>' +
+                        '<td>[[allTallaOP.can_talla]]' +
+                        '</td><td>[[allTallaOP.res_talla]]</td></tr>' +
                         '</tbody></table>';
 
 
@@ -227,25 +231,48 @@ function formOP(idOp, usuario) {
 
 };
 
+
+
+
+function deleteDespacho(id_despacho) {
+    alert(id_despacho);
+
+
+    axios.delete('eliminar_despachos/' + id_despacho + '/').then(response => {
+        console.log(response);
+        //this.response = response.data
+        this.success = 'Data eliminada';
+        this.response = JSON.stringify(response, null, 2)
+    }).catch(error => {
+        this.response = 'Error: ' + error.response.status
+    })
+
+
+
+}
+
+
 function despachoOP(idOp, usuario) {
 
     new Vue({
-        el: '#despachoVue',
+        el: '#despachoVueAccion',
         delimiters: ['[[', ']]'],
-
         data: function() {
             return {
-                allDespachoOPs: [],
-
-
+                allDespachoOPs: []
             }
-
         },
+
+
+
+
 
 
         methods: {
 
             delDespacho: function(id_despacho) {
+
+
 
 
                 axios.delete('eliminar_despachos/' + id_despacho + '/').then(response => {
@@ -262,6 +289,10 @@ function despachoOP(idOp, usuario) {
 
 
 
+
+
+
+
             getDespachoS: function() {
 
 
@@ -269,9 +300,11 @@ function despachoOP(idOp, usuario) {
                 axios
                     .get('list/?idOp=' + idOp + '&usuario=' + usuario)
                     .then((resp) => {
-                        this.allDespachoOPs = resp.data
+                        this.allDespachoOPs = resp.data;
+
                     })
-                    .catch(error => console.log(error))
+                    .catch(error => console.log(error));
+
             }
 
 
@@ -280,7 +313,6 @@ function despachoOP(idOp, usuario) {
         mounted: function() {
 
             this.getDespachoS();
-
 
 
 
