@@ -55,7 +55,7 @@ class ItemListView(ServerSideDatatableView):
     #columns = ['id', 'can_terminada','created_at','patinador_id','empresa','talla','nomPatinadorDespacho','nomTallaDespacho']    
 
     
-    columns = ['nomPatinadorDespacho','nomTallaDespacho','can_terminada','created_at','id']
+    columns = ['nomPatinadorDespacho','nomTallaDespacho','can_terminada','created_at','btnDelDespacho','id']
     
     def get_queryset(self):
         if self.request.method == 'GET':           
@@ -245,6 +245,7 @@ def createDespacho(request,):
     nomPatinador  = Integrante.objects.filter(id=int(request.data['selectIDPatinador'])).values('nombres','apellidos')
     nom_patinador = nomPatinador[0]['nombres']+" "+nomPatinador[0]['apellidos']
     
+    
     try:
         
         
@@ -258,7 +259,12 @@ def createDespacho(request,):
         nomTallaDespacho     = nombreTalla[0]['nom_talla'],
         nomPatinadorDespacho = nom_patinador
 
-        )      
+        )
+        obj = Despacho.objects.latest('id')
+        btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteDespachoUnico({})'> </button>".format(obj.id)
+        obj = Despacho.objects.all().filter(id=obj.id).update(btnDelDespacho=btnDel)
+        
+        #print("last id",obj.id)
         data = {
             'despacho': True
         }

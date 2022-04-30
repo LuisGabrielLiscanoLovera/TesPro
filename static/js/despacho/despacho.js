@@ -108,18 +108,16 @@ function DetailFormatterButAccionDespacho(index, row) {
         'data: 0' +
         '}, {' +
         'name: "nomTallaDespacho",' +
-        'data: 1,id:666' +
+        'data: 1' +
         '}, ' +
 
         '{name:"can_terminada",data:2}, ' +
         '{name:"created_at",data:3},' +
-        /*  '{name:"id",data:null },' + */
+        '{name:"btnDelDespacho",data:4 },' +
 
 
         '],' +
 
-
-        '"columnDefs": [{ targets: 4, data:"id","defaultContent": "<button id=\'del-btn\'> eliminar</button>", }]' +
 
 
         '});' +
@@ -138,6 +136,9 @@ function DetailFormatterButAccionDespacho(index, row) {
 }
 
 
+function deleteDespachoUnico(id) {
+    alert(id);
+}
 
 function formOP(idOp, usuario) {
 
