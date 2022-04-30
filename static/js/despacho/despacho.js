@@ -123,13 +123,14 @@ function DetailFormatterButAccionDespacho(index, row) {
         '});' +
 
 
-        '$("#items-table' + row.id + '").on("click", "button", function(){ table.reload() ; console.log($(this).attr("id"));' +
+        '$("#items-table' + row.id + '").on("click", "button", function(){ ' +
+
+        '$("#items-table' + row.id + '").DataTable().ajax.reload();' +
+
+        'console.log($(this).attr("id"));' +
 
         '});' +
-
-
         '});' +
-
         '</script>' +
         '</div>';
 
@@ -137,7 +138,7 @@ function DetailFormatterButAccionDespacho(index, row) {
 
 
 function deleteDespachoUnico(id_despacho) {
-    alert(id_despacho);
+
     axios.delete('eliminar_despachos/' + id_despacho + '/')
         .then(res => {
             console.log(res)
