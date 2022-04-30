@@ -88,7 +88,7 @@ function DetailFormatterButAccionDespacho(index, row) {
 
 
         '<center><div class="col-md-2 col-md-offset-4 align-self-center">' +
-        '<button class="btn btn-sm btn-block btn-outline-danger  icofont-ui-remove" type="submit" onclick="deleteDespacho(' + row.id + ')">' +
+        //'<button class="btn btn-sm btn-block btn-outline-danger  icofont-ui-remove" type="submit" onclick="deleteDespacho(' + row.id + ')">' +
         '</div></center>' +
         '<script type="application/javascript">' +
         '$(document).ready(function() {' +
@@ -122,9 +122,8 @@ function DetailFormatterButAccionDespacho(index, row) {
 
         '});' +
 
-
+        //reload data table despues de eliminar
         '$("#items-table' + row.id + '").on("click", "button", function(){ ' +
-
         '$("#items-table' + row.id + '").DataTable().ajax.reload();' +
 
         'console.log($(this).attr("id"));' +
