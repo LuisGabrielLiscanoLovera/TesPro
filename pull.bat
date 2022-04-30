@@ -3,3 +3,4 @@
  git status 
  git commit -m 'automatico'
  git push
+ python key.py
