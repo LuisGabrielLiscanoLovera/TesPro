@@ -7,21 +7,20 @@ from talla.models import Talla
 # Create your models here.
 
 class Despacho(models.Model):
-    usuario           = models.ForeignKey(User, null=True,blank=True,related_name='Despacho',on_delete=models.CASCADE)
+    usuario           = models.ForeignKey(User, null=True,blank=True,related_name='Despacho', on_delete=models.CASCADE)
     patinador         = models.ForeignKey(Patinador, related_name='Despacho', null=False, blank=False,on_delete=models.CASCADE)
     empresa           = models.ForeignKey(Empresa, related_name='Despacho', null=False, blank=False,on_delete=models.CASCADE)
     operacion         = models.ForeignKey(Operacion,related_name='Despacho',on_delete=models.CASCADE)
-    talla             = models.ForeignKey(Talla,related_name='Despacho',null=True, blank=False,on_delete=models.CASCADE)
+    talla             = models.ForeignKey(Talla,related_name='Despacho',null=True, blank=False,on_delete=models.DO_NOTHING)
     can_terminada     = models.IntegerField(blank=True, null=True)
     nomTallaDespacho  = models.CharField(max_length=140)
     nomPatinadorDespacho = models.CharField(max_length=140)
+    
     #integrante = models.ForeignKey(Integrante,related_name='DespachoI', null=False, blank=False,on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):
         return 'patinador {} id {} can_termin {} usuario {} empresa {}'.format(self.patinador,self.id, self.can_terminada,self.usuario,self.empresa)
-
-
 
 
 class Task(models.Model):

@@ -96,7 +96,8 @@ class CreatePatinador(View):
 
 class DeletePatinador(View):
     def  get(self, request):
-        id1 = request.GET.get('id', None)
+        id1 = request.GET.get('idPatinador', None)
+        print(id1,6666666666666666666)
         Patinador.objects.get(id=id1).delete()
         data = {
             'deleted': True

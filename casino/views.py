@@ -65,19 +65,24 @@ class CreateCasino(View):
         
         lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
         idIntegrante     = int(request.GET.get('idIntegranteCasino', None))
-        
-        obj = Casino.objects.create(
+        print(lastEm,idIntegrante,idUser)
+
+        try:
+            Casino.objects.create(
             empresa_id   = lastEm.lastEm,
             usuario_id   = idUser.id,
             integrante_id= idIntegrante, 
-            
-          
-              
-        )
+            )
   
-        data = {
-            'user': "user"
-        } 
+            data = {
+            'casino': True
+        }
+        
+        except Exception as e:
+            data = {
+            'casino': False
+        }
+            print("reparar peo de cors header crsf token")
         return JsonResponse(data)
 
 

@@ -75,10 +75,12 @@ function DetailFormatterButAccionDespacho(index, row) {
         '<table id="items-table' + row.id +
         '"><thead><tr>' +
 
-        '<th>id</th>' +
-        '<th>Can terminada</th>' +
+
+        '<th>Patinador</th>' +
+        '<th>Talla</th>' +
+        '<th>Cantidad</th>' +
         '<th>Fecha</th>' +
-        '<th>patinador</th>' +
+        '<th>Eliminar</th>' +
         '</tr></thead><tbody></tbody></table>' +
 
         '</div>' +
@@ -90,26 +92,44 @@ function DetailFormatterButAccionDespacho(index, row) {
         '</div></center>' +
         '<script type="application/javascript">' +
         '$(document).ready(function() {' +
-        '$("#items-table' + row.id +
-        '").dataTable({' +
-        'serverSide: true,' +
+
+        'var table= $("#items-table' + row.id +
+        '").removeAttr("width").dataTable({  "searching": false' +
+        ',serverSide: true, scrollY: "250px", scrollCollapse: true,' +
+
+
+
+
         'sAjaxSource:' +
         '"data/?idOp= ' + row.id + ' &usuario=' + row.usuario + '",' +
-        'columns: [{' +
-
-        'name: "id",' +
+        'columns: [' +
+        ' {' +
+        'name: "nomPatinadorDespacho",' +
         'data: 0' +
         '}, {' +
-        'name: "can_terminada",' +
-        'data: 1' +
-        '}, {' +
-        'name: "created_at",' +
-        'data: 2' +
+        'name: "nomTallaDespacho",' +
+        'data: 1,id:666' +
+        '}, ' +
+
+        '{name:"can_terminada",data:2}, ' +
+        '{name:"created_at",data:3},' +
+        /*  '{name:"id",data:null },' + */
 
 
+        '],' +
 
-        '}, {name:"",data:3} ],' +
+
+        '"columnDefs": [{ targets: 4, data:"id","defaultContent": "<button id=\'del-btn\'> eliminar</button>", }]' +
+
+
         '});' +
+
+
+        '$("#items-table' + row.id + '").on("click", "button", function(){console.log($(this).parent()); console.log($(this).attr("id"));' +
+
+        '});' +
+
+
         '});' +
 
         '</script>' +

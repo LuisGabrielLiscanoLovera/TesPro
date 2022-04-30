@@ -51,7 +51,11 @@ from django.db.models import F
 from django_serverside_datatable.views import ServerSideDatatableView
 
 class ItemListView(ServerSideDatatableView):   
-    columns = ['id', 'can_terminada','created_at','patinador_id','empresa','talla']    
+    
+    #columns = ['id', 'can_terminada','created_at','patinador_id','empresa','talla','nomPatinadorDespacho','nomTallaDespacho']    
+
+    
+    columns = ['nomPatinadorDespacho','nomTallaDespacho','can_terminada','created_at','id']
     
     def get_queryset(self):
         if self.request.method == 'GET':           
@@ -60,18 +64,11 @@ class ItemListView(ServerSideDatatableView):
             
             if idOp and idUser is not None:
                 lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()      
-                queryset   = Despacho.objects.filter(empresa_id=lastEm.lastEm,operacion_id=idOp)#.order_by('-id') #.select_related('patinador')#.filter(type=Integrante.objects.get(id=))               
+                queryset   = Despacho.objects.filter(empresa_id=lastEm.lastEm,operacion_id=idOp).order_by('-id') #.select_related('patinador')#.filter(type=Integrante.objects.get(id=))               
                 
-                #m =  Despacho.objects.filter(empresa_id=lastEm.lastEm,operacion_id=idOp).filter(Despacho__published=True)
-               # m  = Talla.objects.filter(Despacho__talla=True)
                 
-                # a=DespachoSerializer(queryset)
-                #queryset=a                #>>> Book.objects.select_related('author').get(id=1).author.first_name  FOO.objects.filter(<your filter>).values_list( * FOO._meta.get_all_field_names(), flat=True)
-                #querysetdd = Despacho.objects.all().filter(empresa_id=lastEm.lastEm,operacion_id=idOp).values_list( * Integrante._meta.get_all_field_names('nombres'))
-                #m = Despacho.objects.select_related().all().filter(empresa_id=lastEm.lastEm,operacion_id=idOp).order_by('-id')
-                
-               # pprint(m)
             return queryset
+    
     
 
 
@@ -243,16 +240,24 @@ def createDespacho(request,):
     #print(request.data)
     
     
-    canTerminada = int(request.data['cant'])
-    try:
-        obj = Despacho.objects.create(
-        usuario_id     = int(idUser.id),
-        patinador_id   = int(request.data['selectIDPatinador']),
-        empresa_id     = int(lastEm.lastEm),
-        operacion_id   = int(request.data['id_OP']), 
-        talla_id       = int(request.data['selectIdTalla']),
-        can_terminada  = canTerminada
+    canTerminada  = int(request.data['cant'])
+    nombreTalla   = Talla.objects.filter(id=int(request.data['selectIdTalla'])).values('nom_talla')
+    nomPatinador  = Integrante.objects.filter(id=int(request.data['selectIDPatinador'])).values('nombres','apellidos')
+    nom_patinador = nomPatinador[0]['nombres']+" "+nomPatinador[0]['apellidos']
     
+    try:
+        
+        
+        obj = Despacho.objects.create(
+        usuario_id           = int(idUser.id),
+        patinador_id         = int(request.data['selectIDPatinador']),
+        empresa_id           = int(lastEm.lastEm),
+        operacion_id         = int(request.data['id_OP']), 
+        talla_id             = int(request.data['selectIdTalla']),
+        can_terminada        = canTerminada,
+        nomTallaDespacho     = nombreTalla[0]['nom_talla'],
+        nomPatinadorDespacho = nom_patinador
+
         )      
         data = {
             'despacho': True

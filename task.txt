@@ -4,3 +4,5 @@
 # deicdir la estructura de los template
 # crear opccion en operacion sin talla automatico
 # tadas las data tables pasara a vue
+
+#crear chebox para patinador que maneje despacho 

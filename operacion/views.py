@@ -57,8 +57,8 @@ class CreateOperacion(View):
         idReferenciaOP = request.GET.get('idReferenciaOP', None)
         idColorOP      = int(request.GET.get('idColorOP', None))
         nomOperacion   = request.GET.get('nomOperacion', None)
-        estatus = 'A'
         
+        print(lastEm,can_totalOP,idReferenciaOP,idColorOP,nomOperacion+'passsssssssssss')
         
         #puede existir pero no repetido en la misma empresa
         existOperacion    =  Operacion.objects.extra(where=["nom_operacion='%s' AND usuario_id = '%s' AND empresa_id = '%s'" %(nomOperacion,idUser.id,lastEm.lastEm) ])
@@ -69,13 +69,13 @@ class CreateOperacion(View):
                 empresa_id     = lastEm.lastEm,
                 usuario_id     = idUser.id,
                 nom_operacion  = "OP-"+nomOperacion.upper(), 
-                estatus        = estatus,
+                estatus        = 'A',
                 color_id       = idColorOP,
                 referencia_id  = idReferenciaOP,
                 can_total      = can_totalOP,
                 can_restante   = can_totalOP
         )
-    
+           
             data = {
             'user': "user"
         }
