@@ -94,7 +94,7 @@ function DetailFormatterButAccionDespacho(index, row) {
         '$(document).ready(function() {' +
 
         'var table= $("#items-table' + row.id +
-        '").removeAttr("width").dataTable({  "searching": false' +
+        '").removeAttr("width").dataTable({  "searching": true' +
         ',serverSide: true, scrollY: "250px", scrollCollapse: true,' +
 
 
@@ -123,7 +123,7 @@ function DetailFormatterButAccionDespacho(index, row) {
         '});' +
 
 
-        '$("#items-table' + row.id + '").on("click", "button", function(){console.log($(this).parent()); console.log($(this).attr("id"));' +
+        '$("#items-table' + row.id + '").on("click", "button", function(){ table.reload() ; console.log($(this).attr("id"));' +
 
         '});' +
 
@@ -136,8 +136,13 @@ function DetailFormatterButAccionDespacho(index, row) {
 }
 
 
-function deleteDespachoUnico(id) {
-    alert(id);
+function deleteDespachoUnico(id_despacho) {
+    alert(id_despacho);
+    axios.delete('eliminar_despachos/' + id_despacho + '/')
+        .then(res => {
+            console.log(res)
+        })
+
 }
 
 function formOP(idOp, usuario) {
@@ -273,8 +278,7 @@ function deleteDespacho(id_despacho) {
 }
 
 
-function despachoOP(idOp, usuario) {
-
+/* function despachoOP(idOp, usuario) {
     new Vue({
         el: '#despachoVueAccion',
         delimiters: ['[[', ']]'],
@@ -283,19 +287,8 @@ function despachoOP(idOp, usuario) {
                 allDespachoOPs: []
             }
         },
-
-
-
-
-
-
         methods: {
-
             delDespacho: function(id_despacho) {
-
-
-
-
                 axios.delete('eliminar_despachos/' + id_despacho + '/').then(response => {
                     // console.log(response);
                     // this.response = response.data
@@ -304,44 +297,23 @@ function despachoOP(idOp, usuario) {
                 }).catch(error => {
                     this.response = 'Error: ' + error.response.status
                 })
-
-
             },
 
-
-
-
-
-
-
             getDespachoS: function() {
-
-
-
                 axios
                     .get('list/?idOp=' + idOp + '&usuario=' + usuario)
                     .then((resp) => {
                         this.allDespachoOPs = resp.data;
-
                     })
                     .catch(error => console.log(error));
-
             }
-
-
         },
-
         mounted: function() {
-
             this.getDespachoS();
-
-
-
         }
-
     });
 
-}
+} */
 
 function tallasOP(idOp) {
 

@@ -107,25 +107,25 @@ def despacho_list(request):
 @api_view(['DELETE'])
 def deleteDespacho(request,id):
 
-    id_despacho = request.GET.get('id', None)
-
+    #id = request.GET.get('id', None)
+    
     try:
-        id= request.GET.get('id_despacho', None)
-      
-        r=Despacho.objects.all().filter(id=id)
+    
        
-        r.delete()
+        #r=Despacho.objects.all().filter(id=id)       
+        #r.delete()       
+        canTerminada =  Despacho.objects.filter(id=id).values('can_terminada','operacion_id','talla_id')
         
-        
-        
-        
-        '''  canTerminada =  Despacho.objects.filter(id=id).values('can_terminada','operacion_id')
         for event in canTerminada:
-            canTerminada=(event['can_terminada'])
-            operacion_id=(event['operacion_id'])
-        CanTalla.objects.all().filter(operacion_id=operacion_id).update(res_talla= F('res_talla') + canTerminada)
+            canTerminada = (event['can_terminada'])
+            operacion_id = (event['operacion_id'])
+            tallaid     = (event['talla_id'])
+        
+        
+        
+        CanTalla.objects.all().filter(operacion_id=operacion_id,talla_id=tallaid).update(res_talla= F('res_talla') + canTerminada)
         Operacion.objects.all().filter(id=operacion_id).update(can_restante= F('can_restante') + canTerminada)
-        Despacho.objects.get(id=id).delete() '''
+        Despacho.objects.get(id=id).delete()
         
         data = {
             'deleted': True
