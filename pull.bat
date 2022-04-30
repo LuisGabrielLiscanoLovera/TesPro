@@ -1,3 +1,4 @@
+ python key.py
  git add .
  git status 
  git commit -m 'automatico'

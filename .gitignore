@@ -1,3 +1,6 @@
+.vscode
 .history
 node_modules
 uploads
+key.py
+TesPro/settings.py
