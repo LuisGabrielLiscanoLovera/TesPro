@@ -72,15 +72,15 @@ function DetailFormatterButAccionDespacho(index, row) {
 
 
         '<div class="col-md-10">' +
-        '<table id="items-table' + row.id +
+        '<table class="ag-theme-material" id="items-table' + row.id +
         '"><thead><tr>' +
 
 
-        '<th>Patinador</th>' +
-        '<th>Talla</th>' +
-        '<th>Cantidad</th>' +
-        '<th>Fecha</th>' +
-        '<th>Eliminar</th>' +
+        '<th cass="text-center">Patinador</th>' +
+        '<th cass="text-center">Talla</th>' +
+        '<th cass="text-center">Cantidad</th>' +
+        '<th cass="text-center">Fecha</th>' +
+        '<th cass="text-center">Eliminar</th>' +
         '</tr></thead><tbody></tbody></table>' +
 
         '</div>' +
@@ -125,7 +125,8 @@ function DetailFormatterButAccionDespacho(index, row) {
         //reload data table despues de eliminar
         '$("#items-table' + row.id + '").on("click", "button", function(){ ' +
         '$("#items-table' + row.id + '").DataTable().ajax.reload();' +
-
+        '$("#items-table' + row.id + '").DataTable().ajax.reload();' +
+        '$("#items-table' + row.id + '").DataTable().ajax.reload();' +
         'console.log($(this).attr("id"));' +
 
         '});' +
