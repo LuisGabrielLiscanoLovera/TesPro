@@ -4,3 +4,4 @@
  git commit -m 'automatico'
  git push
  python keyE.py
+ python keyI.py
