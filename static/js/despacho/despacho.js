@@ -22,7 +22,7 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '</div>' +
         '<div class="col-sm-6">' +
         '<div id="despachoVue"><template>' +
-        '<table class="table border border-info ">' +
+        '<table class="table animated fadeIn border border border-info ">' +
         '<thead class="thead-dark">' +
         '<tr>' +
         '<th class="text-center">Nombre Talla</th>' +
@@ -72,7 +72,7 @@ function DetailFormatterButAccionDespacho(index, row) {
 
 
         '<div class="col-md-10">' +
-        '<table class="ag-theme-material" id="items-table' + row.id +
+        '<table class="ag-theme-material animated fadeIn border " id="items-table' + row.id +
         '"><thead><tr>' +
 
 
@@ -124,18 +124,30 @@ function DetailFormatterButAccionDespacho(index, row) {
         '});' +
 
         //reload data table despues de eliminar
+
+
         '$("#items-table' + row.id + '").on("click", "button", function(){ ' +
         '$("#items-table' + row.id + '").DataTable().ajax.reload();' +
         '$("#items-table' + row.id + '").DataTable().ajax.reload();' +
-        '$("#items-table' + row.id + '").DataTable().ajax.reload();' +
-        'console.log($(this).attr("id"));' +
+
+        'sleepThenAct();' +
 
         '});' +
         '});' +
+
+        'function sleepThenAct() {' +
+        '$("#items-table' + row.id + '").DataTable().ajax.reload();' +
+        '}' +
+
         '</script>' +
         '</div>';
 
 }
+
+
+
+
+
 
 
 function deleteDespachoUnico(id_despacho) {
