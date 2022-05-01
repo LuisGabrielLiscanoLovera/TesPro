@@ -20,18 +20,19 @@
 
                 <h6 style="text-align: center;">Agregar patinador</h6>
                 <hr>
-                <form id="addPatinador" autocomplete="off" class=" ">
+                <form id="addPatinador" autocomplete="off" class="">
                     <div class="">
                         <div>
                             <div class="fullday">
-                                <input type="radio" id="check">Control del Despacho
+                                <input type="checkbox" id="check"> Controlador del Despacho
+                                <hr>
                             </div>
 
 
                             <input type="text" list="BuscarIntegrantes" name="idIntegrante" required Placeholder="Integrante..." class="form-control" style="width:150px;">
                             <datalist id="BuscarIntegrantes">
                 {% for results in allIntegrante %}
-                <option value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
+                <option class="form-control " value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
                 {% endfor %}
               </datalist>
 

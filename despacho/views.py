@@ -181,7 +181,7 @@ def patinadoresAct(request):
     lastEm = CambioEmpres.objects.filter(Usuario_id=idUser).last()
     lastEm = lastEm.lastEm    
     try:        
-        patinadores     = Patinador.objects.all().filter(usuario=idUser,estatus='A',empresa_id=int(lastEm))
+        patinadores     = Patinador.objects.all().filter(usuario=idUser,estatus='A',ctrlDespacho=1, empresa_id=int(lastEm))
         serializer      = PatinadorSerializer(patinadores, many=True)
         return Response(serializer.data)
     except Exception as e:    
@@ -243,7 +243,10 @@ def createDespacho(request,):
     canTerminada  = int(request.data['cant'])
     nombreTalla   = Talla.objects.filter(id=int(request.data['selectIdTalla'])).values('nom_talla')
     nomPatinador  = Integrante.objects.filter(id=int(request.data['selectIDPatinador'])).values('nombres','apellidos')
-    nom_patinador = nomPatinador[0]['nombres']+" "+nomPatinador[0]['apellidos']
+    
+    print(nomPatinador,int(request.data['selectIDPatinador']))
+   
+    #nom_patinador = nomPatinador[0]['nombres']+" "+nomPatinador[0]['apellidos']
     
     
     try:
@@ -257,7 +260,7 @@ def createDespacho(request,):
         talla_id             = int(request.data['selectIdTalla']),
         can_terminada        = canTerminada,
         nomTallaDespacho     = nombreTalla[0]['nom_talla'],
-        nomPatinadorDespacho = nom_patinador
+        nomPatinadorDespacho = "nom_patinador"
 
         )
         obj = Despacho.objects.latest('id')
