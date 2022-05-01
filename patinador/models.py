@@ -15,7 +15,7 @@ class Patinador(models.Model):
     created_at     = models.DateTimeField(auto_now_add=True)
     created_atv    = models.DateTimeField(auto_now_add=True)
     updated_at     = models.DateTimeField(auto_now=True)
-    
+    ctrlDespacho   = models.BooleanField(default=False)
     
     btnAcci = models.CharField(max_length=97, blank=True ,default='<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>' , null=True)
     class Meta:

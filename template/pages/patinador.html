@@ -23,6 +23,11 @@
                 <form id="addPatinador" autocomplete="off" class=" ">
                     <div class="">
                         <div>
+                            <div class="fullday">
+                                <input type="radio" id="check">Control del Despacho
+                            </div>
+
+
                             <input type="text" list="BuscarIntegrantes" name="idIntegrante" required Placeholder="Integrante..." class="form-control" style="width:150px;">
                             <datalist id="BuscarIntegrantes">
                 {% for results in allIntegrante %}
@@ -133,15 +138,37 @@ data-auto-refresh-status="true"
 </div>
 
 
-
+<script>
+</script>
 
 <!--create ipatinador-->
 <script>
+    //#check box al agregar patinador para el control del despacho
+    check = document.getElementById("check");
+    globalThis.ctrlDespachoCheck = check.checked;
+    check.addEventListener("click", function() {
+        console.log("estado al hacer check o uncheck", this.checked);
+        globalThis.ctrlDespachoCheck = check.checked;
+
+    });
+
+
+
+
+
+
+
     $("form#addPatinador").submit(function() {
 
         var idIntegrante = $('input[name="idIntegrante"]').val().trim();
         var idEmpresa = $('input[name="idEmpresa"]').val().trim();
         var idUser = $('input[name="idUser"]').val().trim();
+        var ctrlDespach = ctrlDespachoCheck;
+        if (ctrlDespach == null) {
+            ctrlDespach = 0;
+
+        }
+
         if (idIntegrante && idEmpresa && idUser) {
             // Create Ajax Call
             $.ajax({
@@ -149,7 +176,7 @@ data-auto-refresh-status="true"
                 data: {
 
                     'idIntegrante': idIntegrante,
-
+                    'ctrlDespacho': ctrlDespach,
                     'idEmpresa': idEmpresa,
                     'idUser': idUser
 

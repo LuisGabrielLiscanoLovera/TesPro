@@ -63,15 +63,19 @@ class CreatePatinador(View):
                 username = request.session['username']     
                 idUser   = MyUser.objects.get(username=username)
         
-        lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
-      
-        #idEmpresa        = request.GET.get('idEmpresa', None)
-        idIntegrante     = int(request.GET.get('idIntegrante', None))
-        estatus          = 'A'
+        lastEm              = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
+        #idEmpresa          = request.GET.get('idEmpresa', None)
+        idIntegrante        = int(request.GET.get('idIntegrante', None))
+        estatus             = 'A'
+        ctrlDespachoCheck   = request.GET.get('ctrlDespacho', None)
+        
+        #check box al agregar patinador para el control del despacho 
+        if (ctrlDespachoCheck=='true'):ctrlDespachoCheck=1
+        elif (ctrlDespachoCheck=='false'):ctrlDespachoCheck=0
         
         #puede existir pero no repetido en la misma empresa
         existeIntPat    =  Patinador.objects.extra(where=["integrante_id='%s' AND usuario_id = '%s' AND empresa_id = '%s'" %(idIntegrante,idUser.id,lastEm.lastEm) ])
-        
+       
                
         if existeIntPat.count()==0:
           
@@ -79,8 +83,9 @@ class CreatePatinador(View):
                 empresa_id   = lastEm.lastEm,
                 usuario_id   = idUser.id,
                 integrante_id= idIntegrante, 
-                estatus      = estatus,    
-            )
+                estatus      = estatus,
+                ctrlDespacho = ctrlDespachoCheck,
+            ) 
            
             data = {
             'user': "user"
