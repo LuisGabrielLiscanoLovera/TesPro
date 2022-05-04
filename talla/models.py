@@ -10,9 +10,12 @@ class Talla(models.Model):
     nom_talla     = models.CharField(max_length=10)
     num_talla     = models.IntegerField(blank=True, null=True) 
 
-    created_at    = models.DateTimeField(auto_now_add=True)
-    updated_at    = models.DateTimeField(auto_now=True)
-    btnAcci = models.CharField(max_length=150, blank=True ,default='<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>' , null=True)
+    created_at     = models.DateTimeField(auto_now_add=True)
+    updated_at     = models.DateTimeField(auto_now=True)
+    btnAcci        = models.CharField(max_length=150, blank=True ,default='<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>' , null=True)
+    btnAddTalla    = models.CharField(max_length=150, blank=True ,default='' , null=True)
+   
+    
     class Meta:
         ordering = ['created_at']
         indexes = [

@@ -30,13 +30,22 @@
 
 
                             <input type="text" list="BuscarIntegrantes" name="idIntegrante" required Placeholder="Integrante..." class="form-control" style="width:150px;">
-                            <datalist id="BuscarIntegrantes">
-                {% for results in allIntegrante %}
-                <option class="form-control " value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
-                {% endfor %}
-              </datalist>
 
-                            <input type="password" name="passwordP" Placeholder="clave patinador" class="form-control" style="width:150px;">
+                            <datalist id="BuscarIntegrantes">
+                                {% for resultsInt in allIntegrante %}
+                                <option label="{{resultsInt.nombres}}
+                                {{resultsInt.apellidos}}"><h6>{{resultsInt.nombres}}
+                                {{resultsInt.apellidos}}</h6>
+                                <input type="number" hidden="True" name="idIntegrantePatinador" value="{{ resultsInt.id }}">
+                                </option>
+                                {% endfor %}
+                            </datalist>
+
+
+
+
+
+                            <input type="text" name="passwordP" Placeholder="clave patinador" class="form-control" style="width:150px;">
 
 
 
@@ -126,7 +135,7 @@ data-auto-refresh-status="true"
 
 
                     '</div>' +
-                    '<div class="col-sm-1">' + '<input value="" class="btn btn-outline-danger" onclick="removePtinador(' + row.id + ')"  >Eliminar</input>' +
+                    '<div class="col-sm-1">' + '<button value="" class="btn btn-block btn-sm btn-outline-danger icofont-ui-remove" onclick="removePtinador(' + row.id + ')"  ></button>' +
                     '</div>' +
                     '</form>';
 
@@ -161,7 +170,7 @@ data-auto-refresh-status="true"
 
     $("form#addPatinador").submit(function() {
 
-        var idIntegrante = $('input[name="idIntegrante"]').val().trim();
+        var idIntegrante = $('input[name="idIntegrantePatinador"]').val().trim();
         var idEmpresa = $('input[name="idEmpresa"]').val().trim();
         var idUser = $('input[name="idUser"]').val().trim();
         var ctrlDespach = ctrlDespachoCheck;

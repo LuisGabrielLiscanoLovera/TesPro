@@ -99,7 +99,9 @@ class CreateTalla(View):
                 nom_talla    = nomTalla, 
                 num_talla    = numTalla,                   
             )
-      
+            obj = Talla.objects.latest('id')
+            obj = Talla.objects.all().filter(id=obj.id).update(btnAddTalla="<input type='number'  class='form-control-sm input-group-number' name='inputTalla-{}'  id='inputTalla-{}'>".format(obj.id,obj.id))
+            
             data = {
             'user': "user"
         }

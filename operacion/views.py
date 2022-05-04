@@ -3,7 +3,6 @@ from django.shortcuts import render
 # Create your views here.
 import json
 from django.shortcuts import render, redirect
-
 from operacion.models import Operacion
 from authapp.models import MyUser
 from django.views.generic import TemplateView, View
@@ -11,9 +10,11 @@ from django.http import JsonResponse
 from django.utils import (dateformat, formats)
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import OperacionSerializer
+from .serializers import OperacionSerializer,TallaSerializerOperacion
 from empresa.models import CambioEmpres
 from django.shortcuts import render
+from talla.models import Talla
+
 from django.template.loader import render_to_string
 from django.contrib.sessions.backends.db import SessionStore
 
@@ -43,7 +44,6 @@ def operacionList(request):
      
     return Response(serializer.data)
 
-
 class CreateOperacion(View):
     
     def get(self, request):
@@ -58,7 +58,7 @@ class CreateOperacion(View):
         idColorOP      = int(request.GET.get('idColorOP', None))
         nomOperacion   = request.GET.get('nomOperacion', None)
         
-        print(lastEm,can_totalOP,idReferenciaOP,idColorOP,nomOperacion+'passsssssssssss')
+       # print(lastEm,can_totalOP,idReferenciaOP,idColorOP,nomOperacion+'passsssssssssss')
         
         #puede existir pero no repetido en la misma empresa
         existOperacion    =  Operacion.objects.extra(where=["nom_operacion='%s' AND usuario_id = '%s' AND empresa_id = '%s'" %(nomOperacion,idUser.id,lastEm.lastEm) ])
@@ -76,8 +76,17 @@ class CreateOperacion(View):
                 can_restante   = can_totalOP
         )
            
+            #aqui me tiene que devolver el las id para trabajar con las tallas
+            obj         = Operacion.objects.latest('id')
+            idEmpresaOP = Operacion.objects.filter(id=obj.id).values('empresa_id')
+            tallas      = Talla.objects.filter(empresa_id=idEmpresaOP[0]['empresa_id']).order_by('-id')
+            serializer  = TallaSerializerOperacion(tallas, many=True)
+            
+            datas = json.dumps(serializer.data)
             data = {
-            'user': "user"
+            'user': "Operacion creaada con exito!",
+            'lastIdOperacion':obj.id,
+            'tallasEmpresa':datas,
         }
         else:
             data = {
