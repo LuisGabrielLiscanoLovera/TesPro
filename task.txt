@@ -5,4 +5,4 @@
 # crear opccion en operacion sin talla automatico
 # tadas las data tables pasara a vue
 
-#crear chebox para patinador que maneje despacho 
+#en despacho crear boton eliminar despacho y cerrar operacion
