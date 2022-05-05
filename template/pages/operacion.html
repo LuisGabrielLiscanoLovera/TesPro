@@ -21,9 +21,10 @@ data-auto-refresh-interval="30"
 data-auto-refresh-silent="true"
 data-auto-refresh-status="true"
 -->
-        <table id="operacionTable" data-id-field="id" class="table" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-show-columns="true" data-search="True" data-show-fullscreen="true" data-locale="es-SP" data-pagination="true"
+        <table id="operacionTable" data-id-field="id" class="table scrollme " data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-show-columns="true" data-search="True" data-show-fullscreen="true" data-locale="es-SP" data-pagination="true"
             data-detail-view-icon="false" data-show-export="false" data-url="operacion/operacion-list/">
-            <div class="row">
+
+            <div class="row ">
 
                 <div class="col-sm-2">
                     <a href="#openModalHijoAddOperacion">
@@ -39,10 +40,8 @@ data-auto-refresh-status="true"
                         <th data-field="nomReferencia" class="text-center">Referencia</th>
                         <th data-field="estatus" class="text-center">Estatus</th>
                         <th data-field="nomColor" class="text-center">Color</th>
-                        <!-- <th data-field="codColor" class="text-center">Cod. Color</th> -->
                         <th data-field="can_restante" class="text-center">Cant. Faltante</th>
                         <th data-field="can_total" class="text-center">Cant. Total</th>
-
                         <th data-field="created_at" class="text-center">Fecha creada</th>
                         <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionPoperacion" class="text-center">
                             Accion</th>
@@ -429,16 +428,20 @@ data-auto-refresh-status="true"
                                     </tr>
                                 </thead>
                             </table>
-                            <button class="btn btn-outline-primary form-" type="submit">Guardar</button>
+                            <!-- <input class="submit button" type="submit" value="Sign Up"> -->
+
+
+                            <input class="submit button" type="submit" onclick="ModalOperacion()" value="Guardar">
                         </fieldset>
 
 
-
+                        <!-- 
                         <fieldset class="section">
-                            <h3>Account Created!</h3>
-                            <p>Your account has now been created.</p>
-                            <div class="button">Reset Form</div>
-                        </fieldset>
+                            <br>
+                            <h3>¡Operación creada con exito!</h3>
+                            <p></p> 
+                        <div class="button">Reset Form</div>
+                       </fieldset> -->
                     </form>
                 </div>
             </div>
@@ -446,6 +449,12 @@ data-auto-refresh-status="true"
 
 
             <script>
+                function ModalOperacion() {
+                    window.location.href = "/";
+
+
+
+                };
                 $(document).ready(function() {
                     $(".form-wrapper .button").click(function() {
                         var button = $(this);
