@@ -4,277 +4,260 @@
 
 
 
-<script  src="{% static 'js/bootstrap-table-auto-refresh.js' %}"></script>
-<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+<script src="{% static 'js/bootstrap-table-auto-refresh.js' %}"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 
 <div id="openModalCasino" class="modalDialogPadre">
-  <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
-    
-    <center>
-     <u> <h1>Casino {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1></u><hr>
-    </center> 
-    <h6 class="" style="text-align: right;"><u>Importe total $ {{totalCasino}}</u></h5>
+    <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
+
+        <center>
+            <br>
+            <h1>Casino {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
+            <hr>
+        </center>
 
 
-    
-<!--
+
+
+
+        <!--
 
 data-show-refresh="true"
 data-auto-refresh="true"
 data-auto-refresh-interval="30"
 data-auto-refresh-silent="true"
 data-auto-refresh-status="true"
--->    
-<table
-id="table"
-data-id-field="id"
-class="table"
-data-toggle="table"
-data-detail-view="true"
-data-detail-view-by-click="true"
-data-detail-view-icon="false"
-data-search="true"
-data-show-fullscreen="true"        
+-->
+
+        <div class="row">
+
+            <div class="col-sm-3">
+
+                <h6 style="text-align: center;">Registar integrante casino</h6>
+
+                <form id="addIntegranteCasino" autocomplete="off" class="form-inline">
+                    <input type="number" hidden="True" name="idEmpresaCasino" value="{{ lastIdEmpresa }}">
+                    <input type="number" hidden="True" name="idUserCasino" value="{{ login_user_id}}">
+
+                    <div class="form-group mx-sm-2">
+                        <label for="integrante" class="sr-only">Integrante</label>
 
 
-data-show-export="true" 
-data-locale="es-SP"
-data-pagination="true"
+                        <input type="text" list="BuscarIntegrantesCasino" required placeholder="integrante al casino..." class="form-control">
 
-data-url="casino/casino-list/">
-<div class="row">
+                        <datalist id="BuscarIntegrantesCasino">
+                            {% for resultsCasino in allIntegrante %}
+                                  <option  value="{{resultsCasino.nombres}} {{resultsCasino.apellidos}}"></option>
+                                  <input type="number" hidden="True" name="idIntegranteCasino" value="{{ resultsCasino.id }}">
 
-  <div class="col-sm-3">
-    
-    <h6 style="text-align: center;">Registar integrante casino</h6>
-    
-    <form id="addIntegranteCasino" autocomplete="off" class="form-inline">
-          <input type="number" hidden="True" name="idEmpresaCasino" value="{{ lastIdEmpresa }}">
-          <input type="number" hidden="True" name="idUserCasino" value="{{ login_user_id}}"> 
-          
-          <div class="form-group mx-sm-2" >
-                  <label for="integrante" class="sr-only">Integrante</label>
-                  <input type="text" list="BuscarIntegrantesCasino"  name="idIntegranteCasino"  required Placeholder="integrante al casino..." class="form-control" >
-                  <datalist id="BuscarIntegrantesCasino">
-                  {% for results in allIntegrante %}
-                        <option  value="{{results.id}}">{{results.nombres}} {{results.apellidos}}</option>
-                  {% endfor %}
-                  </datalist>
-                  </div>
-          <div class="form-group mx-sm-2" >                
-                  <button class="btn btn-outline-primary form-control" type="submit">Cargar integrante</button>
-          </div>
+                            {% endfor %}
 
-    </form>
+                        </datalist>
+
+                        <div class="form-group mx-sm-2">
+                            <button class="btn btn-outline-primary form-control" type="submit">Cargar integrante</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="col-md-12 col-md-offset-10">
+                <h6 class="" style="text-align: right;">Importe total $ {{totalCasino}}</h6>
+            </div>
+
+            <div class="col-sm-12">
+                <table id="table" data-id-field="id" class="table" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-search="true" data-show-fullscreen="true" data-show-export="true" data-locale="es-SP" data-pagination="true"
+                    data-url="casino/casino-list/">
+
+                    <thead class="thead-dark">
+                        <tr>
+                            <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoCasino" class="text-center">Mas info</th>
+                            <th data-field="nomIntegrante" class="text-center">Nombres</th>
+                            <th data-field="apelIntegrante" class="text-center">Apellidos</th>
+                            <th data-field="deuda" class="text-center">Importe Total</th>
+                            <!-- <th data-field="cedulaIntegrante"  class="text-center">Importe</th> -->
+                            <th data-field="updated_at" class="text-center">Ultimo importe</th>
+
+                            <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionCasino" class="text-center"> Accion</th>
+
+                        </tr>
+                    </thead>
+
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <script>
+            $('#table').SetEditable();
+
+            function DetailFormatterButInfoCasino(index, row) {
+                //crea y renderiza la tabla
+                return '<div class="row">' +
+                    '<div class="col-sm-3">' +
+                    '</div>' +
+
+                    '<div class="col-sm-6">' +
+                    '<table " class="table border border-info ">' +
+                    '<thead class="thead-dark">' +
+                    '<tr>' +
+                    '<th class="text-center">N°</th>' +
+                    '<th class="text-center">Importes</th>' +
+                    '<th class="text-center">Fecha importe</th>' +
+                    '</tr>' +
+                    '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="importeTB' + row.id + '"> </tbody>' +
+                    '</table>' + '<script>' + 'importes(' + row.id + ');</' + 'script>' +
+                    '</div>' +
+                    '</div>';
+            }
+
+            function importes(idCasinoImporte) {
+                $.ajax({
+                    url: '{% url "casinoImporte-list" %}',
+                    data: {
+
+                        'idCasinoImporte': idCasinoImporte,
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+
+
+                        var len = response.length;
+                        for (var i = 0; i < len; i++) {
+                            var id = response[i].id;
+                            var cantidad = response[i].cantidad;
+                            var created_at = response[i].created_at;
+
+
+                            var tr_str = "<tr>" +
+                                "<td style='text-align:left'>" + (len - i) + "</td>" +
+                                "<td style='text-align:center'>$ " + cantidad + "</td>" +
+                                "<td style='text-align:center'>" + created_at + "</td>" +
+
+                                "</tr>";
+                            $('#importeTB' + idCasinoImporte).append(tr_str);
+                        }
+
+                    }
+                });
+
+
+            }
+
+
+
+            function DetailFormatterButAccionCasino(index, row) {
+                return '<form id="editarIntegranteCasino" style="display: inline"  >{% csrf_token %}<hr>' +
+                    '<div class="row">' +
+                    '<div class="col-sm-3">' + '</div>' +
+                    '<div class="col-sm-3">' + '</div>' +
+                    '<div class="col-sm-3">' + '</div>' +
+
+                    '<div class="col-sm-3">' +
+                    '<div class="form-group"><label class="h5">Agregar Importe</label>' +
+                    '<input class="form-control" type="number" placeholder="Monto de recargo" name="importes"></div>' +
+                    '<input type="number" hidden="True" name="idEmpresaUPCasino" value="{{ lastIdEmpresa }}">' +
+                    '<input type="number" hidden="True" name="idUserUPCasino" value="{{ login_user_id}}">' +
+                    '<input type="number" hidden="True" name="idIntegranteImporte" value="' + row.id + '">' +
+                    '<input id="EditIcasinoBtn-' + row.id + '" value="Cargar importe" type="submit" onclick="editIcasino(' + row.id + ')" class="btn-lg  btn btn-outline-success btn-rounded form-control " >' +
+                    '</div>' +
+                    '</div>' +
+
+
+                    '</form>';
+
+
+            }
+        </script>
+
+
+        <!--create integrante consumo casino-->
+        <script>
+            $("form#addIntegranteCasino").submit(function() {
+
+
+                var idIntegrante = $('input[name="idIntegranteCasino"]').val().trim();
+                var idEmpresa = $('input[name="idEmpresaCasino"]').val().trim();
+                var idUser = $('input[name="idUserCasino"]').val().trim();
+
+                if (idIntegrante && idEmpresa && idUser) {
+                    // Create Ajax Call
+                    $.ajax({
+                        url: '{% url "Casino_ajax_create" %}',
+                        data: {
+
+                            'idIntegranteCasino': idIntegrante,
+                            'idEmpresaCasino': idEmpresa,
+                            'idUserCasino': idUser
+
+
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            window.location.reload();
+                            if (data.user) {
+                                appendToUsrTable(data.user);
+                            }
+                        }
+                    });
+
+                } else {
+                    alert("All fields must have a valid value.");
+                }
+                $('form#addPatinador').trigger("reset");
+                return false;
+            });
+        </script>
+
+
+
+        <script>
+            function editIcasino(id) {
+                var importes = $('input[name="importes"]').val().trim();
+                var idEmpresaUPCasino = $('input[name="idEmpresaUPCasino"]').val().trim();
+                var idUserUPCasino = $('input[name="idUserUPCasino"]').val().trim();
+                var idIntegranteImporte = $('input[name="idIntegranteImporte"]').val().trim();
+                if (importes && idEmpresaUPCasino && idUserUPCasino && idIntegranteImporte) {
+
+                    // Create Ajax Call
+                    $.ajax({
+                        url: '{% url "Casino_ajax_update" %}',
+                        data: {
+                            'idEmpresaUPCasino': idEmpresaUPCasino,
+                            'idUserUPCasino': idUserUPCasino,
+                            'importes': importes,
+                            'idCasino': id,
+                            'idIntegranteImporte': idIntegranteImporte
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            if (data.user) {
+                                appendToUsrTable(data.user);
+                            }
+                        }
+                    });
+
+                } else {
+                    alert("All fields must have a valid value.");
+                }
+            }
+        </script>
+
+
+
     </div>
-  
-
-      
-   
-   
-</div>
-
-<thead class="thead-dark">
-  <tr>
-     <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoCasino"class="text-center">Mas info</th> 
-    <th data-field="nomIntegrante"   class="text-center">Nombres</th>
-    <th data-field="apelIntegrante"  class="text-center">Apellidos</th>
-    <th data-field="deuda"    class="text-center">Importe Total</th>
-    <!-- <th data-field="cedulaIntegrante"  class="text-center">Importe</th> -->
-    <th data-field="updated_at" class="text-center">Ultimo importe</th> 
-    
-     <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionCasino" class="text-center"> Accion</th>
-
-  </tr>
-</thead>
-
-
-</table>
-
-
-
-
-
-
-
-
-
-
-<script>
-
-$('#table').SetEditable();
-
-function DetailFormatterButInfoCasino(index, row) {
-//crea y renderiza la tabla
-return '<div class="row">'+
-            '<div class="col-sm-3">'+
-            '</div>'+
-            
-            '<div class="col-sm-6">'+
-                  '<table " class="table border border-info ">'+
-                    '<thead class="thead-dark">'+
-                      '<tr>'+
-                        '<th class="text-center">N°</th>'+
-                        '<th class="text-center">Importes</th>'+
-                        '<th class="text-center">Fecha importe</th>'+
-                      '</tr>'+  
-                    '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="importeTB'+row.id+'"> </tbody>'+
-                    '</table>'+'<script>'+'importes('+row.id+');</'+'script>'+
-              '</div>'+      
-          '</div>'
-  ; 
-}
-
-function importes(idCasinoImporte){
-  $.ajax({
-        url: '{% url "casinoImporte-list" %}',
-        data: {
-            
-            'idCasinoImporte'    : idCasinoImporte,         
-        },
-        dataType: 'json',
-        success: function(response){
-
-          
-            var len = response.length;
-            for(var i=0; i<len; i++){
-                var id = response[i].id;
-                var cantidad = response[i].cantidad;
-                var created_at = response[i].created_at;
-              
-
-                var tr_str = "<tr>" +
-                  "<td style='text-align:left'>" + (len-i) + "</td>" + 
-                  "<td style='text-align:center'>$ " + cantidad + "</td>" +                   
-                  "<td style='text-align:center'>" + created_at + "</td>" +                   
-                 
-                  "</tr>";
-                $('#importeTB'+idCasinoImporte).append(tr_str);
-            }
-
-        }
-    });
-
- 
-}
-
-
-
-function DetailFormatterButAccionCasino(index,row){
-  return '<form id="editarIntegranteCasino" style="display: inline"  >{% csrf_token %}<hr>'+
-        '<div class="row">'+
-          '<div class="col-sm-3">'+'</div>'+
-          '<div class="col-sm-3">'+'</div>'+
-          '<div class="col-sm-3">'+'</div>'+
-          
-            '<div class="col-sm-3">'+
-              '<div class="form-group"><label class="h5">Agregar Importe</label>'+
-              '<input class="form-control" type="number" placeholder="Monto de recargo" name="importes"></div>'+
-              '<input type="number" hidden="True" name="idEmpresaUPCasino" value="{{ lastIdEmpresa }}">'+
-              '<input type="number" hidden="True" name="idUserUPCasino" value="{{ login_user_id}}">'+
-              '<input type="number" hidden="True" name="idIntegranteImporte" value="'+row.id+'">'+
-              '<input id="EditIcasinoBtn-'+row.id+'" value="Cargar importe" type="submit" onclick="editIcasino('+row.id+')" class="btn-lg  btn btn-outline-success btn-rounded form-control " >'+             
-          '</div>'+ 
-        '</div>'+
-          
-      
-        '</form>';
-        
-        
-}
-
-
-
-
-</script>
-
-
- <!--create integrante consumo casino-->
- <script>
-  $("form#addIntegranteCasino").submit(function() { 
-
-
-var idIntegrante      = $('input[name="idIntegranteCasino"]').val().trim();
-var idEmpresa         = $('input[name="idEmpresaCasino"]').val().trim();
-var idUser            = $('input[name="idUserCasino"]').val().trim();
-
-if (idIntegrante &&  idEmpresa && idUser 
-    ) {
-    // Create Ajax Call
-    $.ajax({
-        url: '{% url "Casino_ajax_create" %}',
-        data: {
-            
-            'idIntegranteCasino'    : idIntegrante,
-            'idEmpresaCasino'       : idEmpresa,
-            'idUserCasino'          : idUser
-
-            
-        },
-        dataType: 'json',
-        success: function (data) {
-          window.location.reload();
-            if (data.user) {
-              appendToUsrTable(data.user);
-            }
-        }
-    });
-
-} else {
-    alert("All fields must have a valid value.");
-}
-$('form#addPatinador').trigger("reset");
-return false;
-});
-
-
-</script>
-
-
-
-<script>
-
-  function editIcasino(id){
-var importes                  = $('input[name="importes"]').val().trim();  
-var idEmpresaUPCasino         = $('input[name="idEmpresaUPCasino"]').val().trim();
-var idUserUPCasino            = $('input[name="idUserUPCasino"]').val().trim();
-var idIntegranteImporte       = $('input[name="idIntegranteImporte"]').val().trim();
-  if (importes && idEmpresaUPCasino && idUserUPCasino && idIntegranteImporte
-      ) {
-       
-        // Create Ajax Call
-      $.ajax({
-          url: '{% url "Casino_ajax_update" %}',
-          data: {
-              'idEmpresaUPCasino' : idEmpresaUPCasino,
-              'idUserUPCasino'    : idUserUPCasino,
-              'importes'          : importes,
-              'idCasino'          : id,
-              'idIntegranteImporte':idIntegranteImporte
-          },
-          dataType: 'json',
-          success: function (data) {
-              if (data.user) {
-                appendToUsrTable(data.user);
-              }
-          }
-      });
-  
-  } else {
-      alert("All fields must have a valid value.");
-  }
-  }
-  
-  
-        
-  
-      
-     
-  </script>
-  
-
-
-</div>  
-  
-

@@ -1,65 +1,49 @@
 {% load static %}
-<script  src="{% static 'js/bootstrap-table-auto-refresh.js' %}"></script>
-<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+<script src="{% static 'js/bootstrap-table-auto-refresh.js' %}"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 
 <div id="openModalTarea" class="modalDialogPadre">
-  <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
-    
-    <center>
-<u>      <h1>Tareas {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
-</u><hr> </center> 
+    <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
+
+        <center>
+            <br>
+            <h1>Tareas {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
+            <hr>
+        </center>
 
 
-    
-<!--
+
+        <!--
 
 data-show-refresh="true"
 data-auto-refresh="true"
 data-auto-refresh-interval="30"
 data-auto-refresh-silent="true"
 data-auto-refresh-status="true"
--->    
-<table
-id="table"
-data-id-field="id"
-class="table"
-data-toggle="table"
-data-detail-view="true"
-data-detail-view-by-click="true"
-data-detail-view-icon="false"
-data-show-columns="true"
-data-search="true"
-data-show-fullscreen="true"        
+-->
+        <table id="table" data-id-field="id" class="table" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-show-columns="true" data-search="true" data-show-fullscreen="true" data-show-refresh="true"
+            data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-pagination="true" data-url="tarea/tarea-list/">
+            <div class="row">
+                <div class="col-sm-2">
+                    <a href="#openModalHijoAddTarea">
+                        <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar </i>
+                    </a>
+                </div>
+                <thead class="thead-dark">
+                    <tr>
+                        <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoTarea" class="text-center">Mas info</th>
+                        <th data-field="nom_tarea" class="text-center">Nombre Tarea</th>
+                        <th data-field="min_minuto" class="text-center">Min x minuto</th>
+                        <th data-field="min_hora" class="text-center">Min x hora</th>
+                        <th data-field="valor" class="text-center">Precio</th>
+                        <th data-field="created_at" class="text-center">Fec Ingreso</th>
+                        <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionTarea" class="text-center">Accion</th>
 
-data-show-refresh="true"
+                    </tr>
+                </thead>
 
-data-always-use-formatter="true"
-data-show-export="true" 
-data-locale="es-SP"
-data-pagination="true"
-
-data-url="tarea/tarea-list/">
-<div class="row">
-  <div class="col-sm-2">
-    <a href="#openModalHijoAddTarea"> 
-      <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar </i>
-  </a>
-</div>
-<thead class="thead-dark">
-  <tr>
-    <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoTarea"class="text-center">Mas info</th>
-    <th data-field="nom_tarea"   class="text-center">Nombre Tarea</th>
-    <th data-field="min_minuto" class="text-center">Min x minuto</th>
-    <th data-field="min_hora"    class="text-center">Min x hora</th>
-    <th data-field="valor"  class="text-center">Precio</th>
-    <th data-field="created_at" class="text-center">Fec Ingreso</th>
-    <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionTarea"class="text-center">Accion</th>
-
-  </tr>
-</thead>
-
-</table>
+        </table>
 
 
 
@@ -70,303 +54,287 @@ data-url="tarea/tarea-list/">
 
 
 
-<script>
+        <script>
+            $('#table').SetEditable();
 
-$('#table').SetEditable();
+            function DetailFormatterButInfoTarea(index, row) {
+                //crea y renderiza la tabla
+                return '<br>Detalle    :' + row.detalle
 
-function DetailFormatterButInfoTarea(index, row) {
-//crea y renderiza la tabla
-  return '<br>Detalle    :'+row.detalle
-       
-}
-function DetailFormatterButAccionTarea(index,row){
-  return '<form id="editarTarea" style="display: inline"  >{% csrf_token %}<hr>'+
-        '<div class="row">'+
-        '<div class="col-sm-3">'+
-            '<div class="form-group"><label>Nombre Tarea</label>'+
-            '<input class="form-control"   value="'+row.nom_tarea+'" name="nombreTareaUP"></div>'+
-            '<div class="form-group"><label>Cantidad x minuto</label>'+
-            '<input class="form-control" value="'+row.min_minuto+'" name="minutoXTareaUP"></div>'+
-            '<div class="form-group"><label>Cantidad x hora</label>'+
-            '<input class="form-control"   value="'+row.min_hora+'" name="horaXTareaUP"></div>'+
-        '</div>'+
-        
+            }
 
-        '<div class="col-sm-3">'+
-            '<div class="form-group"><label>Precio x unidad</label>'+
-            '<input class="form-control" value="'+row.valor+'" name="valorTareaUP"></div>'+
-            '<div class="form-group"><label>Descripcion</label>'+
-            '<input class="form-control" value="'+row.detalle+'" name="detalleTareaUP"></div>'+        
-           
-           
-            
-            '<input type="number" hidden="True" name="empresaTareaUP" value="{{ lastIdEmpresa }}">'+
-            '<input type="number" hidden="True" name="idUserTareaUP" value="{{ login_user_id}}">'+
-            '<input type="number" hidden="True" name="idTareaUP" value="'+row.id+'"'+           
-            
-        '</div>'+
-        '<div class="col-sm-6">'+
-          '<input id="EditTareaBtn-'+row.id+'" value="Actualizar registro" type="submit" onclick="editTarea('+row.id+')" class="btn-lg  btn btn-outline-warning btn-rounded  " >'+ 
-      
-        
-       
-        
-          '</div>'+
+            function DetailFormatterButAccionTarea(index, row) {
+                return '<form id="editarTarea" style="display: inline"  >{% csrf_token %}<hr>' +
+                    '<div class="row">' +
+                    '<div class="col-sm-3">' +
+                    '<div class="form-group"><label>Nombre Tarea</label>' +
+                    '<input class="form-control"   value="' + row.nom_tarea + '" name="nombreTareaUP"></div>' +
+                    '<div class="form-group"><label>Cantidad x minuto</label>' +
+                    '<input class="form-control" value="' + row.min_minuto + '" name="minutoXTareaUP"></div>' +
+                    '<div class="form-group"><label>Cantidad x hora</label>' +
+                    '<input class="form-control"   value="' + row.min_hora + '" name="horaXTareaUP"></div>' +
+                    '</div>' +
 
-        '</div>'+
-        '<div class="col-sm-1">'+'<button value="" onclick="remove('+row.id+')"  id="buttonEliminarTarea" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>'+
-        '</div>'+
-        '</form>';
-        
-        
-        
-}
+
+                    '<div class="col-sm-3">' +
+                    '<div class="form-group"><label>Precio x unidad</label>' +
+                    '<input class="form-control" value="' + row.valor + '" name="valorTareaUP"></div>' +
+                    '<div class="form-group"><label>Descripcion</label>' +
+                    '<input class="form-control" value="' + row.detalle + '" name="detalleTareaUP"></div>' +
+
+
+
+                    '<input type="number" hidden="True" name="empresaTareaUP" value="{{ lastIdEmpresa }}">' +
+                    '<input type="number" hidden="True" name="idUserTareaUP" value="{{ login_user_id}}">' +
+                    '<input type="number" hidden="True" name="idTareaUP" value="' + row.id + '"' +
+
+                    '</div>' +
+                    '<div class="col-sm-6">' +
+                    '<input id="EditTareaBtn-' + row.id + '" value="Actualizar registro" type="submit" onclick="editTarea(' + row.id + ')" class="btn-lg  btn btn-outline-warning btn-rounded  " >' +
 
 
 
 
-</script>
+                    '</div>' +
+
+                    '</div>' +
+                    '<div class="col-sm-1">' + '<button value="" onclick="remove(' + row.id + ')"  id="buttonEliminarTarea" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>' +
+                    '</div>' +
+                    '</form>';
 
 
 
-</div>  
-  
-</div>
+            }
+        </script>
+
+
+
+        </div>
+
+    </div>
 
 
 
 
-<div id="openModalHijoAddTarea" class="modalDialogHijo">
-  <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>            
- 
+    <div id="openModalHijoAddTarea" class="modalDialogHijo">
+        <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>
 
 
 
 
-    
-    <form id="addTarea" class="">
-      <div class=" content p-3 mb-2 bg-dar text-white "  rows="3"  >
-        <div class="border">
-          <center>
-            <h1>Agregar nueva Tarea {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1><hr>
-          </center>
-        
-      
-          <div class="col-sm-12">
-          <div class="form-group">
-            <label >Nombre Tarea </label>
-            <div class="input-group">
-              <span class="input-group-addon">
+
+
+            <form id="addTarea" class="">
+                <div class=" content p-3 mb-2 bg-dar text-white " rows="3">
+                    <div class="border">
+                        <center>
+                            <h1>Agregar nueva Tarea {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
+                            <hr>
+                        </center>
+
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Nombre Tarea </label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
                 <i class="fa fa-user"></i>
               </span>
-              <input class="form-control" type="text" name="nombreTarea" placeholder="Nombres tarea" required>
-            </div>
-          </div>
-          </div>
-          
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label >Cantidad x minuto</label>
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                <input class="form-control" type="number" name="minutoXTarea"  placeholder="duracion x minuto" required>
-              </div>
-            </div>
-          </div>        
-         
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label >Cantidad x hora</label>
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                <input class="form-control" type="text" name="horaXTarea" placeholder="duracion x hora" required>
-              </div>
-            </div>
-          </div>        
+                                    <input class="form-control" type="text" name="nombreTarea" placeholder="Nombres tarea" required>
+                                </div>
+                            </div>
+                        </div>
 
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label>Precio x unidad</label>
-              <div class="input-group">
-                <span class="input-group-addon">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Cantidad x minuto</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
                   <i class="fa fa-user"></i>
                 </span>
-                <input class="form-control" type="number" name="valorTarea" placeholder="Precio por unidad" required>
-              </div>
-            </div>
-          </div>        
-         
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label >Descripcion</label>
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                <input class="form-control" type="text" name="detalleTarea" placeholder="Descripcion de la tarea"  >
-              </div>
-            </div>
-          </div>        
-         
-         
+                                    <input class="form-control" type="number" name="minutoXTarea" placeholder="duracion x minuto" required>
+                                </div>
+                            </div>
+                        </div>
 
-     
-          <div class="modal-footer">          
-            <input type="number" hidden="True" name="empresaTarea" value="{{ lastIdEmpresa }}">
-            <input type="number" hidden="True" name="idUserTarea" value="{{ login_user_id}}">  
-            <button class="btn btn-outline-primary form-" type="submit" onclick="location.href='/'">Guardar</button>
-          </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Cantidad x hora</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                                    <input class="form-control" type="text" name="horaXTarea" placeholder="duracion x hora" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Precio x unidad</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                                    <input class="form-control" type="number" name="valorTarea" placeholder="Precio por unidad" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Descripcion</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                  <i class="fa fa-user"></i>
+                </span>
+                                    <input class="form-control" type="text" name="detalleTarea" placeholder="Descripcion de la tarea">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="modal-footer">
+                            <input type="number" hidden="True" name="empresaTarea" value="{{ lastIdEmpresa }}">
+                            <input type="number" hidden="True" name="idUserTarea" value="{{ login_user_id}}">
+                            <button class="btn btn-outline-primary form-" type="submit" onclick="location.href='/'">Guardar</button>
+                        </div>
+                    </div>
+                </div>
         </div>
-      </div>
-   </div>
-  </form>
- 
-  
-  
-  <!--create Tarea-->
-<script>
-  $("form#addTarea").submit(function() { 
+        </form>
 
 
-var nombreTarea       = $('input[name="nombreTarea"]').val().trim();
-var minutoXTarea      = $('input[name="minutoXTarea"]').val().trim();
-var horaXTarea        = $('input[name="horaXTarea"]').val().trim();
-var valorTarea        = $('input[name="valorTarea"]').val().trim();
-var detalleTarea      = $('input[name="detalleTarea"]').val().trim();
-var empresaTarea      = $('input[name="empresaTarea"]').val().trim();
-var idUserTarea       = $('input[name="idUserTarea"]').val().trim();
-if (nombreTarea && minutoXTarea && horaXTarea &&
-valorTarea && detalleTarea && empresaTarea &&  idUserTarea 
-    ) {
-    // Create Ajax Call
-    $.ajax({
-        url: '{% url "Tarea_ajax_create" %}',
-        data: {
-            
-            'nombreTarea'  : nombreTarea,
-            'minutoXTarea' : minutoXTarea,
-            'horaXTarea'   : horaXTarea,
-            'valorTarea'   : valorTarea,
-            'detalleTarea' : detalleTarea,
-            'empresaTarea' : empresaTarea,
-            'idUserTarea'  : idUserTarea
-            
+
+        <!--create Tarea-->
+        <script>
+            $("form#addTarea").submit(function() {
 
 
-            
-        },
-        dataType: 'json',
-        success: function (data) {
-            if (data.user) {
-              appendToUsrTable(data.user);
-            }
-        }
-    });
+                var nombreTarea = $('input[name="nombreTarea"]').val().trim();
+                var minutoXTarea = $('input[name="minutoXTarea"]').val().trim();
+                var horaXTarea = $('input[name="horaXTarea"]').val().trim();
+                var valorTarea = $('input[name="valorTarea"]').val().trim();
+                var detalleTarea = $('input[name="detalleTarea"]').val().trim();
+                var empresaTarea = $('input[name="empresaTarea"]').val().trim();
+                var idUserTarea = $('input[name="idUserTarea"]').val().trim();
+                if (nombreTarea && minutoXTarea && horaXTarea &&
+                    valorTarea && detalleTarea && empresaTarea && idUserTarea
+                ) {
+                    // Create Ajax Call
+                    $.ajax({
+                        url: '{% url "Tarea_ajax_create" %}',
+                        data: {
 
-} else {
-    alert("All fields must have a valid value.");
-}
-$('form#addTarea').trigger("reset");
-return false;
-});
-
-
-</script>
-
-
-<!--editar Tarea-->
-
-<script>
-
-function editTarea  (id){
-
-  
-var nombreTareaUP   = $('input[name="nombreTareaUP"]').val().trim();
-var minutoXTareaUP  = $('input[name="minutoXTareaUP"]').val().trim();
-var horaXTareaUP    = $('input[name="horaXTareaUP"]').val().trim();
-var valorTareaUP    = $('input[name="valorTareaUP"]').val().trim();
-var detalleTareaUP  = $('input[name="detalleTareaUP"]').val().trim();
-var empresaTareaUP  = $('input[name="empresaTareaUP"]').val().trim();
-var idUserTareaUP   = $('input[name="idUserTareaUP"]').val().trim();
-
-
-if (nombreTareaUP && minutoXTareaUP && horaXTareaUP &&
-valorTareaUP && detalleTareaUP && empresaTareaUP &&  idUserTareaUP 
-    ) {
-      alert(nombreTareaUP);
-
-    // Create Ajax Call
-    $.ajax({
-        url: '{% url "Tarea_ajax_update" %}',
-        data: {
-            
-            'nombreTareaUP'  : nombreTareaUP,
-            'minutoXTareaUP' : minutoXTareaUP,
-            'horaXTareaUP'   : horaXTareaUP,
-            'valorTareaUP'   : valorTareaUP,
-            'detalleTareaUP' : detalleTareaUP,
-            'empresaTareaUP' : empresaTareaUP,
-            'idUserTareaUP'  : idUserTareaUP,
-            'idTareaUP'    : id
-
-
-            
-        },
-        dataType: 'json',
-        success: function (data) {
-            if (data.user) {
-              appendToUsrTable(data.user);
-            }
-        }
-    });
-
-} else {
-    alert("All fields must have a valid value.");
-}
-}
-
-
-      
-
-    
-   
-</script>
+                            'nombreTarea': nombreTarea,
+                            'minutoXTarea': minutoXTarea,
+                            'horaXTarea': horaXTarea,
+                            'valorTarea': valorTarea,
+                            'detalleTarea': detalleTarea,
+                            'empresaTarea': empresaTarea,
+                            'idUserTarea': idUserTarea
 
 
 
 
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            if (data.user) {
+                                appendToUsrTable(data.user);
+                            }
+                        }
+                    });
 
-
-
-<!--Delete Tarea-->
-
-
-<script>
- function remove (idTarea) {
-
-
-  $.ajax({
-            url: '{% url "Tarea_ajax_delete" %}',
-            data: {
-                'id': idTarea,
-            },
-            dataType: 'json',
-            success: function (data) {
-           
-              window.location.reload();
-
-
-              
-            }
+                } else {
+                    alert("All fields must have a valid value.");
+                }
+                $('form#addTarea').trigger("reset");
+                return false;
             });
-}
+        </script>
+
+
+        <!--editar Tarea-->
+
+        <script>
+            function editTarea(id) {
+
+
+                var nombreTareaUP = $('input[name="nombreTareaUP"]').val().trim();
+                var minutoXTareaUP = $('input[name="minutoXTareaUP"]').val().trim();
+                var horaXTareaUP = $('input[name="horaXTareaUP"]').val().trim();
+                var valorTareaUP = $('input[name="valorTareaUP"]').val().trim();
+                var detalleTareaUP = $('input[name="detalleTareaUP"]').val().trim();
+                var empresaTareaUP = $('input[name="empresaTareaUP"]').val().trim();
+                var idUserTareaUP = $('input[name="idUserTareaUP"]').val().trim();
+
+
+                if (nombreTareaUP && minutoXTareaUP && horaXTareaUP &&
+                    valorTareaUP && detalleTareaUP && empresaTareaUP && idUserTareaUP
+                ) {
+                    alert(nombreTareaUP);
+
+                    // Create Ajax Call
+                    $.ajax({
+                        url: '{% url "Tarea_ajax_update" %}',
+                        data: {
+
+                            'nombreTareaUP': nombreTareaUP,
+                            'minutoXTareaUP': minutoXTareaUP,
+                            'horaXTareaUP': horaXTareaUP,
+                            'valorTareaUP': valorTareaUP,
+                            'detalleTareaUP': detalleTareaUP,
+                            'empresaTareaUP': empresaTareaUP,
+                            'idUserTareaUP': idUserTareaUP,
+                            'idTareaUP': id
+
+
+
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            if (data.user) {
+                                appendToUsrTable(data.user);
+                            }
+                        }
+                    });
+
+                } else {
+                    alert("All fields must have a valid value.");
+                }
+            }
+        </script>
 
 
 
 
-</script>
-</div>
+
+
+
+        <!--Delete Tarea-->
+
+
+        <script>
+            function remove(idTarea) {
+
+
+                $.ajax({
+                    url: '{% url "Tarea_ajax_delete" %}',
+                    data: {
+                        'id': idTarea,
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+
+                        window.location.reload();
+
+
+
+                    }
+                });
+            }
+        </script>
+    </div>

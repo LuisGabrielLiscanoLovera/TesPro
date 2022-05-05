@@ -6,12 +6,9 @@
         <a href="#close" title="Close" class="close">
             <i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i>
         </a>
-
         <center>
-            <u>
-        <h1>Operaciones de la empresa {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
-      </u>
-            <hr>
+            <br>
+            <h1>Operaciones {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
         </center>
         <!--
 
@@ -356,25 +353,18 @@ data-auto-refresh-status="true"
                             <h3>
                                 Registro de Operación
                                 <br>{% for i in nomEmpresaU %}{{ i|title }}{% endfor %}
-
                             </h3>
-
                             <label for=""><p style="text-align: right important;" class="text-sm-left">Nombre Operación</p> </label>
                             <input type="text" name="nombreOP" id="name" placeholder="Nombre Operacion">
-
                             <label for=""><p class="text-sm-left">Cantidad Operación  </p></label>
                             <input type="number" name="can_totalOP" id="" class="form-group cm-number" placeholder=" Total">
                             <input type="number" hidden="True" name="idEmpresaOP" value="{{ lastIdEmpresa }}">
                             <input type="number" hidden="True" name="idUserOP" value="{{ login_user_id}}">
                             <div class="button">Detalle</div>
-
                         </fieldset>
-
-
 
                         <fieldset class="section">
                             <h3>Contenido
-
                             </h3>
                             <div class="row cf">
                                 <div class="four col bg-dange">
@@ -383,36 +373,28 @@ data-auto-refresh-status="true"
                                     <datalist id="ReferenciaSelect">
                                         {% for ReferenciaSelect in allReferencia %}
                                         <option value="{{ReferenciaSelect.nom_referencia}}">{{ReferenciaSelect.nom_referencia}}
-                            
-                                        
                                         <input type="number" hidden="True" name="idReferenciaOP" value="{{ ReferenciaSelect.id }}">
                                         </option>
                                         {% endfor %}
                                     </datalist>
                                 </div>
-
                                 <div class="four col">
                                     <h4>Color</h4>
                                     <input type="text" list="Color" required placeholder="Buscar Color..." class="form-control" style="width:150px;">
                                     <datalist id="Color" class="select ">
                                         {% for resultsColor in allColor %}                                        
                                         <option value="{{resultsColor.nom_color}}">
-                                        {{resultsColor.nom_color}}
+                                        # {{resultsColor.codigo_color}}
                                         </option>
                                         <input type="number" hidden="True" name="idColorOp" value="{{ resultsColor.id }}">
                                         {% endfor %}
                                     </datalist>
-
                                 </div>
-
                                 <div class="four col">
                                     <h4>Descripcion</h4>
-
                                     <input type="text" name="notaDes" placeholder="Nota - Descripcion" style="width:150px;">
-
                                 </div>
                             </div>
-
 
 
                             <div class="button">Talla</div>
@@ -679,10 +661,11 @@ data-auto-refresh-status="true"
                     '<div class="col-sm-3 ">' +
                     '<form id="addTallaOP-' + row.id + '" autocomplete="off" class="border">{% csrf_token %}' +
                     '<center><div class="">Agregar Talla: ' + row.nom_operacion + '</div></center>' +
-                    '<input type="text" list="BuscarTalla"  name="idTalla"  required Placeholder="Buscar talla..." class="form-control" >' +
+                    '<input type="text" list="BuscarTalla"  name=""  required Placeholder="Buscar talla..." class="form-control" >' +
                     '<datalist id="BuscarTalla">' +
-                    '{% for results in allTalla %}' +
-                    '<option  value="{{results.id}}">{{results.nom_talla}} #{{results.num_talla}}</option>' +
+                    '{% for resultsTallaOP in allTalla %}' +
+                    '<option  value="{{resultsTallaOP.nom_talla}} #{{resultsTallaOP.num_talla}}"></option>' +
+                    '<input type="number" hidden="True" name="idTalla" value="{{ resultsTallaOP.id }}">' +
                     '{% endfor %}' +
                     '</datalist>' +
                     '<input type="number"  name="cantTalla"  class="form-control" Placeholder="Cantidad Talla..." >' +
