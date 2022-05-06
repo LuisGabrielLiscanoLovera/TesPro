@@ -115,19 +115,27 @@ class CreateTalla(View):
 #create talla op
 
 class CreateTallaOP(View):
-    def  get(self, request):
-        
-        idTalla          = int(request.GET.get('idTalla', None))
-        cantTalla        = int(request.GET.get('cantTalla', None))
-        idOperacionTalla = int(request.GET.get('idOperacionTalla', None))
+    def  get(self, request):       
         
         if request.session.has_key('username'):        
             if 'username' in request.session:
                 username = request.session['username']     
-                idUser   = MyUser.objects.get(username=username)
-                
-        lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()   
-        ptalla           = CanTalla.objects.filter(empresa_id=lastEm.lastEm,talla_id=idTalla,operacion_id=idOperacionTalla)
+                idUser   = MyUser.objects.get(username=username)                
+        lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last() 
+        
+        cantTalla        = int(request.GET.get('cantTalla', None))
+        idOperacionTalla = int(request.GET.get('idOperacionTalla', None))        
+        #para usar 2 formularios en operacion agregando talla
+        f2 = int(request.GET.get('f2', None))      
+        if f2 == 2:     
+            idTalla  = str(request.GET.get('idTallaOPP', None))            
+            idTalla  = Talla.objects.filter(nom_talla = idTalla, empresa_id=lastEm.lastEm).values('id')
+            ptalla   = CanTalla.objects.filter(empresa_id=lastEm.lastEm,talla_id=idTalla[0]['id'],operacion_id=idOperacionTalla)
+
+           
+        else:
+            idTalla        = int(request.GET.get('idTalla', None))
+            ptalla           = CanTalla.objects.filter(empresa_id=lastEm.lastEm,talla_id=idTalla,operacion_id=idOperacionTalla)
         
         if int(ptalla.count()) <= 0 :
             obj = CanTalla.objects.create(

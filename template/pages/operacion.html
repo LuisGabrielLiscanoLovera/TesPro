@@ -661,11 +661,11 @@ data-auto-refresh-status="true"
                     '<div class="col-sm-3 ">' +
                     '<form id="addTallaOP-' + row.id + '" autocomplete="off" class="border">{% csrf_token %}' +
                     '<center><div class="">Agregar Talla: ' + row.nom_operacion + '</div></center>' +
-                    '<input type="text" list="BuscarTalla"  name=""  required Placeholder="Buscar talla..." class="form-control" >' +
+                    '<input type="text" list="BuscarTalla" name="idTallaOPP" required Placeholder="Buscar talla..." class="form-control" >' +
                     '<datalist id="BuscarTalla">' +
-                    '{% for resultsTallaOP in allTalla %}' +
-                    '<option  value="{{resultsTallaOP.nom_talla}} #{{resultsTallaOP.num_talla}}"></option>' +
-                    '<input type="number" hidden="True" name="idTalla" value="{{ resultsTallaOP.id }}">' +
+                    '{% for restOPtalla in allTalla %}' +
+                    '<option data-value="{{restOPtalla.id}}">{{restOPtalla.nom_talla}}' +
+                    '</option>' +
                     '{% endfor %}' +
                     '</datalist>' +
                     '<input type="number"  name="cantTalla"  class="form-control" Placeholder="Cantidad Talla..." >' +
@@ -706,25 +706,32 @@ data-auto-refresh-status="true"
 
 
                     '<script>' +
+
+
+
+
+
+
                     ' $("form#addTallaOP-' + row.id + '").submit(function() { ' +
-                    'var idTalla          = $("input[name=\'idTalla\']").val().trim();' +
+                    'var idTallaOPP       = $("input[name=\'idTallaOPP\']").val().trim();' +
                     'var cantTalla        = $("input[name=\'cantTalla\']").val().trim();' +
                     'var idOperacionTalla = $("input[name=\'idOperacionTalla\']").val().trim();' +
                     'var idEmpresaOPTalla = $("input[name=\'idEmpresaOPTalla\']").val().trim();' +
                     'var idUserOPTalla    = $("input[name=\'idUserOPTalla\']").val().trim();' +
-
-                    'if (idTalla &&  cantTalla && idOperacionTalla && idEmpresaOPTalla && idUserOPTalla' +
+                    'alert(idTallaOPP);' +
+                    'if (idTallaOPP && cantTalla && idOperacionTalla && idEmpresaOPTalla && idUserOPTalla' +
                     ') {' +
 
                     '$.ajax({' +
                     'url: "{% url "TallaOP_ajax_create" %}",' +
                     'data: {' +
 
-                    '\'idTalla\'    : idTalla,' +
-                    '\'cantTalla\'  : cantTalla,' +
+                    '\'idTallaOPP\'       : idTallaOPP,' +
+                    '\'cantTalla\'        : cantTalla,' +
                     '\'idOperacionTalla\' : idOperacionTalla,' +
                     '\'idEmpresaOPTalla\' :idEmpresaOPTalla,' +
-                    '\'idUserOPTalla\'    :idUserOPTalla' +
+                    '\'idUserOPTalla\'    :idUserOPTalla,' +
+                    '\'f2\'    :2' +
                     '},' +
 
                     'dataType: \'json\',' +
@@ -817,7 +824,8 @@ data-auto-refresh-status="true"
                             'cantTalla': canTallaOP,
                             'idOperacionTalla': idOpeT,
                             'idEmpresaOPTalla': idEmpresa,
-                            'idUserOPTalla': idUserOP
+                            'idUserOPTalla': idUserOP,
+                            'f2': 1
 
                         },
                         dataType: 'json',
