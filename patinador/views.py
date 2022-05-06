@@ -65,7 +65,18 @@ class CreatePatinador(View):
         
         lastEm              = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
         #idEmpresa          = request.GET.get('idEmpresa', None)
-        idIntegrante        = int(request.GET.get('idIntegrante', None))
+        idIntegrante        = request.GET.get('idIntegrante', None)
+        
+        
+        
+        #extraemos el numero de cedula
+        newstr = ''.join((ch if ch in '0123456789.-e' else ' ') for ch in idIntegrante)
+        listOfNumbers = [float(i) for i in newstr.split()]        
+        num_cedula = (int(listOfNumbers[0]))
+        idIntegrante = Integrante.objects.filter(cedula=num_cedula,empresa=lastEm.lastEm).values('id')
+            
+        idIntegrante=idIntegrante[0]['id']
+        
         estatus             = 'A'
         ctrlDespachoCheck   = request.GET.get('ctrlDespacho', None)
         

@@ -139,62 +139,97 @@ data-auto-refresh-status="true"
         <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>
 
 
-            <h1 name="heading" class="text-center text-muted">Agregar nuevo integrante de {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
-            <hr>
 
-            <form id="addIntegrante" class="border bg-secondary form-inline">
+            <div class="container">
 
 
+                <div class="wrapper">
+                    <ul class="steps">
+                        <li class="is-active">Integrante</li>
+
+                    </ul>
+                    <form id="addIntegrante" autocomplete="off" class="form-wrapper formf">
+
+                        <fieldset class="section is-active">
+                            Registro de Integrante
+                            <h3 name="heading" class="text-center text-muted">Agregar nuevo integrante de {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h3>
+                            <div class="row">
+                                <div class="col-md-6 md-6  form-group-sm">
+                                    <label for="nombres" class="sr-only">Nombres</label>
+                                    <input class="form-control" id="nombres" name="nombres" placeholder="Nombres">
+                                </div>
+                                <div class="col-md-6 md-6  form-group-sm">
+                                    <label for="apellidos" class="sr-only">Apellidos</label>
+                                    <input name="apellidos" class="form-control" id="apellidos" placeholder="Apellidos">
+                                </div>
+                                <div class="col-md-6 md-6  form-group-sm">
+                                    <label for="cedula" class="sr-only">Cedula</label>
+                                    <input name="cedula" type="cedula" class="form-control" id="cedula" placeholder="Cedula">
+                                </div>
+                                <div class="col-md-6 md-6  form-group-sm">
+                                    <label for="Tlf" class="sr-only">Tlf</label>
+                                    <input name="num_telf" type="Tlf" class="form-control" id="Tlf" placeholder="Telefono">
+                                </div>
+
+                                <div class="col-md-6 md-6  form-group-sm">
+                                    <label for="Correo" class="sr-only">Correo</label>
+                                    <input type="email" name="correo" class="form-control" id="Correo" placeholder="Correo">
+                                </div>
+                                <div class="col-md-6 md-6  form-group-sm">
+                                    <label for="direccion" class="sr-only">Direccion</label>
+                                    <input t name="direccion" class="form-control" id="direccion" placeholder="Direccion">
+                                </div>
+
+                                <div class="col-md-6 md-6  form-group-sm">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"> <i class="fa fa-user"></i></span>
+
+                                        <select class="form-control" id="genero">
+                                          <option  value="select">Select Genero</option>
+                                          <option  value="H">Hombre</option>
+                                          <option  value="M">Mujer</option>
+                                        </select>
+
+                                    </div>
+
+                                    <input type="number" hidden="True" name="empresaIntegrante" value="{{ lastIdEmpresa }}">
+                                    <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">
+
+                                </div>
+                                <div class="">
+                                    <input class="submit button" type="submit" onclick="location.href='/'" value="Guardar">
+                                </div>
+
+                            </div>
 
 
-                <div class="form-group mx-sm-3">
-                    <label for="nombres" class="sr-only">Nombres</label>
-                    <input type="nombres" class="form-control" id="nombres" name="nombres" placeholder="Nombres">
+                        </fieldset>
+
+
+
+                        <!-- 
+                        <fieldset class="section">
+                            <br>
+                            <h3>¡Operación creada con exito!</h3>
+                            <p></p> 
+                        <div class="button">Reset Form</div>
+                       </fieldset> -->
+                    </form>
                 </div>
-                <br><br><br>
-                <div class="form-group mx-sm-3">
-                    <label for="apellidos" class="sr-only">Apellidos</label>
-                    <input name="apellidos" type="text" class="form-control" id="apellidos" placeholder="Apellidos">
-                </div>
-                <div class="form-group mx-sm-3">
-                    <label for="cedula" class="sr-only">Cedula</label>
-                    <input name="cedula" type="cedula" class="form-control" id="cedula" placeholder="Cedula">
-                </div>
-                <div class="form-group mx-sm-3">
-                    <label for="Tlf" class="sr-only">Tlf</label>
-                    <input name="num_telf" type="Tlf" class="form-control" id="Tlf" placeholder="Telefono">
-                </div>
-                <div class="form-group mx-sm-3">
-                    <label for="Correo" class="sr-only">Correo</label>
-                    <input type="email" name="correo" class="form-control" id="Correo" placeholder="Correo">
-                </div>
-                <div class="form-group mx-sm-3">
-                    <label for="direccion" class="sr-only">Direccion</label>
-                    <input type="text" name="direccion" class="form-control" id="direccion" placeholder="Direccion">
-                </div>
 
 
-                <div class="form-group mx-sm-3">
-                    <label for="Genero" class="sr-only">Genero</label>
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                        <select class="form-control" id="genero">
-                  <option value="select">Select Genero</option>
-                  <option value="H">Hombre</option>
-                  <option value="M">Mujer</option>
-                  <option value="O">Otro</option>
-                </select>
 
-                    </div>
-                    <input type="number" hidden="True" name="empresaIntegrante" value="{{ lastIdEmpresa }}">
-                    <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">
 
-                    <div class="form-group mx-sm-5">
-                        <button class="btn btn-success form-control " type="submit" onclick="location.href='/'">Guardar</button><br><br><br>
-                    </div>
-                </div>
+
+
+
+
+            </div>
+
+
+
+
+
 
 
 
@@ -202,7 +237,7 @@ data-auto-refresh-status="true"
 
 
 
-        </form>
+
 
 
 

@@ -16,56 +16,30 @@
 
 
         <div class="row">
-            <div class="col-sm-3">
-
+            <div class="col-sm-6">
                 <h6 style="text-align: center;">Agregar patinador</h6>
-                <hr>
-                <form id="addPatinador" autocomplete="off" class="">
-                    <div class="">
+                <form id="addPatinador" autocomplete="off">
+                    <div class="form-inline">
                         <div>
-                            <div class="fullday">
-                                <input type="checkbox" id="check"> Controlador del Despacho
-                                <hr>
-                            </div>
 
-
-                            <input type="text" list="BuscarIntegrantes" name="idIntegrante" required Placeholder="Integrante..." class="form-control" style="width:150px;">
-
-                            <datalist id="BuscarIntegrantes">
+                            <input type="text" list="BuscarIntegrantes" name="idIntegrantePatinador" required placeholder="Integrante..." class="form-control" style="width:300px;">
+                            <datalist class="form-" id="BuscarIntegrantes">
                                 {% for resultsInt in allIntegrante %}
-                                <option label="{{resultsInt.nombres}}
-                                {{resultsInt.apellidos}}"><h6>{{resultsInt.nombres}}
-                                {{resultsInt.apellidos}}</h6>
-                                <input type="number" hidden="True" name="idIntegrantePatinador" value="{{ resultsInt.id }}">
+                                <option value="{{resultsInt.cedula}} {{resultsInt.nombres}} {{resultsInt.apellidos}}">
                                 </option>
-                                {% endfor %}
+<!--                                 <input type="number" hidden="True" name="idIntegrantePatinador" value="{{ resultsInt.id }}"> 
+ -->                                {% endfor %}
                             </datalist>
-
-
-
-
-
-                            <input type="text" name="passwordP" Placeholder="clave patinador" class="form-control" style="width:150px;">
-
-
-
+                            <input type="text" name="passwordP" placeholder="clave patinador" class="form-control" style="width:300px;">
+                            <div class="fullday form-control">
+                                <input type="checkbox" id="check"> Controlador del Despacho
+                            </div>
                             <input type="number" hidden="True" name="idEmpresa" value="{{ lastIdEmpresa }}">
                             <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">
-                            <button class="btn btn-outline-primary btn-" type="submit" onclick="location.href='/'">Agregar patinador</button>
-
-
-
-
-
-
+                            <button class="btn btn-outline-primary form-control" type="submit" onclick="location.href='/'">Agregar patinador</button>
                         </div>
                     </div>
-
                 </form>
-
-
-
-
             </div>
 
 
@@ -79,7 +53,7 @@ data-auto-refresh-interval="30"
 data-auto-refresh-silent="true"
 data-auto-refresh-status="true"
 -->
-            <div class="col-sm-9">
+            <div class="col-sm-12">
                 <table id="patinadorTable" data-id-field="id" class="table" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-show-columns="true" data-search="True" data-show-fullscreen="true" data-locale="es-SP" data-pagination="true"
                     data-detail-view-icon="false" data-url="patinador/patinador-list/">
 
@@ -174,6 +148,7 @@ data-auto-refresh-status="true"
         var idEmpresa = $('input[name="idEmpresa"]').val().trim();
         var idUser = $('input[name="idUser"]').val().trim();
         var ctrlDespach = ctrlDespachoCheck;
+        console.log(idIntegrante);
         if (ctrlDespach == null) {
             ctrlDespach = 0;
 
