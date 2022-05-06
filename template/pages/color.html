@@ -66,9 +66,47 @@
 
 <div id="openModalHijoColor" class="modalDialogHijo">
     <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>
-        <div class="">
+        <div class="container">
 
-            <form id="addColor">
+
+
+            <div class="wrapper">
+                <ul class="steps">
+                    <li class="is-active">Color</li>
+                </ul>
+                <form id="addColor" autocomplete="off" class="form-wrapper formf">
+                    <fieldset class="section is-active">
+                        Registro de Color
+                        <h3 name="heading" class="text-center text-muted">Agregar color {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h3>
+                        <div class="row">
+
+                            <div class="col-md-6 md-6  form-group-sm">
+                                <label class="sr-only">Nombre de color</label>
+                                <input class="form-control" name="nom_color" placeholder="Nombre color" required>
+                            </div>
+                            <div class="col-md-6 md-6  form-group-sm">
+                                <label class="sr-only">Codigo de Color</label>
+                                <input class="form-control" name="codigo_color" placeholder="cod color" required>
+                            </div>
+
+
+                            <input type="number" hidden="True" name="empresaColor" value="{{ lastIdEmpresa }}">
+                            <input type="number" hidden="True" name="idUserColor" value="{{ login_user_id}}">
+                            <div class="">
+                                <input class="submit button" type="submit" onclick="location.href='/'" value="Guardar">
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </form>
+
+            </div>
+
+
+
+
+
+            <!-- <form id="addColor">
                 <div class="content p-3 mb-2 bg-dar text-white ">
                     <div class="border">
                         <center>
@@ -107,9 +145,9 @@
                         </div>
                     </div>
                 </div>
-        </div>
-        </form>
 
+            </form> -->
+        </div>
 
     </div>
 </div>
