@@ -19,33 +19,6 @@ from django.views.generic import View
 from django.http import JsonResponse, Http404, HttpResponse
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-from pprint import pprint
-
-
 from django.db.models import F
 
 from django_serverside_datatable.views import ServerSideDatatableView
@@ -64,7 +37,7 @@ class ItemListView(ServerSideDatatableView):
             
             if idOp and idUser is not None:
                 lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()      
-                queryset   = Despacho.objects.filter(empresa_id=lastEm.lastEm,operacion_id=idOp).order_by('-id') #.select_related('patinador')#.filter(type=Integrante.objects.get(id=))               
+                queryset   = Despacho.objects.filter(empresa_id=lastEm.lastEm,operacion_id=idOp).order_by('-id')          
                 
                 
             return queryset
@@ -98,8 +71,8 @@ def despacho_list(request):
     despachos  = Despacho.objects.all().filter(empresa_id=lastEm.lastEm,operacion_id=idOp).order_by('-id')
     
     tSerializer = DespachoSerializer(despachos, many = True)
-    
-    return JsonResponse(tSerializer.data, safe=False)
+    data=""
+    return JsonResponse(data, safe=False)
     #return Response(tSerializer.data)
     
 #
@@ -183,10 +156,11 @@ def patinadoresAct(request):
     try:        
         patinadores     = Patinador.objects.all().filter(usuario=idUser,estatus='A',ctrlDespacho=1, empresa_id=int(lastEm))
         serializer      = PatinadorSerializer(patinadores, many=True)
+        
+        
         return Response(serializer.data)
     except Exception as e:    
-        print("no tienes patinadores activos")  
-    
+        print(str(e),"no tienes patinadores activos")   
         return Response("no tienes patinadores activos")
         
 
@@ -201,7 +175,6 @@ class Despachos(TemplateView):
           s.create()
           AllEmpresa      = RelacionEmpresa.objects.filter(Usuario_id=s['last_login'])       
           lastEm          = CambioEmpres.objects.filter(Usuario_id=s['last_login']).last()
-
           Tallas          = Talla.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm)).values('id','nom_talla','num_talla')
           EmpresaActual   = Empresa.objects.filter(usuario=s['last_login'],id=int(lastEm.lastEm))
           Operaciones     = Operacion.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm),estatus='A').values('nom_operacion','id')
@@ -239,17 +212,17 @@ def createDespacho(request,):
     #print(request.data['id_OP'])
     #print(request.data)
     
-    
+ 
     canTerminada  = int(request.data['cant'])
-    nombreTalla   = Talla.objects.filter(id=int(request.data['selectIdTalla'])).values('nom_talla')
-    nomPatinador  = Integrante.objects.filter(id=int(request.data['selectIDPatinador'])).values('nombres','apellidos')
+    nombreTalla   = Talla.objects.filter(empresa_id=int(lastEm.lastEm),usuario_id=int(idUser.id)     ,id=int(request.data['selectIdTalla'])).values('nom_talla')
+    idPatinador   = Patinador.objects.filter(empresa_id=int(lastEm.lastEm),usuario_id=int(idUser.id) ,id=int(request.data['selectIDPatinador'])).values('integrante_id')   
+    nomPatinador  = Integrante.objects.filter(empresa_id=int(lastEm.lastEm),usuario_id=int(idUser.id) ,id=int(idPatinador[0]['integrante_id'])).values('nombres','apellidos')
+    
     #print(nomPatinador,int(request.data['selectIDPatinador']))   
+    
     nom_patinador = nomPatinador[0]['nombres']+" "+nomPatinador[0]['apellidos']
     
-    
     try:
-        
-        
         obj = Despacho.objects.create(
         usuario_id           = int(idUser.id),
         patinador_id         = int(request.data['selectIDPatinador']),

@@ -96,6 +96,7 @@ function DetailFormatterButAccionDespacho(index, row) {
         'var table= $("#items-table' + row.id +
         '").removeAttr("width").dataTable({  "searching": true' +
         ',serverSide: true, scrollY: "250px", scrollCollapse: true,' +
+        'order:[[4,"desc"]],' +
 
 
 
@@ -204,7 +205,7 @@ function formOP(idOp, usuario) {
 
             submitFormDespacho() {
 
-
+                alert(this.selectIDPatinador);
                 axios.post('/despacho/create/', {
                     id_OP: this.id_OP,
                     selectIdTalla: this.selectIdTalla,

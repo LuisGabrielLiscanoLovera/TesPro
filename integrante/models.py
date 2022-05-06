@@ -6,7 +6,7 @@ from authapp.models import MyUser as User
 
 # Create your models here.
 class Integrante(models.Model):
-    usuario    = models.ForeignKey(User, related_name='Integrante', null=False, blank=True,on_delete  = models.CASCADE)
+    usuario    = models.ForeignKey(User, related_name='Integrante', on_delete  = models.CASCADE)
     empresa    = models.ForeignKey(Empresa, related_name='Integrante', null=False, blank=False,on_delete  = models.CASCADE)
     SEXO       = (('H','Hombre'),('M','Mujer'),('O','Otro'))
     ESTATUS    = (('A','Activo'),('I','Inactivo'))
@@ -14,11 +14,12 @@ class Integrante(models.Model):
     estatus    = models.CharField(max_length=1,choices=ESTATUS)
     nombres    = models.CharField(max_length=30)
     apellidos  = models.CharField(max_length=30)
-    sexo       = models.CharField(max_length=1,choices=SEXO)   
-    correo     = models.EmailField('Correo')
-    cedula     = models.IntegerField(blank=True, null=True)
+    sexo       = models.CharField(max_length=1,choices=SEXO)
+    cedula     = models.IntegerField()
+    correo     = models.EmailField('Correo',blank=True, null=True)
+    
     num_telf   = models.IntegerField(blank=True, null=True)
-    direccion  = models.CharField(max_length=250)
+    direccion  = models.CharField(blank=True, null=True, max_length=250)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

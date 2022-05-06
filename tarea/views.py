@@ -46,6 +46,7 @@ def TareaList(request):
 
 
 class CreateTarea(View):
+    
 
     def get(self, request):
         if request.session.has_key('username'):        
@@ -55,30 +56,36 @@ class CreateTarea(View):
         
         lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
       
-               
         nombreTarea  = request.GET.get('nombreTarea', None).upper()
         minutoXTarea = int(request.GET.get('minutoXTarea', None))
         horaXTarea   = int(request.GET.get('horaXTarea', None))
         valorTarea   = int(request.GET.get('valorTarea', None))
         detalleTarea = request.GET.get('detalleTarea', None)
-      
         
-        obj = Tarea.objects.create(
-            empresa_id = lastEm.lastEm,
-            usuario_id = idUser.id,
-            nom_tarea  = nombreTarea, 
-            min_minuto = minutoXTarea, 
-            min_hora   = horaXTarea,
-            valor      = valorTarea,
-            detalle    = detalleTarea, 
-            
-              
+        
+        
+        try:
+            obj = Tarea.objects.create(
+                empresa_id = lastEm.lastEm,
+                usuario_id = idUser.id,
+                nom_tarea  = nombreTarea, 
+                min_minuto = minutoXTarea, 
+                min_hora   = horaXTarea,
+                valor      = valorTarea,
+                detalle    = detalleTarea,              
         )
   
-        data = {
-            'user': "user"
+            data = {
+                'user': "Tarea creada"
         } 
-        return JsonResponse(data)
+           
+            return JsonResponse(data)
+        except Exception as e:
+            data = {'user': "Error al crear tarea" }          
+            return JsonResponse(data)
+
+
+
 
 class DeleteTarea(View):
     def  get(self, request):
@@ -114,7 +121,7 @@ class UpdateTarea(TemplateView):
         try:
             obj.save()
             return redirect('home')
-        except Exception as e:  print("reparar peo de cors header crsf token")
+        except Exception as e:  print(str(e),"reparar peo de cors header crsf token")
 
 
 
