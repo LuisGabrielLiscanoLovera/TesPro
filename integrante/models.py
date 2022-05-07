@@ -7,7 +7,7 @@ from authapp.models import MyUser as User
 # Create your models here.
 class Integrante(models.Model):
     usuario    = models.ForeignKey(User, related_name='Integrante', on_delete  = models.CASCADE)
-    empresa    = models.ForeignKey(Empresa, related_name='Integrante', null=False, blank=False,on_delete  = models.CASCADE)
+    empresa    = models.ForeignKey(Empresa, related_name='Integrante', on_delete  = models.CASCADE)
     SEXO       = (('H','Hombre'),('M','Mujer'),('O','Otro'))
     ESTATUS    = (('A','Activo'),('I','Inactivo'))
     
@@ -23,8 +23,8 @@ class Integrante(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
-    btnInfo = models.CharField(max_length=100, blank=True ,default='<button type="button" class="btn btn-outline-info text-center btn-sm btn-block">Info</button>', null=True)
-    btnAcci = models.CharField(max_length=100, blank=True ,default='<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>' , null=True)
+    btnInfo = models.CharField(max_length=100,default='<button type="button" class="btn btn-outline-info text-center btn-sm btn-block">Info</button>')
+    btnAcci = models.CharField(max_length=100, default='<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>')
     
     class Meta:
             ordering = ["nombres"]

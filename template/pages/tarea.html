@@ -129,47 +129,44 @@ data-auto-refresh-status="true"
 
 
 
-                <!-- 
-                    <form id="addColor" autocomplete="off" class="form-wrapper formf">
-                        <fieldset class="section is-active">
-                            Registro de Tarea
-                            <h3>Agregar nueva Tarea {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h3>
-                            <div class="row">
 
-                                <div class="col-md-6 md-6  form-group-sm">
-                                    <label class="sr-only">Nombre de tarea</label>
-                                    <input class="form-control" name="nombreTarea" placeholder="Nombres tarea" required>
-                                </div>
+                <form id="addColor" autocomplete="off" class="form-wrapper formf">
+                    <fieldset class="section is-active">
+                        Registro de Tarea
+                        <h3>Agregar nueva Tarea {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h3>
+                        <div class="row">
 
-
-
-
-
-                                <div class="col-md-6 md-6  form-group-sm">
-                                    <label class="sr-only">Codigo de Color</label>
-                                    <input class="form-control" name="codigo_color" placeholder="cod color" required>
-                                </div>
-
-
-
-
-
-                                <input type="number" hidden="True" name="empresaTarea" value="{{ lastIdEmpresa }}">
-                                <input type="number" hidden="True" name="idUserTarea" value="{{ login_user_id}}">
-
-                                <div class="">
-                                    <input class="submit button" type="submit" onclick="location.href='/'" value="Guardar">
-                                </div>
-
-
-
-
+                            <div class="col-md-6 md-6  form-group-sm">
+                                <label class="sr-only">Nombre de tarea</label>
+                                <input class="form-control" name="nombreTarea" placeholder="Nombres tarea" required>
                             </div>
-                        </fieldset>
-                    </form>
 
 
- -->
+
+
+
+                            <div class="col-md-6 md-6  form-group-sm">
+                                <label class="sr-only">Codigo de Color</label>
+                                <input class="form-control" name="codigo_color" placeholder="cod color" required>
+                            </div>
+
+
+
+
+
+                            <input type="number" hidden="True" name="empresaTarea" value="{{ lastIdEmpresa }}">
+                            <input type="number" hidden="True" name="idUserTarea" value="{{ login_user_id}}">
+
+                            <div class="">
+                                <input class="submit button" type="submit" onclick="location.href='/'" value="Guardar">
+                            </div>
+
+
+
+
+                        </div>
+                    </fieldset>
+                </form>
 
 
 
@@ -212,9 +209,9 @@ data-auto-refresh-status="true"
 
 
 
-    <br><br><br>
 
 
+    <!-- 
     <form id="addTarea" class="">
         <div class=" content p-3 mb-2 bg-dar text-white " rows="3">
             <div class="border">
@@ -294,7 +291,7 @@ data-auto-refresh-status="true"
         </div>
 
     </form>
-
+ -->
 
 
     <!--create Tarea-->

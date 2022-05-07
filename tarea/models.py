@@ -19,8 +19,8 @@ class Tarea(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
-    btnInfo = models.CharField(max_length=100, default='<button type="button" class="btn    btn-outline-info text-center btn-sm btn-block">Info</button>', null=True)
-    btnAcci = models.CharField(max_length=100, default='<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>' , null=True)
+    btnInfo = models.CharField(max_length=100, default='<button type="button" class="btn    btn-outline-info text-center btn-sm btn-block">Info</button>')
+    btnAcci = models.CharField(max_length=100, default='<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>')
     
     def __str__(self):
         return '%s %s %s %s %s %s %s %s %s' % (self.id, self.nom_tarea, self.min_minuto,self.min_hora,self.valor,self.detalle,self.usuario,self.empresa,self.created_at)

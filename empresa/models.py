@@ -4,7 +4,7 @@ from django.db import models
 #from django.contrib.auth.models import User
 from authapp.models import MyUser as User
 class Empresa(models.Model):    
-    usuario = models.ForeignKey(User, null=True,blank=True,related_name='Empresa',on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User,related_name='Empresa',on_delete=models.CASCADE)
     nom_empresa = models.CharField(max_length=30)
     direccion = models.CharField(max_length=150)
     descripcion = models.CharField(max_length=100)
@@ -31,7 +31,7 @@ class RelacionEmpresa(models.Model):
  
 
 class CambioEmpres(models.Model):
-    Usuario = models.ForeignKey(User, null=True,blank=True,related_name='CambioEmpres',on_delete=models.CASCADE)
+    Usuario = models.ForeignKey(User, related_name='CambioEmpres',on_delete=models.CASCADE)
     lastEm=models.IntegerField(default=+1)
     created_at = models.DateTimeField(auto_now_add=True)
     class Meta:

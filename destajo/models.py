@@ -7,8 +7,8 @@ from empresa.models import Empresa
 # Create your models here.
 from authapp.models import MyUser as User
 class Destajo(models.Model):
-    usuario       = models.ForeignKey(User, null=True,blank=True,related_name='Destajo',on_delete=models.CASCADE)
-    empresa       = models.ForeignKey(Empresa, related_name='DestajoE', null=False, blank=False,on_delete=models.CASCADE)
+    usuario       = models.ForeignKey(User, related_name='Destajo',on_delete=models.CASCADE)
+    empresa       = models.ForeignKey(Empresa, related_name='DestajoE', on_delete=models.CASCADE)
     operacion     = models.ForeignKey(Operacion, related_name='Destajo',on_delete=models.CASCADE)
     tarea         = models.ForeignKey(Tarea, related_name='Destajo',on_delete=models.CASCADE)
     integrante    = models.ForeignKey(Integrante, related_name='Destajo',on_delete=models.CASCADE)

@@ -9,12 +9,12 @@ from talla.models import Talla
 class Despacho(models.Model):
    
 
-    usuario              = models.ForeignKey(User, null=True,blank=True,related_name='Despacho', on_delete=models.CASCADE)
-    patinador            = models.ForeignKey(Patinador, related_name='Despacho', null=False, blank=False,on_delete=models.CASCADE)
-    empresa              = models.ForeignKey(Empresa, related_name='Despacho', null=False, blank=False,on_delete=models.CASCADE)
+    usuario              = models.ForeignKey(User,related_name='Despacho', on_delete=models.CASCADE)
+    patinador            = models.ForeignKey(Patinador, related_name='Despacho',  on_delete=models.CASCADE)
+    empresa              = models.ForeignKey(Empresa, related_name='Despacho',  on_delete=models.CASCADE)
     operacion            = models.ForeignKey(Operacion,related_name='Despacho',on_delete=models.CASCADE)
-    talla                = models.ForeignKey(Talla,related_name='Despacho',null=True, blank=False,on_delete=models.DO_NOTHING)
-    can_terminada        = models.IntegerField(blank=True, null=True)
+    talla                = models.ForeignKey(Talla,related_name='Despacho',on_delete=models.DO_NOTHING)
+    can_terminada        = models.IntegerField()
     nomTallaDespacho     = models.CharField(max_length=140)
     nomPatinadorDespacho = models.CharField(max_length=140)
     

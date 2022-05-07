@@ -9,10 +9,10 @@ class Operacion(models.Model):
     btnAccion     = '<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>'
     ESTATUS       = (('A','Activo'),('I','Inactivo'))
     
-    usuario       = models.ForeignKey(User, related_name='Operacion', null=True, blank=True,on_delete=models.CASCADE)
-    empresa       = models.ForeignKey(Empresa, related_name='Operacion', null=False, blank=False,on_delete=models.CASCADE)
-    referencia    = models.ForeignKey(Referencia, related_name='Operacion', null=True, blank=True,on_delete=models.CASCADE)
-    color         = models.ForeignKey(Color, related_name='Operacion', null=False, blank=False,on_delete=models.CASCADE)
+    usuario       = models.ForeignKey(User, related_name='Operacion',on_delete=models.CASCADE)
+    empresa       = models.ForeignKey(Empresa, related_name='Operacion', on_delete=models.CASCADE)
+    referencia    = models.ForeignKey(Referencia, related_name='Operacion', on_delete=models.CASCADE)
+    color         = models.ForeignKey(Color, related_name='Operacion', on_delete=models.CASCADE)
     nom_operacion = models.CharField(max_length=35)
     nota          = models.CharField(max_length=50,blank=True, null=True)
     estatus       = models.CharField(max_length=1,choices=ESTATUS)

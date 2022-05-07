@@ -5,15 +5,15 @@ from operacion.models import Operacion
 # Create your models here.
 # revisar la cuestion de modelo de tabla unica para nomretalla
 class Talla(models.Model):
-    usuario       = models.ForeignKey(User, related_name='Talla', null=True, blank=True,on_delete=models.CASCADE)
-    empresa       = models.ForeignKey(Empresa, related_name='Talla', null=False, blank=False,on_delete=models.CASCADE)
+    usuario       = models.ForeignKey(User, related_name='Talla', on_delete=models.CASCADE)
+    empresa       = models.ForeignKey(Empresa, related_name='Talla',on_delete=models.CASCADE)
     nom_talla     = models.CharField(max_length=10)
     num_talla     = models.IntegerField(blank=True, null=True) 
-
+    
     created_at     = models.DateTimeField(auto_now_add=True)
     updated_at     = models.DateTimeField(auto_now=True)
-    btnAcci        = models.CharField(max_length=150, blank=True ,default='<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>' , null=True)
-    btnAddTalla    = models.CharField(max_length=150, blank=True ,default='' , null=True)
+    btnAcci        = models.CharField(max_length=150, default='<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>' )
+    btnAddTalla    = models.CharField(max_length=150, default='' , null=True)
    
     
     class Meta:
