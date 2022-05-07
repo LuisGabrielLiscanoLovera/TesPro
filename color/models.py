@@ -7,7 +7,7 @@ class Color(models.Model):
     usuario        = models.ForeignKey(User, related_name='Color', on_delete=models.CASCADE)
     empresa        = models.ForeignKey(Empresa, related_name='Color',on_delete=models.CASCADE)
     nom_color      = models.CharField(max_length=20)
-    codigo_color   = models.IntegerField(blank=True, null=True)    
+    codigo_color   = models.CharField(blank=True, null=True,max_length=25)    
     created_at     = models.DateTimeField(auto_now_add=True)
     updated_at     = models.DateTimeField(auto_now=True)
     class Meta:

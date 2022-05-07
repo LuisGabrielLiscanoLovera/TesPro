@@ -503,37 +503,41 @@ data-auto-refresh-status="true"
                 console.log("I-id operacion ", idOperacion);
                 let idOpeT = idOperacion;
                 arrayTallaOp.forEach(function(obj) {
-                    //console.log(obj);
-                    //console.log("id talla ", obj.id);
-                    //console.log("id empresa ", obj.empresa_id);
+                    console.log(obj);
+                    console.log("id talla ", obj.id);
+                    console.log("id empresa ", obj.empresa_id);
                     console.log("II- id operacion ", idOpeT);
+
                     var idTallaOP = obj.id;
                     var idEmpresa = obj.empresa_id;
-
-
                     var canTallaOP = $('input[name="inputTalla-' + idTallaOP + '"]').val().trim();
-                    $.ajax({
-                        url: '{% url "TallaOP_ajax_create" %}',
-                        data: {
-                            'idTalla': idTallaOP,
-                            'cantTalla': canTallaOP,
-                            'idOperacionTalla': idOpeT,
-                            'idEmpresaOPTalla': idEmpresa,
-                            'idUserOPTalla': idUserOP,
-                            'f2': 1
+                    if (canTallaOP != '') {
+                        console.log("vavio", canTallaOP)
+                        console.log("talls canTalla OPeracion ", canTallaOP);
+                        $.ajax({
+                            url: '{% url "TallaOP_ajax_create" %}',
+                            data: {
+                                'idTalla': idTallaOP,
+                                'cantTalla': canTallaOP,
+                                'idOperacionTalla': idOpeT,
+                                'idEmpresaOPTalla': idEmpresa,
+                                'idUserOPTalla': idUserOP,
+                                'f2': 1
 
-                        },
-                        dataType: 'json',
-                        success: function(data) {
-                            console.log("passsssssss");
-                        }
-
-
-
-                    });
-
+                            },
+                            dataType: 'json',
+                            success: function(data) {
+                                console.log("passsssssss");
+                            }
 
 
+
+                        });
+
+
+                    } else {
+                        console.log('canTallaOP esta vacia ==', canTallaOP)
+                    }
 
 
 

@@ -86,7 +86,7 @@
                             </div>
                             <div class="col-md-6 md-6  form-group-sm">
                                 <label class="sr-only">Codigo de Color</label>
-                                <input class="form-control" name="codigo_color" placeholder="cod color" required>
+                                <input class="form-control" name="codColor" placeholder="cod color" required>
                             </div>
 
 
@@ -373,9 +373,10 @@ return false;
 
 
         var nom_colorInput = $('input[name="nom_color"]').val().trim();
-        var codigo_colorInput = $('input[name="codigo_color"]').val().trim();
+        var codigo_colorInput = $('input[name="codColor"]').val().trim();
         var idEmpresaColorInput = $('input[name="empresaColor"]').val().trim();
         var idUserColor = $('input[name="idUserColor"]').val().trim();
+
         if (nom_colorInput && codigo_colorInput && idEmpresaColorInput && idUserColor) {
             // Create Ajax Call
             $.ajax({

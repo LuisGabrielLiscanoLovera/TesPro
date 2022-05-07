@@ -3,7 +3,6 @@ from authapp.models import MyUser as User
 from empresa.models import Empresa
 # Create your models here.
 
-
 class Tarea(models.Model):
     
     usuario       = models.ForeignKey(User, related_name='Tarea', on_delete=models.CASCADE)

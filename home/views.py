@@ -43,7 +43,14 @@ class Home(LoginRequiredMixin,TVB):
         
         totalReferencia = Referencia.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
         totalColor      = Color.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
-        totalIntegrante = Integrante.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
+        
+        
+        
+        totalIntegrante = Integrante.objects.all().filter(usuario=s['last_login'],estatus='A',empresa_id=int(idlastEmpresa))
+        
+        
+        
+        
         allTalla        = Talla.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
         allTarea        = Tarea.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
         totalPatinador  = Patinador.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa)).count()

@@ -205,7 +205,7 @@ function formOP(idOp, usuario) {
 
             submitFormDespacho() {
 
-                alert(this.selectIDPatinador);
+
                 axios.post('/despacho/create/', {
                     id_OP: this.id_OP,
                     selectIdTalla: this.selectIdTalla,
@@ -276,7 +276,7 @@ function formOP(idOp, usuario) {
 
 
 function deleteDespacho(id_despacho) {
-    alert(id_despacho);
+
 
 
     axios.delete('eliminar_despachos/' + id_despacho + '/').then(response => {
