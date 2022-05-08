@@ -61,18 +61,20 @@ class CreateTarea(View):
         horaXTarea   = int(request.GET.get('horaXTarea', None))
         valorTarea   = int(request.GET.get('valorTarea', None))
         detalleTarea = request.GET.get('detalleTarea', None)
+        codigoTarea  = request.GET.get('codigoTarea', None)
         
         
         
         try:
             obj = Tarea.objects.create(
-                empresa_id = lastEm.lastEm,
-                usuario_id = idUser.id,
-                nom_tarea  = nombreTarea, 
-                min_minuto = minutoXTarea, 
-                min_hora   = horaXTarea,
-                valor      = valorTarea,
-                detalle    = detalleTarea,              
+                empresa_id   = lastEm.lastEm,
+                usuario_id   = idUser.id,
+                nom_tarea    = nombreTarea, 
+                min_minuto   = minutoXTarea, 
+                min_hora     = horaXTarea,
+                valor        = valorTarea,
+                detalle      = detalleTarea,
+                codigo_tarea = codigoTarea
         )
   
             data = {

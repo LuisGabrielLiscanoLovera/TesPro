@@ -72,28 +72,44 @@ data-auto-refresh-status="true"
                         <li>Talla</li>
                     </ul>
                     <form id="addOperacion" autocomplete="off" class="form-wrapper">
+                        <input type="number" hidden="True" name="idEmpresaOP" value="{{ lastIdEmpresa }}">
+                        <input type="number" hidden="True" name="idUserOP" value="{{ login_user_id}}">
 
                         <fieldset class="section is-active">
                             <h3>
                                 Registro de Operación
                                 <br>{% for i in nomEmpresaU %}{{ i|title }}{% endfor %}
                             </h3>
-                            <label for=""><p style="text-align: right important;" class="text-sm-left">Nombre Operación</p> </label>
-                            <input type="text" name="nombreOP" id="name" placeholder="Nombre Operacion">
-                            <label for=""><p class="text-sm-left">Cantidad Operación  </p></label>
-                            <input type="number" name="can_totalOP" id="" class="form-group cm-number" placeholder=" Total">
-                            <input type="number" hidden="True" name="idEmpresaOP" value="{{ lastIdEmpresa }}">
-                            <input type="number" hidden="True" name="idUserOP" value="{{ login_user_id}}">
+                            <div class="row cf form-group form-inline">
+                                <div class="col-sm-12 col-sm-offset-6  ">
+                                    <label class=""><h5>Nombre Operación</h5> </label>
+                                    <input class="form-contro" type="text" name="nombreOP" id="name" placeholder="Nombre Operacion">
+                                </div>
+
+                                <div class="col-sm-12 col-sm-offset-6  ">
+                                    <label class=""><h5>Cantidad Operación</h5> </label>
+                                    <input class="form-control cm-number " type="number" name="can_totalOP" placeholder="Total">
+                                </div>
+
+                            </div>
+                            <br>
+
                             <div class="button">Detalle</div>
+
                         </fieldset>
 
                         <fieldset class="section">
-                            <h3>Contenido
+                            <h3>
+                                Detalles de Operación
+
                             </h3>
-                            <div class="row cf">
-                                <div class="four col bg-dange">
-                                    <h4>Referencia</h4>
-                                    <input type="text" list="ReferenciaSelect" placeholder="Buscar Referencia..." class="form-control" style="width:150px;">
+                            <div class="row cf form-group-sm ">
+
+                                <div class="col-sm-6 col-sm-offset-6">
+                                    <label for=""><h5>Referencia</h5></label>
+
+                                    <input class="form-control" type="text" list="ReferenciaSelect" placeholder="Buscar Referencia...">
+
                                     <datalist id="ReferenciaSelect">
                                         {% for ReferenciaSelect in allReferencia %}
                                         <option value="{{ReferenciaSelect.nom_referencia}}">{{ReferenciaSelect.nom_referencia}}
@@ -102,9 +118,13 @@ data-auto-refresh-status="true"
                                         {% endfor %}
                                     </datalist>
                                 </div>
-                                <div class="four col">
-                                    <h4>Color</h4>
-                                    <input type="text" list="Color" required placeholder="Buscar Color..." class="form-control" style="width:150px;">
+
+
+                                <div class="col-sm-6 col-sm-offset-6 ">
+                                    <label for=""> <h5>Color</h5></label>
+
+                                    <input class="form-control" type="text" list="Color" required placeholder="Buscar Color...">
+
                                     <datalist id="Color" class="select ">
                                         {% for resultsColor in allColor %}                                        
                                         <option value="{{resultsColor.nom_color}}">
@@ -114,13 +134,26 @@ data-auto-refresh-status="true"
                                         {% endfor %}
                                     </datalist>
                                 </div>
-                                <div class="four col">
-                                    <h4>Descripcion</h4>
-                                    <input type="text" name="notaDes" placeholder="Nota - Descripcion" style="width:150px;">
+
+                                <div class="col-sm-12 col-sm-offset-6 ">
+                                    <label for=""><h5>Descripcion</h5></label>
+
+                                    <textarea type="text" class="form-control" name="notaDes" placeholder="Nota - Descripcion"></textarea>
                                 </div>
                             </div>
+
+
                             <div class="button">Talla</div>
                         </fieldset>
+
+
+
+
+
+
+
+
+
 
                         <fieldset class="section">
                             <h3>Registro de Talla</h3>
@@ -456,7 +489,7 @@ data-auto-refresh-status="true"
             $("form#addOperacion").submit(function() {
 
 
-                var NotaDesOp = $('input[name="notaDes"]').val().trim();
+                var NotaDesOp = $('textarea[name="notaDes"]').val().trim();
                 var can_totalOP = $('input[name="can_totalOP"]').val().trim();
                 var nomOperacion = $('input[name="nombreOP"]').val().trim();
                 var idReferenciaOP = $('input[name="idReferenciaOP"]').val().trim();

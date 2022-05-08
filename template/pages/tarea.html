@@ -130,27 +130,40 @@ data-auto-refresh-status="true"
 
 
 
-                <form id="addColor" autocomplete="off" class="form-wrapper formf">
+                <form id="addTarea" autocomplete="off" class="form-wrapper formf">
                     <fieldset class="section is-active">
                         Registro de Tarea
                         <h3>Agregar nueva Tarea {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h3>
                         <div class="row">
 
                             <div class="col-md-6 md-6  form-group-sm">
-                                <label class="sr-only">Nombre de tarea</label>
-                                <input class="form-control" name="nombreTarea" placeholder="Nombres tarea" required>
+                                <label class=" col-form-label">Nombre de tarea</label>
+                                <input class="form-control" name="nombreTareaForm1" placeholder="Nombres tarea" required>
                             </div>
-
-
-
-
 
                             <div class="col-md-6 md-6  form-group-sm">
-                                <label class="sr-only">Codigo de Color</label>
-                                <input class="form-control" name="codigo_color" placeholder="cod color" required>
+                                <label class="">Cantidad por 10 min</label>
+                                <input class="form-control" type="number" name="minutoXTarea" placeholder="tarea x 10 min">
+
                             </div>
 
+                            <div class="col-md-6 md-6  form-group-sm">
+                                <label class="">Cantidad por hora</label>
+                                <input class="form-control" type="number" name="horaXTarea" placeholder="tarea x hora">
+                            </div>
+                            <div class="col-md-6 md-6  form-group-sm">
+                                <label class="">Precio por unidad</label>
+                                <input class="form-control" type="number" name="valorTarea" placeholder="Precio por unidad">
+                            </div>
+                            <div class="col-md-6 md-6  form-group-sm">
+                                <label class="">Cod tarea</label>
+                                <input class="form-control" type="number" name="codigoTarea" placeholder="Cod tarea">
+                            </div>
+                            <div class="col-md-6 md-6  form-group-sm">
+                                <label class="">Descripción de la tarea</label>
+                                <textarea class="form-control" rows=" " cols=" " name="detalleTarea" placeholder="Descripción de la tarea"></textarea>
 
+                            </div>
 
 
 
@@ -298,12 +311,13 @@ data-auto-refresh-status="true"
     <script>
         $("form#addTarea").submit(function() {
 
-
-            var nombreTarea = $('input[name="nombreTarea"]').val().trim();
+            codigoTarea
+            var nombreTarea = $('input[name="nombreTareaForm1"]').val().trim();
             var minutoXTarea = $('input[name="minutoXTarea"]').val().trim();
             var horaXTarea = $('input[name="horaXTarea"]').val().trim();
             var valorTarea = $('input[name="valorTarea"]').val().trim();
-            var detalleTarea = $('input[name="detalleTarea"]').val().trim();
+            var codigoTarea = $('input[name="codigoTarea"]').val().trim();
+            var detalleTarea = $('textarea[name="detalleTarea"]').val().trim();
             var empresaTarea = $('input[name="empresaTarea"]').val().trim();
             var idUserTarea = $('input[name="idUserTarea"]').val().trim();
             if (minutoXTarea == '') {
@@ -315,8 +329,10 @@ data-auto-refresh-status="true"
             if (valorTarea == '') {
                 var valorTarea = 0
             }
-
-            //(nombreTarea && minutoXTarea && horaXTarea &&    valorTarea && detalleTarea && empresaTarea && idUserTarea
+            if (codigoTarea == '') {
+                var codigoTarea = 0
+            }
+            console.log(nombreTarea) // && minutoXTarea && horaXTarea && valorTarea && detalleTarea && empresaTarea && idUserTarea
             if (nombreTarea) {
                 // Create Ajax Call
                 $.ajax({
@@ -327,6 +343,7 @@ data-auto-refresh-status="true"
                         'minutoXTarea': minutoXTarea,
                         'horaXTarea': horaXTarea,
                         'valorTarea': valorTarea,
+                        'codigoTarea': codigoTarea,
                         'detalleTarea': detalleTarea,
                         'empresaTarea': empresaTarea,
                         'idUserTarea': idUserTarea
@@ -344,7 +361,7 @@ data-auto-refresh-status="true"
                 });
 
             } else {
-                alert("All fields must have a valid value.");
+                alert("culopeluo.");
             }
             $('form#addTarea').trigger("reset");
             return false;

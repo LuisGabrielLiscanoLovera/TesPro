@@ -17,7 +17,6 @@ from talla.models import Talla
 
 from django.template.loader import render_to_string
 from django.contrib.sessions.backends.db import SessionStore
-
 # Create your views here.
 
 @api_view(['GET'])
