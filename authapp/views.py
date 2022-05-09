@@ -5,6 +5,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 
+
+
+
 User = get_user_model()
 
 
@@ -22,6 +25,7 @@ def signin(request):
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
+                
                 return redirect('home')
     context = {
         'form': forms
@@ -46,6 +50,7 @@ def signup(request):
             if password == confirm_password:
                 try:
                     User.objects.create_user(username=username, password=password, email=email, first_name=firstname, last_name=lastname)
+                   
                     return redirect('signin')
                 except Exception as e:
                     print(str(e))

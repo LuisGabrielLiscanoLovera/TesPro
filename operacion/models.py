@@ -11,8 +11,8 @@ class Operacion(models.Model):
     
     usuario       = models.ForeignKey(User, related_name='Operacion',on_delete=models.CASCADE)
     empresa       = models.ForeignKey(Empresa, related_name='Operacion', on_delete=models.CASCADE)
-    referencia    = models.ForeignKey(Referencia, related_name='Operacion', on_delete=models.CASCADE)
-    color         = models.ForeignKey(Color, related_name='Operacion', on_delete=models.CASCADE)
+    referencia    = models.ForeignKey(Referencia, related_name='Operacion', on_delete=models.CASCADE,blank=True, null=True)
+    color         = models.ForeignKey(Color, related_name='Operacion', on_delete=models.CASCADE,blank=True, null=True)
     nom_operacion = models.CharField(max_length=35)
     nota          = models.CharField(max_length=50,blank=True, null=True)
     estatus       = models.CharField(max_length=1,choices=ESTATUS)

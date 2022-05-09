@@ -106,9 +106,12 @@ data-auto-refresh-status="true"
                                 <input class="form-control" type="text" list="ReferenciaSelect" placeholder="Buscar Referencia...">
 
                                 <datalist id="ReferenciaSelect">
+                                    
                                         {% for ReferenciaSelect in allReferencia %}
+                                        
+                                        
                                         <option value="{{ReferenciaSelect.nom_referencia}}">{{ReferenciaSelect.nom_referencia}}
-                                        <input type="number" hidden="True" name="idReferenciaOP" value="{{ ReferenciaSelect.id }}">
+                                        <input type="number" hidden="True" name="idReferenciaOP" default="" value="{{ ReferenciaSelect.id }}">
                                         </option>
                                         {% endfor %}
                                     </datalist>
@@ -118,7 +121,7 @@ data-auto-refresh-status="true"
                             <div class="col-sm-6 col-sm-offset-6 ">
                                 <label for=""> <h5>Color</h5></label>
 
-                                <input class="form-control" type="text" list="Color" required placeholder="Buscar Color...">
+                                <input value="" class="form-control" type="text" list="Color" required placeholder="Buscar Color...">
 
                                 <datalist id="Color" class="select ">
                                         {% for resultsColor in allColor %}                                        
@@ -492,7 +495,11 @@ data-auto-refresh-status="true"
             var idEmpresaOP = $('input[name="idEmpresaOP"]').val().trim();
             var idUserOP = $('input[name="idUserOP"]').val().trim();
 
-            if (can_totalOP && idReferenciaOP && idColorOP && nomOperacion && idEmpresaOP && idUserOP) {
+
+            if (can_totalOP == '') {
+                can_totalOP = 0
+            }
+            if (can_totalOP && nomOperacion && idEmpresaOP && idUserOP) {
 
                 // Create Ajax Call
                 $.ajax({

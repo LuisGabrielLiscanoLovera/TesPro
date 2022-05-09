@@ -93,7 +93,7 @@ class CreateTalla(View):
         if existeTallaUser.count()==0:
                 
             obj = Talla.objects.create(
-               #empresa_id   = idEmpresaTalla,
+              
                 empresa_id   = lastEm.lastEm,
                 usuario_id   = idUser.id,
                 nom_talla    = nomTalla, 
@@ -134,8 +134,8 @@ class CreateTallaOP(View):
 
            
         else:
-            idTalla        = int(request.GET.get('idTalla', None))
-            ptalla           = CanTalla.objects.filter(empresa_id=lastEm.lastEm,talla_id=idTalla,operacion_id=idOperacionTalla)
+            idTalla = int(request.GET.get('idTalla', None))
+            ptalla  = CanTalla.objects.filter(empresa_id=lastEm.lastEm,talla_id=idTalla,operacion_id=idOperacionTalla)
         
         if int(ptalla.count()) <= 0 :
             obj = CanTalla.objects.create(

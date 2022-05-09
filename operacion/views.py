@@ -51,11 +51,13 @@ class CreateOperacion(View):
                 username = request.session['username']     
                 idUser   = MyUser.objects.get(username=username)
                 
+                
+                   
+                
         lastEm         = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
         can_totalOP    = request.GET.get('can_totalOP', None)
-        
-        idReferenciaOP = request.GET.get('idReferenciaOP', None)
-        idColorOP      = int(request.GET.get('idColorOP', None))
+        idReferenciaOP = request.GET.get('idReferenciaOP', None)       
+        idColorOP      = request.GET.get('idColorOP', None)
         nomOperacion   = request.GET.get('nomOperacion', None)
         
        # print(lastEm,can_totalOP,idReferenciaOP,idColorOP,nomOperacion+'passsssssssssss')
@@ -70,7 +72,7 @@ class CreateOperacion(View):
                 usuario_id     = idUser.id,
                 nom_operacion  = "OP-"+nomOperacion.upper(), 
                 estatus        = 'A',
-                color_id       = idColorOP,
+                color_id       = int(idColorOP),
                 referencia_id  = idReferenciaOP,
                 can_total      = can_totalOP,
                 can_restante   = can_totalOP
