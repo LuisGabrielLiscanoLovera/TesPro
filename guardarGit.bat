@@ -5,3 +5,4 @@
  git push
  python keyE.py
  python keyD.py
+ python .\manage.py runserver
