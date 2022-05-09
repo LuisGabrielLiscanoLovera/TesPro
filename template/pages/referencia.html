@@ -65,15 +65,15 @@
                 <form id="addReferencia" autocomplete="off" class="form-wrapper formf">
                     <fieldset class="section is-active">
                         Registro de Referencia
-                        <h3 name="heading" class="text-center text-muted">Agregar referencia {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h3>
+                        <h3 name="heading" class="text-center text-muted">Agregar referencia <br>{% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h3>
                         <div class="row">
 
                             <div class="col-md-6 md-6  form-group-sm">
-                                <label class="sr-only">Nombre de referencia</label>
+                                <label class="">Nombre de referencia</label>
                                 <input class="form-control" name="nom_referencia" placeholder="Nombre referencia" required>
                             </div>
                             <div class="col-md-6 md-6  form-group-sm">
-                                <label class="sr-only">Descripcion de Referencia</label>
+                                <label class="">Descripcion de Referencia</label>
                                 <input class="form-control" name="descripcion" placeholder="Descripcion" required>
                             </div>
 

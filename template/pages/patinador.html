@@ -23,7 +23,7 @@
                         <div class="container">
                             <h6 class="form">Agregar patinador</h6>
                             <br>
-                            <input type="text" list="BuscarIntegrantes" name="idIntegrantePatinador" required placeholder="Integrante..." class="form-control" style="width:300px;">
+                            <input type="text" list="BuscarIntegrantes" name="idIntegrantePatinador" required placeholder="Integrante..." class="form-control" style="width:600px;">
                             <datalist class="form-" id="BuscarIntegrantes">
                                 {% for resultsInt in allIntegrante %}
                                 <option value="{{resultsInt.cedula}} {{resultsInt.nombres}} {{resultsInt.apellidos}}">
@@ -31,7 +31,7 @@
 <!--                                 <input type="number" hidden="True" name="idIntegrantePatinador" value="{{ resultsInt.id }}"> 
  -->                                {% endfor %}
                             </datalist>
-                            <input type="text" name="passwordP" placeholder="clave patinador" class="form-control" style="width:300px;">
+                            <input type="text" name="passwordP" placeholder="clave patinador" class="form-control" style="width:150px;">
                             <div class="fullday">
                                 <input class="form-control" type="checkbox" id="check"> Controlador del Despacho
                             </div>

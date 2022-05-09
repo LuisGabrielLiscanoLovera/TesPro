@@ -133,7 +133,7 @@ data-auto-refresh-status="true"
                 <form id="addTarea" autocomplete="off" class="form-wrapper formf">
                     <fieldset class="section is-active">
                         Registro de Tarea
-                        <h3>Agregar nueva Tarea {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h3>
+                        <h3 name="heading" class="text-center text-muted">Agregar nueva Tarea<br>{% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h3>
                         <div class="row">
 
                             <div class="col-md-6 md-6  form-group-sm">
@@ -157,7 +157,7 @@ data-auto-refresh-status="true"
                             </div>
                             <div class="col-md-6 md-6  form-group-sm">
                                 <label class="">Cod tarea</label>
-                                <input class="form-control" type="number" name="codigoTarea" placeholder="Cod tarea">
+                                <input class="form-control" name="codigoTarea" placeholder="Cod tarea">
                             </div>
                             <div class="col-md-6 md-6  form-group-sm">
                                 <label class="">Descripción de la tarea</label>
@@ -171,7 +171,7 @@ data-auto-refresh-status="true"
                             <input type="number" hidden="True" name="idUserTarea" value="{{ login_user_id}}">
 
                             <div class="">
-                                <input class="submit button" type="submit" onclick="location.href='/'" value="Guardar">
+                                <br><input class="submit button" type="submit" onclick="location.href='/'" value="Guardar">
                             </div>
 
 
