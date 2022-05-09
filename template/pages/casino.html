@@ -34,19 +34,19 @@ data-auto-refresh-status="true"
 
             <div class="col-sm-3">
 
-                <h6 style="text-align: center;">Registar integrante casino</h6>
+                <h5 style="text-align: center;">Registar integrante casino</h3>
 
-                <form id="addIntegranteCasino" autocomplete="off" class="form-inline">
-                    <input type="number" hidden="True" name="idEmpresaCasino" value="{{ lastIdEmpresa }}">
-                    <input type="number" hidden="True" name="idUserCasino" value="{{ login_user_id}}">
+                    <form id="addIntegranteCasino" autocomplete="off" class="form-inline">
+                        <input type="number" hidden="True" name="idEmpresaCasino" value="{{ lastIdEmpresa }}">
+                        <input type="number" hidden="True" name="idUserCasino" value="{{ login_user_id}}">
 
-                    <div class="form-group mx-sm-2">
-                        <label for="integrante" class="sr-only">Integrante</label>
+                        <div class="form-group mx-sm-2">
+                            <label for="integrante" class="sr-only">Integrante</label>
 
 
-                        <input type="text" list="BuscarIntegrantesCasino" required placeholder="integrante al casino..." class="form-control">
+                            <input type="text" list="BuscarIntegrantesCasino" required placeholder="integrante al casino..." class="form-control">
 
-                        <datalist id="BuscarIntegrantesCasino">
+                            <datalist id="BuscarIntegrantesCasino">
                             {% for resultsCasino in allIntegrante %}
                                   <option  value="{{resultsCasino.nombres}} {{resultsCasino.apellidos}}"></option>
                                   <input type="number" hidden="True" name="idIntegranteCasino" value="{{ resultsCasino.id }}">
@@ -55,12 +55,12 @@ data-auto-refresh-status="true"
 
                         </datalist>
 
-                        <div class="form-group mx-sm-2">
-                            <button class="btn btn-outline-primary form-control" type="submit">Cargar integrante</button>
+                            <div class="form-group mx-sm-2">
+                                <button class="btn btn-outline-primary form-control" type="submit">Cargar integrante</button>
+                            </div>
                         </div>
-                    </div>
 
-                </form>
+                    </form>
             </div>
             <div class="col-md-12 col-md-offset-10">
                 <h6 class="" style="text-align: right;">Importe total $ {{totalCasino}}</h6>
