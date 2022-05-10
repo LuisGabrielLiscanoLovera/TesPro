@@ -1,383 +1,614 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Material Dash</title>
-  <!-- plugins:css -->
-  <link rel="stylesheet" href="../../../assets/vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="../../../assets/vendors/css/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- Layout styles -->
-  <link rel="stylesheet" href="../../../assets/css/demo/style.css">
-  <!-- End layout styles -->
-  <link rel="shortcut icon" href="../../../assets/images/favicon.png" />
-</head>
-<body>
-<script src="../assets/js/preloader.js"></script>
-  <div class="body-wrapper">
-    <!-- partial:../../partials/_sidebar.html -->
-    <aside class="mdc-drawer mdc-drawer--dismissible mdc-drawer--open">
-      <div class="mdc-drawer__header">
-        <a href="../../index.html" class="brand-logo">
-          <img src="../../../assets/images/logo.svg" alt="logo">
+{% load static %}
+
+
+<div id="openModalOperacion" class="modalDialogPadre">
+    <div>
+        <a href="#close" title="Close" class="close">
+            <i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i>
         </a>
-      </div>
-      <div class="mdc-drawer__content">
-        <div class="user-info">
-          <p class="name">Clyde Miles</p>
-          <p class="email">clydemiles@elenor.us</p>
-        </div>
-        <div class="mdc-list-group">
-          <nav class="mdc-list mdc-drawer-menu">
-            <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-drawer-link" href="../../index.html">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i>
-                Dashboard
-              </a>
-            </div>
-            <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-drawer-link" href="../../pages/forms/basic-forms.html">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">track_changes</i>
-                Forms
-              </a>
-            </div>
-            <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i>
-                UI Features
-                <i class="mdc-drawer-arrow material-icons">chevron_right</i>
-              </a>
-              <div class="mdc-expansion-panel" id="ui-sub-menu">
-                <nav class="mdc-list mdc-drawer-submenu">
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="../../pages/ui-features/buttons.html">
-                      Buttons
+        <center>
+            <br>
+            <h1>Operaciones {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
+        </center>
+        <!--
+
+data-show-refresh="true"
+data-auto-refresh="true"
+data-auto-refresh-interval="30"
+data-auto-refresh-silent="true"
+data-auto-refresh-status="true"
+-->
+        <table id="operacionTable" data-id-field="id" class="table scrollme " data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-show-columns="true" data-search="True" data-show-fullscreen="true" data-locale="es-SP" data-pagination="true"
+            data-detail-view-icon="false" data-show-export="false" data-url="operacion/operacion-list/">
+
+            <div class="row ">
+
+                <div class="col-sm-2">
+                    <a href="#openModalHijoAddOperacion">
+                        <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar OP </i>
                     </a>
-                  </div>
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="../../pages/ui-features/typography.html">
-                      Typography
-                    </a>
-                  </div>
-                </nav>
-              </div>
-            </div>
-            <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-drawer-link" href="../../pages/tables/basic-tables.html">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">grid_on</i>
-                Tables
-              </a>
-            </div>
-            <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-drawer-link" href="../../pages/charts/chartjs.html">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">pie_chart_outlined</i>
-                Charts
-              </a>
-            </div>
-            <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="sample-page-submenu">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">pages</i>
-                Sample Pages
-                <i class="mdc-drawer-arrow material-icons">chevron_right</i>
-              </a>
-              <div class="mdc-expansion-panel" id="sample-page-submenu">
-                <nav class="mdc-list mdc-drawer-submenu">
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="../../pages/samples/blank-page.html">
-                      Blank Page
-                    </a>
-                  </div>
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="../../pages/samples/403.html">
-                      403
-                    </a>
-                  </div>
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="../../pages/samples/404.html">
-                      404
-                    </a>
-                  </div>
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="../../pages/samples/500.html">
-                      500
-                    </a>
-                  </div>
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="../../pages/samples/505.html">
-                      505
-                    </a>
-                  </div>
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="../../pages/samples/login.html">
-                      Login
-                    </a>
-                  </div>
-                  <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="../../pages/samples/register.html">
-                      Register
-                    </a>
-                  </div>
-                </nav>
-              </div>
-            </div>
-            <div class="mdc-list-item mdc-drawer-item">
-              <a class="mdc-drawer-link" href="https://www.bootstrapdash.com/demo/material-admin-free/jquery/documentation/documentation.html" target="_blank">
-                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">description</i>
-                Documentation
-              </a>
-            </div>
-          </nav>
-        </div>
-        <div class="profile-actions">
-          <a href="javascript:;">Settings</a>
-          <span class="divider"></span>
-          <a href="javascript:;">Logout</a>
-        </div>
-        <div class="mdc-card premium-card">
-          <div class="d-flex align-items-center">
-            <div class="mdc-card icon-card box-shadow-0">
-              <i class="mdi mdi-shield-outline"></i>
-            </div>
-            <div>
-              <p class="mt-0 mb-1 ml-2 font-weight-bold tx-12">Material Dash</p>
-              <p class="mt-0 mb-0 ml-2 tx-10">Pro available</p>
-            </div>
-          </div>
-          <p class="tx-8 mt-3 mb-1">More elements. More Pages.</p>
-          <p class="tx-8 mb-3">Starting from $25.</p>
-          <a href="https://www.bootstrapdash.com/product/material-design-admin-template/" target="_blank">
-						<span class="mdc-button mdc-button--raised mdc-button--white">Upgrade to Pro</span>
-					</a>
-        </div>
-      </div>
-    </aside>
-    <!-- partial -->
-    <div class="main-wrapper mdc-drawer-app-content">
-      <!-- partial:../../partials/_navbar.html -->
-      <header class="mdc-top-app-bar">
-        <div class="mdc-top-app-bar__row">
-          <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-            <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
-            <span class="mdc-top-app-bar__title">Greetings Clyde!</span>
-            <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon search-text-field d-none d-md-flex">
-              <i class="material-icons mdc-text-field__icon">search</i>
-              <input class="mdc-text-field__input" id="text-field-hero-input">
-              <div class="mdc-notched-outline">
-                <div class="mdc-notched-outline__leading"></div>
-                <div class="mdc-notched-outline__notch">
-                  <label for="text-field-hero-input" class="mdc-floating-label">Search..</label>
                 </div>
-                <div class="mdc-notched-outline__trailing"></div>
-              </div>
+
+                <thead class="thead-dark">
+                    <tr>
+                        <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoOperacion" class="text-center">Info
+                        </th>
+                        <th data-field="nom_operacion" class="text-center">Operación</th>
+                        <th data-field="nomReferencia" class="text-center">Referencia</th>
+                        <th data-field="estatus" class="text-center">Estatus</th>
+                        <th data-field="nomColor" class="text-center">Color</th>
+                        <th data-field="can_restante" class="text-center">Cant. Faltante</th>
+                        <th data-field="can_total" class="text-center">Cant. Total</th>
+                        <th data-field="created_at" class="text-center">Fecha creada</th>
+                        <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionPoperacion" class="text-center">
+                            Accion</th>
+                    </tr>
+                </thead>
             </div>
-          </div>
-          <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right">
-            <div class="menu-button-container menu-profile d-none d-md-block">
-              <button class="mdc-button mdc-menu-button">
-                <span class="d-flex align-items-center">
-                  <span class="figure">
-                    <img src="../../../assets/images/faces/face1.jpg" alt="user" class="user">
-                  </span>
-                  <span class="user-name">Clyde Miles</span>
-                </span>
-              </button>
-              <div class="mdc-menu mdc-menu-surface" tabindex="-1">
-                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
-                  <li class="mdc-list-item" role="menuitem">
-                    <div class="item-thumbnail item-thumbnail-icon-only">
-                      <i class="mdi mdi-account-edit-outline text-primary"></i>
-                    </div>
-                    <div class="item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 class="item-subject font-weight-normal">Edit profile</h6>
-                    </div>
-                  </li>
-                  <li class="mdc-list-item" role="menuitem">
-                    <div class="item-thumbnail item-thumbnail-icon-only">
-                      <i class="mdi mdi-settings-outline text-primary"></i>                      
-                    </div>
-                    <div class="item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 class="item-subject font-weight-normal">Logout</h6>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="divider d-none d-md-block"></div>
-            <div class="menu-button-container d-none d-md-block">
-              <button class="mdc-button mdc-menu-button">
-                <i class="mdi mdi-settings"></i>
-              </button>
-              <div class="mdc-menu mdc-menu-surface" tabindex="-1">
-                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
-                  <li class="mdc-list-item" role="menuitem">
-                    <div class="item-thumbnail item-thumbnail-icon-only">
-                      <i class="mdi mdi-alert-circle-outline text-primary"></i>
-                    </div>
-                    <div class="item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 class="item-subject font-weight-normal">Settings</h6>
-                    </div>
-                  </li>
-                  <li class="mdc-list-item" role="menuitem">
-                    <div class="item-thumbnail item-thumbnail-icon-only">
-                      <i class="mdi mdi-progress-download text-primary"></i>                      
-                    </div>
-                    <div class="item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 class="item-subject font-weight-normal">Update</h6>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="menu-button-container">
-              <button class="mdc-button mdc-menu-button">
-                <i class="mdi mdi-bell"></i>
-              </button>
-              <div class="mdc-menu mdc-menu-surface" tabindex="-1">
-                <h6 class="title"> <i class="mdi mdi-bell-outline mr-2 tx-16"></i> Notifications</h6>
-                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
-                  <li class="mdc-list-item" role="menuitem">
-                    <div class="item-thumbnail item-thumbnail-icon">
-                      <i class="mdi mdi-email-outline"></i>
-                    </div>
-                    <div class="item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 class="item-subject font-weight-normal">You received a new message</h6>
-                      <small class="text-muted"> 6 min ago </small>
-                    </div>
-                  </li>
-                  <li class="mdc-list-item" role="menuitem">
-                    <div class="item-thumbnail item-thumbnail-icon">
-                      <i class="mdi mdi-account-outline"></i>                      
-                    </div>
-                    <div class="item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 class="item-subject font-weight-normal">New user registered</h6>
-                      <small class="text-muted"> 15 min ago </small>
-                    </div>
-                  </li>
-                  <li class="mdc-list-item" role="menuitem">
-                    <div class="item-thumbnail item-thumbnail-icon">
-                      <i class="mdi mdi-alert-circle-outline"></i>
-                    </div>
-                    <div class="item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 class="item-subject font-weight-normal">System Alert</h6>
-                      <small class="text-muted"> 2 days ago </small>
-                    </div>
-                  </li> 
-                  <li class="mdc-list-item" role="menuitem">
-                    <div class="item-thumbnail item-thumbnail-icon">
-                      <i class="mdi mdi-update"></i>
-                    </div>
-                    <div class="item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 class="item-subject font-weight-normal">You have a new update</h6>
-                      <small class="text-muted"> 3 days ago </small>
-                    </div>
-                  </li> 
-                </ul>
-              </div>
-            </div>
-            <div class="menu-button-container">
-              <button class="mdc-button mdc-menu-button">
-                <i class="mdi mdi-email"></i>
-                <span class="count-indicator">
-                  <span class="count">3</span>
-                </span>
-              </button>
-              <div class="mdc-menu mdc-menu-surface" tabindex="-1">
-                <h6 class="title"><i class="mdi mdi-email-outline mr-2 tx-16"></i> Messages</h6>
-                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
-                  <li class="mdc-list-item" role="menuitem">
-                    <div class="item-thumbnail">
-                      <img src="../../../assets/images/faces/face4.jpg" alt="user">
-                    </div>
-                    <div class="item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 class="item-subject font-weight-normal">Mark send you a message</h6>
-                      <small class="text-muted"> 1 Minutes ago </small>
-                    </div>
-                  </li>
-                  <li class="mdc-list-item" role="menuitem">
-                    <div class="item-thumbnail">
-                      <img src="../../../assets/images/faces/face2.jpg" alt="user">
-                    </div>
-                    <div class="item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 class="item-subject font-weight-normal">Cregh send you a message</h6>
-                      <small class="text-muted"> 15 Minutes ago </small>
-                    </div>
-                  </li>
-                  <li class="mdc-list-item" role="menuitem">
-                    <div class="item-thumbnail">
-                      <img src="../../../assets/images/faces/face3.jpg" alt="user">
-                    </div>
-                    <div class="item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 class="item-subject font-weight-normal">Profile picture updated</h6>
-                      <small class="text-muted"> 18 Minutes ago </small>
-                    </div>
-                  </li>                
-                </ul>
-              </div>
-            </div>
-            <div class="menu-button-container d-none d-md-block">
-              <button class="mdc-button mdc-menu-button">
-                <i class="mdi mdi-arrow-down-bold-box"></i>
-              </button>
-              <div class="mdc-menu mdc-menu-surface" tabindex="-1">
-                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
-                  <li class="mdc-list-item" role="menuitem">
-                    <div class="item-thumbnail item-thumbnail-icon-only">
-                      <i class="mdi mdi-lock-outline text-primary"></i>
-                    </div>
-                    <div class="item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 class="item-subject font-weight-normal">Lock screen</h6>
-                    </div>
-                  </li>
-                  <li class="mdc-list-item" role="menuitem">
-                    <div class="item-thumbnail item-thumbnail-icon-only">
-                      <i class="mdi mdi-logout-variant text-primary"></i>                      
-                    </div>
-                    <div class="item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 class="item-subject font-weight-normal">Logout</h6>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-      <!-- partial -->
-      <div class="page-wrapper mdc-toolbar-fixed-adjust">
-        <main class="content-wrapper">
-          
-        </main>
-        <!-- partial:../../partials/_footer.html -->
-        <footer>
-          <div class="mdc-layout-grid">
-            <div class="mdc-layout-grid__inner">
-              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
-                <span class="text-center text-sm-left d-block d-sm-inline-block tx-14">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com </a>2020</span>
-              </div>
-              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop d-flex justify-content-end">
-                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center tx-14">Free <a href="https://www.bootstrapdash.com/material-design-dashboard/" target="_blank"> material admin </a> dashboards from Bootstrapdash.com</span>
-              </div>
-            </div>
-          </div>
-        </footer>
-        <!-- partial -->
-      </div>
+        </table>
     </div>
-  </div>
-  <!-- plugins:js -->
-  <script src="../../../assets/vendors/js/vendor.bundle.base.js"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page-->
-  <!-- End plugin js for this page-->
-  <!-- inject:js -->
-  <script src="../../../assets/js/material.js"></script>
-  <script src="../../../assets/js/misc.js"></script>
-  <!-- endinject -->
-  <!-- Custom js for this page-->
-  <!-- End custom js for this page-->
-</body>
-</html>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div id="openModalHijoAddOperacion" class="modalDialogHijo">
+    <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>
+
+
+
+
+        <div class="container">
+            <div class="wrapper">
+                <ul class="steps">
+                    <li class="is-active">Operación</li>
+                    <li>Detalle</li>
+                    <li>Talla</li>
+                </ul>
+                <form id="addOperacion" autocomplete="off" class="form-wrapper">
+                    <input type="number" hidden="True" name="idEmpresaOP" value="{{ lastIdEmpresa }}">
+                    <input type="number" hidden="True" name="idUserOP" value="{{ login_user_id}}">
+
+                    <fieldset class="section is-active">
+                        <h3>
+                            Registro de Operación <br>{% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h3>
+                        <div class="row cf form-group form-inline">
+                            <div class="col-sm-12">
+                                <label class="">Nombre de Operación </label>
+                                <input class="form-control" type="text" name="nombreOP" id="name" placeholder="Nombre Operacion">
+                            </div>
+                            <div class="col-sm-12"><br>
+                            </div>
+                            <div class="col-sm-12">
+                                <label>Cantidad de Operación</label>
+                                <input class="" type="number" name="can_totalOP" placeholder="Total">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="button">Detalle</div>
+                    </fieldset>
+
+                    <fieldset class="section">
+                        <h3> Detalles de Operación
+
+                        </h3>
+                        <div class="row cf form-group-sm ">
+
+                            <div class="col-sm-6 col-sm-offset-6">
+                                <label for=""><h5>Referencia</h5></label>
+
+                                <input class="form-control" type="text" list="ReferenciaSelect" placeholder="Buscar Referencia...">
+
+                                <datalist id="ReferenciaSelect">
+                                    
+                                        {% for ReferenciaSelect in allReferencia %}
+                                        
+                                        
+                                        <option value="{{ReferenciaSelect.nom_referencia}}">{{ReferenciaSelect.nom_referencia}}
+                                        <input type="number" hidden="True" name="idReferenciaOP" default="" value="{{ ReferenciaSelect.id }}">
+                                        </option>
+                                        {% endfor %}
+                                    </datalist>
+                            </div>
+
+
+                            <div class="col-sm-6 col-sm-offset-6 ">
+                                <label for=""> <h5>Color</h5></label>
+
+                                <input value="" class="form-control" type="text" list="Color" required placeholder="Buscar Color...">
+
+                                <datalist id="Color" class="select ">
+                                        {% for resultsColor in allColor %}                                        
+                                        <option value="{{resultsColor.nom_color}}" >
+                                            {{resultsColor.nom_color}}-{{resultsColor.codigo_color}}
+                                        </option>
+                                        <input type="number" hidden="True" name="idColorOp" value="{{ resultsColor.id }}">
+                                        {% endfor %}
+                                    </datalist>
+                            </div>
+
+                            <div class="col-sm-12 col-sm-offset-6 ">
+                                <label for=""><h5>Descripcion</h5></label>
+
+                                <textarea type="text" class="form-control" name="notaDes" placeholder="Nota - Descripcion"></textarea>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="button">Talla</div>
+                    </fieldset>
+
+
+
+
+
+
+
+
+
+
+                    <fieldset class="section">
+                        <h3>Registro de Talla</h3>
+                        <table id="TallaTable" data-id-field="id" class="table table-sm" data-toggle="table" data-detail-view="true" data-detail-view-by-click="false" data-show-columns="false" data-search="false" data-show-fullscreen="false" data-locale="es-SP" data-pagination="true"
+                            data-detail-view-icon="false" data-url="talla/talla-list/">
+                            <thead class="thead-dark ">
+                                <tr>
+                                    <th data-field="nom_talla" class="text-center">Nombre Talla </th>
+                                    <th data-field="btnAddTalla" class="text-center">Cantidad</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <!-- <input class="submit button" type="submit" value="Sign Up"> -->
+
+
+                        <br><br> <br><br><br><input class=" submit button" type="submit" onclick="ModalOperacion()" value="Guardar">
+                    </fieldset>
+
+
+                    <!-- 
+                        <fieldset class="section">
+                            <br>
+                            <h3>¡Operación creada con exito!</h3>
+                            <p></p> 
+                        <div class="button">Reset Form</div>
+                       </fieldset> -->
+                </form>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+</div>
+
+
+
+
+
+
+<div id="Scripts">
+
+    <!--table operacion-->
+    <script>
+        $('#operacionTable').SetEditable();
+
+        function DetailFormatterButInfoOperacion(index, row) {
+            //crea y renderiza la tabla
+            return '<div class="row">' +
+
+
+
+
+
+                //'<div class="col-sm-3">' +
+                //'<h3 id="opTallaInconsistente' + row.id + '" ></h3>' +
+                //'</div>' +
+
+                '<div class="col-sm-6">' +
+                '<table " class="table border border-info ">' +
+                '<thead class="thead-dark">' +
+                '<tr>' +
+                '<th class="text-center">Talla</th>' +
+                '<th class="text-center">Talla restante</th>' +
+                '<th class="text-center">Total</th>' +
+                '<th class="text-center">Eliminar talla</th>' +
+
+                '</tr>' +
+                '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '"> </tbody>' +
+                '</table>' + '<script>' + 'tallas(' + row.id + ');</' + 'script>' +
+
+
+
+                '</div>';
+
+        }
+
+        function tallas(idOp) {
+            $.ajax({
+                url: '{% url "tallaOP-list" %}',
+                data: {
+
+                    'idOp': idOp,
+                },
+                dataType: 'json',
+                success: function(response) {
+                    TallaOpCanIncosistente(idOp);
+
+                    var len = response.length;
+                    for (var i = 0; i < len; i++) {
+                        var id = response[i].id;
+                        var canTalla = response[i].can_talla;
+                        var nombreTalla = response[i].nom_talla;
+                        var res_talla = response[i].res_talla;
+
+                        if (res_talla == null) {
+                            res_talla = canTalla;
+                        }
+
+                        var tr_str = "<tr>" +
+                            "<td style='text-align:center'>" + nombreTalla + "</td>" +
+                            "<td style='text-align:center'>" + res_talla + "</td>" +
+                            "<td style='text-align:center'>" + canTalla + "</td>" +
+
+                            "<td style='text-align:center'>" + "<button class='btn btn-sm btn-block btn-outline-danger  icofont-ui-remove' onclick='reoveCanTalla(" + id + ")'> " + "</td>" +
+                            "</tr>";
+                        $('#listKill' + idOp).append(tr_str);
+                    }
+
+                }
+            });
+
+
+
+        }
+
+
+
+        function TallaOpCanIncosistente(idOp) {
+            $.ajax({
+                url: '{% url "tallaOP-Incosistente" %}',
+                data: {
+
+                    'idOperacion': idOp,
+                },
+                dataType: 'json',
+                success: function(response) {
+
+                    var CanOperacion = response.CanOperacion;
+                    var CanTallaTotal = response.CanTallaTotal;
+
+                    if (CanOperacion != CanTallaTotal) {
+                        //conmprueba si sobra o falta operacion
+                        var isCompleta = (CanTallaTotal - CanOperacion)
+
+                        if (isCompleta < 0) {
+
+
+                            var tr_str = '<p class="alert alert-warning">!Inconsistencia!<br>Operación ' + CanOperacion +
+                                '<br>Talla ' + CanTallaTotal +
+                                '<br>Cantidad faltante  <t  class="text-danger border"> ' + isCompleta +
+                                '</t>' +
+                                '</p>';
+
+                        } else {
+                            var tr_str = '<p class="alert alert-warning">!Inconsistencia!<br>Operación ' + CanOperacion +
+                                '<br>Talla ' + CanTallaTotal +
+                                '<br>Cantidad pasada por  <t  class="text-danger border"> ' + isCompleta +
+                                '</t>' +
+                                '</p>';
+
+
+                        }
+
+
+                        //$('#opTallaInconsistente' + idOp).append(tr_str);
+                        console.log("CanOperacion = ", CanOperacion);
+                        console.log("CanTallaTotal = ", CanTallaTotal);
+
+                    }
+                }
+            })
+
+        }
+
+
+
+
+        function reoveCanTalla(idCantalla) {
+            $.ajax({
+                url: '{% url "TallaOP_ajax_delete" %}',
+                data: {
+                    'id': idCantalla,
+                },
+                dataType: 'json',
+                success: function(data) {
+                    window.location.reload();
+
+                }
+            });
+        }
+
+
+        function DetailFormatterButAccionPoperacion(index, row) {
+            return '<div class="row">' +
+                '<div class="col-sm-3 ">' +
+                '<form id="addTallaOP-' + row.id + '" autocomplete="off" class="border">{% csrf_token %}' +
+                '<center><div class="">Agregar Talla: ' + row.nom_operacion + '</div></center>' +
+                '<input type="text" list="BuscarTalla" name="idTallaOPP" required Placeholder="Buscar talla..." class="form-control" >' +
+                '<datalist id="BuscarTalla">' +
+                '{% for restOPtalla in allTalla %}' +
+                '<option data-value="{{restOPtalla.id}}">{{restOPtalla.nom_talla}}' +
+                '</option>' +
+                '{% endfor %}' +
+                '</datalist>' +
+                '<input type="number"  name="cantTalla"  class="form-control" Placeholder="Cantidad Talla..." >' +
+                '<input type="number" hidden="True" name="idOperacionTalla" value="' + row.id + '">' +
+                '<input type="number" hidden="True" name="idEmpresaOPTalla" value="{{ lastIdEmpresa }}">' +
+                '<input type="number" hidden="True" name="idUserOPTalla" value="{{ login_user_id}}">' +
+                '<button class="btn btn-outline-primary form-control btn_block" type="submit" >Guardar</button>' +
+
+
+                '</form>' +
+                '</div>' +
+
+
+                '<div class="col-sm-3">' +
+                '<form id="editarIpoperacion" style="display: inline"  >{% csrf_token %}' +
+                '<div class="form-group"><label>Estatus</label>' +
+                '<select class="form-group" id="estatusUP">' +
+                '<option value="' + row.estatus + '">' + row.estatus + '</option>' +
+                '<option value="A">Activo</option>' +
+                '<option value="I">Inactivo</option>' +
+                '</select></div>' +
+                '<input type="number" hidden="True" name="idEmpresaUPOP" value="{{ lastIdEmpresa }}">' +
+                '<input type="number" hidden="True" name="idUserUPOP" value="{{ login_user_id}}">' +
+                '<input type="number" hidden="True" name="idIpoperacionUPOP" value="' + row.id + '"' +
+
+                '</div>' +
+                '<input id="EditPoperacionBtn-' + row.id + '" value="Actualizar registro" type="submit" onclick="editPoperacion(' + row.id + ')" class="btn-md  btn btn-outline-warning btn-rounded  " >' +
+
+
+
+
+
+                '</div>' +
+                '<div class="col-sm-1">' + '<button value="" onclick="removeOP(' + row.id + ')"  id="buttonEliminarPoperacion" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>' +
+                '</div>' +
+                '</form>' +
+
+
+
+                '<script>' +
+
+
+
+
+
+
+                ' $("form#addTallaOP-' + row.id + '").submit(function() { ' +
+                'var idTallaOPP       = $("input[name=\'idTallaOPP\']").val().trim();' +
+                'var cantTalla        = $("input[name=\'cantTalla\']").val().trim();' +
+                'var idOperacionTalla = $("input[name=\'idOperacionTalla\']").val().trim();' +
+                'var idEmpresaOPTalla = $("input[name=\'idEmpresaOPTalla\']").val().trim();' +
+                'var idUserOPTalla    = $("input[name=\'idUserOPTalla\']").val().trim();' +
+
+                'if (idTallaOPP && cantTalla && idOperacionTalla && idEmpresaOPTalla && idUserOPTalla' +
+                ') {' +
+
+                '$.ajax({' +
+                'url: "{% url "TallaOP_ajax_create" %}",' +
+                'data: {' +
+
+                '\'idTallaOPP\'       : idTallaOPP,' +
+                '\'cantTalla\'        : cantTalla,' +
+                '\'idOperacionTalla\' : idOperacionTalla,' +
+                '\'idEmpresaOPTalla\' :idEmpresaOPTalla,' +
+                '\'idUserOPTalla\'    :idUserOPTalla,' +
+                '\'f2\'    :2' +
+                '},' +
+
+                'dataType: \'json\',' +
+                'success: function (data) {window.location.reload();' +
+                'if (data.user) {' +
+                'appendToUsrTable(data.user);' +
+                '}' +
+                '}' +
+                '});' +
+                '} else {' +
+                '   alert("All fields must have a valid value.");' +
+                '}' +
+                '$("form#addPoperacion").trigger("reset");' +
+                'return false;' +
+                '});' +
+                '</' + 'script>';
+
+        }
+    </script>
+
+
+
+
+
+    <!--create operacion-->
+    <script>
+        $("form#addOperacion").submit(function() {
+
+
+            var NotaDesOp = $('textarea[name="notaDes"]').val().trim();
+            var can_totalOP = $('input[name="can_totalOP"]').val().trim();
+            var nomOperacion = $('input[name="nombreOP"]').val().trim();
+            var idReferenciaOP = $('input[name="idReferenciaOP"]').val().trim();
+            var idColorOP = $('input[name="idColorOp"]').val().trim();
+            var idEmpresaOP = $('input[name="idEmpresaOP"]').val().trim();
+            var idUserOP = $('input[name="idUserOP"]').val().trim();
+
+
+            if (can_totalOP == '') {
+                can_totalOP = 0
+            }
+            if (can_totalOP && nomOperacion && idEmpresaOP && idUserOP) {
+
+                // Create Ajax Call
+                $.ajax({
+                    url: '{% url "Operacion_ajax_create" %}',
+                    data: {
+
+                        'can_totalOP': can_totalOP,
+                        'idReferenciaOP': idReferenciaOP,
+                        'idColorOP': idColorOP,
+                        'nomOperacion': nomOperacion,
+                        'idEmpresaOP': idEmpresaOP,
+                        'idUserOP': idUserOP,
+                        'NotaOp': NotaDesOp
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        var idOperacion = data.lastIdOperacion;
+                        var arrayTallas = data.tallasEmpresa;
+                        btnTallaAdd(idOperacion, arrayTallas, idUserOP);
+
+
+                    }
+
+                });
+
+
+            } else {
+                console.log("All fields must have a valid value.");
+            }
+            $('form#addPoperacion').trigger("reset");
+            return false;
+        });
+
+        function btnTallaAdd(idOperacion, arrayTallas, idUserOP) {
+            var arrayTallaOp = JSON.parse(arrayTallas);
+            console.log("I-id operacion ", idOperacion);
+            let idOpeT = idOperacion;
+            arrayTallaOp.forEach(function(obj) {
+                console.log(obj);
+                console.log("id talla ", obj.id);
+                console.log("id empresa ", obj.empresa_id);
+                console.log("II- id operacion ", idOpeT);
+
+                var idTallaOP = obj.id;
+                var idEmpresa = obj.empresa_id;
+                var canTallaOP = $('input[name="inputTalla-' + idTallaOP + '"]').val().trim();
+                if (canTallaOP != '') {
+                    console.log("vavio", canTallaOP)
+                    console.log("talls canTalla OPeracion ", canTallaOP);
+                    $.ajax({
+                        url: '{% url "TallaOP_ajax_create" %}',
+                        data: {
+                            'idTalla': idTallaOP,
+                            'cantTalla': canTallaOP,
+                            'idOperacionTalla': idOpeT,
+                            'idEmpresaOPTalla': idEmpresa,
+                            'idUserOPTalla': idUserOP,
+                            'f2': 1
+
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            console.log("passsssssss");
+                        }
+
+
+
+                    });
+
+
+                } else {
+                    console.log('canTallaOP esta vacia ==', canTallaOP)
+                }
+
+
+
+            });
+
+        }
+    </script>
+    <!--editar ipoperacion-->
+    <script>
+        function editPoperacion(id) {
+
+
+
+            var estatusUP = document.getElementById("estatusUP").value;
+            var idEmpresaUP = $('input[name="idEmpresaUPOP"]').val().trim();
+            var idUserUP = $('input[name="idUserUPOP"]').val().trim();
+
+
+
+            if (estatusUP && idEmpresaUP && idUserUP) {
+
+                // Create Ajax Call
+                $.ajax({
+                    url: '{% url "Operacion_ajax_update" %}',
+                    data: {
+                        'estatusUP': estatusUP,
+                        'idEmpresaUP': idEmpresaUP,
+                        'idUserUP': idUserUP,
+                        'idIpoperacionUP': id
+
+
+
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.user) {
+                            appendToUsrTable(data.user);
+                        }
+                    }
+                });
+
+            } else {
+                console.log("All fields must have a valid value.");
+            }
+        }
+    </script>
+    <!--Delete poperacion-->
+    <script>
+        function removeOP(idOperacion) {
+
+
+            $.ajax({
+                url: '{% url "Operacion_ajax_delete" %}',
+                data: {
+                    'id': idOperacion,
+                },
+                dataType: 'json',
+                success: function(data) {
+
+                    window.location.reload();
+
+
+
+                }
+            });
+        }
+    </script>
+
+</div>
+</div>

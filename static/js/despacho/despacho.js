@@ -21,7 +21,7 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '<div class="col-sm-1">' +
         '</div>' +
         '<div class="col-sm-6">' +
-        '<div id="despachoVue"><template>' +
+        '<div id="despachoVue-' + row.id + '"><template>' +
         '<table class="table animated fadeIn border border border-info ">' +
         '<thead class="thead-dark">' +
         '<tr>' +
@@ -39,7 +39,8 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
 
         '</div>' +
 
-        '<div class="col-sm-3"><div id="FormuTallaOP"><template>' +
+        '<div class="col-sm-3"><div id="FormuTallaOP-' + row.id +
+        '"><template>' +
 
         '<form @submit.prevent="submitFormDespacho" class="form dark"><div hidden=True>{% csrf_token %}</div>' +
 
@@ -51,7 +52,7 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
 
         '<option id="id_talla"  v-for="(optionTalla) in allTallasOPs"  v-bind:value="optionTalla.talla"  >[[optionTalla.num_talla]] / [[optionTalla.nom_talla]]</option></select>' +
         '<input class="form-control" autocomplete="off" placeholder="Cantidad terminada" id="cant" type="number" v-model="cant" required/>' +
-        '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number" required/>' +
+        '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number"/>' +
         '<br><input class="form-control btn btn-block" type="submit"  value="Guardar"></form></div></div>' + '</div>' +
 
         '</div></template>' +
@@ -161,10 +162,8 @@ function deleteDespachoUnico(id_despacho) {
 }
 
 function formOP(idOp, usuario) {
-
-
     new Vue({
-        el: '#FormuTallaOP',
+        el: '#FormuTallaOP-' + idOp,
         delimiters: ['[[', ']]'],
 
         data: function() {
@@ -219,7 +218,7 @@ function formOP(idOp, usuario) {
                     this.success = 'Data saved successfully';
                     this.response = JSON.stringify(response, null, 2);
 
-                    document.getElementById('despachoVue').innerHTML =
+                    document.getElementById('despachoVue-' + idOp).innerHTML =
                         '<table class="table animated fadeIn border border-info ">' +
                         '<thead class="thead-dark">' +
                         '<tr>' +
@@ -333,7 +332,7 @@ function deleteDespacho(id_despacho) {
 function tallasOP(idOp) {
 
     new Vue({
-        el: '#despachoVue',
+        el: '#despachoVue-' + idOp,
         delimiters: ['[[', ']]'],
 
         data: function() {
@@ -356,7 +355,7 @@ function tallasOP(idOp) {
                         this.allTallaOPs = resp.data;
                         if (resp.data == '') {
                             //alert("no hay un coño");
-                            document.getElementById('despachoVue').innerHTML = '<h3>No hay tallas cargada</h3>';
+                            document.getElementById('despachoVue-' + idOp).innerHTML = '<h3>No hay tallas cargada</h3>';
 
                         }
                         console.log(resp.data);

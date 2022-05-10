@@ -1,4 +1,5 @@
 import json
+from traceback import print_tb
 from authapp.models import MyUser
 from operacion.models import Operacion
 from django.shortcuts import render, redirect
@@ -15,6 +16,8 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 
+from despacho.models import Despacho
+from django.db.models import Sum, F 
 # Create your views here.
 
 
@@ -72,9 +75,49 @@ def TallaOPList(request):
                 
     lastEm   = CambioEmpres.objects.filter(Usuario_id=idUser.id).last() 
     ptalla     = CanTalla.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(request.GET.get('idOp', None))).order_by('-id')
+    
     serializer = CanTallaSerializer(ptalla, many=True)
 
     return Response(serializer.data)
+ 
+
+ 
+@api_view(['GET'])  
+def TallaOpCanIncosistente(request):
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+            
+    lastEm        = CambioEmpres.objects.filter(Usuario_id=idUser.id).last() 
+    idOP          =  request.GET.get('idOperacion', None) 
+    CanOperacion  = Operacion.objects.filter(id=int(idOP)).values('can_total')
+    CanOperacion  = CanOperacion[0]['can_total']
+    
+    CanTallaTotal = CanTalla.objects.filter(empresa_id=lastEm.lastEm,operacion_id=idOP).aggregate(can_talla=Sum('can_talla'))
+    CanTallaTotal = CanTallaTotal['can_talla']
+    
+   
+    data = {
+        'CanTallaTotal':CanTallaTotal,
+        'CanOperacion':CanOperacion,
+        }
+    
+    print(data)
+    
+    return JsonResponse(data)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
 #create talla 
 class CreateTalla(View):
@@ -159,13 +202,6 @@ class CreateTallaOP(View):
 
 
 
-
-
-
-
-
-
-
 class DeleteTalla(View):
     def  get(self, request):
         id1 = request.GET.get('id', None)
@@ -179,10 +215,15 @@ class DeleteTalla(View):
 class DeleteTallaOP(View):
     def  get(self, request):
         id1 = request.GET.get('id', None)
+        #boorar en tabla despacho
+        idOpCantalla = CanTalla.objects.filter(id=id1).values('id','operacion_id','talla_id')       
+        Despacho.objects.filter(operacion_id=idOpCantalla[0]['operacion_id'],talla_id=idOpCantalla[0]['talla_id']).delete()
+        #boorar en tabla CanTalla
         CanTalla.objects.get(id=id1).delete()
         data = {
             'deleted': True
         }
+        
         return JsonResponse(data)
 
 

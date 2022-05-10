@@ -188,104 +188,14 @@ data-auto-refresh-status="true"
 
 
 
-        <!--        <form id="addOperacion" autocomplete="off" class="">
-                <div class=" content p-3 mb-2 bg-dar text-white " rows="3">
-                    <div class="border">
-                        <center>
-                            <h1>Agregar nueva OP para {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
-                            <hr>
-                        </center>
-
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Nom. Operacion </label>
-                                <div class="input-group">
-                                    <div class="02"></div>
-                                    <span class="input-group-addon">
-                                              <i class="fa fa-user"></i>
-                                            </span>
-                                    <input class="form-control" type="text" name="nombreOP" placeholder="Nombre Operacion" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Referencia</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-
-
-                                    <input type="text" list="ReferenciaSelect" name="idReferenciaOP" required Placeholder="Buscar Referencia..." class="form-control" style="width:300px;">
-                                    <datalist id="ReferenciaSelect">
-                      {% for results in allReferencia %}
-                      <option value="{{results.id}}">{{results.nom_referencia}}</option>
-                      {% endfor %}
-                    </datalist>
 
 
 
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Color</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-
-                                    <input type="text" list="Color" name="idColorOp" required Placeholder="Buscar Color..." class="form-control" style="width:300px;">
-                                    <datalist id="Color">
-                  {% for results in allColor %}
-                  <option value="{{results.id}}">{{results.nom_color}}</option>
-                  {% endfor %}
-                </datalist>
 
 
-                                </div>
-                            </div>
-                        </div>
 
 
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Can Total </label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                                    <input class="form-control" type="number" name="can_totalOP" placeholder="Can total Operacion" required>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Descripcion </label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                                    <input class="form-control" type="text" name="NotaOp" placeholder="Nota/Descripcion">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <input type="number" hidden="True" name="idEmpresaOP" value="{{ lastIdEmpresa }}">
-                            <input type="number" hidden="True" name="idUserOP" value="{{ login_user_id}}">
-                            <button class="btn btn-outline-primary form-" type="submit">Guardar</button>
-                        </div>
-                    </div>
-                </div>
-
-            </form>
- -->
     </div>
 
 
@@ -307,7 +217,13 @@ data-auto-refresh-status="true"
         function DetailFormatterButInfoOperacion(index, row) {
             //crea y renderiza la tabla
             return '<div class="row">' +
+
+
+
+
+
                 '<div class="col-sm-3">' +
+                '<h3 id="opTallaInconsistente' + row.id + '" ></h3>' +
                 '</div>' +
 
                 '<div class="col-sm-6">' +
@@ -322,7 +238,9 @@ data-auto-refresh-status="true"
                 '</tr>' +
                 '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '"> </tbody>' +
                 '</table>' + '<script>' + 'tallas(' + row.id + ');</' + 'script>' +
-                '</div>' +
+
+
+
                 '</div>';
 
         }
@@ -336,8 +254,7 @@ data-auto-refresh-status="true"
                 },
                 dataType: 'json',
                 success: function(response) {
-
-
+                    TallaOpCanIncosistente(idOp);
 
                     var len = response.length;
                     for (var i = 0; i < len; i++) {
@@ -366,6 +283,58 @@ data-auto-refresh-status="true"
 
 
         }
+
+
+
+        function TallaOpCanIncosistente(idOp) {
+            $.ajax({
+                url: '{% url "tallaOP-Incosistente" %}',
+                data: {
+
+                    'idOperacion': idOp,
+                },
+                dataType: 'json',
+                success: function(response) {
+
+                    var CanOperacion = response.CanOperacion;
+                    var CanTallaTotal = response.CanTallaTotal;
+
+                    if (CanOperacion != CanTallaTotal) {
+                        //conmprueba si sobra o falta operacion
+                        var isCompleta = (CanTallaTotal - CanOperacion)
+
+                        if (isCompleta < 0) {
+
+
+                            var tr_str = '<p class="alert alert-warning">!Inconsistencia!<br>Operación ' + CanOperacion +
+                                '<br>Talla ' + CanTallaTotal +
+                                '<br>Cantidad faltante  <t  class="text-danger border"> ' + isCompleta +
+                                '</t>' +
+                                '</p>';
+
+                        } else {
+                            var tr_str = '<p class="alert alert-warning">!Inconsistencia!<br>Operación ' + CanOperacion +
+                                '<br>Talla ' + CanTallaTotal +
+                                '<br>Cantidad pasada por  <t  class="text-danger border"> ' + isCompleta +
+                                '</t>' +
+                                '</p>';
+
+
+                        }
+
+
+                        $('#opTallaInconsistente' + idOp).append(tr_str);
+                        console.log("CanOperacion = ", CanOperacion);
+                        console.log("CanTallaTotal = ", CanTallaTotal);
+
+                    }
+                }
+            })
+
+        }
+
+
+
 
         function reoveCanTalla(idCantalla) {
             $.ajax({
@@ -444,7 +413,7 @@ data-auto-refresh-status="true"
                 'var idOperacionTalla = $("input[name=\'idOperacionTalla\']").val().trim();' +
                 'var idEmpresaOPTalla = $("input[name=\'idEmpresaOPTalla\']").val().trim();' +
                 'var idUserOPTalla    = $("input[name=\'idUserOPTalla\']").val().trim();' +
-                'alert(idTallaOPP);' +
+
                 'if (idTallaOPP && cantTalla && idOperacionTalla && idEmpresaOPTalla && idUserOPTalla' +
                 ') {' +
 

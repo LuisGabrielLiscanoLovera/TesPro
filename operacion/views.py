@@ -23,11 +23,12 @@ from django.contrib.sessions.backends.db import SessionStore
 def apiOverview(request):
 	api_urls = {
 		'List':'/operacion-list/'
+		
 		}
 	return Response(api_urls)
 #@login_required(login_url='signin')
 
-
+#muestra lista de
 @api_view(['GET'])  
 def operacionList(request):
     #capturamos el inicio de session   
@@ -42,6 +43,9 @@ def operacionList(request):
     serializer = OperacionSerializer(operacion, many=True)
      
     return Response(serializer.data)
+
+
+
 
 class CreateOperacion(View):
     
@@ -97,6 +101,9 @@ class CreateOperacion(View):
             print("enviar un mensaje de error operacion repetida") 
         
         return JsonResponse(data)
+
+
+
 
 class DeleteOperacion(View):
     def  get(self, request):
