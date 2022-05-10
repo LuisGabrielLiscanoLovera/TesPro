@@ -16,6 +16,13 @@ axios.defaults.xsrfCookieName = "csrftoken";
 
 
 function DetailFormatterButInfoOperacionDespacho(index, row) {
+    //r = parseInt("[[progressRest]]");
+
+
+
+
+
+
     //crea y renderiza la tabla
     return '<div class="row">' +
         '<div class="col-sm-1">' +
@@ -45,14 +52,34 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '<form @submit.prevent="submitFormDespacho" class="form dark"><div hidden=True>{% csrf_token %}</div>' +
 
         '<div>' +
-        '<select  class="form-control" v-model="selectIDPatinador"><option disabled value="">Selecciones Patinador</option>' +
-        '<option id="id_pantinador"  v-for="option in allPatinadoresOPs" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]]</option></select>' +
+        '<div class="alert alert-info"><p>Total restante [[cantRestante]] de [[total]]  </p>' +
 
-        '<select  class="form-control" v-model="selectIdTalla"><option  value="">Selecciones Talla</option>' +
+
+        //'<div class="progress progress-striped"><div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1" style="width:' +
+        //'% ' +
+        //'">Faltante</div></div>' +
+        '<input  id="operacion-' + row.id +
+        '" name="operacion-' + row.id +
+        '"  type="number" hidden=True value="' + row.id +
+        '"  required/>' +
+
+
+
+        '</div> <select  class="form-control" v-model="selectIDPatinador" id="OccionId_pantinador-' + row.id +
+        '"><option disabled value="">Selecciones Patinador</option>' +
+        '<option  v-for="option in allPatinadoresOPs" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]]</option></select>' +
+
+
+        '<select  id="OccionId_talla-' + row.id +
+        '" class="form-control" v-model="selectIdTalla"><option  value="">Selecciones Talla</option>' +
 
         '<option id="id_talla"  v-for="(optionTalla) in allTallasOPs"  v-bind:value="optionTalla.talla"  >[[optionTalla.num_talla]] / [[optionTalla.nom_talla]]</option></select>' +
-        '<input class="form-control" autocomplete="off" placeholder="Cantidad terminada" id="cant" type="number" v-model="cant" required/>' +
+        '<input class="form-control" autocomplete="off" placeholder="Cantidad terminada" id="cant" name="cantOpDespacho-' + row.id +
+        '"  type="number" v-model="cant" required/>' +
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number"/>' +
+
+
+
         '<br><input class="form-control btn btn-block" type="submit"  value="Guardar"></form></div></div>' + '</div>' +
 
         '</div></template>' +
@@ -175,6 +202,9 @@ function formOP(idOp, usuario) {
                 selectIdTalla: '',
                 usuario: usuario,
                 cant: '',
+                cantRestante: '',
+                progressRest: '',
+                total: ''
 
             }
 
@@ -198,24 +228,45 @@ function formOP(idOp, usuario) {
                     })
                     .catch(error => console.log(error));
 
+                axios
+                    .get('/talla/tallaOP-Incosistente/?idOperacion=' + idOp)
+                    .then((resp) => {
+                        this.cantRestante = resp.data.TotalOpRestante;
+                        this.total = resp.data.CanOperacion;
+                        //this.progressRest = ((resp.data.TotalOpRestante * 100) / resp.data.CanTallaTotal)
+                        //document.getElementById('canRestante-' + idOp).innerHTML = "Restante";
+                        //console.log(this.cantRestante)
+                    })
+                    .catch(error => console.log(error));
+
 
 
             },
 
             submitFormDespacho() {
+                var OccionId_pantinador = $('select[id="OccionId_pantinador-' + this.id_OP + '"]').val().trim();
+                var OccionId_talla = $('select[id="OccionId_talla-' + this.id_OP + '"]').val().trim();
+                var cantOpDespacho = $('input[name="cantOpDespacho-' + this.id_OP + '"]').val().trim();
+                var operacion = $('input[name="operacion-' + this.id_OP + '"]').val().trim();
 
+
+                console.log("operacion ", operacion);
 
                 axios.post('/despacho/create/', {
-                    id_OP: this.id_OP,
-                    selectIdTalla: this.selectIdTalla,
-                    selectIDPatinador: this.selectIDPatinador,
+                    id_OP: operacion,
+                    selectIdTalla: OccionId_talla, //
+                    selectIDPatinador: OccionId_pantinador, //l
                     usuario: this.usuario,
-                    cant: this.cant
+                    cant: cantOpDespacho //
 
                 }).then(response => {
                     // console.log(response);
                     // this.response = response.data
                     this.success = 'Data saved successfully';
+
+
+
+
                     this.response = JSON.stringify(response, null, 2);
 
                     document.getElementById('despachoVue-' + idOp).innerHTML =
@@ -236,15 +287,14 @@ function formOP(idOp, usuario) {
 
 
                     tallasOP(idOp);
-
-
-
-
-
-
-
-
-
+                    axios
+                        .get('/talla/tallaOP-Incosistente/?idOperacion=' + idOp)
+                        .then((resp) => {
+                            this.cantRestante = resp.data.TotalOpRestante;
+                            //document.getElementById('canRestante-' + idOp).innerHTML = "Restante";
+                            //console.log(this.cantRestante)
+                        })
+                        .catch(error => console.log(error));
 
                 }).catch(error => {
                     this.response = 'Error: ' + error.response.status
@@ -358,7 +408,7 @@ function tallasOP(idOp) {
                             document.getElementById('despachoVue-' + idOp).innerHTML = '<h3>No hay tallas cargada</h3>';
 
                         }
-                        console.log(resp.data);
+                        //console.log(resp.data);
 
 
 

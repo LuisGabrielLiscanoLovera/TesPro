@@ -244,7 +244,7 @@ def createDespacho(request,):
         }
         
         
-        CanTallaOP      = CanTalla.objects.all().filter(talla_id=int(request.data['selectIdTalla'])).update(res_talla= F('res_talla') - canTerminada)
+        CanTallaOP      = CanTalla.objects.all().filter(operacion_id=int(request.data['id_OP']),talla_id=int(request.data['selectIdTalla'])).update(res_talla= F('res_talla') - canTerminada)
         OpTallaRestante = Operacion.objects.all().filter(id=int(request.data['id_OP'])).update(can_restante= F('can_restante') - canTerminada)
         
         

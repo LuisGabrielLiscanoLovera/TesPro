@@ -90,20 +90,21 @@ def TallaOpCanIncosistente(request):
             idUser   = MyUser.objects.get(username=username)
             
     lastEm        = CambioEmpres.objects.filter(Usuario_id=idUser.id).last() 
-    idOP          =  request.GET.get('idOperacion', None) 
+    idOP          = request.GET.get('idOperacion', None) 
     CanOperacion  = Operacion.objects.filter(id=int(idOP)).values('can_total')
     CanOperacion  = CanOperacion[0]['can_total']
     
-    CanTallaTotal = CanTalla.objects.filter(empresa_id=lastEm.lastEm,operacion_id=idOP).aggregate(can_talla=Sum('can_talla'))
-    CanTallaTotal = CanTallaTotal['can_talla']
-    
-   
+    CanTallaTotal   = CanTalla.objects.filter(empresa_id=lastEm.lastEm,operacion_id=idOP).aggregate(can_talla=Sum('can_talla'))
+    CanTallaTotal   = CanTallaTotal['can_talla']
+    TotalOpRestante = Operacion.objects.filter(id=idOP).values('can_restante') 
+    TotalOpRestante = TotalOpRestante[0]['can_restante']
     data = {
         'CanTallaTotal':CanTallaTotal,
         'CanOperacion':CanOperacion,
+        'TotalOpRestante':TotalOpRestante
         }
     
-    print(data)
+   
     
     return JsonResponse(data)
  
