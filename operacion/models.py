@@ -20,6 +20,7 @@ class Operacion(models.Model):
     can_restante  = models.IntegerField(blank=True, null=True)
     btnAcci       = models.CharField(max_length=300, blank=True ,default=btnAccion , null=True)
     btnInfo       = models.CharField(max_length=300, blank=True ,default=btnInfo , null=True)
+    fecha_cierre  = models.DateTimeField(blank=True,null=True )
     created_at    = models.DateTimeField(auto_now_add=True)
     updated_at    = models.DateTimeField(auto_now=True)
 
