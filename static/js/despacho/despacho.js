@@ -115,8 +115,11 @@ function DetailFormatterButAccionDespacho(index, row) {
 
 
 
-        '<center><div class="col-md-2 col-md-offset-4 align-self-center">' +
+        '<center><div class="col-md-6 col-md-offset-1 align-self-center">' +
         //'<button class="btn btn-sm btn-block btn-outline-danger  icofont-ui-remove" type="submit" onclick="deleteDespacho(' + row.id + ')">' +
+
+        '<button class="btn btn-outline-success " type="submit" onclick="carrarOp(' + row.id + ')"> <h5>Cerrar op</h5></button>' +
+
         '</div></center>' +
         '<script type="application/javascript">' +
         '$(document).ready(function() {' +
@@ -174,6 +177,17 @@ function DetailFormatterButAccionDespacho(index, row) {
 }
 
 
+function carrarOp(id_OP) {
+
+    axios.get('/operacion/cerrarOP/?idOP=' + id_OP)
+        .then((resp) => {
+            console.log("operacion cerrada");
+            window.location.reload();
+        })
+        .catch(error => console.log(error));
+
+
+}
 
 
 
@@ -184,9 +198,11 @@ function deleteDespachoUnico(id_despacho) {
     axios.delete('eliminar_despachos/' + id_despacho + '/')
         .then(res => {
             console.log(res)
-        })
+        }).catch(error => console.log(error));
 
 }
+
+
 
 function formOP(idOp, usuario) {
     new Vue({
@@ -204,7 +220,8 @@ function formOP(idOp, usuario) {
                 cant: '',
                 cantRestante: '',
                 progressRest: '',
-                total: ''
+                total: '',
+                fechaCierre: ''
 
             }
 
@@ -224,7 +241,8 @@ function formOP(idOp, usuario) {
                 axios
                     .get('/talla/tallaOP-list/?idOp=' + idOp)
                     .then((resp) => {
-                        this.allTallasOPs = resp.data
+                        this.allTallasOPs = resp.data;
+
                     })
                     .catch(error => console.log(error));
 
@@ -232,10 +250,11 @@ function formOP(idOp, usuario) {
                     .get('/talla/tallaOP-Incosistente/?idOperacion=' + idOp)
                     .then((resp) => {
                         this.cantRestante = resp.data.TotalOpRestante;
+
                         this.total = resp.data.CanOperacion;
                         //this.progressRest = ((resp.data.TotalOpRestante * 100) / resp.data.CanTallaTotal)
                         //document.getElementById('canRestante-' + idOp).innerHTML = "Restante";
-                        //console.log(this.cantRestante)
+
                     })
                     .catch(error => console.log(error));
 

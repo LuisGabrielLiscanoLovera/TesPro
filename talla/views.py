@@ -14,8 +14,6 @@ from .serializers import TallaSerializer,CanTallaSerializer
 from empresa.models import CambioEmpres
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from django.http import JsonResponse
-
 from despacho.models import Despacho
 from django.db.models import Sum, F 
 # Create your views here.
@@ -45,7 +43,7 @@ def apiOverview(request):
 
 
 #@login_required(login_url='signin')
-from django.http import JsonResponse
+
 
 #talla
 @api_view(['GET'])  
@@ -96,12 +94,16 @@ def TallaOpCanIncosistente(request):
     
     CanTallaTotal   = CanTalla.objects.filter(empresa_id=lastEm.lastEm,operacion_id=idOP).aggregate(can_talla=Sum('can_talla'))
     CanTallaTotal   = CanTallaTotal['can_talla']
-    TotalOpRestante = Operacion.objects.filter(id=idOP).values('can_restante') 
+    TotalOpRestante = Operacion.objects.filter(id=idOP).values('can_restante','fecha_cierre') 
+    FechaCierre     = TotalOpRestante[0]['fecha_cierre']
+    
     TotalOpRestante = TotalOpRestante[0]['can_restante']
+    
     data = {
         'CanTallaTotal':CanTallaTotal,
         'CanOperacion':CanOperacion,
-        'TotalOpRestante':TotalOpRestante
+        'TotalOpRestante':TotalOpRestante,
+        'FechaCierre':FechaCierre
         }
     
    
@@ -230,7 +232,7 @@ class DeleteTallaOP(View):
 
 class UpdateTalla(TemplateView):
     def  get(self, request):
-        idIptalla     = request.GET.get('idIptallaUP', None)
+        idIptalla        = request.GET.get('idIptallaUP', None)
         idEmpresa        = request.GET.get('idEmpresaUP', None)
         idUser           = request.GET.get('idUserUP', None)
         nombres          = request.GET.get('nombresInputUP', None)

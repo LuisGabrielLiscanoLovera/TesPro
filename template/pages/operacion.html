@@ -218,10 +218,6 @@ data-auto-refresh-status="true"
             //crea y renderiza la tabla
             return '<div class="row">' +
 
-
-
-
-
                 '<div class="col-sm-3">' +
                 '<h3 id="opTallaInconsistente' + row.id + '" ></h3>' +
                 '</div>' +
@@ -233,7 +229,7 @@ data-auto-refresh-status="true"
                 '<th class="text-center">Talla</th>' +
                 '<th class="text-center">Talla restante</th>' +
                 '<th class="text-center">Total</th>' +
-                '<th class="text-center">Eliminar talla</th>' +
+                '<th class="text-center">Eliminar</th>' +
 
                 '</tr>' +
                 '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '"> </tbody>' +
@@ -246,6 +242,7 @@ data-auto-refresh-status="true"
         }
 
         function tallas(idOp) {
+
             $.ajax({
                 url: '{% url "tallaOP-list" %}',
                 data: {
@@ -254,6 +251,9 @@ data-auto-refresh-status="true"
                 },
                 dataType: 'json',
                 success: function(response) {
+
+
+
                     TallaOpCanIncosistente(idOp);
 
                     var len = response.length;
@@ -298,6 +298,8 @@ data-auto-refresh-status="true"
 
                     var CanOperacion = response.CanOperacion;
                     var CanTallaTotal = response.CanTallaTotal;
+                    var FechaCierre = response.FechaCierre;
+                    console.log(FechaCierre); /////////fecha de cierre
 
                     if (CanOperacion != CanTallaTotal) {
                         //conmprueba si sobra o falta operacion

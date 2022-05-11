@@ -1,5 +1,6 @@
+from turtle import update
 from django.shortcuts import render
-
+import datetime
 # Create your views here.
 import json
 from django.shortcuts import render, redirect
@@ -159,3 +160,23 @@ class UpdateOperacion(TemplateView):
 
 
 
+@api_view(['GET'])
+def cerarOP(request):
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+        
+    lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
+
+    
+    idOP=int(request.GET['idOP'])
+    
+    
+    
+    Operacion.objects.filter(id=idOP).update(estatus="I", fecha_cierre=( Operacion.objects.filter(id=idOP).values('updated_at')))
+    
+    
+    
+    
+    return Response(66) 
