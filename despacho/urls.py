@@ -3,19 +3,11 @@ from django.urls import path
 #from .views import  CreateDespacho,Despachos
 
 #from .views import despacho_list # ,createDespacho, get_despacho, updateDespacho, deleteDespacho
-
 from .views import despacho_list,Despachos,deleteDespacho,operacionesList,patinadoresAct,createDespacho,ItemListView
-
 #from .views import TasksView
-
 from rest_framework import routers
-
 router = routers.DefaultRouter()
-
-
-
 urlpatterns = [
-
     #path('d/', TasksView.as_view(), name='task_list_url'),   
     #path('', Despachos.as_view(), name='despacho'),
     path('lista_operaciones/', operacionesList, name="operaciones-list"),

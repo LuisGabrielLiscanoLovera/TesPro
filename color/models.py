@@ -17,7 +17,7 @@ class Color(models.Model):
             
         ]
     def __str__(self):
-            return '%s %s %i' % (self.id, self.nom_color, self.codigo_color)
+            return 'id{} nom_color{}  cod_empresa{}'.format(self.id, self.nom_color, self.codigo_color)
   
  
 

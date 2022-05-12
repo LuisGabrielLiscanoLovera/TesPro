@@ -22,4 +22,4 @@ class Tarea(models.Model):
     btnAcci = models.CharField(max_length=100, default='<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>')
     
     def __str__(self):
-        return '%s %s %s %s %s %s %s %s %s' % (self.id, self.nom_tarea, self.min_minuto,self.min_hora,self.valor,self.detalle,self.usuario,self.empresa,self.created_at,self.codigo_tarea)
+        return '{} {} {} {} {} {} {} {} {} {}'.format(self.id, self.nom_tarea, self.min_minuto,self.min_hora,self.valor,self.detalle,self.usuario,self.empresa,self.created_at,self.codigo_tarea)

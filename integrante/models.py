@@ -18,7 +18,7 @@ class Integrante(models.Model):
     cedula     = models.IntegerField()
     correo     = models.EmailField('Correo',blank=True, null=True)
     
-    num_telf   = models.IntegerField(blank=True, null=True)
+    num_telf   = models.CharField(blank=True, null=True,max_length=15)
     direccion  = models.CharField(blank=True, null=True, max_length=250)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -15,7 +15,7 @@ axios.defaults.xsrfCookieName = "csrftoken";
 
 
 
-function DetailFormatterButInfoOperacionDespacho(index, row) {
+function DetailFormatterButInfoDespacho(index, row) {
     //r = parseInt("[[progressRest]]");
 
 
@@ -52,7 +52,7 @@ function DetailFormatterButInfoOperacionDespacho(index, row) {
         '<form @submit.prevent="submitFormDespacho" class="form dark"><div hidden=True>{% csrf_token %}</div>' +
 
         '<div>' +
-        '<div class="alert alert-info"><p>Total restante [[cantRestante]] de [[total]]  </p>' +
+        '<div class="alert alert-info"><h6> restante [[cantRestante]] de [[total]]  </h6>' +
 
 
         //'<div class="progress progress-striped"><div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1" style="width:' +
