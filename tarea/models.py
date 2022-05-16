@@ -18,8 +18,12 @@ class Tarea(models.Model):
     
     ESTATUS       = (('A','Activo'),('I','Inactivo'))
     estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
-    fecha_cierre  = models.DateTimeField(blank=True,null=True )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)    
     def __str__(self):
-        return '{} {} {} {} {} {} {} {} {} {}'.format(self.id, self.nom_tarea, self.min_minuto,self.min_hora,self.valor,self.detalle,self.usuario,self.empresa,self.created_at,self.codigo_tarea)
+        return 'id:{} nomTarea:{} min_minuto:{} min_hora:{} valor:{} detalle:{} usuario:{} empresa:{} codigo_tarea:{} created_at:{} estatus:{}'.format(self.id,
+        self.nom_tarea, self.min_minuto,
+        self.min_hora,self.valor,
+        self.detalle,self.usuario,
+        self.empresa,self.codigo_tarea,
+        self.created_at,self.estatus)

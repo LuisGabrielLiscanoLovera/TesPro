@@ -17,7 +17,7 @@ function DetailFormatterButInfoProduccion(index, row) {
 
 
         '<select  class="form-control" v-model="selectIDPatinadorProduccion" id="OccionId_pantinador-' + row.id +
-        '"><option disabled value="">Selecciones Patinador</option>' +
+        '"><option  value="">Selecciones Patinador</option>' +
         '<option  v-for="option in allPatinadoresProduccions" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]]</option></select>' +
 
 
@@ -25,7 +25,16 @@ function DetailFormatterButInfoProduccion(index, row) {
 
         '<select  id="OccionId_talla-' + row.id +
         '" class="form-control" v-model="selectIdTallaProduccion"><option  value="">Selecciones Talla</option>' +
-        '<option id="id_talla"  v-for="(optionTalla) in allTallasProduccions"  v-bind:value="optionTalla.talla"  >[[optionTalla.num_talla]] / [[optionTalla.nom_talla]]</option></select>' +
+        '<option id="id_talla"  v-for="(optionTalla) in allTallasProduccions"  v-bind:value="optionTalla.id">[[optionTalla.num_talla]] / [[optionTalla.nom_talla]]</option></select>' +
+
+
+        '<select  id="OccionId_tarea-' + row.id +
+        '" class="form-control" v-model="selectIdTareaProduccion"><option   value="">Selecciones Tarea</option>' +
+        '<option id="id_tarea"  v-for="(optionTarea) in allTareasProduccions" v-bind:value="optionTarea.id">[[optionTarea.nom_tarea]] / [[optionTarea.detalle]]</option></select>' +
+
+
+
+
 
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number"/>' +
 
@@ -101,9 +110,11 @@ function formProduccionOP(idOperacion, idUsuario) {
 
 
                 axios
-                    .get('/tarea/lista_tarea/')
+                    .get('/tarea/tarea-list/')
                     .then((resp) => {
-                        this.allTareasProduccions = resp.data
+                        this.allTareasProduccions = resp.data;
+
+
                     })
                     .catch(error => console.log(error));
 

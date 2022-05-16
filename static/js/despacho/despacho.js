@@ -164,7 +164,7 @@ function carrarOp(id_OP) {
 
     axios.get('/operacion/cerrarOP/?idOP=' + id_OP)
         .then((resp) => {
-            console.log("operacion cerrada");
+
             window.location.reload();
         })
         .catch(error => console.log(error));
@@ -248,7 +248,6 @@ function formOP(idOp, usuario) {
                 var operacion = $('input[name="operacion-' + this.id_OP + '"]').val().trim();
 
 
-                console.log("operacion ", operacion);
 
                 axios.post('/despacho/create/', {
                     id_OP: operacion,
