@@ -34,10 +34,12 @@ data-auto-refresh-status="true"
                     <tr>
                         <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoTarea" class="text-center">Mas info</th>
                         <th data-field="nom_tarea" class="text-center">Nombre Tarea</th>
+                        <th data-field="estatus" class="text-center">Estatus</th>
                         <!-- <th data-field="min_minuto" class="text-center">Min x minuto</th>
                         <th data-field="min_hora" class="text-center">Min x hora</th> -->
                         <th data-field="valor" class="text-center">Valor por unidad</th>
                         <th data-field="created_at" class="text-center">Fec Ingreso</th>
+
                         <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionTarea" class="text-center">Accion</th>
 
                     </tr>
@@ -82,6 +84,8 @@ data-auto-refresh-status="true"
                     '<div class="form-group"><label>Descripcion</label>' +
                     '<input class="form-control" value="' + row.detalle + '" name="detalleTareaUP"></div>' +
 
+                    '<div class="form-group"><label>Estatus</label>' +
+                    '<input class="form-control" value="' + row.estatus + '" name="estatusUP"></div>' +
 
 
                     '<input type="number" hidden="True" name="empresaTareaUP" value="{{ lastIdEmpresa }}">' +
@@ -380,12 +384,11 @@ data-auto-refresh-status="true"
             var detalleTareaUP = $('input[name="detalleTareaUP"]').val().trim();
             var empresaTareaUP = $('input[name="empresaTareaUP"]').val().trim();
             var idUserTareaUP = $('input[name="idUserTareaUP"]').val().trim();
+            var estatusTarea = $('input[name="estatusUP"]').val().trim();;
 
 
-            if (nombreTareaUP && minutoXTareaUP && horaXTareaUP &&
-                valorTareaUP && detalleTareaUP && empresaTareaUP && idUserTareaUP
-            ) {
-                alert(nombreTareaUP);
+            if (nombreTareaUP && empresaTareaUP && idUserTareaUP) {
+
 
                 // Create Ajax Call
                 $.ajax({
@@ -399,7 +402,8 @@ data-auto-refresh-status="true"
                         'detalleTareaUP': detalleTareaUP,
                         'empresaTareaUP': empresaTareaUP,
                         'idUserTareaUP': idUserTareaUP,
-                        'idTareaUP': id
+                        'idTareaUP': id,
+                        'estatusTarea': estatusTarea,
 
 
 

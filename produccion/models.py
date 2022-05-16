@@ -17,9 +17,14 @@ class Produccion(models.Model):
     talla                = models.ForeignKey(Talla,related_name='Produccion',on_delete=models.DO_NOTHING, blank=True, null=True)
     can_terminada        = models.IntegerField()
     integrante           = models.ForeignKey(Integrante,related_name='ProduccionI',on_delete=models.CASCADE)
-    patinador            = models.ForeignKey(Patinador, related_name='Produccion',  on_delete=models.CASCADE)
+    patinador            = models.ForeignKey(Patinador, related_name='Produccion', blank=True, null=True, on_delete=models.CASCADE)
     
     
+    delProduccion = models.CharField(max_length=150, default='' , null=True)
+    
+    ESTATUS       = (('A','Activo'),('I','Inactivo'))
+    estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
+    fecha_cierre  = models.DateTimeField(blank=True,null=True )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):

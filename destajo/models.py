@@ -15,8 +15,11 @@ class Destajo(models.Model):
     cantidad      = models.IntegerField(blank=True, null=True)
     talla         = models.CharField(blank=True, null=True,max_length=5)
 
+    ESTATUS       = (('A','Activo'),('I','Inactivo'))
+    estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
 
     def __str__(self):
         return str(self.integrante)

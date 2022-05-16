@@ -17,11 +17,15 @@ class Casino(models.Model):
     
     cantidad   = models.IntegerField(blank=True, null=True)
     deuda      = models.IntegerField(blank=True, null=True,default=0)
+    btnInfo = models.CharField(max_length=1000, blank=True ,default=btnInfoStrin, null=True)
+    btnAcci = models.CharField(max_length=1000, blank=True ,default=formCasino , null=True)
+    
+    ESTATUS       = (('A','Activo'),('I','Inactivo'))
+    estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
-    btnInfo = models.CharField(max_length=1000, blank=True ,default=btnInfoStrin, null=True)
-    btnAcci = models.CharField(max_length=1000, blank=True ,default=formCasino , null=True)
+    
     class Meta:
         ordering = ['id']
         indexes = [
@@ -29,16 +33,22 @@ class Casino(models.Model):
             
         ]
     def __str__(self):
-        return '%s %s %s %s %s' % (self.id, self.usuario, self.empresa,self.deuda,self.created_at)
+        return 'id:{} usuario:{} empresa:{} deuda:{} created_at:{} estatus:{}'.format(self.id,
+                self.usuario, self.empresa,
+                self.deuda,self.created_at,
+                self.estatus)
     
     
 class Importe(models.Model):
     empresa    = models.ForeignKey(Empresa, related_name='Importe', null=False, blank=False,on_delete=models.CASCADE)
     casino     = models.ForeignKey(Casino, related_name='Importe', null=False, blank=False,on_delete=models.CASCADE)
-    cantidad   = models.IntegerField(blank=True, null=True)
+    cantidad   = models.IntegerField(blank=True, null=True)    
+    ESTATUS    = (('A','Activo'),('I','Inactivo'))
+    estatus    = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+  
     class Meta:
         ordering = ['id']
         indexes = [
@@ -46,6 +56,6 @@ class Importe(models.Model):
             
         ]
     def __str__(self):
-        return '%s %s %s' % (self.id, self.cantidad,self.created_at)
+        return 'id:{} cantidad:{} creatd_at:{} estatus:{}' .format(self.id,self.cantidad,self.created_at,self.estatus)
     
     

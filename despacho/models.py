@@ -24,10 +24,14 @@ class Despacho(models.Model):
     
     btnDelDespacho  = models.CharField(max_length=300, blank=True ,default="-" , null=True)
     #integrante = models.ForeignKey(Integrante,related_name='DespachoI', null=False, blank=False,on_delete=models.CASCADE)
+    
+    ESTATUS       = (('A','Activo'),('I','Inactivo'))
+    estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
     def __str__(self):
-        return 'patinador {} id {} can_termin {} usuario {} empresa {}'.format(self.patinador,self.id, self.can_terminada,self.usuario,self.empresa)
+        return 'id:{} patinador:{}  can_termin:{} usuario:{} empresa:{} estatus:{}'.format(self.id,self.patinador, self.can_terminada,self.usuario,self.empresa,self.estatus)
 
 
 class Task(models.Model):

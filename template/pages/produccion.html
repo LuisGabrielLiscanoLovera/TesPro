@@ -11,7 +11,23 @@
 
 
 
+
  -->
+
+
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+
+
+
+
+
+
+
+
+
+
 
 <div class="modalBase">
 
@@ -22,7 +38,26 @@
     </center>
 
 
-
+    <table id="produccionTable" data-id-field="id" class="" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-show-columns="true" data-search="true" data-show-fullscreen="true" data-pagination="true"
+        data-show-refresh="true" data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-url="{% url 'operaciones-list'%}">
+        <thead class="thead-dark ">
+            <tr>
+                <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoProduccion" class="text-center">Info
+                </th>
+                {% comment %}
+                <th data-field="id" class="text-center ">id</th> {% endcomment %}
+                <th data-field="nom_operacion" class="text-center ">OP</th>
+                <th data-field="nomReferencia" class="text-center">Referencia</th>
+                <th data-field="nomColor" class="text-center">Color</th>
+                <!--                 <th data-field="can_total" class="text-center">Cant. Faltante</th>
+-->
+                <th data-field="can_total" class="text-center">Cant. Total</th>
+                <th data-field="created_at" class="text-center">Fecha creada</th>
+                <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionProduccion" class="text-center">
+                    Accion</th>
+            </tr>
+        </thead>
+    </table>
 
 
 

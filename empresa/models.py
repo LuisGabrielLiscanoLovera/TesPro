@@ -9,8 +9,12 @@ class Empresa(models.Model):
     direccion = models.CharField(max_length=150)
     descripcion = models.CharField(max_length=100)
     logo_empresa = models.ImageField(upload_to='uploads/',null=True, height_field=None, width_field=None, max_length=100)
+    
+    ESTATUS       = (('A','Activo'),('I','Inactivo'))
+    estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
    
     class Meta:
         ordering = ["id"]
@@ -22,7 +26,7 @@ class RelacionEmpresa(models.Model):
     Usuario = models.ForeignKey(User, null=True,blank=True,related_name='RelacionEmpresa',on_delete=models.CASCADE)
     Empresa = models.ForeignKey(Empresa, null=True,blank=True,related_name='RelacionEmpresa',on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+   
    
     class Meta:
         ordering = ["id"]

@@ -10,12 +10,13 @@ class Talla(models.Model):
     nom_talla     = models.CharField(max_length=10)
     num_talla     = models.IntegerField(blank=True, null=True) 
     
-    created_at     = models.DateTimeField(auto_now_add=True)
-    updated_at     = models.DateTimeField(auto_now=True)
     btnAcci        = models.CharField(max_length=150, default='<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>' )
     btnAddTalla    = models.CharField(max_length=150, default='' , null=True)
-   
     
+    ESTATUS        = (('A','Activo'),('I','Inactivo'))
+    estatus        = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
+    created_at     = models.DateTimeField(auto_now_add=True)
+    updated_at     = models.DateTimeField(auto_now=True)
     class Meta:
         ordering = ['created_at']
         indexes = [

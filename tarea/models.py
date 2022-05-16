@@ -13,13 +13,13 @@ class Tarea(models.Model):
     min_hora      = models.IntegerField(blank=True, null=True )
     valor         = models.IntegerField(blank=True, null=True )    
     detalle       = models.CharField(blank=True, null=True,max_length=150 )
-    
-    
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
     btnInfo = models.CharField(max_length=100, default='<button type="button" class="btn    btn-outline-info text-center btn-sm btn-block">Info</button>')
     btnAcci = models.CharField(max_length=100, default='<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>')
     
+    ESTATUS       = (('A','Activo'),('I','Inactivo'))
+    estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
+    fecha_cierre  = models.DateTimeField(blank=True,null=True )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)    
     def __str__(self):
         return '{} {} {} {} {} {} {} {} {} {}'.format(self.id, self.nom_tarea, self.min_minuto,self.min_hora,self.valor,self.detalle,self.usuario,self.empresa,self.created_at,self.codigo_tarea)

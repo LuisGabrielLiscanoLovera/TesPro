@@ -4,24 +4,9 @@
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
 
-
-
-
-
-
 //script datatable
-
-
-
-
-
 function DetailFormatterButInfoDespacho(index, row) {
     //r = parseInt("[[progressRest]]");
-
-
-
-
-
 
     //crea y renderiza la tabla
     return '<div class="row">' +
@@ -41,7 +26,7 @@ function DetailFormatterButInfoDespacho(index, row) {
         '<td>[[allTallaOP.nom_talla]]</td><td>[[allTallaOP.can_talla]]' +
         '</td><td>[[allTallaOP.res_talla]]</td></tr>' +
         '</tbody></template></div>' +
-        '</table>' + '<script type="application/javascript">' + 'formOP(' + row.id + ',' + row.empresa + ');' +
+        '</table>' + '<script type="application/javascript">' + 'formOP(' + row.id + ',' + row.usuario + ');' +
         '</' + 'script>' +
 
         '</div>' +
@@ -52,7 +37,7 @@ function DetailFormatterButInfoDespacho(index, row) {
         '<form @submit.prevent="submitFormDespacho" class="form dark"><div hidden=True>{% csrf_token %}</div>' +
 
         '<div>' +
-        '<div class="alert alert-info"><h6> restante [[cantRestante]] de [[total]]  </h6>' +
+        '<div class="alert alert-info"><b><h6>Restante &nbsp;&nbsp;[[cantRestante]] de [[total]]</b></h6>' +
 
 
         //'<div class="progress progress-striped"><div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1" style="width:' +
@@ -91,8 +76,6 @@ function DetailFormatterButInfoDespacho(index, row) {
 
 
 
-
-
 function DetailFormatterButAccionDespacho(index, row) {
     //crea y renderiza la tabla
     return '<div class="row">' +
@@ -100,7 +83,7 @@ function DetailFormatterButAccionDespacho(index, row) {
 
 
         '<div class="col-md-10">' +
-        '<table class="ag-theme-material animated fadeIn border " id="items-table' + row.id +
+        '<table class="animated fadeIn table" id="items-table' + row.id +
         '"><thead><tr>' +
 
 
@@ -191,8 +174,6 @@ function carrarOp(id_OP) {
 
 
 
-
-
 function deleteDespachoUnico(id_despacho) {
 
     axios.delete('eliminar_despachos/' + id_despacho + '/')
@@ -201,8 +182,6 @@ function deleteDespachoUnico(id_despacho) {
         }).catch(error => console.log(error));
 
 }
-
-
 
 function formOP(idOp, usuario) {
     new Vue({
@@ -282,12 +261,7 @@ function formOP(idOp, usuario) {
                     // console.log(response);
                     // this.response = response.data
                     this.success = 'Data saved successfully';
-
-
-
-
                     this.response = JSON.stringify(response, null, 2);
-
                     document.getElementById('despachoVue-' + idOp).innerHTML =
                         '<table class="table animated fadeIn border border-info ">' +
                         '<thead class="thead-dark">' +
@@ -303,8 +277,6 @@ function formOP(idOp, usuario) {
                         '<td>[[allTallaOP.can_talla]]' +
                         '</td><td>[[allTallaOP.res_talla]]</td></tr>' +
                         '</tbody></table>';
-
-
                     tallasOP(idOp);
                     axios
                         .get('/talla/tallaOP-Incosistente/?idOperacion=' + idOp)
@@ -318,35 +290,17 @@ function formOP(idOp, usuario) {
                 }).catch(error => {
                     this.response = 'Error: ' + error.response.status
                 })
-
-
-
-
-
             }
-
-
-
         },
-
         mounted: function() {
             this.getDespachoData();
-
-
-
-
         }
     });
-
 };
 
 
 
-
 function deleteDespacho(id_despacho) {
-
-
-
     axios.delete('eliminar_despachos/' + id_despacho + '/').then(response => {
         console.log(response);
         //this.response = response.data
@@ -355,7 +309,6 @@ function deleteDespacho(id_despacho) {
     }).catch(error => {
         this.response = 'Error: ' + error.response.status
     })
-
 
 
 }
@@ -397,27 +350,17 @@ function deleteDespacho(id_despacho) {
     });
 
 } */
-
 function tallasOP(idOp) {
-
     new Vue({
         el: '#despachoVue-' + idOp,
         delimiters: ['[[', ']]'],
-
         data: function() {
             return {
                 allTallaOPs: [],
-
-
             }
-
         },
-
-
         methods: {
-
             getDespachosTallas: function() {
-
                 axios
                     .get('/talla/tallaOP-list/?idOp=' + idOp)
                     .then((resp) => {
@@ -429,20 +372,12 @@ function tallasOP(idOp) {
                         }
                         //console.log(resp.data);
 
-
-
                     })
                     .catch(error => console.log(error))
             }
-
         },
-
         mounted: function() {
-
             this.getDespachosTallas()
-
-
-
         }
 
     });

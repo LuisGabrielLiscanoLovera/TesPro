@@ -1,10 +1,8 @@
-import json
 from django.shortcuts import render, redirect
 from patinador.forms import PatinadorCreationForm
 from integrante.models import Integrante
 from patinador.models import Patinador
 from django.views.generic import TemplateView, View
-from django.http import JsonResponse
 from django.utils import (dateformat, formats)
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -113,7 +111,7 @@ class CreatePatinador(View):
 class DeletePatinador(View):
     def  get(self, request):
         id1 = request.GET.get('idPatinador', None)
-        print(id1,6666666666666666666)
+       
         Patinador.objects.get(id=id1).delete()
         data = {
             'deleted': True

@@ -1,4 +1,4 @@
-import json
+
 from traceback import print_tb
 from authapp.models import MyUser
 from operacion.models import Operacion
@@ -16,6 +16,7 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from despacho.models import Despacho
 from django.db.models import Sum, F 
+
 # Create your views here.
 
 

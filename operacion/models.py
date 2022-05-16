@@ -7,7 +7,7 @@ from color.models import Color
 class Operacion(models.Model):
     btnInfo       = '<button type="button" class="btn btn-outline-info text-center btn-sm btn-block ">Info</button>'
     btnAccion     = '<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>'
-    ESTATUS       = (('A','Activo'),('I','Inactivo'))
+  
     
     usuario       = models.ForeignKey(User, related_name='Operacion',on_delete=models.CASCADE)
     empresa       = models.ForeignKey(Empresa, related_name='Operacion', on_delete=models.CASCADE)
@@ -15,14 +15,17 @@ class Operacion(models.Model):
     color         = models.ForeignKey(Color, related_name='Operacion', on_delete=models.CASCADE,blank=True, null=True)
     nom_operacion = models.CharField(max_length=35)
     nota          = models.CharField(max_length=50,blank=True, null=True)
-    estatus       = models.CharField(max_length=1,choices=ESTATUS)
     can_total     = models.IntegerField(blank=True, null=True)
-    can_restante  = models.IntegerField(blank=True, null=True)
+    can_restante  = models.IntegerField(blank=True, null=True)    
     btnAcci       = models.CharField(max_length=300,default=btnAccion , null=True)
     btnInfo       = models.CharField(max_length=300,default=btnInfo , null=True)
+        
+    ESTATUS       = (('A','Activo'),('I','Inactivo'))
+    estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
     fecha_cierre  = models.DateTimeField(blank=True,null=True )
-    created_at    = models.DateTimeField(auto_now_add=True)
-    updated_at    = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
 
 
     class Meta:
@@ -33,4 +36,8 @@ class Operacion(models.Model):
         ]
 
     def __str__(self):
-        return '%s %s %s %s %s %s %s %s' % (self.id, self.usuario, self.empresa,self.referencia,self.estatus,self.color,self.nom_operacion,self.created_at)
+        return 'id:{} usuario:{} empresa:{} referencia:{} color:{} nom_operacion:{} created_at:{} estatus:{} '.format(self.id, self.usuario,
+        self.empresa,self.referencia,
+        self.color,
+        self.nom_operacion,self.created_at,
+        self.estatus)

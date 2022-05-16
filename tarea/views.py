@@ -74,7 +74,8 @@ class CreateTarea(View):
                 min_hora     = horaXTarea,
                 valor        = valorTarea,
                 detalle      = detalleTarea,
-                codigo_tarea = codigoTarea
+                codigo_tarea = codigoTarea,
+                estatus        = 'A',
         )
   
             data = {
@@ -111,6 +112,7 @@ class UpdateTarea(TemplateView):
         idempresaTarea 	 = int(request.GET.get('empresaTareaUP', None))
         idUserTarea      = int(request.GET.get('idUserTareaUP', None))
         idTareaUP        = int(request.GET.get('idTareaUP', None))
+        estatusUP          = int(request.GET.get('estatusTarea', None))
         
         obj = Tarea.objects.get(id=idTareaUP)
         obj.empresa_id = idempresaTarea
@@ -119,7 +121,8 @@ class UpdateTarea(TemplateView):
         obj.min_minuto = minutoXTarea 
         obj.min_hora   = horaXTarea     
         obj.valor      = valorTarea
-        obj.detalle    = detalleTarea  
+        obj.detalle    = detalleTarea
+        obj.estatus    = estatusUP
         try:
             obj.save()
             return redirect('home')

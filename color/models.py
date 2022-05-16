@@ -8,8 +8,12 @@ class Color(models.Model):
     empresa        = models.ForeignKey(Empresa, related_name='Color',on_delete=models.CASCADE)
     nom_color      = models.CharField(max_length=20)
     codigo_color   = models.CharField(blank=True, null=True,max_length=25)    
-    created_at     = models.DateTimeField(auto_now_add=True)
-    updated_at     = models.DateTimeField(auto_now=True)
+    
+    ESTATUS       = (('A','Activo'),('I','Inactivo'))
+    estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
     class Meta:
         ordering = ['-created_at']
         indexes = [
@@ -17,7 +21,7 @@ class Color(models.Model):
             
         ]
     def __str__(self):
-            return 'id{} nom_color{}  cod_empresa{}'.format(self.id, self.nom_color, self.codigo_color)
+            return 'id:{} nom_color:{}  cod_empresa:{} estatus:{}'.format(self.id, self.nom_color, self.codigo_color,self.estatus)
   
  
 
