@@ -207,7 +207,7 @@ function ProduccionOP(idOperacion, idUsuario) {
             //scrollY: "450px",
 
             order: [
-                [1, "asc"]
+                [5, "dsc"]
             ],
 
             columns: [
