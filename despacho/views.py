@@ -17,10 +17,7 @@ from patinador.serializers import PatinadorSerializer
 from operacion.models import Operacion
 from django.views.generic import View
 from django.http import JsonResponse, Http404, HttpResponse
-
-
 from django.db.models import F
-
 from django_serverside_datatable.views import ServerSideDatatableView
 
 class ItemListView(ServerSideDatatableView):   
@@ -43,20 +40,6 @@ class ItemListView(ServerSideDatatableView):
             return queryset
     
     
-
-
-
-
-        
-
-
-
-
-
-
-
-
-
 #original
 @api_view(['GET'])
 def despacho_list(request):
@@ -122,8 +105,7 @@ def deleteDespacho(request,id):
 
 
 @api_view(['GET'])  
-def operacionesList(request):
-     
+def operacionesList(request):     
     if request.session.has_key('username'):        
         if 'username' in request.session:
             username = request.session['username']     
@@ -193,6 +175,10 @@ class Despachos(TemplateView):
 
 
 
+
+
+
+
 @api_view(['POST'])
 def createDespacho(request,):
     if request.session.has_key('username'):        
@@ -205,15 +191,12 @@ def createDespacho(request,):
     
     #print(request.data['id_OP'])
     #print(request.data)
-    
- 
     canTerminada  = int(request.data['cant'])
+    
     nombreTalla   = Talla.objects.filter(empresa_id=int(lastEm.lastEm),usuario_id=int(idUser.id)     ,id=int(request.data['selectIdTalla'])).values('nom_talla')
     idPatinador   = Patinador.objects.filter(empresa_id=int(lastEm.lastEm),usuario_id=int(idUser.id) ,id=int(request.data['selectIDPatinador'])).values('integrante_id')   
     nomPatinador  = Integrante.objects.filter(empresa_id=int(lastEm.lastEm),usuario_id=int(idUser.id) ,id=int(idPatinador[0]['integrante_id'])).values('nombres','apellidos')
-    
     #print(nomPatinador,int(request.data['selectIDPatinador']))   
-    
     nom_patinador = nomPatinador[0]['nombres']+" "+nomPatinador[0]['apellidos']
     
     try:
@@ -236,13 +219,9 @@ def createDespacho(request,):
         data = {
             'despacho': True
         }
-        
-        
+
         CanTallaOP      = CanTalla.objects.all().filter(operacion_id=int(request.data['id_OP']),talla_id=int(request.data['selectIdTalla'])).update(res_talla= F('res_talla') - canTerminada)
         OpTallaRestante = Operacion.objects.all().filter(id=int(request.data['id_OP'])).update(can_restante= F('can_restante') - canTerminada)
-        
-        
-        
         
         return Response(data)
     except Exception as e:

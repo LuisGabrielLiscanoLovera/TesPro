@@ -66,11 +66,13 @@ class CreateReferencia(View):
             obj = Referencia.objects.latest('id')
             user = {'id':obj.id,'nom_referencia':obj.nom_referencia,'descripcion':obj.descripcion,'created_at':obj.created_at.strftime("%Y-%m-%d %H:%M:%S")}
             data = {
-            'user': user
+            'user': user,
+             'estatus':True
         }
         else:
             data = {
-            'user': "enviar un mensaje de error Referencia repetida repetido"
+            'user': "enviar un mensaje de error Referencia repetida repetido",
+             'estatus':False
         }
             print("enviar un mensaje de error Referencia repetida ") 
         

@@ -14,7 +14,7 @@ function DetailFormatterButInfoDespacho(index, row) {
         '</div>' +
         '<div class="col-sm-6">' +
         '<div id="despachoVue-' + row.id + '"><template>' +
-        '<table class="table animated fadeIn border border border-info ">' +
+        '<table class="table animated fadeIn  border-info ">' +
         '<thead class="thead-dark">' +
         '<tr>' +
         '<th class="text-center">Nombre Talla</th>' +
@@ -59,7 +59,7 @@ function DetailFormatterButInfoDespacho(index, row) {
         '" class="form-control" v-model="selectIdTalla"><option  value="">Selecciones Talla</option>' +
 
         '<option id="id_talla"  v-for="(optionTalla) in allTallasOPs"  v-bind:value="optionTalla.talla"  >[[optionTalla.num_talla]] / [[optionTalla.nom_talla]]</option></select>' +
-        '<input class="form-control" autocomplete="off" placeholder="Cantidad terminada" id="cant" name="cantOpDespacho-' + row.id +
+        '<input class="form-control big-button" autocomplete="off" placeholder="Cantidad terminada" id="cant" name="cantOpDespacho-' + row.id +
         '"  type="number" v-model="cant" required/>' +
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number"/>' +
 

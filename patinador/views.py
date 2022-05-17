@@ -97,12 +97,14 @@ class CreatePatinador(View):
             ) 
            
             data = {
-            'user': "user"
+            'user': "user",
+             'estatus':True
         }
         
         else:
             data = {
-            'user': "enviar un mensaje de error patinador repetido"
+            'user': "enviar un mensaje de error patinador repetido",
+             'estatus':False
         }
             print("enviar un mensaje de error patinador repetida") 
         

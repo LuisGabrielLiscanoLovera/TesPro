@@ -10,6 +10,7 @@ from talla.models import Talla
 from operacion.models import Operacion
 from patinador.models import Patinador
 from integrante.models import Integrante
+from produccion.models import Produccion as Prod
 from authapp.models import MyUser
 from .serializers import ProduccionSerializer
 from rest_framework.decorators import api_view
@@ -63,3 +64,48 @@ def ProduccionOPList(request):
     
     return HttpResponse(dump, content_type='application/json')
     
+
+
+
+
+@api_view(['POST'])
+def createProduccion(request,):
+    #Prod = Models Produccion
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+        
+    lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()  
+    
+    canTerminada  = int(request.data['cantidadProd'])
+    try: 
+        obj = Prod.objects.create(
+        usuario_id           = int(idUser.id),
+        patinador_id         = int(request.data['OccionId_pantinador_prod']),
+        integrante_id        = int(request.data['OccionId_integrante_prod']),
+        empresa_id           = int(lastEm.lastEm),
+        operacion_id         = int(request.data['idOperacion']),
+        talla_id             = int(request.data['OccionId_talla']),
+        tarea_id             = int(request.data['OccionId_tarea']),
+        can_terminada        = canTerminada       
+        )
+        obj = Prod.objects.latest('id')
+        btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteProduccionUnico({})'> </button>".format(obj.id)
+        obj = Prod.objects.all().filter(id=obj.id).update(delProduccion=btnDel)
+        data = {
+            'produccion': "Produccion guardado con exito!",
+            'estatus':True
+        }
+       
+        return Response(data)
+
+    except Exception as e:
+        print(str(e))
+        return Response("despacho no cargado " +str(e) )
+ 
+   
+   
+
+   
+    return HttpResponse()

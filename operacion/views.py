@@ -94,10 +94,12 @@ class CreateOperacion(View):
             'user': "Operacion creaada con exito!",
             'lastIdOperacion':obj.id,
             'tallasEmpresa':datas,
+            'estatus':True
         }
         else:
             data = {
-            'user': "enviar un mensaje de error operacion repetida"
+            'user': "enviar un mensaje de error operacion repetida",
+             'estatus':False
         }
             print("enviar un mensaje de error operacion repetida") 
         

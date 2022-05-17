@@ -33,7 +33,7 @@ def integranteList(request):
             idUser   = MyUser.objects.get(username=username)
 
     lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()    
-    integrante = Integrante.objects.all().filter(empresa_id=lastEm.lastEm).order_by('-id')
+    integrante = Integrante.objects.all().filter(empresa_id=lastEm.lastEm,estatus='A').order_by('-id')
     serializer = IntegranteSerializer(integrante, many=True)
     return Response(serializer.data)
 
@@ -83,11 +83,13 @@ class CreateIntegrante(View):
         )
   
             data = {
-            'user': "user"
+            'user': "user",
+             'estatus':True
         }
         else:
             data = {
-            'user': "enviar un mensaje de error Integrante repetido"
+            'user': "enviar un mensaje de error Integrante repetido",
+            'estatus':False
         }
             print("enviar un mensaje de error Integrante repetidao") 
         
@@ -100,6 +102,7 @@ class DeleteIntegrante(View):
         Integrante.objects.get(id=id1).delete()
         data = {
             'deleted': True
+            
         }
         return JsonResponse(data)
 
