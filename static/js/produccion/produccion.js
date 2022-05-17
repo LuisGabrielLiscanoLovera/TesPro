@@ -204,7 +204,7 @@ function ProduccionOP(idOperacion, idUsuario) {
             // scrollY: '500px',
 
             scrollCollapse: true,
-            //scrollY: "450px",
+            scrollY: "250px",
 
             order: [
                 [5, "dsc"]
@@ -224,4 +224,15 @@ function ProduccionOP(idOperacion, idUsuario) {
 
 
     })
+}
+
+
+
+function deleteProduccionUnico(id_produccion) {
+
+    axios.delete('eliminar_produccion/' + id_produccion + '/')
+        .then(res => {
+            console.log(res)
+        }).catch(error => console.log(error));
+
 }

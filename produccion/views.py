@@ -14,7 +14,7 @@ from produccion.models import Produccion as Prod
 from authapp.models import MyUser
 from .serializers import ProduccionSerializer
 from rest_framework.decorators import api_view
-from .models import Produccion as prod
+
 from django.http import HttpResponse
 class Produccion(TemplateView):
      template_name = "pages/produccion.html"     
@@ -57,7 +57,7 @@ def ProduccionOPList(request):
                 idUser   = MyUser.objects.get(username = username)
                  
     lastEm     = CambioEmpres.objects.filter(Usuario_id = idUser.id).last() 
-    produccion = prod.objects.filter(empresa_id = lastEm.lastEm,operacion_id=int(request.GET.get('idOp', None))).order_by('-id')
+    produccion = Prod.objects.filter(empresa_id = lastEm.lastEm,operacion_id=int(request.GET.get('idOp', None))).order_by('-id')
     ProduccionSe = ProduccionSerializer(produccion, many=True)   
     dump = json.dumps(ProduccionSe.data)   #dump serializer to json reponse 
     
@@ -109,3 +109,26 @@ def createProduccion(request,):
 
    
     return HttpResponse()
+
+
+
+@api_view(['DELETE'])
+def deleteProduccion(request,id):
+    try:      
+        Prod.objects.get(id=id).delete()
+        data = {
+            'deleted': True
+        }
+        
+    except Exception as e:
+        print(str(e))
+        
+        data = {
+            'deleted': False            
+        }
+        
+        Response("Unable to Delete Task!")
+    return JsonResponse(data)
+    
+        
+    
