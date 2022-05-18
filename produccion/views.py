@@ -73,12 +73,13 @@ def ProduccionDataIntegrante(request):
                 idUser   = MyUser.objects.get(username = username)
     idOperacion  = request.GET.get('idOp',None)    
     idIntegrante = request.GET.get('idIntegranteSelect')
+    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()   
+
+    
+    prodIntegrante=Prod.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(idOperacion),integrante_id=idIntegrante)
     
     
-    
-    
-    
-  
+    print(prodIntegrante)
     data = {'OP':idOperacion,'idIntegranteSelect':idIntegrante}
     
     
