@@ -6,10 +6,10 @@ function DetailFormatterButInfoProduccion(index, row) {
     //crea y renderiza la tabla
     return '<div class="row">' +
         '<script type="application/javascript">' + 'formProduccionOP(' + row.id + ',' + row.usuario + ');' +
+
+
+
         '</' + 'script>' +
-
-
-
 
 
         '<div id="FormuProduccionOP-' + row.id + '">' +
@@ -24,7 +24,7 @@ function DetailFormatterButInfoProduccion(index, row) {
         '<div class="form-group">' +
 
         '<select  id="OccionId_integrante_prod-' + row.id +
-        '" class="form-select form-select-sm form-control" v-model="selectIdIntegranteProduccion"><option value="">Selecciones Integrante</option>' +
+        '" class="sectIntegrenteOnChan-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteProduccion"><option value="">Selecciones Integrante</option>' +
         '<option id="id_integrante"  v-for="(optionIntegrante) in allIntegrantesProduccions" v-bind:value="optionIntegrante.id">[[optionIntegrante.nombres]]  [[optionIntegrante.apellidos]]</option></select></div>' +
         '</div>' +
 
@@ -62,14 +62,23 @@ function DetailFormatterButInfoProduccion(index, row) {
 
         '</template>' +
         '</div>' +
+        '<div class="col-mx-9 col-md-offset-9">' +
 
+
+
+
+        '<div id="sectIntegreOC-' + row.id + '" class="resutatatIntegrante-' + row.id +
+        '"></div>' +
+        '</div>' +
         '</div>';
 
 
-
-
-
 }
+
+
+
+
+
 
 function DetailFormatterButAccionProduccion(index, row) {
     //r = parseInt("[[progressRest]]");
@@ -100,8 +109,6 @@ function DetailFormatterButAccionProduccion(index, row) {
 }
 
 
-
-
 function formProduccionOP(idOperacion, idUsuario) {
     new Vue({
         el: '#FormuProduccionOP-' + idOperacion,
@@ -123,8 +130,74 @@ function formProduccionOP(idOperacion, idUsuario) {
             }
         },
         methods: {
+
+            getProduccionDataIntegrante: function() {
+
+                const selectElement = document.querySelector(".sectIntegrenteOnChan-" + idOperacion);
+                selectElement.addEventListener("change", (event) => {
+                    const resutatatIntegrante = document.
+                    querySelector(".resutatatIntegrante-" + idOperacion);
+
+
+
+
+
+                    //resutatatIntegrante.textContent = `Te gusta el sabor ${event.target.value}`;
+                    //console.log(event.target.value);
+                    ///Crear tabla data integrante record 
+                    // ?idOp=' + idOperacion + '/?idInteg=' + idIntegranteSelect + '/')
+                    const idIntegranteSelect = event.target.value;
+                    console.log('id integrante=', idIntegranteSelect);
+                    console.log('id op=', idOperacion);
+
+
+                    $.ajax({
+                        url: 'dataProduccionInte-list/',
+                        data: {
+
+                            'idIntegranteSelect': idIntegranteSelect,
+                            'idOp': idOperacion,
+
+
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+
+                            if (data.user) {
+                                appendToUsrTable(data.user);
+                            }
+                        }
+                    });
+
+
+
+                    document.getElementById('sectIntegreOC-' + idOperacion).innerHTML =
+
+
+                        '<table class="table animated fadeIn border border-info ">' +
+                        '<thead class="thead-dark">' +
+                        '<tr>' +
+                        '<th class="text-center">Nombre Talla</th>' +
+                        '<th class="text-center">Talla Total</th>' +
+                        '<th class="text-center">Talla Restante</th>' +
+                        '</tr></div>';
+
+
+
+
+
+
+
+
+                });
+
+
+
+            },
+
             getProduccionData: function() {
                 ProduccionOP(idOperacion);
+
                 axios
                     .get('/tarea/tarea-list/')
                     .then((resp) => {
@@ -180,13 +253,10 @@ function formProduccionOP(idOperacion, idUsuario) {
 
             }
         },
-
-
-
         mounted: function() {
             this.getProduccionData();
+            this.getProduccionDataIntegrante();
         }
-
     })
 
 
@@ -200,7 +270,7 @@ function ProduccionOP(idOperacion, idUsuario) {
                 url: '/produccion/produccionOP-list/?idOp=' + idOperacion,
                 dataSrc: ''
             },
-            language: { "sProcessing": "Procesando...", "sLengthMenu": "Mostrar _MENU_ registros", "sZeroRecords": "No se encontraron resultados", "sEmptyTable": "Ningún dato disponible en esta tabla", "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros", "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros", "sInfoFiltered": "(filtrado de un total de _MAX_ registros)", "sInfoPostFix": "", "sSearch": "Buscar:", "sUrl": "", "sInfoThousands": ",", "sLoadingRecords": "Cargando...", "oPaginate": { "sFirst": "Primero", "sLast": "Último", "sNext": "Siguiente", "sPrevious": "Anterior" }, "oAria": { "sSortAscending": ": Activar para ordenar la columna de manera ascendente", "sSortDescending": ": Activar para ordenar la columna de manera descendente" } },
+            language: { "sProcessing": "Procesando...", "sLengthMenu": "Mostrar _MENU_ registros", "sZeroRecords": "No se encontraron resutatatIntegrantes", "sEmptyTable": "Ningún dato disponible en esta tabla", "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros", "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros", "sInfoFiltered": "(filtrado de un total de _MAX_ registros)", "sInfoPostFix": "", "sSearch": "Buscar:", "sUrl": "", "sInfoThousands": ",", "sLoadingRecords": "Cargando...", "oPaginate": { "sFirst": "Primero", "sLast": "Último", "sNext": "Siguiente", "sPrevious": "Anterior" }, "oAria": { "sSortAscending": ": Activar para ordenar la columna de manera ascendente", "sSortDescending": ": Activar para ordenar la columna de manera descendente" } },
             // scrollY: '500px',
 
             scrollCollapse: true,

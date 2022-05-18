@@ -2,7 +2,11 @@
 # tomar en cuenta los temas de db on cascade
 # hacer reactivo los formularios
 # deicdir la estructura de los template
-# crear opccion en operacion sin talla automatico
-# tadas las data tables pasara a vue
 
-#en despacho crear boton eliminar despacho y cerrar operacion
+# tadas las data tables pasara a vue
+#crear registro pdf para generar cda data de los registro
+#loguin patinador (caja negra de despacho y produccion) crear modo fon
+#(el patinador solo puede eliminar los tre ultimo registo de la bas ede datos en despacho y produccion )
+
+#modificar referencia color talla con referente a campos de esttatus
+#crear casino 

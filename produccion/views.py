@@ -48,7 +48,6 @@ class Produccion(TemplateView):
           
           return context
 
-
 @api_view(['GET'])  
 def ProduccionOPList(request):
     if request.session.has_key('username'):        
@@ -64,9 +63,29 @@ def ProduccionOPList(request):
     
     return HttpResponse(dump, content_type='application/json')
     
-
-
-
+    
+#dataProduccionInte-list/
+@api_view(['GET'])  
+def ProduccionDataIntegrante(request):
+    if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username = username)
+    idOperacion  = request.GET.get('idOp',None)    
+    idIntegrante = request.GET.get('idIntegranteSelect')
+    
+    
+    
+    
+    
+  
+    data = {'OP':idOperacion,'idIntegranteSelect':idIntegrante}
+    
+    
+    return Response(data)
+    
+    
+    
 
 @api_view(['POST'])
 def createProduccion(request,):
@@ -109,8 +128,6 @@ def createProduccion(request,):
 
    
     return HttpResponse()
-
-
 
 @api_view(['DELETE'])
 def deleteProduccion(request,id):
