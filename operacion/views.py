@@ -15,6 +15,7 @@ from .serializers import OperacionSerializer,TallaSerializerOperacion
 from empresa.models import CambioEmpres
 from django.shortcuts import render
 from talla.models import Talla
+from produccion.models import Produccion as Prod
 
 from django.template.loader import render_to_string
 from django.contrib.sessions.backends.db import SessionStore
@@ -177,6 +178,7 @@ def cerarOP(request):
     
     
     Operacion.objects.filter(id=idOP).update(estatus="I", fecha_cierre=( Operacion.objects.filter(id=idOP).values('updated_at')))
+    Prod.objects.filter(operacion_id=idOP).update(estatus="I", fecha_cierre=( Operacion.objects.filter(id=idOP).values('updated_at')))
     
     
     

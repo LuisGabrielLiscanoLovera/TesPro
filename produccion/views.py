@@ -7,12 +7,15 @@ from django.contrib.sessions.backends.db import SessionStore
 from rest_framework.response import Response
 from empresa.models import Empresa,RelacionEmpresa,CambioEmpres
 from talla.models import Talla
+from tarea.models import Tarea
 from operacion.models import Operacion
 from patinador.models import Patinador
 from integrante.models import Integrante
 from produccion.models import Produccion as Prod
+from django.db.models import Sum, F 
 from authapp.models import MyUser
 from .serializers import ProduccionSerializer
+from patinador.serializers import PatinadorSerializer
 from rest_framework.decorators import api_view
 
 from django.http import HttpResponse
@@ -65,25 +68,42 @@ def ProduccionOPList(request):
     
     
 #dataProduccionInte-list/
-@api_view(['GET'])  
+@api_view(['GET'])
 def ProduccionDataIntegrante(request):
     if request.session.has_key('username'):        
             if 'username' in request.session:
                 username = request.session['username']     
-                idUser   = MyUser.objects.get(username = username)
-    idOperacion  = request.GET.get('idOp',None)    
-    idIntegrante = request.GET.get('idIntegranteSelect')
-    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()   
-
+                idUser   = MyUser.objects.get(username = username)    
+    lastEm          = CambioEmpres.objects.filter(Usuario_id=idUser).last()   
+    idOperacion     = request.GET.get('idOp',None)    
+    idIntegrante    = request.GET.get('idIntegranteSelect')
     
-    prodIntegrante=Prod.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(idOperacion),integrante_id=idIntegrante)
+    dontrepeYorself=[]
+    tareas=[]
+    patinadores=[]
     
-    
-    print(prodIntegrante)
-    data = {'OP':idOperacion,'idIntegranteSelect':idIntegrante}
-    
-    
-    return Response(data)
+    for tareasIntegrante in Prod.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(idOperacion),
+    integrante_id=idIntegrante).distinct().values('tarea_id','patinador_id'):       
+        tareaIntegrante = (Tarea.objects.filter(empresa_id=lastEm.lastEm,id=tareasIntegrante['tarea_id']).values('nom_tarea','id')[0])  
+        totalIntegrante = Prod.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(idOperacion),integrante_id=idIntegrante,tarea_id=tareaIntegrante['id']).values('tarea_id','can_terminada').aggregate(can_terminada=Sum('can_terminada'))
+        patinador       = Patinador.objects.filter(empresa_id=lastEm.lastEm,id=tareasIntegrante['patinador_id']).distinct().values('integrante_id')
+        patinador       = Integrante.objects.filter(empresa_id=lastEm.lastEm,id=patinador[0]['integrante_id']).values('nombres','apellidos')
+        patinador       = "{} {}".format(patinador[0]['nombres'],patinador[0]['apellidos'] )
+        
+        if patinador in patinadores:pass
+        else:patinadores.append(patinador)       
+        if tareaIntegrante['nom_tarea'] in dontrepeYorself:pass
+        else:           
+            dontrepeYorself.append(tareaIntegrante['nom_tarea'])
+            tareas.append({
+            'tarea':tareaIntegrante['nom_tarea'],
+            'cat_total_tarea':totalIntegrante['can_terminada'],
+        })       
+    if tareas==[]:pass
+    else:
+        if patinadores ==[]:pass 
+        else:tareas.append({'patinadores':patinadores})
+    return Response(tareas)
     
     
     
@@ -149,4 +169,19 @@ def deleteProduccion(request,id):
     return JsonResponse(data)
     
         
-    
+
+@api_view(['GET'])  
+def patinadoresActProd(request):
+    if request.session.has_key('username'):
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)            
+    lastEm = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm = lastEm.lastEm    
+    try:        
+        patinadores     = Patinador.objects.all().filter(usuario=idUser,estatus='A',ctrlProduccion=1, empresa_id=int(lastEm))
+        serializer      = PatinadorSerializer(patinadores, many=True)        
+        return Response(serializer.data)
+    except Exception as e:    
+        print(str(e),"no tienes patinadores activos")   
+        return Response("no tienes patinadores activos")

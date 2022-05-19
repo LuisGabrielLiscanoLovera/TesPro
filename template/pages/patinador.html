@@ -33,7 +33,10 @@
                             </datalist>
                             <input type="text" name="passwordP" placeholder="clave patinador" class="form-control" style="width:150px;">
                             <div class="fullday">
-                                <input class="form-control" type="checkbox" id="check"> Controlador del Despacho
+                                <input class="form-control" type="checkbox" id="check"> Control Despacho
+                            </div>
+                            <div class="fullday">
+                                <input class="form-control" type="checkbox" id="checkProd"> Control Producción
                             </div>
                             <input type="number" hidden="True" name="idEmpresa" value="{{ lastIdEmpresa }}">
                             <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">
@@ -137,9 +140,14 @@ data-auto-refresh-status="true"
 
     });
 
+    //#check box al agregar patinador para el control del Produccion
+    checkProd = document.getElementById("checkProd");
+    globalThis.ctrlProduccionoCheck = checkProd.checked;
+    checkProd.addEventListener("click", function() {
+        console.log("estado al hacer check o uncheck", this.checked);
+        globalThis.ctrlProduccionoCheck = checkProd.checked;
 
-
-
+    });
 
 
 
@@ -149,10 +157,12 @@ data-auto-refresh-status="true"
         var idEmpresa = $('input[name="idEmpresa"]').val().trim();
         var idUser = $('input[name="idUser"]').val().trim();
         var ctrlDespach = ctrlDespachoCheck;
-        console.log(idIntegrante);
+        var ctrlProduccion = ctrlProduccionoCheck;
+        if (ctrlProduccion == null) {
+            ctrlProduccion = 0;
+        }
         if (ctrlDespach == null) {
             ctrlDespach = 0;
-
         }
 
         if (idIntegrante && idEmpresa && idUser) {
@@ -163,6 +173,7 @@ data-auto-refresh-status="true"
 
                     'idIntegrante': idIntegrante,
                     'ctrlDespacho': ctrlDespach,
+                    'ctrlProduccion': ctrlProduccion,
                     'idEmpresa': idEmpresa,
                     'idUser': idUser
 

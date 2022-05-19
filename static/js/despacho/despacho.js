@@ -262,7 +262,7 @@ function formOP(idOp, usuario) {
                     this.success = 'Data saved successfully';
                     this.response = JSON.stringify(response, null, 2);
                     document.getElementById('despachoVue-' + idOp).innerHTML =
-                        '<table class="table animated fadeIn border border-info ">' +
+                        '<table class="table animated fadeIn">' +
                         '<thead class="thead-dark">' +
                         '<tr>' +
                         '<th class="text-center">Nombre Talla</th>' +

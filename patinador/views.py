@@ -77,8 +77,11 @@ class CreatePatinador(View):
         
         estatus             = 'A'
         ctrlDespachoCheck   = request.GET.get('ctrlDespacho', None)
-        
+        ctrlProduccionCheck = request.GET.get('ctrlProduccion', None)
         #check box al agregar patinador para el control del despacho 
+        if (ctrlProduccionCheck=='true'):ctrlProduccionCheck=1
+        elif (ctrlProduccionCheck=='false'):ctrlProduccionCheck=0
+        
         if (ctrlDespachoCheck=='true'):ctrlDespachoCheck=1
         elif (ctrlDespachoCheck=='false'):ctrlDespachoCheck=0
         
@@ -94,6 +97,7 @@ class CreatePatinador(View):
                 integrante_id= idIntegrante, 
                 estatus      = estatus,
                 ctrlDespacho = ctrlDespachoCheck,
+                ctrlProduccion=ctrlProduccionCheck
             ) 
            
             data = {

@@ -13,7 +13,8 @@ class Patinador(models.Model):
     created_at     = models.DateTimeField(auto_now_add=True)
     created_atv    = models.DateTimeField(auto_now_add=True)
     updated_at     = models.DateTimeField(auto_now=True)
-    ctrlDespacho   = models.BooleanField(default=False)    
+    ctrlDespacho   = models.BooleanField(default=False)
+    ctrlProduccion = models.BooleanField(default=False) 
     btnAcci = models.CharField(max_length=97, default='<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>' )
     
     ESTATUS       = (('A','Activo'),('I','Inactivo'))

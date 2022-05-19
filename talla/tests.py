@@ -1,3 +1,5 @@
 from django.test import TestCase
 
-# Create your tests here.
+
+lista = [{'tarea': 'PEGAR TACHE', 'cat_total_tarea': 6}]
+print(lista[0]['tarea'])

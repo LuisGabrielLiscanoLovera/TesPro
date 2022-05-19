@@ -4,7 +4,7 @@ axios.defaults.xsrfCookieName = "csrftoken";
 
 function DetailFormatterButInfoProduccion(index, row) {
     //crea y renderiza la tabla
-    return '' +
+    return '<div class="row">' +
         '<script type="application/javascript">' + 'formProduccionOP(' + row.id + ',' + row.usuario + ');' +
 
 
@@ -12,17 +12,27 @@ function DetailFormatterButInfoProduccion(index, row) {
         '</' + 'script>' +
 
 
-        '<div id="FormuProduccionOP-' + row.id + '">' +
+        '<div class="" id="FormuProduccionOP-' + row.id + '">' +
         '<template>' +
 
         '<form @submit.prevent="submitFormProduccion" class="form animated fadeIn border-info ">' +
         '<div hidden=True>{% csrf_token %}</div>' +
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number"/>' +
 
-        '<div class="row">' +
+
+        '<div class="col-md-6 col-md-offset-3">' +
+        '<div class="form-group">' +
+        '<select  id="OccionId_integrante_prod-' + row.id +
+        '" class="sectIntegrenteOnChan-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteProduccion"><option value="">Selecciones Integrante</option>' +
+        '<option id="id_integrante"  v-for="(optionIntegrante) in allIntegrantesProduccions" v-bind:value="optionIntegrante.id">[[optionIntegrante.nombres]]  [[optionIntegrante.apellidos]]</option></select></div>' +
+        '</div>' +
 
 
-        '<div class="col-md-6 " style="position:absolute; top:10; left:0; margin: 10px 0 0 10px">' +
+
+
+
+
+        '<div class="col-md-6 col-md-offset-3">' +
         '<div id="sectIntegreOC-' + row.id + '" class="resutatatIntegrante-' + row.id +
         '">' +
         '<table>' +
@@ -41,67 +51,49 @@ function DetailFormatterButInfoProduccion(index, row) {
 
 
 
-        '<div class="col-sm-6   offset-6" >' +
-        '<div class="form-group">' +
-        '<select  id="OccionId_integrante_prod-' + row.id +
-        '" class="sectIntegrenteOnChan-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteProduccion"><option value="">Selecciones Integrante</option>' +
-        '<option id="id_integrante"  v-for="(optionIntegrante) in allIntegrantesProduccions" v-bind:value="optionIntegrante.id">[[optionIntegrante.nombres]]  [[optionIntegrante.apellidos]]</option></select></div>' +
-        '</div>' +
 
 
 
 
 
 
-        '<div class="col-sm-6 mb-2 offset-6  ">' +
+
+
+
+
+
+        '<div class="col-mx-9">' +
         '<div class="form-group">' +
         '<select  class="form-select form-select-sm form-control" v-model="selectIDPatinadorProduccion" id="OccionId_pantinador_prod-' + row.id +
         '"><option  value="">Selecciones Patinador</option>' +
         '<option  v-for="option in allPatinadoresProduccions" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]]</option></select></div>' +
         '</div>' +
 
-
-
-
-        '<div class="col-sm-6 mb-2 offset-6">' +
+        '<div class="col-mx-9">' +
         '<div class="form-group">' +
         '<select  id="OccionId_tarea-' + row.id +
         '" class="form-select form-select-sm form-control " v-model="selectIdTareaProduccion"><option value="">Selecciones Tarea</option>' +
         '<option id="id_tarea"  v-for="(optionTarea) in allTareasProduccions" v-bind:value="optionTarea.id">[[optionTarea.nom_tarea]] / [[optionTarea.detalle]]</option></select></div>' +
         '</div>' +
 
-        '<div class="col-sm-6 mb-2 offset-6">' +
+        '<div class="col-mx-9">' +
         '<div class="form-group">' +
         '<select  id="OccionId_talla-' + row.id +
         '" class="form-select form-control form-select-sm" v-model="selectIdTallaProduccion"><option value="">Selecciones Talla</option>' +
         '<option id="id_talla"  v-for="(optionTalla) in allTallasProduccions"  v-bind:value="optionTalla.id">[[optionTalla.num_talla]] / [[optionTalla.nom_talla]]</option></select></div>' +
         '</div>' +
 
-        '<div class="col-sm-6 mb-2 offset-6">' +
+        '<div class="col-mx-9">' +
         '<div class="form-group">' +
         '<input class="form-control big-button" autocomplete="off" placeholder="Cantidad terminada" id="cant_prod" name="cant_produccion-' + row.id +
         '"  type="number" v-model="cant_prod" required/> </div>' +
         '</div>' +
 
-        '<div class="col-sm-6 mb-2 offset-6">' +
+        '<div class="col-mx-9">' +
         '<div class="form-group  "><input class="form-control btn btn-block" type="submit"  value="Guardar"></div>' +
         '</div>' +
         '</form>' +
 
-
-
-
-
-
-
-
-
-
-
-        '</div>' +
-
-
-
         '</div>' +
 
 
@@ -109,7 +101,22 @@ function DetailFormatterButInfoProduccion(index, row) {
 
 
 
-        '</template>';
+
+
+
+
+        '</template>' +
+
+
+
+
+
+
+
+
+
+
+        '</div>';
 
 
 }
@@ -123,9 +130,9 @@ function DetailFormatterButAccionProduccion(index, row) {
     //r = parseInt("[[progressRest]]");
 
     return '<div class="row">' +
-        //'<div class="col-sm-6 mb-1">' +
+        //'<div class="col-sm-1">' +
         //'</div>' +
-        '<div class="">' +
+        '<div class="col-mx-9">' +
         '<table  class="table animated fadeIn "  id="items-table-produccion-' + row.id +
         '">' +
         '<thead class="thead-dark">' +

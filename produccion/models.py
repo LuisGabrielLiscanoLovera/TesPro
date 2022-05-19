@@ -14,7 +14,7 @@ class Produccion(models.Model):
     empresa              = models.ForeignKey(Empresa, related_name='Produccion',  on_delete=models.CASCADE)
     operacion            = models.ForeignKey(Operacion,related_name='Produccion',on_delete=models.CASCADE)
     tarea                = models.ForeignKey(Tarea,related_name='Produccion',on_delete=models.DO_NOTHING,blank=True, null=True)
-    talla                = models.ForeignKey(Talla,related_name='Produccion',on_delete=models.DO_NOTHING, blank=True, null=True)
+    talla                = models.ForeignKey(Talla,related_name='ProduccionTallaFK',on_delete=models.DO_NOTHING, blank=True, null=True)
     can_terminada        = models.IntegerField()
     integrante           = models.ForeignKey(Integrante,related_name='ProduccionI',on_delete=models.CASCADE)
     patinador            = models.ForeignKey(Patinador, related_name='Produccion', blank=True, null=True, on_delete=models.CASCADE)

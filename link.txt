@@ -64,7 +64,9 @@ https://examples.bootstrap-table.com/index.html#methods/update-row.html#view-sou
 
 
 
+conexion con postegres
 
+https://codigofacilito.com/articulos/articulo_15_10_2019_16_52_20
 
 
 
