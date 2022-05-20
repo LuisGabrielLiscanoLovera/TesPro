@@ -28,12 +28,12 @@ class Talla(models.Model):
         return '%s %s %s %s %s %s ' % (self.id, self.usuario, self.empresa,self.nom_talla,self.num_talla,self.created_at)
     
 class CanTalla(models.Model):
-    usuario       = models.ForeignKey(User, related_name='CanTalla', null=True, blank=True,on_delete=models.CASCADE)
-    empresa       = models.ForeignKey(Empresa, related_name='CanTalla', null=False, blank=False,on_delete=models.CASCADE)
+    usuario       = models.ForeignKey(User, related_name='CanTalla',on_delete=models.CASCADE)
+    empresa       = models.ForeignKey(Empresa, related_name='CanTalla', on_delete=models.CASCADE)
     can_talla     = models.IntegerField(blank=True, null=True)
     res_talla     = models.IntegerField(blank=True, null=True)
-    talla         = models.ForeignKey(Talla, related_name='CanTalla', null=False, blank=False,on_delete  =models.CASCADE)
-    operacion     = models.ForeignKey(Operacion, related_name='CanTalla', null=False, blank=False,on_delete=models.CASCADE)
+    talla         = models.ForeignKey(Talla, related_name='CanTalla',on_delete  =models.CASCADE)
+    operacion     = models.ForeignKey(Operacion, related_name='CanTalla',on_delete=models.CASCADE)
     created_at    = models.DateTimeField(auto_now_add=True)
     updated_at    = models.DateTimeField(auto_now=True)
     class Meta:
@@ -44,5 +44,5 @@ class CanTalla(models.Model):
         ]
 
     def __str__(self):
-        return '%s %s %s %s %s %s %s %s ' % (self.id, self.usuario, self.empresa,self.can_talla,self.res_talla,self.talla,self.operacion,self.created_at)
+        return 'id:{} usuario:{} empresa:{} can_talla:{} res_talla:{} talla_id:{} operacion:{} created_at:{}'.format(self.id, self.usuario, self.empresa,self.can_talla,self.res_talla,self.talla,self.operacion,self.created_at)
 

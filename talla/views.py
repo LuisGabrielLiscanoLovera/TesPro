@@ -73,10 +73,10 @@ def TallaOPList(request):
                 idUser   = MyUser.objects.get(username=username)
                 
     lastEm   = CambioEmpres.objects.filter(Usuario_id=idUser.id).last() 
-    ptalla     = CanTalla.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(request.GET.get('idOp', None))).order_by('-id')
+    ptalla   = CanTalla.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(request.GET.get('idOp', None))).order_by('-id')
     
     serializer = CanTallaSerializer(ptalla, many=True)
-
+    print(serializer)
     return Response(serializer.data)
  
 
