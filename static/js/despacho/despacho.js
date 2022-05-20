@@ -83,7 +83,7 @@ function DetailFormatterButAccionDespacho(index, row) {
 
 
         '<div class="col-md-10">' +
-        '<table class="animated fadeIn table" id="items-table' + row.id +
+        '<table class="animated fadeIn table thead-dark " id="items-table' + row.id +
         '"><thead><tr>' +
 
 

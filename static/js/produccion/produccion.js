@@ -26,7 +26,7 @@ function DetailFormatterButInfoProduccion(index, row) {
         '<div id="sectIntegreOC-' + row.id + '" class="resutatatIntegrante-' + row.id +
         '">' +
 
-        '<table class="thead-dark tale ">' +
+        '<table class="thead-dark animated fadeIn">' +
         '<thead class="">' +
         '<tr><th scope="col" class="text-center">Tareas</th><th scope="col" class="text-center">Cantidad</th></tr>' +
         '</thead>' +
