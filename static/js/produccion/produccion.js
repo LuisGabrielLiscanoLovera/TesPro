@@ -22,27 +22,33 @@ function DetailFormatterButInfoProduccion(index, row) {
         '<div class="row">' +
 
 
-        '<div class="col-md-6 " style="position:absolute; top:10; left:0; margin: 10px 0 0 10px">' +
+        '<div class="col-md-6 " style="position:absolute; left:0; margin: 10px 0 0 10px">' +
         '<div id="sectIntegreOC-' + row.id + '" class="resutatatIntegrante-' + row.id +
         '">' +
-        '<table>' +
-        '<thead class="thead-dark">' +
-        '<tr><th>Tareas</th><th>Cantidad</th>' +
+
+        '<table class="thead-dark tale ">' +
+        '<thead class="">' +
+        '<tr><th scope="col" class="text-center">Tareas</th><th scope="col" class="text-center">Cantidad</th></tr>' +
         '</thead>' +
         '<tbody>' +
         '<tr v-for="i in allTareaProduccions">' +
-        '<td>[[i.tarea]]</td>' +
-        '<td>[[i.cat_total_tarea]]</td>' +
+
+        '<td class="text-center">[[i.tarea]]</td>' +
+        '<td class="text-center">[[i.cat_total_tarea]]</td>' +
+
         '</tr>' +
+
+
         '</tbody>' +
         '</table>' +
+
         '</div>' +
         '</div>' +
 
 
 
         '<div class="col-sm-6   offset-6" >' +
-        '<div class="form-group">' +
+        '<div class="form-group"> ' + //<label>Integrante</label>
         '<select  id="OccionId_integrante_prod-' + row.id +
         '" class="sectIntegrenteOnChan-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteProduccion"><option value="">Selecciones Integrante</option>' +
         '<option id="id_integrante"  v-for="(optionIntegrante) in allIntegrantesProduccions" v-bind:value="optionIntegrante.id">[[optionIntegrante.nombres]]  [[optionIntegrante.apellidos]]</option></select></div>' +
@@ -88,43 +94,17 @@ function DetailFormatterButInfoProduccion(index, row) {
         '</div>' +
         '</form>' +
 
-
-
-
-
-
-
-
-
-
-
         '</div>' +
-
-
-
         '</div>' +
-
-
-
-
-
-
         '</template>';
-
-
 }
-
-
-
 
 
 
 function DetailFormatterButAccionProduccion(index, row) {
     //r = parseInt("[[progressRest]]");
-
     return '<div class="row">' +
-        //'<div class="col-sm-6 mb-1">' +
-        //'</div>' +
+
         '<div class="">' +
         '<table  class="table animated fadeIn "  id="items-table-produccion-' + row.id +
         '">' +
@@ -164,6 +144,7 @@ function formProduccionOP(idOperacion, idUsuario) {
                 selectIdTallaProduccion: '',
                 selectIDPatinadorProduccion: '',
                 cant_prod: '',
+                name: 'pass',
                 usuario: idUsuario,
                 idOperacion: idOperacion,
 
@@ -173,17 +154,15 @@ function formProduccionOP(idOperacion, idUsuario) {
 
             getProduccionDataIntegrante: function() {
 
+                //evento de escucha de integrante
                 const selectElement = document.querySelector(".sectIntegrenteOnChan-" + idOperacion);
                 selectElement.addEventListener("change", (event) => {
                     const resutatatIntegrante = document.
                     querySelector(".resutatatIntegrante-" + idOperacion);
-                    //resutatatIntegrante.textContent = `Te gusta el sabor ${event.target.value}`;
-                    //console.log(event.target.value);
-                    ///Crear tabla data integrante record 
-                    // ?idOp=' + idOperacion + '/?idInteg=' + idIntegranteSelect + '/')
                     const idIntegranteSelect = event.target.value;
-                    console.log('id integrante=', idIntegranteSelect);
-                    console.log('id op=', idOperacion);
+
+                    //variable global prototype idIntegranteSelect
+                    Vue.prototype.$varGlobalSelectIntegrProd = idIntegranteSelect;
 
                     axios.get('dataProduccionInte-list/', {
                         params: {
@@ -192,36 +171,14 @@ function formProduccionOP(idOperacion, idUsuario) {
                         }
                     }).then((resp) => {
                         this.allTareaProduccions = resp.data;
+
                     }).catch(error => console.log(error));
-
-
-
-
-
-
                     /* 
-                                        document.getElementById('sectIntegreOC-' + idOperacion).innerHTML =
-                                            '<table class="table animated fadeIn border border-info ">' +
-
-                                            '<thead class="thead-dark">' +
-                                            '<tr>' +
-                                            '<th class="text-center"></th>' +
-                                            '<th class="text-center">Talla Total</th>' +
-                                            '<th class="text-center">Talla Restante</th>' +
-                                            '</tr></div>';
+                    document.getElementById('sectIntegreOC-' + idOperacion).innerHTML =         
                      */
-
-
-
-
-
-
-
                 });
-
-
-
             },
+
 
             getProduccionData: function() {
                 ProduccionOP(idOperacion);
@@ -255,8 +212,6 @@ function formProduccionOP(idOperacion, idUsuario) {
                 var OccionId_talla = $('select[id="OccionId_talla-' + this.idOperacion + '"]').val().trim();
                 var cantidad = $('input[name="cant_produccion-' + this.idOperacion + '"]').val().trim();
                 //crear la evaluacion de solo puede guardar los datos si cantidad esta llenna con if
-
-
                 axios.post('/produccion/create/', {
                     idOperacion: idOperacion,
                     usuario: idUsuario,
@@ -265,30 +220,25 @@ function formProduccionOP(idOperacion, idUsuario) {
                     OccionId_tarea: OccionId_tarea,
                     OccionId_talla: OccionId_talla,
                     cantidadProd: cantidad,
-
                 }).then(response => {
-                    console.log(response);
+                    //console.log("produccion creada");
+                    //console.log(this.$varGlobalSelectIntegrProd);
+                    axios.get('dataProduccionInte-list/', {
+                        params: {
+                            idIntegranteSelect: this.$varGlobalSelectIntegrProd,
+                            idOp: idOperacion,
+                        }
+                    }).then((resp) => {
+                        this.allTareaProduccions = resp.data;
+                    }).catch(error => console.log(error));
                 })
-
-
-
-
-
-
-
-
-
-
             }
         },
         mounted: function() {
-            this.getProduccionData();
             this.getProduccionDataIntegrante();
+            this.getProduccionData();
         }
     })
-
-
-
 }
 
 function ProduccionOP(idOperacion, idUsuario) {
@@ -330,7 +280,10 @@ function deleteProduccionUnico(id_produccion) {
 
     axios.delete('eliminar_produccion/' + id_produccion + '/')
         .then(res => {
-            console.log(res)
+            console.log(res);
+            ProduccionOP(id_produccion, 0);
+
+
         }).catch(error => console.log(error));
 
 }
