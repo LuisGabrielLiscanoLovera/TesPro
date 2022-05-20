@@ -119,6 +119,16 @@ def createProduccion(request,):
     lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()  
     
     canTerminada  = int(request.data['cantidadProd'])
+    
+    print("int(idUser.id): ",int(idUser.id))
+    print("int(request.data['OccionId_pantinador_prod']:" ,int(request.data['OccionId_pantinador_prod']))
+    print("OccionId_integrante_prod: ",int(request.data['OccionId_integrante_prod']))
+    print("int(lastEm.lastEm):",int(lastEm.lastEm))
+    print("int(request.data['OccionId_talla']): ",int(request.data['OccionId_talla']))
+    print("int(request.data['OccionId_tarea']):", int(request.data['OccionId_tarea']))
+    print("int(request.data['idOperacion']): ",int(request.data['idOperacion']))
+    print(canTerminada)
+    
     try: 
         obj = Prod.objects.create(
         usuario_id           = int(idUser.id),
@@ -130,6 +140,11 @@ def createProduccion(request,):
         tarea_id             = int(request.data['OccionId_tarea']),
         can_terminada        = canTerminada       
         )
+        
+        
+        
+        
+        
         obj = Prod.objects.latest('id')
         btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteProduccionUnico({})'> </button>".format(obj.id)
         obj = Prod.objects.all().filter(id=obj.id).update(delProduccion=btnDel)
@@ -142,7 +157,7 @@ def createProduccion(request,):
 
     except Exception as e:
         print(str(e))
-        return Response("despacho no cargado " +str(e) )
+        return Response("PRODUCCION no cargadA " +str(e) )
  
    
    

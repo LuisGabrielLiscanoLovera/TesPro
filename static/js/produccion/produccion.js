@@ -80,7 +80,8 @@ function DetailFormatterButInfoProduccion(index, row) {
         '<div class="form-group">' +
         '<select  id="OccionId_talla-' + row.id +
         '" class="form-select form-control form-select-sm" v-model="selectIdTallaProduccion"><option value="">Selecciones Talla</option>' +
-        '<option id="id_talla"  v-for="(optionTalla) in allTallasProduccions"  v-bind:value="optionTalla.id">[[optionTalla.num_talla]] / [[optionTalla.nom_talla]]</option></select></div>' +
+        '<option id="id_talla"  v-for="(opcTarea) in allTallasProduccions"  v-bind:value="opcTarea.id">[[opcTarea.num_talla]] / [[opcTarea.nom_talla]]</option></select></div>' +
+
         '</div>' +
 
         '<div class="col-sm-6 mb-2 offset-6">' +
@@ -220,6 +221,7 @@ function formProduccionOP(idOperacion, idUsuario) {
                     .get('/talla/tallaOP-list/?idOp=' + idOperacion)
                     .then((resp) => {
                         this.allTallasProduccions = resp.data;
+                        console.log(this.allTallasProduccions);
                     }).catch(error => console.log(error));
             },
             submitFormProduccion: function() {
