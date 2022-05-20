@@ -128,6 +128,23 @@ function DetailFormatterButAccionProduccion(index, row) {
 }
 
 
+
+
+function deleteProduccionUnico(id_produccion) {
+
+    axios.delete('eliminar_produccion/' + id_produccion + '/')
+        .then(res => {
+            console.log(res);
+
+
+
+
+        }).catch(error => console.log(error));
+
+}
+
+
+
 function formProduccionOP(idOperacion, idUsuario) {
     new Vue({
         el: '#FormuProduccionOP-' + idOperacion,
@@ -243,7 +260,10 @@ function formProduccionOP(idOperacion, idUsuario) {
 
 function ProduccionOP(idOperacion, idUsuario) {
     $(document).ready(function() {
-        var table = $("#items-table-produccion-" + idOperacion).removeAttr("width").dataTable({
+
+
+
+        let table = $("#items-table-produccion-" + idOperacion).removeAttr("width").dataTable({
             ajax: {
                 url: '/produccion/produccionOP-list/?idOp=' + idOperacion,
                 dataSrc: ''
@@ -270,20 +290,20 @@ function ProduccionOP(idOperacion, idUsuario) {
 
         });
 
+        $("#items-table-produccion-" + idOperacion).on("click", "button", function() {
 
+            $("#items-table-produccion-" + idOperacion).DataTable().ajax.reload();
+            sleepThenAct();
+
+        })
+
+        function sleepThenAct() {
+            $("#items-table-produccion-" + idOperacion).DataTable().ajax.reload();
+
+        }
     })
-}
 
 
 
-function deleteProduccionUnico(id_produccion) {
-
-    axios.delete('eliminar_produccion/' + id_produccion + '/')
-        .then(res => {
-            console.log(res);
-            ProduccionOP(id_produccion, 0);
-
-
-        }).catch(error => console.log(error));
 
 }
