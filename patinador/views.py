@@ -76,14 +76,18 @@ class CreatePatinador(View):
         idIntegrante=idIntegrante[0]['id']
         
         estatus             = 'A'
+        ctrlCasinoCheck     = request.GET.get('ctrlCasino', None)
         ctrlDespachoCheck   = request.GET.get('ctrlDespacho', None)
         ctrlProduccionCheck = request.GET.get('ctrlProduccion', None)
-        #check box al agregar patinador para el control del despacho 
+        #check box al agregar patinador para el control del despacho, produccion, casino 
         if (ctrlProduccionCheck=='true'):ctrlProduccionCheck=1
         elif (ctrlProduccionCheck=='false'):ctrlProduccionCheck=0
         
         if (ctrlDespachoCheck=='true'):ctrlDespachoCheck=1
         elif (ctrlDespachoCheck=='false'):ctrlDespachoCheck=0
+        
+        if (ctrlCasinoCheck=='true'):ctrlCasinoCheck=1
+        elif (ctrlCasinoCheck=='false'):ctrlCasinoCheck=0
         
         #puede existir pero no repetido en la misma empresa
         existeIntPat    =  Patinador.objects.extra(where=["integrante_id='%s' AND usuario_id = '%s' AND empresa_id = '%s'" %(idIntegrante,idUser.id,lastEm.lastEm) ])
@@ -92,12 +96,13 @@ class CreatePatinador(View):
         if existeIntPat.count()==0:
           
             obj = Patinador.objects.create(
-                empresa_id   = lastEm.lastEm,
-                usuario_id   = idUser.id,
-                integrante_id= idIntegrante, 
-                estatus      = estatus,
-                ctrlDespacho = ctrlDespachoCheck,
-                ctrlProduccion=ctrlProduccionCheck
+                empresa_id     = lastEm.lastEm,
+                usuario_id     = idUser.id,
+                integrante_id  = idIntegrante, 
+                estatus        = estatus,
+                ctrlDespacho   = ctrlDespachoCheck,
+                ctrlProduccion = ctrlProduccionCheck,
+                ctrlCasino     = ctrlCasinoCheck
             ) 
            
             data = {

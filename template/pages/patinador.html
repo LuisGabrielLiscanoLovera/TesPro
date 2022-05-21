@@ -38,6 +38,9 @@
                             <div class="fullday">
                                 <input class="form-control" type="checkbox" id="checkProd"> Control Producción
                             </div>
+                            <div class="fullday">
+                                <input class="form-control" type="checkbox" id="checkCasino"> Control Casino
+                            </div>
                             <input type="number" hidden="True" name="idEmpresa" value="{{ lastIdEmpresa }}">
                             <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">
                             <button class="btn button btn-outline-primary form-control" type="submit" onclick="location.href='/'">Agregar patinador</button>
@@ -131,6 +134,18 @@ data-auto-refresh-status="true"
 
 <!--create ipatinador-->
 <script>
+    //#check box al agregar patinador para el control del Casino
+    checkCasino = document.getElementById("checkCasino");
+    globalThis.ctrlCasinoCheck = checkCasino.checked;
+    checkCasino.addEventListener("click", function() {
+        console.log("estado al hacer check o uncheck", this.checked);
+        globalThis.ctrlCasinoCheck = checkCasino.checked;
+
+    });
+
+
+
+
     //#check box al agregar patinador para el control del despacho
     check = document.getElementById("check");
     globalThis.ctrlDespachoCheck = check.checked;
@@ -156,13 +171,19 @@ data-auto-refresh-status="true"
         var idIntegrante = $('input[name="idIntegrantePatinador"]').val().trim();
         var idEmpresa = $('input[name="idEmpresa"]').val().trim();
         var idUser = $('input[name="idUser"]').val().trim();
+
+        var ctrlCasino = ctrlCasinoCheck;
         var ctrlDespach = ctrlDespachoCheck;
         var ctrlProduccion = ctrlProduccionoCheck;
+
         if (ctrlProduccion == null) {
             ctrlProduccion = 0;
         }
         if (ctrlDespach == null) {
             ctrlDespach = 0;
+        }
+        if (ctrlCasino == null) {
+            ctrlCasino = 0;
         }
 
         if (idIntegrante && idEmpresa && idUser) {
@@ -173,12 +194,10 @@ data-auto-refresh-status="true"
 
                     'idIntegrante': idIntegrante,
                     'ctrlDespacho': ctrlDespach,
+                    'ctrlCasino': ctrlCasino,
                     'ctrlProduccion': ctrlProduccion,
                     'idEmpresa': idEmpresa,
                     'idUser': idUser
-
-
-
 
                 },
                 dataType: 'json',

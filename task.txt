@@ -8,5 +8,6 @@
 #loguin patinador (caja negra de despacho y produccion) crear modo fon
 #(el patinador solo puede eliminar los tre ultimo registo de la bas ede datos en despacho y produccion )
 
+#limpiar unica casilla en cantdad input 
 #modificar referencia color talla con referente a campos de esttatus
 #crear casino 
