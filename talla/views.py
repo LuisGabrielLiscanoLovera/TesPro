@@ -76,7 +76,7 @@ def TallaOPList(request):
     ptalla   = CanTalla.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(request.GET.get('idOp', None))).order_by('-id')
     
     serializer = CanTallaSerializer(ptalla, many=True)
-    print(serializer)
+   
     return Response(serializer.data)
  
 

@@ -120,14 +120,14 @@ def createProduccion(request,):
     
     canTerminada  = int(request.data['cantidadProd'])
     
-    print("int(idUser.id): ",int(idUser.id))
+    ''' print("int(idUser.id): ",int(idUser.id))
     print("int(request.data['OccionId_pantinador_prod']:" ,int(request.data['OccionId_pantinador_prod']))
     print("OccionId_integrante_prod: ",int(request.data['OccionId_integrante_prod']))
     print("int(lastEm.lastEm):",int(lastEm.lastEm))
     print("int(request.data['OccionId_talla']): ",int(request.data['OccionId_talla']))
     print("int(request.data['OccionId_tarea']):", int(request.data['OccionId_tarea']))
     print("int(request.data['idOperacion']): ",int(request.data['idOperacion']))
-    print(canTerminada)
+    print(canTerminada) '''
     
     try: 
         obj = Prod.objects.create(
