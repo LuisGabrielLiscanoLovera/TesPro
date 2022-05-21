@@ -79,7 +79,7 @@ function DetailFormatterButInfoProduccion(index, row) {
         '<div class="col-sm-6 mb-2 offset-6">' +
         '<div class="form-group">' +
         '<select  id="OccionId_talla-' + row.id +
-        '" class="form-select big-button form-control form-select-sm" v-model="selectIdTallaProduccion"><option value="">Selecciones Talla</option>' +
+        '" class="form-select form-control form-select-sm" v-model="selectIdTallaProduccion"><option value="">Selecciones Talla</option>' +
         '<option id="id_talla"  v-for="(opcTarea) in allTallasProduccions"  v-bind:value="opcTarea.talla">[[opcTarea.num_talla]] / [[opcTarea.nom_talla]]</option></select></div>' +
 
         '</div>' +
@@ -90,7 +90,7 @@ function DetailFormatterButInfoProduccion(index, row) {
         '"  type="number" v-model="cant_prod" required/> </div>' +
         '</div>' +
 
-        '<div class="col-sm-6 mb-2 offset-6">' +
+        '<div class="col-sm-6 mb-3 offset-6">' +
         '<div class="form-group  "><input class="form-control btn btn-block" type="submit"  value="Guardar"></div>' +
         '</div>' +
         '</form>' +

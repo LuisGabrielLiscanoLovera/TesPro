@@ -14,30 +14,30 @@ function DetailFormatterButInfoDespacho(index, row) {
         '</div>' +
         '<div class="col-sm-6">' +
         '<div id="despachoVue-' + row.id + '"><template>' +
-        '<table class="table animated fadeIn  border-info ">' +
+        '<table class="table  animated fadeIn  border-info ">' +
         '<thead class="thead-dark">' +
-        '<tr>' +
+        '<tr class="" >' +
         '<th class="text-center">Nombre Talla</th>' +
         '<th class="text-center">Talla Total</th>' +
         '<th class="text-center">Talla Restante</th>' +
         '</tr>' +
         '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '">' +
         '<tr v-for="allTallaOP in allTallaOPs" :key="allTallaOP.id">' +
-        '<td>[[allTallaOP.nom_talla]]</td><td>[[allTallaOP.can_talla]]' +
-        '</td><td>[[allTallaOP.res_talla]]</td></tr>' +
+        '<td class="text-center">[[allTallaOP.nom_talla]]</td><td class="text-center">[[allTallaOP.can_talla]]' +
+        '</td><td class=" text-center">[[allTallaOP.res_talla]]</td></tr>' +
         '</tbody></template></div>' +
         '</table>' + '<script type="application/javascript">' + 'formOP(' + row.id + ',' + row.usuario + ');' +
         '</' + 'script>' +
 
         '</div>' +
 
-        '<div class="col-sm-3"><div id="FormuTallaOP-' + row.id +
+        '<div class="col-sm-4"><div id="FormuTallaOP-' + row.id +
         '"><template>' +
-
+        '<div class="border border-info alert"><b><h6>Restante &nbsp;&nbsp;<b class="big-button">[[cantRestante]] <hrr></b> de [[total]]</b></h6></div>' +
         '<form @submit.prevent="submitFormDespacho" class="form dark"><div hidden=True>{% csrf_token %}</div>' +
 
         '<div>' +
-        '<div class="alert alert-info"><b><h6>Restante &nbsp;&nbsp;[[cantRestante]] de [[total]]</b></h6>' +
+
 
 
         //'<div class="progress progress-striped"><div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1" style="width:' +
@@ -50,13 +50,13 @@ function DetailFormatterButInfoDespacho(index, row) {
 
 
 
-        '</div> <select  class="form-control" v-model="selectIDPatinador" id="OccionId_pantinador-' + row.id +
+        '<select  class="form-control mb-2" v-model="selectIDPatinador" id="OccionId_pantinador-' + row.id +
         '"><option disabled value="">Selecciones Patinador</option>' +
-        '<option  v-for="option in allPatinadoresOPs" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]]</option></select>' +
+        '<option  v-for="option in allPatinadoresOPs" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]] </option></select>' +
 
 
         '<select  id="OccionId_talla-' + row.id +
-        '" class="form-control" v-model="selectIdTalla"><option  value="">Selecciones Talla</option>' +
+        '" class="form-control mb-2" v-model="selectIdTalla"><option  value="">Selecciones Talla</option>' +
 
         '<option id="id_talla"  v-for="(optionTalla) in allTallasOPs"  v-bind:value="optionTalla.talla"  >[[optionTalla.num_talla]] / [[optionTalla.nom_talla]]</option></select>' +
         '<input class="form-control big-button" autocomplete="off" placeholder="Cantidad terminada" id="cant" name="cantOpDespacho-' + row.id +
@@ -272,9 +272,9 @@ function formOP(idOp, usuario) {
                         '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + idOp + '">' +
                         '<tr v-for="allTallaOP in allTallaOPs" :key="allTallaOP.id">' +
 
-                        '<td>[[allTallaOP.nom_talla]]</td>' +
-                        '<td>[[allTallaOP.can_talla]]' +
-                        '</td><td>[[allTallaOP.res_talla]]</td></tr>' +
+                        '<td class="text-center">[[allTallaOP.nom_talla]]</td>' +
+                        '<td class="text-center">[[allTallaOP.can_talla]]' +
+                        '</td><td class="text-center">[[allTallaOP.res_talla]]</td></tr>' +
                         '</tbody></table>';
                     tallasOP(idOp);
                     axios
