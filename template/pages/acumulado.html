@@ -1,55 +1,59 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
-<header class="mdc-top-app-bar">
-    <div class="mdc-top-app-bar__row">
-      <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-        
-        <span class="mdc-top-app-bar__title">Acumulado</span>
-        <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon search-text-field d-none d-md-flex">
-          <i class="material-icons mdc-text-field__icon">search</i>
-          <input class="mdc-text-field__input" id="text-field-hero-input">
-          <div class="mdc-notched-outline">
-            <div class="mdc-notched-outline__leading"></div>
-            <div class="mdc-notched-outline__notch">
-              <label for="text-field-hero-input" class="mdc-floating-label">Search..</label>
-            </div>
-            <div class="mdc-notched-outline__trailing"></div>
-          </div>
-        </div>
-      </div>
-      <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right">
-        <div class="menu-button-container menu-profile d-none d-md-block">
-        
-          <div class="mdc-menu mdc-menu-surface" tabindex="-1">
-            <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
-             
-              <li class="mdc-list-item" role="menuitem">
-                <div class="item-thumbnail item-thumbnail-icon-only">
-                  <i class="mdi mdi-settings-outline text-primary"></i>                      
-                </div>
-                
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="divider d-none d-md-block"></div> 
-       
-    
+{% extends 'base.html' %} {% load static %} {% block content %}
+<script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-table.js' %}"></script>
 
-      </div>
-    </div>
-  </header>
-<div class="mdc-layout-grid">
-<div class="mdc-layout-grid__inner">   
-  
-   
-    
- 
-  
-    
-  </div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="modalBase">
+
+
+    <center>
+        <h1 class="title">Acomulado</h1>
+        <hr>
+    </center>
+
+
+    <table id="produccionTable" data-id-field="id" class="" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-show-columns="true" data-search="true" data-show-fullscreen="true" data-pagination="true"
+        data-show-refresh="true" data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-url="{% url 'prodAcomulado-list'%}">
+        <thead class="thead-dark ">
+            <tr>
+                <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoAcumulado" class="text-center">Info
+                </th>
+                {% comment %}
+                <th data-field="id" class="text-center ">id</th> {% endcomment %}
+                <th data-field="nom_acumulado" class="text-center ">Nom. Acumulado</th>
+                <th data-field="estatus" class="text-center">Estatus</th>
+                <th data-field="can_total" class="text-center">Cant. Total</th>
+                <th data-field="created_at" class="text-center">Fecha creada</th>
+                <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionAcumulado" class="text-center">
+                    Accion</th>
+            </tr>
+        </thead>
+    </table>
+
+
+
 </div>
 
 
+
+
+
+
+
+
 {% endblock %}
+</div>
+</div>
+</div>

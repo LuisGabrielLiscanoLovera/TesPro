@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from acumulado.models import Acumulado,ProcAcomulado
+admin.site.register(Acumulado)
+admin.site.register(ProcAcomulado)
