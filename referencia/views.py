@@ -27,7 +27,7 @@ def referenciaList(request):
             idUser   = MyUser.objects.get(username=username)
             
     
-    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()
     lastEm=lastEm.lastEm
     referencias = Referencia.objects.all().filter(empresa_id=lastEm).order_by('-id')
     
@@ -44,7 +44,7 @@ class CreateReferencia(View):
                 idUser   = MyUser.objects.get(username=username)
         
         
-        lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
+        lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
         nom_referencia = request.GET.get('nom_referencia', None).upper()
         descripcion    = request.GET.get('descripcion', None)
         #img1            = request.GET.get('img1', None)

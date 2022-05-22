@@ -33,7 +33,7 @@ def casinoList(request):
             idUser   = MyUser.objects.get(username=username)
             
     
-    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()
     lastEm=lastEm.lastEm
     casinos = Casino.objects.filter(empresa_id=lastEm).order_by('-id')
     serializer = CasinoSerializer(casinos, many=True)
@@ -47,7 +47,7 @@ def casinoListImporte(request):
             idUser   = MyUser.objects.get(username=username)
             
     
-    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()
     
     idCasinoImporte=int(request.GET.get('idCasinoImporte', None))
     casinos = Importe.objects.filter(empresa_id=lastEm.lastEm,casino_id=idCasinoImporte).order_by('-id')
@@ -63,7 +63,7 @@ class CreateCasino(View):
                 username = request.session['username']     
                 idUser   = MyUser.objects.get(username=username)
         
-        lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
+        lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
         idIntegrante     = int(request.GET.get('idIntegranteCasino', None))
         print(lastEm,idIntegrante,idUser)
 

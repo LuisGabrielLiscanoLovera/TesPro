@@ -25,7 +25,7 @@ def colorList(request):
             idUser   = MyUser.objects.get(username=username)
             
     
-    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()
     lastEm=lastEm.lastEm
     colores = Color.objects.all().filter(empresa_id=lastEm).order_by('-id')    
     serializer = ColorSerializer(colores, many=True)
@@ -46,7 +46,7 @@ class CreateColor(View):
                 idUser   = MyUser.objects.get(username=username)
         
         
-        lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
+        lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
         nom_color = request.GET.get('nom_color', None)
         codigo_color    = request.GET.get('codigo_color', None)
         existeColor   =  Color.objects.extra(where=["nom_color='%s' AND usuario_id = '%s' AND empresa_id = '%s'" %(nom_color,idUser.id,lastEm.lastEm) ])

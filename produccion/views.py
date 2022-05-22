@@ -27,8 +27,8 @@ class Produccion(TemplateView):
           s = SessionStore()
           s['last_login'] = self.request.user.pk
           s.create()
-          AllEmpresa      = RelacionEmpresa.objects.filter(Usuario_id=s['last_login'])       
-          lastEm          = CambioEmpres.objects.filter(Usuario_id=s['last_login']).last()
+          AllEmpresa      = RelacionEmpresa.objects.filter(usuario_id=s['last_login'])       
+          lastEm          = CambioEmpres.objects.filter(usuario_id=s['last_login']).last()
           Tallas          = Talla.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm)).values('id','nom_talla','num_talla')
           EmpresaActual   = Empresa.objects.filter(usuario=s['last_login'],id=int(lastEm.lastEm))
           Operaciones     = Operacion.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm),estatus='A').values('nom_operacion','id')
@@ -58,7 +58,7 @@ def ProduccionOPList(request):
                 username = request.session['username']     
                 idUser   = MyUser.objects.get(username = username)
                  
-    lastEm     = CambioEmpres.objects.filter(Usuario_id = idUser.id).last() 
+    lastEm     = CambioEmpres.objects.filter(usuario_id = idUser.id).last() 
     produccion = Prod.objects.filter(empresa_id = lastEm.lastEm,operacion_id=int(request.GET.get('idOp', None))).order_by('-id')
     ProduccionSe = ProduccionSerializer(produccion, many=True)   
     dump = json.dumps(ProduccionSe.data)   #dump serializer to json reponse 
@@ -74,7 +74,7 @@ def ProduccionDataIntegrante(request):
             if 'username' in request.session:
                 username = request.session['username']     
                 idUser   = MyUser.objects.get(username = username)    
-    lastEm          = CambioEmpres.objects.filter(Usuario_id=idUser).last()   
+    lastEm          = CambioEmpres.objects.filter(usuario_id=idUser).last()   
     idOperacion     = request.GET.get('idOp',None)    
     idIntegrante    = request.GET.get('idIntegranteSelect')
     
@@ -116,7 +116,7 @@ def createProduccion(request,):
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
         
-    lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()  
+    lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()  
     
     canTerminada  = int(request.data['cantidadProd'])
     
@@ -191,7 +191,7 @@ def patinadoresActProd(request):
         if 'username' in request.session:
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)            
-    lastEm = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm = CambioEmpres.objects.filter(usuario_id=idUser).last()
     lastEm = lastEm.lastEm    
     try:        
         patinadores     = Patinador.objects.all().filter(usuario=idUser,estatus='A',ctrlProduccion=1, empresa_id=int(lastEm))

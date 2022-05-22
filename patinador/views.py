@@ -45,7 +45,7 @@ def patinadorList(request):
             idUser   = MyUser.objects.get(username=username)
             
     
-    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()
     patinador  = Patinador.objects.filter(empresa_id=lastEm.lastEm).order_by('-id')
     serializer = PatinadorSerializer(patinador, many=True)
     
@@ -61,7 +61,7 @@ class CreatePatinador(View):
                 username = request.session['username']     
                 idUser   = MyUser.objects.get(username=username)
         
-        lastEm              = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
+        lastEm              = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
         #idEmpresa          = request.GET.get('idEmpresa', None)
         idIntegrante        = request.GET.get('idIntegrante', None)
         

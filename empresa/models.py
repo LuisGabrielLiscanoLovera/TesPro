@@ -23,7 +23,7 @@ class Empresa(models.Model):
         return '%s ' % (self.nom_empresa)
 
 class RelacionEmpresa(models.Model):    
-    Usuario = models.ForeignKey(User, null=True,blank=True,related_name='RelacionEmpresa',on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, null=True,blank=True,related_name='RelacionEmpresa',on_delete=models.CASCADE)
     Empresa = models.ForeignKey(Empresa, null=True,blank=True,related_name='RelacionEmpresa',on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
    
@@ -31,17 +31,17 @@ class RelacionEmpresa(models.Model):
     class Meta:
         ordering = ["id"]
     def __str__(self):
-        return '%s %s %s ' % (self.id, self.Empresa, self.Usuario)
+        return '%s %s %s ' % (self.id, self.Empresa, self.usuario)
  
 
 class CambioEmpres(models.Model):
-    Usuario = models.ForeignKey(User, related_name='CambioEmpres',on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, related_name='CambioEmpres',on_delete=models.CASCADE)
     lastEm=models.IntegerField(default=+1)
     created_at = models.DateTimeField(auto_now_add=True)
     class Meta:
             ordering = ["id"]
     def __str__(self):
-        return 'ID=%s lastEm=%s Usuario=%s ' % (self.id, self.lastEm, self.Usuario)
+        return 'ID=%s lastEm=%s usuario=%s ' % (self.id, self.lastEm, self.usuario)
     
     
     

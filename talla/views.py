@@ -55,7 +55,7 @@ def TallaList(request):
             idUser   = MyUser.objects.get(username=username)
             
     
-    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()
     lastEm=lastEm.lastEm
     
     cantalla   = Talla.objects.filter(empresa_id=lastEm).order_by('-id')
@@ -72,7 +72,7 @@ def TallaOPList(request):
                 username = request.session['username']     
                 idUser   = MyUser.objects.get(username=username)
                 
-    lastEm   = CambioEmpres.objects.filter(Usuario_id=idUser.id).last() 
+    lastEm   = CambioEmpres.objects.filter(usuario_id=idUser.id).last() 
     ptalla   = CanTalla.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(request.GET.get('idOp', None))).order_by('-id')
     
     serializer = CanTallaSerializer(ptalla, many=True)
@@ -88,7 +88,7 @@ def TallaOpCanIncosistente(request):
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
             
-    lastEm        = CambioEmpres.objects.filter(Usuario_id=idUser.id).last() 
+    lastEm        = CambioEmpres.objects.filter(usuario_id=idUser.id).last() 
     idOP          = request.GET.get('idOperacion', None) 
     CanOperacion  = Operacion.objects.filter(id=int(idOP)).values('can_total')
     CanOperacion  = CanOperacion[0]['can_total']
@@ -134,7 +134,7 @@ class CreateTalla(View):
         nomTalla           = request.GET.get('nomTalla', None).upper()
         numTalla           = int(request.GET.get('numTalla', None))
         #idEmpresaTalla     = int(request.GET.get('idEmpresaTalla', None))
-        lastEm             = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
+        lastEm             = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
 
         existeTallaUser    =  Talla.objects.extra(where=["nom_talla='%s' AND usuario_id = '%s' AND empresa_id = '%s'" %(nomTalla,idUser.id,lastEm.lastEm)])
         if existeTallaUser.count()==0:
@@ -168,7 +168,7 @@ class CreateTallaOP(View):
             if 'username' in request.session:
                 username = request.session['username']     
                 idUser   = MyUser.objects.get(username=username)                
-        lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last() 
+        lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last() 
         
         cantTalla        = int(request.GET.get('cantTalla', None))
         idOperacionTalla = int(request.GET.get('idOperacionTalla', None))        

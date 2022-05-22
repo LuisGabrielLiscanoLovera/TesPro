@@ -40,10 +40,10 @@ class Home(LoginRequiredMixin,TVB):
        
         
         
-        lastEm          = CambioEmpres.objects.filter(Usuario_id=s['last_login']).last()     
+        lastEm          = CambioEmpres.objects.filter(usuario_id=s['last_login']).last()     
 
         
-        nomTodasEmpresa = RelacionEmpresa.objects.filter(Usuario_id=s['last_login'])    
+        nomTodasEmpresa = RelacionEmpresa.objects.filter(usuario_id=s['last_login'])    
         idlastEmpresa   = lastEm.lastEm
         
         
@@ -105,7 +105,7 @@ def cambioEmpresa(request):
     idEmpresa = request.GET.get('idEmpresa', None)
     idUser    = request.GET.get('idUser', None)
     obj = CambioEmpres.objects.create(
-            Usuario_id = idUser,
+            usuario_id = idUser,
             lastEm = idEmpresa
             )
     return redirect('home')

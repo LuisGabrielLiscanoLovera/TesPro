@@ -40,7 +40,7 @@ def operacionList(request):
             idUser   = MyUser.objects.get(username=username)
             
     
-    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()
     operacion  = Operacion.objects.filter(empresa_id=lastEm.lastEm).order_by('-id')
     serializer = OperacionSerializer(operacion, many=True)
      
@@ -60,7 +60,7 @@ class CreateOperacion(View):
                 
                    
                 
-        lastEm         = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
+        lastEm         = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
         can_totalOP    = request.GET.get('can_totalOP', None)
         idReferenciaOP = request.GET.get('idReferenciaOP', None)       
         idColorOP      = request.GET.get('idColorOP', None)
@@ -170,7 +170,7 @@ def cerarOP(request):
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
         
-    lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
+    lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
 
     
     idOP=int(request.GET['idOP'])

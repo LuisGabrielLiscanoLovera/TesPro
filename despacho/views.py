@@ -33,7 +33,7 @@ class ItemListView(ServerSideDatatableView):
             idUser = self.request.GET.get('usuario', None)            
             
             if idOp and idUser is not None:
-                lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()      
+                lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()      
                 queryset   = Despacho.objects.filter(empresa_id=lastEm.lastEm,operacion_id=idOp).order_by('-id')          
                 
                 
@@ -50,7 +50,7 @@ def despacho_list(request):
             
     #crear registro de despacho
     idOp       = request.GET.get('idOp', None)
-    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()   
+    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()   
     despachos  = Despacho.objects.all().filter(empresa_id=lastEm.lastEm,operacion_id=idOp).order_by('-id')
     tSerializer = DespachoSerializer(despachos, many = True)
     data=""
@@ -111,7 +111,7 @@ def operacionesList(request):
             idUser   = MyUser.objects.get(username=username)
             
     
-    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()   
+    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()   
     despacho   = Operacion.objects.filter(empresa_id=lastEm.lastEm,estatus='A').order_by('-id')
     serializer = OperacionSerializer(despacho, many=True)
     return Response(serializer.data)
@@ -125,7 +125,7 @@ def patinadoresAct(request):
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
             
-    lastEm = CambioEmpres.objects.filter(Usuario_id=idUser).last()
+    lastEm = CambioEmpres.objects.filter(usuario_id=idUser).last()
     lastEm = lastEm.lastEm    
     try:        
         patinadores     = Patinador.objects.all().filter(usuario=idUser,estatus='A',ctrlDespacho=1, empresa_id=int(lastEm))
@@ -147,8 +147,8 @@ class Despachos(TemplateView):
           s = SessionStore()
           s['last_login'] = self.request.user.pk
           s.create()
-          AllEmpresa      = RelacionEmpresa.objects.filter(Usuario_id=s['last_login'])       
-          lastEm          = CambioEmpres.objects.filter(Usuario_id=s['last_login']).last()
+          AllEmpresa      = RelacionEmpresa.objects.filter(usuario_id=s['last_login'])       
+          lastEm          = CambioEmpres.objects.filter(usuario_id=s['last_login']).last()
           Tallas          = Talla.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm)).values('id','nom_talla','num_talla')
           EmpresaActual   = Empresa.objects.filter(usuario=s['last_login'],id=int(lastEm.lastEm))
           Operaciones     = Operacion.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm),estatus='A').values('nom_operacion','id')
@@ -184,7 +184,7 @@ def createDespacho(request,):
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
         
-    lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
+    lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
     #serializer = DespachoSerializer(data = request.data)
     
     #print(request.data['id_OP'])

@@ -32,7 +32,7 @@ def integranteList(request):
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
 
-    lastEm     = CambioEmpres.objects.filter(Usuario_id=idUser).last()    
+    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()    
     integrante = Integrante.objects.all().filter(empresa_id=lastEm.lastEm,estatus='A').order_by('-id')
     serializer = IntegranteSerializer(integrante, many=True)
     return Response(serializer.data)
@@ -52,7 +52,7 @@ class CreateIntegrante(View):
                 username = request.session['username']     
                 idUser   = MyUser.objects.get(username=username)
         
-        lastEm           = CambioEmpres.objects.filter(Usuario_id=idUser.id).last()
+        lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
         nombres          = request.GET.get('nomIntegrante', None).upper()
         apellido         = request.GET.get('apeIntegrante', None).upper()
         sexo             = request.GET.get('genero', None)
