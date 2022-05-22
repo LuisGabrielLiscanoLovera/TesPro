@@ -10,10 +10,12 @@ class Acumulado(models.Model):
     
     empresa       = models.ForeignKey(Empresa,  on_delete=models.CASCADE)
     nom_acumulado = models.CharField(max_length=35, unique=True)
-    can_total     = models.IntegerField(blank=True, null=True)    
+    can_total     = models.IntegerField(blank=True, null=True,default=0)    
+    nota          = models.CharField(max_length=50,blank=True, null=True)
     ESTATUS       = (('A','Activo'),('I','Inactivo'))
     estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
     btnAcci       = models.CharField(max_length=300,default=btnAccion , null=True)
+    delAcumulado  = models.CharField(max_length=150, default='' , null=True)
     btnInfo       = models.CharField(max_length=300,default=btnInfo , null=True)
     created_at    = models.DateTimeField(auto_now_add=True)
     updated_at    = models.DateTimeField(auto_now=True)
@@ -38,9 +40,9 @@ class ProcAcomulado(models.Model):
     acumulado     = models.ForeignKey(Acumulado, on_delete=models.CASCADE)
     integrante    = models.ForeignKey(Integrante, on_delete=models.CASCADE)
     talla         = models.ForeignKey(Talla,  on_delete=models.CASCADE,blank=True, null=True)
+    can_prod_acum = models.IntegerField()
     created_at    = models.DateTimeField(auto_now_add=True)
     updated_at    = models.DateTimeField(auto_now=True)
-    can_prod_acum = models.IntegerField()  
 
     
     class Meta:

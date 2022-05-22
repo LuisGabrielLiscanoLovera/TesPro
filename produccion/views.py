@@ -158,12 +158,12 @@ def createProduccion(request,):
     except Exception as e:
         print(str(e))
         return Response("PRODUCCION no cargadA " +str(e) )
- 
-   
-   
-
    
     return HttpResponse()
+    
+    
+    
+    
 
 @api_view(['DELETE'])
 def deleteProduccion(request,id):

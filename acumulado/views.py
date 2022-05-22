@@ -60,8 +60,48 @@ def ProdAcomuladoList(request):
     
     lastEm          = CambioEmpres.objects.filter(usuario_id = idUser.id).last()
     acumuladoQsect  = ACU.objects.filter(empresa_id = lastEm.lastEm).order_by('-id')
-    AcomuladoSe = AcumuladoSerializer(acumuladoQsect, many=True)   
-    dump = json.dumps(AcomuladoSe.data)   #dump serializer to json reponse 
-
+    AcomuladoSe     = AcumuladoSerializer(acumuladoQsect, many=True)   
+    dump            = json.dumps(AcomuladoSe.data)   #dump serializer to json reponse 
     return HttpResponse(dump, content_type='application/json')
+    
+    
+
+@api_view(['POST'])
+def createAcumulado(request,):
+    #Prod = Models AcumulcreateAcumulado
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+        
+    lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()  
+    
+    canTerminada  = int(request.data['can_total_acu'])
+    
+
+    try: 
+        obj = ACU.objects.create(
+        usuario_id     = int(idUser.id),
+        empresa_id     = int(lastEm.lastEm),
+        nom_acumulado  = request.data['nom_acumulado'],
+        nota           = request.data['nota_acu'],
+        can_total      = canTerminada,      
+        )
+                
+        #obj = ACU.objects.latest('id')
+        #btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteProduccionUnico({})'> </button>".format(obj.id)
+        #obj = ACU.objects.all().filter(id=obj.id).update(delAcumulado=btnDel)
+        data = {
+            'Acumulado': "Acumulado guardado con exito!",
+            'estatus':True
+        }
+       
+        return Response(data)
+
+    except Exception as e:
+        print(str(e))
+        return Response("Acumulado no cargadA " +str(e) )
+   
+    return HttpResponse()
+    
     
