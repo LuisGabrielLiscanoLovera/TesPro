@@ -12,16 +12,17 @@ from django.db.models import Sum, F
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from authapp.models import MyUser
-from acumulado.models import Acumulado as ACU
+from acumulado.models import Acumulado as ACUMULADO
 from acumulado.models import ProAcumulado as  ProAcu
 from tarea.models import Tarea
 
 from django.views.generic import View
 from django.http import JsonResponse, Http404, HttpResponse
 from django.db.models import F
-from acumulado.serializers import AcumuladoSerializer
+from acumulado.serializers import AcumuladoSerializer,AcuSerializerProc
 
 class Acumulado(TemplateView):
+    
      
      template_name = "pages/acumulado.html"
      success_url = '/'
@@ -53,8 +54,26 @@ class Acumulado(TemplateView):
           finally:
             return context
        
-          
-          
+        
+   
+   
+@api_view(['GET'])  
+def AcumuladoListProc(request):
+    if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username = username)    
+    lastEm          = CambioEmpres.objects.filter(usuario_id=idUser).last()   
+    idAcumulado     = request.GET.get('idAcumulado',None)
+    
+    acumuladoProc= ProAcu.objects.filter(usuario_id=idUser,empresa_id=lastEm.lastEm,acumulado_id=idAcumulado).order_by('-id')
+    
+    serializer = AcuSerializerProc(acumuladoProc, many=True)
+    return Response(serializer.data)   
+    
+    
+   
+   
 @api_view(['GET'])  
 def AcumuladoList(request):
     if request.session.has_key('username'):
@@ -63,9 +82,10 @@ def AcumuladoList(request):
                 idUser   = MyUser.objects.get(username = username)
     
     lastEm          = CambioEmpres.objects.filter(usuario_id = idUser.id).last()
-    acumuladoQsect  = ACU.objects.filter(empresa_id = lastEm.lastEm).order_by('-id')
+    acumuladoQsect  = ACUMULADO.objects.filter(empresa_id = lastEm.lastEm).order_by('-id')
     AcumuladoSe     = AcumuladoSerializer(acumuladoQsect, many=True)   
     dump            = json.dumps(AcumuladoSe.data)   #dump serializer to json reponse 
+    
     return HttpResponse(dump, content_type='application/json')
     
     
@@ -82,7 +102,7 @@ def createAcumulado(request,):
     canTerminada  = int(request.data['can_total_acu'])
     
     try: 
-        obj = ACU.objects.create(
+        obj = ACUMULADO.objects.create(
         usuario_id     = int(idUser.id),
         empresa_id     = int(lastEm.lastEm),
         nom_acumulado  = request.data['nom_acumulado'],
@@ -90,9 +110,6 @@ def createAcumulado(request,):
         can_total      = canTerminada,      
         )
                 
-        #obj = ACU.objects.latest('id')
-        #btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteProduccionUnico({})'> </button>".format(obj.id)
-        #obj = ACU.objects.all().filter(id=obj.id).update(delAcumulado=btnDel)
         data = {            'Acumulado': "Acumulado guardado con exito!",
             'estatus':True
         }
@@ -130,9 +147,10 @@ def createProAcumulado(request,):
         acumulado_id    =int(request.data['acumulado_id'])
         )
                 
-        #obj = ACU.objects.latest('id')
-        #btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteProduccionUnico({})'> </button>".format(obj.id)
-        #obj = ACU.objects.all().filter(id=obj.id).update(delAcumulado=btnDel)
+        obj = ProAcu.objects.latest('id')
+        btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteAcumuladoUnico({})'> </button>".format(obj.id)
+        obj = ProAcu.objects.all().filter(id=obj.id).update(delAcumulProc=btnDel)
+        
         data = {
             'Acumulado': "Acumulado guardado con exito!",
             'estatus':True
@@ -147,7 +165,6 @@ def createProAcumulado(request,):
     return Response(data)
     
    
-#dataProduccionInte-list/
 @api_view(['GET'])
 def AcumuladoDataIntegrante(request):
     if request.session.has_key('username'):        
@@ -160,15 +177,15 @@ def AcumuladoDataIntegrante(request):
     dontrepeYorself=[]
     tareas=[]
     patinadores=[]    
-    for tareasIntegrante in ProAcu.objects.filter(empresa_id=lastEm.lastEm,acumulado_id=int(idAcumulado),
+    for tareasIntegrante in ProAcu.objects.filter(usuario_id=idUser,empresa_id=lastEm.lastEm,acumulado_id=int(idAcumulado),
     
     integrante_id=idIntegrante).distinct().values('tarea_id','patinador_id'):       
-        tareaIntegrante = (Tarea.objects.filter(empresa_id=lastEm.lastEm,id=tareasIntegrante['tarea_id']).values('nom_tarea','id')[0])  
-        totalIntegrante = ProAcu.objects.filter(empresa_id=lastEm.lastEm,acumulado_id=int(idAcumulado),integrante_id=idIntegrante,tarea_id=tareaIntegrante['id']).values('tarea_id','can_prod_acum').aggregate(can_prod_acum=Sum('can_prod_acum'))
+        tareaIntegrante = (Tarea.objects.filter(usuario_id=idUser,empresa_id=lastEm.lastEm,id=tareasIntegrante['tarea_id']).values('nom_tarea','id')[0])  
+        totalIntegrante = ProAcu.objects.filter(usuario_id=idUser,empresa_id=lastEm.lastEm,acumulado_id=int(idAcumulado),integrante_id=idIntegrante,tarea_id=tareaIntegrante['id']).values('tarea_id','can_prod_acum').aggregate(can_prod_acum=Sum('can_prod_acum'))
         
         
-        patinador       = Patinador.objects.filter(empresa_id=lastEm.lastEm,id=tareasIntegrante['patinador_id']).distinct().values('integrante_id')
-        patinador       = Integrante.objects.filter(empresa_id=lastEm.lastEm,id=patinador[0]['integrante_id']).values('nombres','apellidos')
+        patinador       = Patinador.objects.filter(usuario_id=idUser,empresa_id=lastEm.lastEm,id=tareasIntegrante['patinador_id']).distinct().values('integrante_id')
+        patinador       = Integrante.objects.filter(usuario_id=idUser,empresa_id=lastEm.lastEm,id=patinador[0]['integrante_id']).values('nombres','apellidos')
         patinador       = "{} {}".format(patinador[0]['nombres'],patinador[0]['apellidos'] )
         
         if patinador in patinadores:pass

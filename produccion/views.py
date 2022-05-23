@@ -1,6 +1,7 @@
 # Create your views here
 import json
 from textwrap import indent
+from traceback import print_tb
 from django.http import JsonResponse
 from django.views.generic.base import TemplateView
 from django.contrib.sessions.backends.db import SessionStore
@@ -69,7 +70,7 @@ def ProduccionOPList(request):
     ProduccionSe = ProduccionSerializer(produccion, many=True)   
     dump = json.dumps(ProduccionSe.data)   #dump serializer to json reponse 
     
-    
+ 
     return HttpResponse(dump, content_type='application/json')
     
     
@@ -83,10 +84,9 @@ def ProduccionDataIntegrante(request):
     lastEm          = CambioEmpres.objects.filter(usuario_id=idUser).last()   
     idOperacion     = request.GET.get('idOp',None)    
     idIntegrante    = request.GET.get('idIntegranteSelect')
-    
-    dontrepeYorself=[]
-    tareas=[]
-    patinadores=[]
+    dontrepeYorself = []
+    tareas = []
+    patinadores = []
     
     for tareasIntegrante in Prod.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(idOperacion),
     integrante_id=idIntegrante).distinct().values('tarea_id','patinador_id'):       
@@ -94,8 +94,7 @@ def ProduccionDataIntegrante(request):
         totalIntegrante = Prod.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(idOperacion),integrante_id=idIntegrante,tarea_id=tareaIntegrante['id']).values('tarea_id','can_terminada').aggregate(can_terminada=Sum('can_terminada'))
         patinador       = Patinador.objects.filter(empresa_id=lastEm.lastEm,id=tareasIntegrante['patinador_id']).distinct().values('integrante_id')
         patinador       = Integrante.objects.filter(empresa_id=lastEm.lastEm,id=patinador[0]['integrante_id']).values('nombres','apellidos')
-        patinador       = "{} {}".format(patinador[0]['nombres'],patinador[0]['apellidos'] )
-        
+        patinador       = "{} {}".format(patinador[0]['nombres'],patinador[0]['apellidos'] ) 
         if patinador in patinadores:pass
         else:patinadores.append(patinador)       
         if tareaIntegrante['nom_tarea'] in dontrepeYorself:pass
@@ -110,9 +109,6 @@ def ProduccionDataIntegrante(request):
         if patinadores ==[]:pass 
         else:tareas.append({'patinadores':patinadores})
     return Response(tareas)
-    
-    
-    
 
 @api_view(['POST'])
 def createProduccion(request,):
@@ -122,18 +118,8 @@ def createProduccion(request,):
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
         
-    lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()  
-    
+    lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
     canTerminada  = int(request.data['cantidadProd'])
-    
-    ''' print("int(idUser.id): ",int(idUser.id))
-    print("int(request.data['OccionId_pantinador_prod']:" ,int(request.data['OccionId_pantinador_prod']))
-    print("OccionId_integrante_prod: ",int(request.data['OccionId_integrante_prod']))
-    print("int(lastEm.lastEm):",int(lastEm.lastEm))
-    print("int(request.data['OccionId_talla']): ",int(request.data['OccionId_talla']))
-    print("int(request.data['OccionId_tarea']):", int(request.data['OccionId_tarea']))
-    print("int(request.data['idOperacion']): ",int(request.data['idOperacion']))
-    print(canTerminada) '''
     
     try: 
         obj = Prod.objects.create(
@@ -165,7 +151,7 @@ def createProduccion(request,):
         print(str(e))
         return Response("PRODUCCION no cargadA " +str(e) )
    
-    return HttpResponse()
+   
     
     
     

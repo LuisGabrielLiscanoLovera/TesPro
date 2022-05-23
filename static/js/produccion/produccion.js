@@ -100,8 +100,6 @@ function DetailFormatterButInfoProduccion(index, row) {
         '</template>';
 }
 
-
-
 function DetailFormatterButAccionProduccion(index, row) {
     //r = parseInt("[[progressRest]]");
     return '<div class="row">' +
@@ -128,9 +126,6 @@ function DetailFormatterButAccionProduccion(index, row) {
         '</div>';
 }
 
-
-
-
 function deleteProduccionUnico(id_produccion) {
 
     axios.delete('eliminar_produccion/' + id_produccion + '/')
@@ -143,8 +138,6 @@ function deleteProduccionUnico(id_produccion) {
         }).catch(error => console.log(error));
 
 }
-
-
 
 function formProduccionOP(idOperacion, idUsuario) {
     new Vue({
@@ -259,9 +252,6 @@ function formProduccionOP(idOperacion, idUsuario) {
 
 function ProduccionOP(idOperacion, idUsuario) {
     $(document).ready(function() {
-
-
-
         let table = $("#items-table-produccion-" + idOperacion).removeAttr("width").dataTable({
             ajax: {
                 url: '/produccion/produccionOP-list/?idOp=' + idOperacion,
@@ -269,14 +259,11 @@ function ProduccionOP(idOperacion, idUsuario) {
             },
             language: { "sProcessing": "Procesando...", "sLengthMenu": "Mostrar _MENU_ registros", "sZeroRecords": "No se encontraron resutatatIntegrantes", "sEmptyTable": "Ningún dato disponible en esta tabla", "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros", "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros", "sInfoFiltered": "(filtrado de un total de _MAX_ registros)", "sInfoPostFix": "", "sSearch": "Buscar:", "sUrl": "", "sInfoThousands": ",", "sLoadingRecords": "Cargando...", "oPaginate": { "sFirst": "Primero", "sLast": "Último", "sNext": "Siguiente", "sPrevious": "Anterior" }, "oAria": { "sSortAscending": ": Activar para ordenar la columna de manera ascendente", "sSortDescending": ": Activar para ordenar la columna de manera descendente" } },
             // scrollY: '500px',
-
             scrollCollapse: true,
             scrollY: "250px",
-
             order: [
                 [5, "dsc"]
             ],
-
             columns: [
                 { data: "nomIntegrante" },
                 { data: "apeIntegrante" },
@@ -288,21 +275,13 @@ function ProduccionOP(idOperacion, idUsuario) {
             ]
 
         });
-
         $("#items-table-produccion-" + idOperacion).on("click", "button", function() {
-
             $("#items-table-produccion-" + idOperacion).DataTable().ajax.reload();
             sleepThenAct();
-
         })
 
         function sleepThenAct() {
             $("#items-table-produccion-" + idOperacion).DataTable().ajax.reload();
-
         }
     })
-
-
-
-
 }

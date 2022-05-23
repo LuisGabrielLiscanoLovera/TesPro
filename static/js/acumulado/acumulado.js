@@ -80,8 +80,6 @@ function DetailFormatterButInfoAcumulado(index, row) {
         '</template>';
 }
 
-
-
 function formAcumulado(idAcumulado, idUsuario) {
 
     new Vue({
@@ -136,7 +134,7 @@ function formAcumulado(idAcumulado, idUsuario) {
 
 
             getAcumuladoData: function() {
-                ProduccionOP(idAcumulado);
+                AcumuladoProd(idAcumulado);
 
 
                 axios
@@ -204,4 +202,68 @@ function formAcumulado(idAcumulado, idUsuario) {
 
 
 
+}
+
+
+
+function DetailFormatterButAccionAcumulado(index, row) {
+    //r = parseInt("[[progressRest]]");
+    return '<div class="row">' +
+
+        '<div class="">' +
+        '<table  class="table animated fadeIn "  id="items-table-Acumulado-' + row.id +
+        '">' +
+        '<thead class="thead-dark">' +
+        '<tr>' +
+        '<th class="text-center">Nombre</th>' +
+        '<th class="text-center">Apellido</th>' +
+        '<th class="text-center">Tarea</th>' +
+        '<th class="text-center">Talla</th>' +
+        '<th class="text-center">Cantidad</th>' +
+        '<th class="text-center">Fecha</th>' +
+        '<th class="text-center">Eliminar</th>' +
+        '</tr>' +
+        '</thead>' +
+        '<tbody calss="table-striped table  table-sm  table-bordered table-hover" id="produccionKill-' + row.id + '">' +
+        '</tbody>' +
+        '</table>' +
+        '<script type="application/javascript">' + 'AcumuladoProd(' + row.id + ',' + row.usuario + ');' +
+        '</' + 'script>' +
+        '</div>';
+}
+
+function AcumuladoProd(idAcumulado, idUsuario) {
+    $(document).ready(function() {
+        let table = $("#items-table-Acumulado-" + idAcumulado).removeAttr("width").dataTable({
+            ajax: {
+                url: 'AcumuladoProc-list/?idAcumulado=' + idAcumulado,
+                dataSrc: ''
+            },
+            language: { "sProcessing": "Procesando...", "sLengthMenu": "Mostrar _MENU_ registros", "sZeroRecords": "No se encontraron resutatatIntegrantes", "sEmptyTable": "Ningún dato disponible en esta tabla", "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros", "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros", "sInfoFiltered": "(filtrado de un total de _MAX_ registros)", "sInfoPostFix": "", "sSearch": "Buscar:", "sUrl": "", "sInfoThousands": ",", "sLoadingRecords": "Cargando...", "oPaginate": { "sFirst": "Primero", "sLast": "Último", "sNext": "Siguiente", "sPrevious": "Anterior" }, "oAria": { "sSortAscending": ": Activar para ordenar la columna de manera ascendente", "sSortDescending": ": Activar para ordenar la columna de manera descendente" } },
+            // scrollY: '500px',
+            scrollCollapse: true,
+            scrollY: "250px",
+            order: [
+                [5, "dsc"]
+            ],
+            columns: [
+                { data: "nomIntegrante" },
+                { data: "apeIntegrante" },
+                { data: "nomTarea" },
+                { data: "nom_talla" },
+                { data: "can_prod_acum" },
+                { data: "created_at" },
+                { data: "delAcumulProc" },
+            ]
+
+        });
+        $("#items-table-Acumulado-" + idAcumulado).on("click", "button", function() {
+            $("#items-table-Acumulado-" + idAcumulado).DataTable().ajax.reload();
+            sleepThenAct();
+        })
+
+        function sleepThenAct() {
+            $("#items-table-Acumulado-" + idAcumulado).DataTable().ajax.reload();
+        }
+    })
 }

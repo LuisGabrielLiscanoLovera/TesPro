@@ -41,12 +41,10 @@ def operacionList(request):
             
     
     lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()
-    operacion  = Operacion.objects.filter(empresa_id=lastEm.lastEm).order_by('-id')
+    operacion  = Operacion.objects.filter(usuario_id=idUser,empresa_id=lastEm.lastEm).order_by('-id')
     serializer = OperacionSerializer(operacion, many=True)
      
     return Response(serializer.data)
-
-
 
 
 class CreateOperacion(View):
@@ -106,9 +104,6 @@ class CreateOperacion(View):
         
         return JsonResponse(data)
 
-
-
-
 class DeleteOperacion(View):
     def  get(self, request):
         id1 = request.GET.get('id', None)
@@ -117,9 +112,6 @@ class DeleteOperacion(View):
             'deleted': True
         }
         return JsonResponse(data)
-
-
-
 
 class UpdateOperacion(TemplateView):
     def  get(self, request):
@@ -157,11 +149,6 @@ class UpdateOperacion(TemplateView):
             obj.save()
             return redirect('home')
         except Exception as e:  print("reparar peo de cors header crsf token")
-
-
-
-
-
 
 @api_view(['GET'])
 def cerarOP(request):
