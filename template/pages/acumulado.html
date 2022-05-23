@@ -65,31 +65,26 @@
                 <div class="wrapper">
                     <ul class="steps">
                         <li class="is-active">Acumulado</li>
-
                     </ul>
                     <form id="addAcumulado" autocomplete="off" class="form-wrapper formf">{% csrf_token %}
                         <input type="number" hidden="True" name="empresaAcumulado" value="{{ lastIdEmpresa }}">
-
                         <fieldset class="section is-active">
-
                             <h3 name="heading">Registo de proceso acumulado
                                 <br>{% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h3>
                             <div class="row">
-
                                 <div class="col-md-6 md-6  form-group">
                                     <label for="nom_acumulado" class="">Nombre de registro</label>
                                     <input class="form-control" id="nom_acumulado" name="nom_acumulado" placeholder="Nombre">
                                 </div>
-
                                 <div class="col-md-6 md-6  form-group">
                                     <label for="can_total_acu" class="">Cantida Total </label>
                                     <input name="can_total_acu" type="number" class="form-control" id="can_total_acu" placeholder="Cantidad Total">
                                 </div>
-
                                 <div class="col-md-12 md-6  form-group">
                                     <label for="nota_acu" class="">Nota</label>
                                     <input name="nota_acu" type="nota_acu" class="form-control" id="nota_acu" placeholder="Nota">
                                 </div>
+
                                 <div class="">
                                     <input class="submit button" type="submit" onclick="location.href='/acumulado/'" value="Guardar">
                                 </div>

@@ -29,45 +29,27 @@ class Home(LoginRequiredMixin,TVB):
     
     template_name = "home.html"
     login_url = 'auth/signin/'
-    success_url = '/'
-    
-    
+    success_url = '/'  
     def get_context_data(self, **kwargs):        
         s = SessionStore()
         s['last_login'] = self.request.user.pk
         s.create()
-        
-       
-        
-        
-        lastEm          = CambioEmpres.objects.filter(usuario_id=s['last_login']).last()     
-
-        
-        nomTodasEmpresa = RelacionEmpresa.objects.filter(usuario_id=s['last_login'])    
+        lastEm          = CambioEmpres.objects.filter(usuario_id=s['last_login']).last()
+        nomTodasEmpresa = RelacionEmpresa.objects.filter(usuario_id=s['last_login'])   
         idlastEmpresa   = lastEm.lastEm
-        
-        
         
         #Carga de data por defecto Sin(Referenciam,color,talla)
         if Referencia.objects.filter(usuario_id=s['last_login'],empresa_id=idlastEmpresa,nom_referencia="SIN REFERENCIA"):pass
         else: Referencia.objects.create(nom_referencia = "SIN REFERENCIA",descripcion = "SIN REFERENCIA", empresa_id = lastEm.lastEm, usuario_id = s['last_login'])
-        
-        
-        
         if Color.objects.filter(usuario_id=s['last_login'],empresa_id=idlastEmpresa,nom_color="SIN COLOR"):pass
         else: Color.objects.create(nom_color = "SIN COLOR",codigo_color = "0",empresa_id = lastEm.lastEm,usuario_id = s['last_login'])
-        
-        
-        
         if Talla.objects.filter(usuario_id=s['last_login'],empresa_id=idlastEmpresa,nom_talla="SIN TALLA"):pass
         else:
             Talla.objects.create(empresa_id=lastEm.lastEm,usuario_id=s['last_login'],nom_talla="SIN TALLA",num_talla= 0,)
             obj = Talla.objects.latest('id')
             obj = Talla.objects.all().filter(id=obj.id).update(btnAddTalla="<input type='number' style='background-color : #f5f2f2;' class='form-control-sm input-group-number' name='inputTalla-{}'  id='inputTalla-{}'>".format(obj.id,obj.id))
         #-----------------------------------------------------
-        
-        
-        
+             
         nombreEpreAct   = Empresa.objects.filter(usuario=s['last_login'],id=int(idlastEmpresa))        
         totalReferencia = Referencia.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
         totalColor      = Color.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))

@@ -1,8 +1,8 @@
 {% load static %}
 <script src="{% static 'js/bootstrap-table-auto-refresh.js' %}"></script>
-<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+<!-- <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-
+ -->
 <div id="openModalTarea" class="modalDialogPadre">
     <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
 
@@ -159,11 +159,11 @@ data-auto-refresh-status="true"
                                 <label class="">Precio por unidad</label>
                                 <input class="form-control" type="number" name="valorTarea" placeholder="Precio por unidad">
                             </div>
-                            <div class="col-md-6 md-6  form-group-sm">
+                            <!--  <div class="col-md-6 md-6  form-group-sm">
                                 <label class="">Cod tarea</label>
                                 <input class="form-control" name="codigoTarea" placeholder="Cod tarea">
-                            </div>
-                            <div class="col-md-6 md-6  form-group-sm">
+                            </div> -->
+                            <div class="col-md-12 md-6  form-group-sm">
                                 <label class="">Descripción de la tarea</label>
                                 <textarea class="form-control" rows=" " cols=" " name="detalleTarea" placeholder="Descripción de la tarea"></textarea>
 
@@ -315,12 +315,12 @@ data-auto-refresh-status="true"
     <script>
         $("form#addTarea").submit(function() {
 
-            codigoTarea
+
             var nombreTarea = $('input[name="nombreTareaForm1"]').val().trim();
             var minutoXTarea = $('input[name="minutoXTarea"]').val().trim();
             var horaXTarea = $('input[name="horaXTarea"]').val().trim();
             var valorTarea = $('input[name="valorTarea"]').val().trim();
-            var codigoTarea = $('input[name="codigoTarea"]').val().trim();
+            // var codigoTarea = $('input[name="codigoTarea"]').val().trim();
             var detalleTarea = $('textarea[name="detalleTarea"]').val().trim();
             var empresaTarea = $('input[name="empresaTarea"]').val().trim();
             var idUserTarea = $('input[name="idUserTarea"]').val().trim();
@@ -333,9 +333,9 @@ data-auto-refresh-status="true"
             if (valorTarea == '') {
                 var valorTarea = 0
             }
-            if (codigoTarea == '') {
-                var codigoTarea = 0
-            }
+            //  if (codigoTarea == '') {
+            //  var codigoTarea = 0
+            // }
             console.log(nombreTarea) // && minutoXTarea && horaXTarea && valorTarea && detalleTarea && empresaTarea && idUserTarea
             if (nombreTarea) {
                 // Create Ajax Call
@@ -347,7 +347,7 @@ data-auto-refresh-status="true"
                         'minutoXTarea': minutoXTarea,
                         'horaXTarea': horaXTarea,
                         'valorTarea': valorTarea,
-                        'codigoTarea': codigoTarea,
+                        //  'codigoTarea': codigoTarea,
                         'detalleTarea': detalleTarea,
                         'empresaTarea': empresaTarea,
                         'idUserTarea': idUserTarea

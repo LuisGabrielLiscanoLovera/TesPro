@@ -64,18 +64,31 @@ def TallaList(request):
     return Response(serializer.data)
 
 
-#can talla op
+#can tallas de la op
 @api_view(['GET'])  
 def TallaOPList(request):
     if request.session.has_key('username'):        
             if 'username' in request.session:
                 username = request.session['username']     
-                idUser   = MyUser.objects.get(username=username)
-                
+                idUser   = MyUser.objects.get(username=username)             
     lastEm   = CambioEmpres.objects.filter(usuario_id=idUser.id).last() 
     ptalla   = CanTalla.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(request.GET.get('idOp', None))).order_by('-id')
-    
     serializer = CanTallaSerializer(ptalla, many=True)
+    return Response(serializer.data)
+ 
+ 
+#tallas generales TallaEmpresaList
+@api_view(['GET'])  
+def TallaEmpresaList(request):
+    if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username=username)
+           
+    lastEm   = CambioEmpres.objects.filter(usuario_id=idUser.id).last() 
+    ptalla   = Talla.objects.filter(empresa_id=lastEm.lastEm).order_by('-id')
+    
+    serializer = TallaSerializer(ptalla, many=True)
    
     return Response(serializer.data)
  

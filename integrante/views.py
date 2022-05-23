@@ -34,9 +34,13 @@ def integranteList(request):
 
     lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()    
     integrante = Integrante.objects.all().filter(empresa_id=lastEm.lastEm,estatus='A').order_by('-id')
-    serializer = IntegranteSerializer(integrante, many=True)
-    return Response(serializer.data)
-
+   
+    try:
+        serializer = IntegranteSerializer(integrante, many=True)
+        return Response(serializer.data)
+    except Exception as e:    
+        print(str(e),"no tienes patinadores activos")   
+        return Response("no tienes patinadores activos")
     #return JsonResponse({'data':dt})
     #return JsonResponse({'data':serializer.data})
     

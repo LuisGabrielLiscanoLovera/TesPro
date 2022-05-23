@@ -61,7 +61,7 @@ class CreateTarea(View):
         horaXTarea   = int(request.GET.get('horaXTarea', None))
         valorTarea   = int(request.GET.get('valorTarea', None))
         detalleTarea = request.GET.get('detalleTarea', None)
-        codigoTarea  = request.GET.get('codigoTarea', None)
+        #codigoTarea  = request.GET.get('codigoTarea', None)
         
         
         
@@ -74,7 +74,7 @@ class CreateTarea(View):
                 min_hora     = horaXTarea,
                 valor        = valorTarea,
                 detalle      = detalleTarea,
-                codigo_tarea = codigoTarea,
+               # codigo_tarea = codigoTarea,
                 estatus        = 'A',
         )
   

@@ -7,7 +7,7 @@ class Tarea(models.Model):
     
     usuario       = models.ForeignKey(User, related_name='Tarea', on_delete=models.CASCADE)
     empresa       = models.ForeignKey(Empresa, related_name='Tarea',on_delete=models.CASCADE)
-    codigo_tarea  = models.CharField(blank=True, null=True,max_length=25)  
+    #codigo_tarea  = models.CharField(blank=True, null=True,max_length=25)  
     nom_tarea     = models.CharField(max_length=50)
     min_minuto    = models.IntegerField(blank=True, null=True )
     min_hora      = models.IntegerField(blank=True, null=True )
@@ -21,9 +21,9 @@ class Tarea(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)    
     def __str__(self):
-        return 'id:{} nomTarea:{} min_minuto:{} min_hora:{} valor:{} detalle:{} usuario:{} empresa:{} codigo_tarea:{} created_at:{} estatus:{}'.format(self.id,
+        return 'id:{} nomTarea:{} min_minuto:{} min_hora:{} valor:{} detalle:{} usuario:{} empresa:{} created_at:{} estatus:{}'.format(self.id,
         self.nom_tarea, self.min_minuto,
         self.min_hora,self.valor,
         self.detalle,self.usuario,
-        self.empresa,self.codigo_tarea,
+        self.empresa,
         self.created_at,self.estatus)

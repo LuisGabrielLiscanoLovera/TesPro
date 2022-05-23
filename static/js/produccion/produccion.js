@@ -178,10 +178,8 @@ function formProduccionOP(idOperacion, idUsuario) {
                     const resutatatIntegrante = document.
                     querySelector(".resutatatIntegrante-" + idOperacion);
                     const idIntegranteSelect = event.target.value;
-
                     //variable global prototype idIntegranteSelect
                     Vue.prototype.$varGlobalSelectIntegrProd = idIntegranteSelect;
-
                     axios.get('dataProduccionInte-list/', {
                         params: {
                             idIntegranteSelect: idIntegranteSelect,
@@ -189,7 +187,6 @@ function formProduccionOP(idOperacion, idUsuario) {
                         }
                     }).then((resp) => {
                         this.allTareaProduccions = resp.data;
-
                     }).catch(error => console.log(error));
                     /* 
                     document.getElementById('sectIntegreOC-' + idOperacion).innerHTML =         
