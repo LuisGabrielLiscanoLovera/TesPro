@@ -14,6 +14,8 @@ from rest_framework.response import Response
 from authapp.models import MyUser
 from acumulado.models import Acumulado as ACU
 from acumulado.models import ProAcumulado as  ProAcu
+from tarea.models import Tarea
+
 from django.views.generic import View
 from django.http import JsonResponse, Http404, HttpResponse
 from django.db.models import F
@@ -54,7 +56,7 @@ class Acumulado(TemplateView):
           
           
 @api_view(['GET'])  
-def AcomuladoList(request):
+def AcumuladoList(request):
     if request.session.has_key('username'):
             if 'username' in request.session:
                 username = request.session['username']
@@ -62,8 +64,8 @@ def AcomuladoList(request):
     
     lastEm          = CambioEmpres.objects.filter(usuario_id = idUser.id).last()
     acumuladoQsect  = ACU.objects.filter(empresa_id = lastEm.lastEm).order_by('-id')
-    AcomuladoSe     = AcumuladoSerializer(acumuladoQsect, many=True)   
-    dump            = json.dumps(AcomuladoSe.data)   #dump serializer to json reponse 
+    AcumuladoSe     = AcumuladoSerializer(acumuladoQsect, many=True)   
+    dump            = json.dumps(AcumuladoSe.data)   #dump serializer to json reponse 
     return HttpResponse(dump, content_type='application/json')
     
     
@@ -114,7 +116,7 @@ def createProAcumulado(request,):
         
     lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()  
     canTerminada  = int(request.data['Cantidad_Acu'])
-    print(int(request.data['OccionId_pantinador_Acu']),"gggggggggg")    
+    
     
     try: 
         obj = ProAcu.objects.create(
@@ -144,4 +146,43 @@ def createProAcumulado(request,):
     
     return Response(data)
     
+   
+#dataProduccionInte-list/
+@api_view(['GET'])
+def AcumuladoDataIntegrante(request):
+    if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username = username)    
+    lastEm          = CambioEmpres.objects.filter(usuario_id=idUser).last()   
+    idAcumulado     = request.GET.get('idAcumulado',None)    
+    idIntegrante    = request.GET.get('idIntegranteSelect')    
+    dontrepeYorself=[]
+    tareas=[]
+    patinadores=[]    
+    for tareasIntegrante in ProAcu.objects.filter(empresa_id=lastEm.lastEm,acumulado_id=int(idAcumulado),
+    
+    integrante_id=idIntegrante).distinct().values('tarea_id','patinador_id'):       
+        tareaIntegrante = (Tarea.objects.filter(empresa_id=lastEm.lastEm,id=tareasIntegrante['tarea_id']).values('nom_tarea','id')[0])  
+        totalIntegrante = ProAcu.objects.filter(empresa_id=lastEm.lastEm,acumulado_id=int(idAcumulado),integrante_id=idIntegrante,tarea_id=tareaIntegrante['id']).values('tarea_id','can_prod_acum').aggregate(can_prod_acum=Sum('can_prod_acum'))
+        
+        
+        patinador       = Patinador.objects.filter(empresa_id=lastEm.lastEm,id=tareasIntegrante['patinador_id']).distinct().values('integrante_id')
+        patinador       = Integrante.objects.filter(empresa_id=lastEm.lastEm,id=patinador[0]['integrante_id']).values('nombres','apellidos')
+        patinador       = "{} {}".format(patinador[0]['nombres'],patinador[0]['apellidos'] )
+        
+        if patinador in patinadores:pass
+        else:patinadores.append(patinador)       
+        if tareaIntegrante['nom_tarea'] in dontrepeYorself:pass
+        else:           
+            dontrepeYorself.append(tareaIntegrante['nom_tarea'])
+            tareas.append({
+            'tarea':tareaIntegrante['nom_tarea'],
+            'cat_total_tarea':totalIntegrante['can_prod_acum'],
+        })       
+    if tareas==[]:pass
+    else:
+        if patinadores ==[]:pass 
+        else:tareas.append({'patinadores':patinadores})
+    return Response(tareas)
     
