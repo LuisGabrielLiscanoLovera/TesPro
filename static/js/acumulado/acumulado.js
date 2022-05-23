@@ -267,3 +267,13 @@ function AcumuladoProd(idAcumulado, idUsuario) {
         }
     })
 }
+
+
+function deleteAcumuladoUnico(id_acumulado) {
+
+    axios.delete('eliminar_acumulado/' + id_acumulado + '/')
+        .then(res => {
+            console.log(res);
+        }).catch(error => console.log(error));
+
+}

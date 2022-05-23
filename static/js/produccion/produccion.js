@@ -131,10 +131,6 @@ function deleteProduccionUnico(id_produccion) {
     axios.delete('eliminar_produccion/' + id_produccion + '/')
         .then(res => {
             console.log(res);
-
-
-
-
         }).catch(error => console.log(error));
 
 }

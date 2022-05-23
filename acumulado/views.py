@@ -203,3 +203,20 @@ def AcumuladoDataIntegrante(request):
         else:tareas.append({'patinadores':patinadores})
     return Response(tareas)
     
+    
+    
+    
+@api_view(['DELETE'])
+def deleteAcumulado(request,id):
+    try:      
+        ProAcu.objects.get(id=id).delete()
+        data = {'deleted': True}        
+    except Exception as e:           
+        data = {
+            'error':str(e),
+            'deleted': False      
+        }        
+        Response(data)
+    return JsonResponse(data)
+    
+        

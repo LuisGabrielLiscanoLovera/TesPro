@@ -151,10 +151,7 @@ def createProduccion(request,):
         print(str(e))
         return Response("PRODUCCION no cargadA " +str(e) )
    
-   
-    
-    
-    
+  
 
 @api_view(['DELETE'])
 def deleteProduccion(request,id):
@@ -191,3 +188,7 @@ def patinadoresActProd(request):
     except Exception as e:    
         print(str(e),"no tienes patinadores activos")   
         return Response("no tienes patinadores activos")
+        
+        
+        
+     

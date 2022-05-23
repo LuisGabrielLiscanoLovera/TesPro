@@ -2,7 +2,7 @@ import imp
 from django.urls import path
 from rest_framework import routers
 
-from acumulado.views import Acumulado,AcumuladoList,createAcumulado,createProAcumulado,AcumuladoDataIntegrante,AcumuladoListProc
+from acumulado.views import Acumulado,AcumuladoList,createAcumulado,createProAcumulado,AcumuladoDataIntegrante,AcumuladoListProc,deleteAcumulado
 
 router = routers.DefaultRouter()
 urlpatterns = [
@@ -14,6 +14,7 @@ urlpatterns = [
    path('create/', createAcumulado, name="Acumulado_ajax_create"),
    path('cproAcumulado/', createProAcumulado, name="NewsproAcumulado"),
    path('dataAcumuladoInte-list/', AcumuladoDataIntegrante, name="dataAcumuladoInte-list"),
+   path('eliminar_acumulado/<str:id>/', deleteAcumulado, name="delete-produccion")
 
-  
+
 ]
