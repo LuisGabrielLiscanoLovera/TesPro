@@ -217,26 +217,28 @@ function formProduccionOP(idOperacion, idUsuario) {
                 var OccionId_talla = $('select[id="OccionId_talla-' + this.idOperacion + '"]').val().trim();
                 var cantidad = $('input[name="cant_produccion-' + this.idOperacion + '"]').val().trim();
                 //crear la evaluacion de solo puede guardar los datos si cantidad esta llenna con if
-                axios.post('/produccion/create/', {
-                    idOperacion: idOperacion,
-                    usuario: idUsuario,
-                    OccionId_integrante_prod: OccionId_integrante_prod,
-                    OccionId_pantinador_prod: OccionId_pantinador_prod, //l
-                    OccionId_tarea: OccionId_tarea,
-                    OccionId_talla: OccionId_talla,
-                    cantidadProd: cantidad,
-                }).then(response => {
-                    //console.log("produccion creada");
-                    //console.log(this.$varGlobalSelectIntegrProd);
-                    axios.get('dataProduccionInte-list/', {
-                        params: {
-                            idIntegranteSelect: this.$varGlobalSelectIntegrProd,
-                            idOp: idOperacion,
-                        }
-                    }).then((resp) => {
-                        this.allTareaProduccions = resp.data;
-                    }).catch(error => console.log(error));
-                })
+                if (cantidad != 0) {
+                    axios.post('/produccion/create/', {
+                        idOperacion: idOperacion,
+                        usuario: idUsuario,
+                        OccionId_integrante_prod: OccionId_integrante_prod,
+                        OccionId_pantinador_prod: OccionId_pantinador_prod, //l
+                        OccionId_tarea: OccionId_tarea,
+                        OccionId_talla: OccionId_talla,
+                        cantidadProd: cantidad,
+                    }).then(response => {
+                        //console.log("produccion creada");
+                        //console.log(this.$varGlobalSelectIntegrProd);
+                        axios.get('dataProduccionInte-list/', {
+                            params: {
+                                idIntegranteSelect: this.$varGlobalSelectIntegrProd,
+                                idOp: idOperacion,
+                            }
+                        }).then((resp) => {
+                            this.allTareaProduccions = resp.data;
+                        }).catch(error => console.log(error));
+                    })
+                }
             }
         },
         mounted: function() {

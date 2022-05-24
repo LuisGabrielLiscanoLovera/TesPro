@@ -243,47 +243,50 @@ function formOP(idOp, usuario) {
                 var operacion = $('input[name="operacion-' + this.id_OP + '"]').val().trim();
 
 
+                if (cantOpDespacho != 0) {
+                    axios.post('/despacho/create/', {
+                        id_OP: operacion,
+                        selectIdTalla: OccionId_talla, //
+                        selectIDPatinador: OccionId_pantinador, //l
+                        usuario: this.usuario,
+                        cant: cantOpDespacho //
 
-                axios.post('/despacho/create/', {
-                    id_OP: operacion,
-                    selectIdTalla: OccionId_talla, //
-                    selectIDPatinador: OccionId_pantinador, //l
-                    usuario: this.usuario,
-                    cant: cantOpDespacho //
+                    }).then(response => {
+                        // console.log(response);
+                        // this.response = response.data
+                        this.success = 'Data saved successfully';
+                        this.response = JSON.stringify(response, null, 2);
+                        document.getElementById('despachoVue-' + idOp).innerHTML =
+                            '<table class="table animated fadeIn">' +
+                            '<thead class="thead-dark">' +
+                            '<tr>' +
+                            '<th class="text-center">Nombre Talla</th>' +
+                            '<th class="text-center">Talla Total</th>' +
+                            '<th class="text-center">Talla Restante</th>' +
+                            '</tr>' +
+                            '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + idOp + '">' +
+                            '<tr v-for="allTallaOP in allTallaOPs" :key="allTallaOP.id">' +
 
-                }).then(response => {
-                    // console.log(response);
-                    // this.response = response.data
-                    this.success = 'Data saved successfully';
-                    this.response = JSON.stringify(response, null, 2);
-                    document.getElementById('despachoVue-' + idOp).innerHTML =
-                        '<table class="table animated fadeIn">' +
-                        '<thead class="thead-dark">' +
-                        '<tr>' +
-                        '<th class="text-center">Nombre Talla</th>' +
-                        '<th class="text-center">Talla Total</th>' +
-                        '<th class="text-center">Talla Restante</th>' +
-                        '</tr>' +
-                        '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + idOp + '">' +
-                        '<tr v-for="allTallaOP in allTallaOPs" :key="allTallaOP.id">' +
+                            '<td class="text-center">[[allTallaOP.nom_talla]]</td>' +
+                            '<td class="text-center">[[allTallaOP.can_talla]]' +
+                            '</td><td class="text-center">[[allTallaOP.res_talla]]</td></tr>' +
+                            '</tbody></table>';
+                        tallasOP(idOp);
+                        axios
+                            .get('/talla/tallaOP-Incosistente/?idOperacion=' + idOp)
+                            .then((resp) => {
+                                this.cantRestante = resp.data.TotalOpRestante;
+                                //document.getElementById('canRestante-' + idOp).innerHTML = "Restante";
+                                //console.log(this.cantRestante)
+                            })
+                            .catch(error => console.log(error));
 
-                        '<td class="text-center">[[allTallaOP.nom_talla]]</td>' +
-                        '<td class="text-center">[[allTallaOP.can_talla]]' +
-                        '</td><td class="text-center">[[allTallaOP.res_talla]]</td></tr>' +
-                        '</tbody></table>';
-                    tallasOP(idOp);
-                    axios
-                        .get('/talla/tallaOP-Incosistente/?idOperacion=' + idOp)
-                        .then((resp) => {
-                            this.cantRestante = resp.data.TotalOpRestante;
-                            //document.getElementById('canRestante-' + idOp).innerHTML = "Restante";
-                            //console.log(this.cantRestante)
-                        })
-                        .catch(error => console.log(error));
+                    }).catch(error => {
+                        this.response = 'Error: ' + error.response.status
+                    })
 
-                }).catch(error => {
-                    this.response = 'Error: ' + error.response.status
-                })
+                }
+
             }
         },
         mounted: function() {

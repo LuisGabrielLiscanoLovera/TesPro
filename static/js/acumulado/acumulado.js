@@ -170,27 +170,32 @@ function formAcumulado(idAcumulado, idUsuario) {
                 var OccionId_talla_Acu = $('select[id="OccionId_talla_Acu-' + this.idAcumulado + '"]').val().trim();
                 var Cantidad_Acu = $('input[name="cant_prod_Acum-' + this.idAcumulado + '"]').val().trim();
                 //crear la evaluacion de solo puede guardar los datos si cantidad esta llenna con if
-                axios.post('/acumulado/cproAcumulado/', {
-                    idAcumulado: idAcumulado,
-                    usuario: idUsuario,
-                    acumulado_id: idAcumulado,
-                    OccionId_integrante_Acu: OccionId_integrante_Acu,
-                    OccionId_pantinador_Acu: OccionId_pantinador_Acu, //l
-                    OccionId_tarea_Acu: OccionId_tarea_Acu,
-                    OccionId_talla_Acu: OccionId_talla_Acu,
-                    Cantidad_Acu: Cantidad_Acu,
-                }).then(response => {
+
+                if (Cantidad_Acu != 0) {
+                    axios.post('/acumulado/cproAcumulado/', {
+                        idAcumulado: idAcumulado,
+                        usuario: idUsuario,
+                        acumulado_id: idAcumulado,
+                        OccionId_integrante_Acu: OccionId_integrante_Acu,
+                        OccionId_pantinador_Acu: OccionId_pantinador_Acu, //l
+                        OccionId_tarea_Acu: OccionId_tarea_Acu,
+                        OccionId_talla_Acu: OccionId_talla_Acu,
+                        Cantidad_Acu: Cantidad_Acu,
+                    }).then(response => {
 
 
-                    axios.get('dataAcumuladoInte-list/', {
-                        params: {
-                            idIntegranteSelect: this.$varGlobalSelectIntegrAcu,
-                            idAcumulado: idAcumulado,
-                        }
-                    }).then((resp) => {
-                        this.allTareaAcumulados = resp.data;
-                    }).catch(error => console.log(error));
-                })
+                        axios.get('dataAcumuladoInte-list/', {
+                            params: {
+                                idIntegranteSelect: this.$varGlobalSelectIntegrAcu,
+                                idAcumulado: idAcumulado,
+                            }
+                        }).then((resp) => {
+                            this.allTareaAcumulados = resp.data;
+                        }).catch(error => console.log(error));
+                    })
+
+                }
+
             }
         },
         mounted: function() {

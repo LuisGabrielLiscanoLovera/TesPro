@@ -142,36 +142,38 @@ function formCasino(idCasino, idUsuario) {
                 var OccionId_pantinador_Casino = $('select[id="OccionId_pantinador_Casino-' + this.idCasino + '"]').val().trim();
                 var Cantidad_Casino = $('input[name="cant_casino-' + this.idCasino + '"]').val().trim();
                 //crear la evaluacion de solo puede guardar los datos si cantidad esta llenna con if
-                axios.post('/casino/cproCasino/', {
-                    idCasino: idCasino,
-                    usuario: idUsuario,
-                    OccionId_integrante_Casino: OccionId_integrante_Casino,
-                    OccionId_pantinador_Casino: OccionId_pantinador_Casino, //l
-                    Cantidad_Casino: Cantidad_Casino,
-                }).then(response => {
+                if (Cantidad_Casino != 0) {
+                    axios.post('/casino/cproCasino/', {
+                        idCasino: idCasino,
+                        usuario: idUsuario,
+                        OccionId_integrante_Casino: OccionId_integrante_Casino,
+                        OccionId_pantinador_Casino: OccionId_pantinador_Casino, //l
+                        Cantidad_Casino: Cantidad_Casino,
+                    }).then(response => {
 
-                    document.getElementById('sectIntegreOCasino-' + idCasino).innerHTML =
-                        '<div class="text-center"">' +
-                        '<table  class="table text-center animated fadeIn"  id="items-table-Casino-' + idCasino +
-                        '">' +
-                        '<thead class="thead-dark">' +
-                        '<tr>' +
-                        '<th class="" >ID</th>' +
-                        '<th class="text-center">Fecha</th>' +
-                        '<th class="text-center">Cantidad</th>' +
-                        '</tr>' +
-                        '</thead>' +
-                        '<tbody calss="" id="casinoKill-' + idCasino + '">' +
-                        '<td class="text-center">ID</td>' +
-                        '<td class="text-center">Cantidad</td>' +
-                        '<td class="text-center">Fecha</td></tr>' +
-                        '</tbody>' +
-                        '</table>' +
-                        '</div>';
-                    CasinoImporte(idCasino, OccionId_integrante_Casino);
+                        document.getElementById('sectIntegreOCasino-' + idCasino).innerHTML =
+                            '<div class="text-center"">' +
+                            '<table  class="table text-center animated fadeIn"  id="items-table-Casino-' + idCasino +
+                            '">' +
+                            '<thead class="thead-dark">' +
+                            '<tr>' +
+                            '<th class="" >ID</th>' +
+                            '<th class="text-center">Fecha</th>' +
+                            '<th class="text-center">Cantidad</th>' +
+                            '</tr>' +
+                            '</thead>' +
+                            '<tbody calss="" id="casinoKill-' + idCasino + '">' +
+                            '<td class="text-center">ID</td>' +
+                            '<td class="text-center">Cantidad</td>' +
+                            '<td class="text-center">Fecha</td></tr>' +
+                            '</tbody>' +
+                            '</table>' +
+                            '</div>';
+                        CasinoImporte(idCasino, OccionId_integrante_Casino);
 
 
-                })
+                    })
+                }
             }
         },
         mounted: function() {

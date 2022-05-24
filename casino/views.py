@@ -28,9 +28,10 @@ def createProCasino(request,):
         empresa_id     = int(lastEm.lastEm),
         integrante_id  = int(request.data['OccionId_integrante_Casino']),
         patinador_id   = int(request.data['OccionId_pantinador_Casino']),        
-        cantidad      = canTerminada,      
-        casino_id      =int(request.data['idCasino'])
-        )                
+        cantidad       = canTerminada,      
+        casino_id      = int(request.data['idCasino'])
+        )
+        Casino.objects.all().filter(id=int(request.data['idCasino'])).update(can_total=F('can_total') + canTerminada)  
         #obj = ProAcu.objects.latest('id')
         #btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteAcumuladoUnico({})'> </button>".format(obj.id)
         #obj = ProAcu.objects.all().filter(id=obj.id).update(delAcumulProc=btnDel)
