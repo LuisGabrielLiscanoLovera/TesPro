@@ -28,17 +28,12 @@ function DetailFormatterButInfoDespacho(index, row) {
         '</tbody></template></div>' +
         '</table>' + '<script type="application/javascript">' + 'formOP(' + row.id + ',' + row.usuario + ');' +
         '</' + 'script>' +
-
         '</div>' +
-
         '<div class="col-sm-4"><div id="FormuTallaOP-' + row.id +
         '"><template>' +
         '<div class="border border-info alert"><b><h6>Restante &nbsp;&nbsp;<b class="big-button">[[cantRestante]] <hrr></b> de [[total]]</b></h6></div>' +
         '<form @submit.prevent="submitFormDespacho" class="form dark"><div hidden=True>{% csrf_token %}</div>' +
-
         '<div>' +
-
-
 
         //'<div class="progress progress-striped"><div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1" style="width:' +
         //'% ' +
@@ -133,8 +128,8 @@ function DetailFormatterButAccionDespacho(index, row) {
 
         '],' +
 
-        '"language": {"sProcessing": "Procesando...","sLengthMenu": "Mostrar _MENU_ registros","sZeroRecords": "No se encontraron resultados","sEmptyTable": "Ningún dato disponible en esta tabla","sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros","sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros","sInfoFiltered": "(filtrado de un total de _MAX_ registros)","sInfoPostFix": "","sSearch": "Buscar:","sUrl": "","sInfoThousands": ",","sLoadingRecords": "Cargando...","oPaginate": {"sFirst": "Primero","sLast": "Último","sNext": "Siguiente","sPrevious": "Anterior"},"oAria": {"sSortAscending": ": Activar para ordenar la columna de manera ascendente","sSortDescending": ": Activar para ordenar la columna de manera descendente"}},' +
-
+        '"language": {"sProcessing": "Procesando...","sLengthMenu": "Mostrar _MENU_ registros","sZeroRecords": "No se encontraron resultados","sEmptyTable": "Ningún dato disponible","sInfo": "Registros del _START_ al _END_ de un total de _TOTAL_ registros","sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros","sInfoFiltered": "(filtrado de un total de _MAX_ registros)","sInfoPostFix": "","sSearch": "Buscar:","sUrl": "","sInfoThousands": ",","sLoadingRecords": "Cargando...","oPaginate": {"sFirst": "Primero","sLast": "Último","sNext": "Siguiente","sPrevious": "Anterior"},"oAria": {"sSortAscending": ": Activar para ordenar la columna de manera ascendente","sSortDescending": ": Activar para ordenar la columna de manera descendente"}},' +
+        '"columnDefs": [{ "className": "dt-center", "targets": "_all" }],' +
 
         '});' +
 

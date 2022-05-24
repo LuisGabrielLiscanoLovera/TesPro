@@ -44,7 +44,7 @@ class Importe(models.Model):
             models.Index(fields=['created_at',]), 
         ]
     def __str__(self):
-        return 'id:{} integrante:{} cantidad:{} estatus:{}  creatd_at:{}' .format(self.id,
-        self.integrante,self.cantidad,self.estatus,self.created_at)
+        return 'id:{} integrante:{} cantidad:{}   creatd_at:{}' .format(self.id,
+        self.integrante,self.cantidad,self.created_at)
     
     
