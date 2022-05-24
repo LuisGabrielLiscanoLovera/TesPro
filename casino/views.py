@@ -1,5 +1,5 @@
 import json
-from casino.models import Casino
+from casino.models import Casino, Importe
 from integrante.models import Integrante
 from patinador.models import Patinador
 from django.contrib.sessions.backends.db import SessionStore
@@ -8,9 +8,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from authapp.models import MyUser
 from empresa.models import Empresa,RelacionEmpresa,CambioEmpres
-from casino.serializers import CasinoSerializer
-
-
+from casino.serializers import CasinoSerializer,ImporteSerializer
+from django.db.models import Sum, F 
 
 @api_view(['GET'])
 def apiOverview(request):
@@ -33,8 +32,6 @@ def casinoList(request):
     serializer = CasinoSerializer(casinos, many=True)
     return Response(serializer.data)
 
-
-
 @api_view(['POST'])
 def createCasino(request,):
     #Prod = Models AcumulcreateCasino
@@ -43,8 +40,7 @@ def createCasino(request,):
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
         
-    lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()  
-    
+    lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
     
     try: 
         obj = Casino.objects.create(
@@ -55,8 +51,7 @@ def createCasino(request,):
         )
                 
         data = {'Casino': "Casino guardado con exito!",
-                'estatus':True      }
-
+                'estatus':True}
     except Exception as e:
         data = { 'Error': str(e),'estatus':False}        
         return Response("Casino no cargadA " +str(e) )
@@ -64,5 +59,25 @@ def createCasino(request,):
     
     
     
+    
+    
+@api_view(['GET'])
+def CasinoDataIntegranteImporte(request):
+    if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username = username)    
+    lastEm          = CambioEmpres.objects.filter(usuario_id=idUser).last()   
+    idCasino     = request.GET.get('idCasino',None)    
+    idIntegrante    = request.GET.get('idIntegranteSelect')    
+       
+    importeCasino=Importe.objects.filter(usuario_id=idUser,empresa_id=lastEm.lastEm,casino_id=int(idCasino),
+    integrante_id=idIntegrante)
+
+    serializer = ImporteSerializer(importeCasino, many=True)
+    return Response(serializer.data)
+    
+    
+
     
     

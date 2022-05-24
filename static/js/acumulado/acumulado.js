@@ -7,6 +7,8 @@ function DetailFormatterButInfoAcumulado(index, row) {
     return '' +
         '<script type="application/javascript">' + 'formAcumulado(' + row.id + ',' + row.usuario + ');' +
         '</' + 'script>' +
+
+
         '<div id="FormuAcumulado-' + row.id + '">' +
         '<template>' +
         '<form @submit.prevent="submitFormAcumulado" class="form animated fadeIn border-info ">' +
@@ -23,25 +25,23 @@ function DetailFormatterButInfoAcumulado(index, row) {
         '<thead class="">' +
         '<tr><th scope="col" class="text-center">Tareas</th>' +
         '<th scope="col" class="text-center">Cantidad</th></tr>' + '</thead>' +
-
-
         '<tbody>' +
         '<tr v-for="i in allTareaAcumulados">' +
         '<td class="text-center">[[i.tarea]]</td>' +
         '<td class="text-center">[[i.cat_total_tarea]]</td>' +
         '</tr>' +
-
         '</tbody>' +
         '</table>' +
         '</div>' +
         '</div>' +
+
         '<div class="col-sm-6   offset-6" >' +
         '<div class="form-group"> ' + //<label>Integrante</label>
         '<select  id="OccionId_integrante_Acu-' + row.id +
         '" class="sectIntegrenteOnChanAcu-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteAcumulado"><option value="">Selecciones Integrante</option>' +
-
         '<option id="id_integrante"  v-for="(optionIntegranteACU) in allIntegrantesAcumuladoss" v-bind:value="optionIntegranteACU.id">[[optionIntegranteACU.nombres]]  [[optionIntegranteACU.apellidos]]</option></select></div>' +
         '</div>' +
+
         '<div class="col-sm-6 mb-2 offset-6  ">' +
         '<div class="form-group">' +
         '<select  class="form-select form-select-sm form-control" v-model="selectIDPatinadorAcumulado" id="OccionId_pantinador_Acu-' + row.id +
@@ -55,13 +55,14 @@ function DetailFormatterButInfoAcumulado(index, row) {
         '" class="form-select form-select-sm form-control " v-model="selectIdTareaAcumulado"><option value="">Selecciones Tarea</option>' +
         '<option id="id_tarea"  v-for="(optionTareaAcu) in allTareasAcumulados" v-bind:value="optionTareaAcu.id">[[optionTareaAcu.nom_tarea]] / [[optionTareaAcu.detalle]]</option></select></div>' +
         '</div>' +
+
+
         '<div class="col-sm-6 mb-2 offset-6">' +
         '<div class="form-group">' +
         '<select  id="OccionId_talla_Acu-' + row.id +
         '" class="form-select form-control form-select-sm" v-model="selectIdTallaAcumulado"><option value="">Selecciones Talla</option>' +
         '<option id="id_talla"  v-for="(opcTareaAcu) in allTallasAcumulados"  v-bind:value="opcTareaAcu.id">[[opcTareaAcu.num_talla]] / [[opcTareaAcu.nom_talla]]</option></select></div>' +
         '</div>' +
-
 
         '<div class="col-sm-6 mb-2 offset-6">' +
         '<div class="form-group">' +

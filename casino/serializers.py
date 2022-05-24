@@ -17,7 +17,7 @@ class ImporteSerializer(serializers.ModelSerializer):
     nomIntegrante    = serializers.CharField(source='integrante.nombres')
     apelIntegrante   = serializers.CharField(source='integrante.apellidos')
     cedulaIntegrante = serializers.CharField(source='integrante.cedula')
-    #patinadorID      = serializers.CharField(source='patinador.integrante_id')
+    patinadorID      = serializers.CharField(source='patinador.integrante_id')
 
 
 

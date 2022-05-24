@@ -29,11 +29,11 @@ class Casino (models.Model):
         self.nom_casino,self.can_total, self.estatus,self.created_at)
 
 class Importe(models.Model):
+    usuario       = models.ForeignKey(User, on_delete=models.CASCADE)
+
     empresa    = models.ForeignKey(Empresa,on_delete=models.CASCADE)
     casino     = models.ForeignKey(Casino, on_delete=models.CASCADE)
     cantidad   = models.IntegerField(blank=True, null=True)
-    ESTATUS    = (('A','Activo'),('I','Inactivo'))
-    estatus    = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
     integrante = models.ForeignKey(Integrante, on_delete=models.CASCADE)
     patinador  = models.ForeignKey(Patinador, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
