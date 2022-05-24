@@ -4,8 +4,9 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
  -->
 <div id="openModalIntegrante" class="modalDialogPadre">
-    <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
+    <div>
 
+        <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
         <center>
             <br>
             <h1>Integrantes {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
@@ -13,10 +14,7 @@
             <hr>
         </center>
 
-
-
         <!--
-
 data-show-refresh="true"
 data-auto-refresh="true"
 data-auto-refresh-interval="30"
@@ -46,14 +44,6 @@ data-auto-refresh-status="true"
         </table>
 
 
-
-
-
-
-
-
-
-
         <script>
             $('#table').SetEditable();
 
@@ -77,7 +67,6 @@ data-auto-refresh-status="true"
                     '<div class="form-group"><label>Cedula.</label>' +
                     '<input class="form-control"   value="' + row.cedula + '" name="cedulaUP"></div>' +
                     '</div>' +
-
                     '<div class="mx-sm-3">' +
                     '<div class="form-group"><label>Telefono</label>' +
                     '<input class="form-control" value="' + row.num_telf + '" name="num_telfUP"></div>' +
@@ -86,10 +75,7 @@ data-auto-refresh-status="true"
                     '<div class="form-group"><label>Direccion</label>' +
                     '<input class="form-control" value="' + row.direccion + '" name="direccionUP"></div>' +
                     '</div>' +
-
                     '<div class="mx-sm-3">' +
-
-
                     '<div class="form-group"><label>Genero</label>' +
                     '<select id="generoUP">' +
                     '<option value="' + row.sexo + '">' + row.sexo + '</option>' +
@@ -106,16 +92,10 @@ data-auto-refresh-status="true"
                     '<input type="number" hidden="True" name="idEmpresaUP" value="{{ lastIdEmpresa }}">' +
                     '<input type="number" hidden="True" name="idUserUP" value="{{ login_user_id}}">' +
                     '<input type="number" hidden="True" name="idIntegranteUP" value="' + row.id + '"' +
-
                     '</div>' +
                     '<div class="col-sm-6">' +
                     '<input id="EditIntegranteBtn-' + row.id + '" value="Actualizar registro" type="submit" onclick="editIntegrante(' + row.id + ')" class="btn-lg  btn btn-outline-warning btn-rounded  " >' +
-
-
-
-
                     '</div>' +
-
                     '</div>' +
                     '<div class="col-sm-1">' + '<button value="" onclick="removeIntegrante(' + row.id + ')"  id="buttonEliminarIntegrante" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>' +
                     '</div>' +
@@ -125,21 +105,11 @@ data-auto-refresh-status="true"
 
             }
         </script>
-
-
-
         </div>
-
     </div>
-
-
-
 
     <div id="openModalHijoAddIntegrante" class="modalDialogHijo">
         <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>
-
-
-
             <div class="container">
 
 
@@ -226,24 +196,7 @@ data-auto-refresh-status="true"
 
 
             </div>
-
-
-
-
-
-
-
-
         </div>
-
-
-
-
-
-
-
-
-
 
         <!--create integrante-->
         <script>
@@ -294,11 +247,6 @@ data-auto-refresh-status="true"
                 return false;
             });
         </script>
-
-
-
-
-
         <!--editar integrante-->
 
         <script>
@@ -356,16 +304,7 @@ data-auto-refresh-status="true"
                 }
             }
         </script>
-
-
-
-
-
-
-
         <!--Delete integrante-->
-
-
         <script>
             function removeIntegrante(idIntegrante) {
                 $.ajax({

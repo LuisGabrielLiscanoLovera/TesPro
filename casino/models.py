@@ -2,24 +2,21 @@ from django.db import models
 from authapp.models import MyUser as User
 from empresa.models import Empresa
 from integrante.models import Integrante
-# Create your models here.
-class Casino(models.Model):   
-    btnInfoStrin='<button type="button" class="btn btn-outline-info icofont-info-squar text-center btn-md btn-block">Info</button>'
-    formCasino ='<button type="button" class="btn btn-outline-warning icofont-settings-al text-center btn-md btn-block ">Accion</button>'
-    usuario    = models.ForeignKey(User, related_name='Casino',on_delete = models.CASCADE)
-    empresa    = models.ForeignKey(Empresa, related_name='Casino',on_delete = models.CASCADE)
-    integrante = models.OneToOneField(Integrante, related_name='Casino',on_delete= models.CASCADE)
-    cantidad   = models.IntegerField(blank=True, null=True)
-    deuda      = models.IntegerField(blank=True, null=True,default=0)
-    btnInfo = models.CharField(max_length=1000, blank=True ,default=btnInfoStrin, null=True)
-    btnAcci = models.CharField(max_length=1000, blank=True ,default=formCasino , null=True)
-    
+from patinador.models import Patinador
+
+class Casino (models.Model):
+    btnInfo       = '<button type="button" class="btn btn-outline-info text-center btn-sm btn-block ">Info</button>'
+    btnccion      = '<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>'
+    usuario       = models.ForeignKey(User, on_delete=models.CASCADE)
+    empresa       = models.ForeignKey(Empresa,  on_delete=models.CASCADE)
+    nom_casino    = models.CharField(max_length=35, unique=True)
+    can_total     = models.IntegerField(blank=True, null=True,default=0)
     ESTATUS       = (('A','Activo'),('I','Inactivo'))
+    btnccion      = models.CharField(max_length=300,default=btnccion , null=True)
+    btnInfo       = models.CharField(max_length=300,default=btnInfo , null=True)
     estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
-    
+    created_at    = models.DateTimeField(auto_now_add=True)
+    updated_at    = models.DateTimeField(auto_now=True)
     class Meta:
         ordering = ['id']
         indexes = [
@@ -27,29 +24,27 @@ class Casino(models.Model):
             
         ]
     def __str__(self):
-        return 'id:{} usuario:{} empresa:{} deuda:{} created_at:{} estatus:{}'.format(self.id,
-                self.usuario, self.empresa,
-                self.deuda,self.created_at,
-                self.estatus)
-    
-    
+        return 'id:{} usuario:{} empresa:{} nom_casino:{} can_total:{} estatus:{} created_at:{} '.format(
+        self.id, self.usuario,self.empresa,
+        self.nom_casino,self.can_total, self.estatus,self.created_at)
+
 class Importe(models.Model):
-    empresa    = models.ForeignKey(Empresa, related_name='Importe', null=False, blank=False,on_delete=models.CASCADE)
-    casino     = models.ForeignKey(Casino, related_name='Importe', null=False, blank=False,on_delete=models.CASCADE)
-    cantidad   = models.IntegerField(blank=True, null=True)    
+    empresa    = models.ForeignKey(Empresa,on_delete=models.CASCADE)
+    casino     = models.ForeignKey(Casino, on_delete=models.CASCADE)
+    cantidad   = models.IntegerField(blank=True, null=True)
     ESTATUS    = (('A','Activo'),('I','Inactivo'))
     estatus    = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
+    integrante = models.ForeignKey(Integrante, on_delete=models.CASCADE)
+    patinador  = models.ForeignKey(Patinador, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
-  
     class Meta:
         ordering = ['id']
         indexes = [
-            models.Index(fields=['created_at',]),
-            
+            models.Index(fields=['created_at',]), 
         ]
     def __str__(self):
-        return 'id:{} cantidad:{} creatd_at:{} estatus:{}' .format(self.id,self.cantidad,self.created_at,self.estatus)
+        return 'id:{} integrante:{} cantidad:{} estatus:{}  creatd_at:{}' .format(self.id,
+        self.integrante,self.cantidad,self.estatus,self.created_at)
     
     

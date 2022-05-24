@@ -17,7 +17,7 @@ from acumulado.models import ProAcumulado as  ProAcu
 from tarea.models import Tarea
 
 from django.views.generic import View
-from django.http import JsonResponse, Http404, HttpResponse
+from django.http import JsonResponse, HttpResponse,Http404
 from django.db.models import F
 from acumulado.serializers import AcumuladoSerializer,AcuSerializerProc
 

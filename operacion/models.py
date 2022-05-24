@@ -14,7 +14,7 @@ class Operacion(models.Model):
     referencia    = models.ForeignKey(Referencia, related_name='Operacion', on_delete=models.CASCADE,blank=True, null=True)
     color         = models.ForeignKey(Color, related_name='Operacion', on_delete=models.CASCADE,blank=True, null=True)
     nom_operacion = models.CharField(max_length=35)
-    nota          = models.CharField(max_length=50,blank=True, null=True)
+    nota          = models.CharField(max_length=150,blank=True, null=True)
     can_total     = models.IntegerField(blank=True, null=True)
     can_restante  = models.IntegerField(blank=True, null=True)    
     btnAcci       = models.CharField(max_length=300,default=btnAccion , null=True)

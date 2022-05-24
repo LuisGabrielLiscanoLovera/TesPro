@@ -7,7 +7,7 @@ from referencia.models import Referencia
 from color.models import Color
 from integrante.models import Integrante
 from patinador.models import Patinador
-from casino.models import Casino
+#from casino.models import Casino
 from tarea.models import Tarea
 from django.shortcuts import redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
@@ -58,9 +58,10 @@ class Home(LoginRequiredMixin,TVB):
         allTarea        = Tarea.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
         totalPatinador  = Patinador.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa)).count()
         totalOperacion  = Operacion.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa)).count()
-        totalCasino     = Casino.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
-        totalCasino     = totalCasino.aggregate(Sum('deuda'))
-        totalCasino=re.sub("[^0-9]","",str(totalCasino))        
+        #totalCasino     = Casino.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
+        #totalCasino     = totalCasino.aggregate(Sum('deuda'))
+        #totalCasino=re.sub("[^0-9]","",str(totalCasino))        
+        
         context = super(Home, self).get_context_data(**kwargs)        
         context['id']               = self.kwargs.get('id')
         context['login_user_id']    = s['last_login']   # aqui se obtiene el user id
@@ -75,7 +76,7 @@ class Home(LoginRequiredMixin,TVB):
         context['allTalla']         = allTalla                      # all talla
         context['allReferencia']    = totalReferencia               # all referencia
         context['allColor']         = totalColor                    # all color
-        context['totalCasino']      = totalCasino                   # total fondo casino
+    #    context['totalCasino']      = totalCasino                   # total fondo casino
         context['totalOperacion']   = totalOperacion                # total operacion
         context['totalTallas']      = allTalla.count()-1            # total talla (el -1 para no contar las sin talla)
         context['totalTarea']       = allTarea.count()              # total tarea

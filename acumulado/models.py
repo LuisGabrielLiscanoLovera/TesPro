@@ -1,4 +1,3 @@
-from venv import create
 from django.db import models
 from authapp.models import MyUser as User
 from empresa.models import Empresa
@@ -14,7 +13,7 @@ class Acumulado(models.Model):
     empresa       = models.ForeignKey(Empresa,  on_delete=models.CASCADE)
     nom_acumulado = models.CharField(max_length=35, unique=True)
     can_total     = models.IntegerField(blank=True, null=True,default=0)    
-    nota          = models.CharField(max_length=50,blank=True, null=True)
+    nota          = models.CharField(max_length=150,blank=True, null=True)
     ESTATUS       = (('A','Activo'),('I','Inactivo'))
     estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
     btnAcci       = models.CharField(max_length=300,default=btnAccion , null=True)

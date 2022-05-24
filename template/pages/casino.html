@@ -1,79 +1,88 @@
 {% load static %}
 
-
-
-
 <div id="openModalCasino" class="modalDialogPadre">
     <div>
         <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
         <center>
-            <br>
             <h1>Casino {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
-            <hr>
         </center>
-
-
         <div class="row">
+            <div class="col-md-12 col-md-offset-10">
+                <h6 class="cioo" style="text-align: right;">Importe total $ {{totalCasino}}</h6>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-9">
+                    <form id="addCasino" autocomplete="off" class="form-wrapper ">{% csrf_token %}
+                        <input type="number" hidden="True" name="empresaIntegrante" value="{{ lastIdEmpresa }}">
+                        <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">
 
-            <div class="col-sm-3">
+                        <h4 class="text-cent" name="heading">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Registo de Casino</h4>
 
-                <h5 style="text-align: center;">Registar integrante casino</h3>
-
-                    <form id="addIntegranteCasino" autocomplete="off" class="form-inline">{% csrf_token %}
-                        <input type="number" hidden="True" name="idEmpresaCasino" value="{{ lastIdEmpresa }}">
-                        <input type="number" hidden="True" name="idUserCasino" value="{{ login_user_id}}">
-
-                        <div class="form-group mx-sm-2">
-                            <label for="integrante" class="sr-only">Integrante</label>
-
-
-                            <input type="text" list="BuscarIntegrantesCasino" required placeholder="integrante al casino..." class="form-control">
-
-                            <datalist id="BuscarIntegrantesCasino">
-                            {% for resultsCasino in allIntegrante %}
-                                  <option  value="{{resultsCasino.nombres}} {{resultsCasino.apellidos}}"></option>
-                                  <input type="number" hidden="True" name="idIntegranteCasino" value="{{ resultsCasino.id }}">
-
-                            {% endfor %}
-
-                        </datalist>
-
-                            <div class="form-group mx-sm-2">
-                                <button class="btn btn-outline-primary form-control" type="submit">Cargar integrante</button>
+                        <div class="row">
+                            <div class="col-md-4 mb-1  form-group-sm">
+                                <input class="form-control" id="nom_casino" name="nom_casino" placeholder="Nom Casino">
                             </div>
+
                         </div>
 
-                    </form>
-            </div>
-            <div class="col-md-12 col-md-offset-10">
-                <h6 class="" style="text-align: right;">Importe total $ {{totalCasino}}</h6>
-            </div>
+                        <div class="col-md-6 ">
+                            <input class="submit bt mb-xl-1 of" type="submit" onclick="location.href='/'" value="Guardar">
 
-            <div class="col-sm-12">
+                        </div>
+
+
+                    </form>
+
+                    <script>
+                        $("form#addCasino").submit(function() {
+
+                            var nom_casino = $('input[name="nom_casino"]').val().trim();
+                            var idUser = $('input[name="idUser"]').val().trim();
+                            var empresaIntegrante = $('input[name="empresaIntegrante"]').val().trim();
+
+
+                            if (idUser && empresaIntegrante) {
+                                axios.post('/casino/create/', {
+                                    nom_casino: nom_casino,
+                                    usuario: idUser,
+                                    empresa_id: empresaIntegrante,
+
+
+                                }).then(response => {
+
+
+                                    console.log("guardado con exito")
+                                })
+
+                            } else {
+                                alert("All fields must have a valid value.");
+                            }
+                            $('form#addIntegrante').trigger("reset");
+                            return false;
+                        });
+                    </script>
+
+
+
+
+
+
+                </div>
                 <table id="table" data-id-field="id" class="table" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-search="true" data-show-fullscreen="true" data-show-export="true" data-locale="es-SP" data-pagination="true"
                     data-url="casino/casino-list/">
-
                     <thead class="thead-dark">
                         <tr>
-                            <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoCasino" class="text-center">Mas info</th>
-                            <th data-field="nomIntegrante" class="text-center">Nombres</th>
-                            <th data-field="apelIntegrante" class="text-center">Apellidos</th>
-                            <th data-field="deuda" class="text-center">Importe Total</th>
-                            <!-- <th data-field="cedulaIntegrante"  class="text-center">Importe</th> -->
-                            <th data-field="updated_at" class="text-center">Ultimo importe</th>
-
-                            <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionCasino" class="text-center"> Accion</th>
-
+                            <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoCasino" class="text-center">Info</th>
+                            <th data-field="nom_casino" class="text-center">Reg Casino</th>
+                            <th data-field="can_total" class="text-center">Total importe</th>
+                            <th data-field="estatus" class="text-center">Estatus</th>
+                            <th data-field="created_at" class="text-center">Fecha</th>
+                            <th data-field="btnccion" data-detail-formatter="DetailFormatterButAccionCasino" class="text-center"> Accion</th>
                         </tr>
                     </thead>
-
-
                 </table>
-
             </div>
-
         </div>
-
 
 
 
