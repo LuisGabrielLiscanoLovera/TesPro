@@ -217,7 +217,7 @@ function formProduccionOP(idOperacion, idUsuario) {
                 var OccionId_talla = $('select[id="OccionId_talla-' + this.idOperacion + '"]').val().trim();
                 var cantidad = $('input[name="cant_produccion-' + this.idOperacion + '"]').val().trim();
                 //crear la evaluacion de solo puede guardar los datos si cantidad esta llenna con if
-                if (cantidad != 0) {
+                if (cantidad && OccionId_integrante_prod && OccionId_tarea && OccionId_talla) {
                     axios.post('/produccion/create/', {
                         idOperacion: idOperacion,
                         usuario: idUsuario,

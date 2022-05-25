@@ -121,7 +121,7 @@ function formCasino(idCasino, idUsuario) {
                         '">' +
                         '<thead class="thead-dark">' +
                         '<tr>' +
-                        '<th class="" >ID</th>' +
+                        '<th>id</th>' +
 
                         '<th class="text-center">Fecha</th>' +
                         '<th class="text-center">Cantidad</th>' +
@@ -158,7 +158,11 @@ function formCasino(idCasino, idUsuario) {
                 var OccionId_pantinador_Casino = $('select[id="OccionId_pantinador_Casino-' + this.idCasino + '"]').val().trim();
                 var Cantidad_Casino = $('input[name="cant_casino-' + this.idCasino + '"]').val().trim();
                 //crear la evaluacion de solo puede guardar los datos si cantidad esta llenna con if
-                if (Cantidad_Casino != 0) {
+                console.log(OccionId_integrante_Casino);
+                console.log(OccionId_pantinador_Casino);
+
+
+                if (Cantidad_Casino && OccionId_integrante_Casino) {
                     axios.post('/casino/cproCasino/', {
                         idCasino: idCasino,
                         usuario: idUsuario,
@@ -257,7 +261,6 @@ function CasinoImporte(idCasino, idIntegranteSelect) {
                 style: 'currency',
                 currency: 'USD',
             });
-
 
             document.getElementById('TotalImporte-' + idCasino).innerHTML =
                 '<div class="col-md-5 offset-7 alert border btn-cyan bt ">Importe total  : <b>' + T + '</b><br class="mb-3" >Cedula: ' + cedulaIntegrante + '</div>';

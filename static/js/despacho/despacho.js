@@ -243,7 +243,7 @@ function formOP(idOp, usuario) {
                 var operacion = $('input[name="operacion-' + this.id_OP + '"]').val().trim();
 
 
-                if (cantOpDespacho != 0) {
+                if (cantOpDespacho && OccionId_pantinador && operacion) {
                     axios.post('/despacho/create/', {
                         id_OP: operacion,
                         selectIdTalla: OccionId_talla, //

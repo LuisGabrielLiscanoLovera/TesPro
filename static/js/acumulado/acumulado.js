@@ -171,7 +171,8 @@ function formAcumulado(idAcumulado, idUsuario) {
                 var Cantidad_Acu = $('input[name="cant_prod_Acum-' + this.idAcumulado + '"]').val().trim();
                 //crear la evaluacion de solo puede guardar los datos si cantidad esta llenna con if
 
-                if (Cantidad_Acu != 0) {
+                if (Cantidad_Acu && OccionId_integrante_Acu && OccionId_pantinador_Acu &&
+                    OccionId_tarea_Acu && OccionId_talla_Acu) {
                     axios.post('/acumulado/cproAcumulado/', {
                         idAcumulado: idAcumulado,
                         usuario: idUsuario,
