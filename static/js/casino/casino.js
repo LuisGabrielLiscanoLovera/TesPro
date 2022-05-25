@@ -260,7 +260,7 @@ function CasinoImporte(idCasino, idIntegranteSelect) {
 
 
             document.getElementById('TotalImporte-' + idCasino).innerHTML =
-                '<div class="col-md-5 offset-7 alert border ">Importe total  : <b>' + T + '</b><br class="mb-3" >Cedula: ' + cedulaIntegrante + '</div>';
+                '<div class="col-md-5 offset-7 alert border btn-cyan bt ">Importe total  : <b>' + T + '</b><br class="mb-3" >Cedula: ' + cedulaIntegrante + '</div>';
 
         })
         .catch(error => console.log(error));
