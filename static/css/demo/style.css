@@ -23330,6 +23330,7 @@ address p {
     background: linear-gradient(#2a1c5a, #4b3a6e);
     background: url(../../images/sidebar/sidebar-bg.jpg);
     position: fixed;
+    background-size: cover;
 }
 
 .mdc-drawer--open,
@@ -23609,6 +23610,12 @@ footer .vertical-divider {
         width: calc(100% - 243px);
     }
 }
+
+
+/*# sourceMappingURL=../maps/demo/style.css.map */
+
+
+/*# sourceMappingURL=../maps/demo/style.css.map */
 
 
 /*# sourceMappingURL=../maps/demo/style.css.map */

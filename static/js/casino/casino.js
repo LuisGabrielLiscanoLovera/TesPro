@@ -52,7 +52,7 @@ function DetailFormatterButInfoCasino(index, row) {
 function DetailFormatterButAccionCasino(index, row) {
     //r = parseInt("[[progressRest]]");
     return '<div class="row">' +
-        '<div class="col-md-9">' +
+        '<div class="col-md-10">' +
         '<table  class="table animated fadeIn "  id="items-table-CasinoGene-' + row.id +
         '">' +
         '<thead class="thead-dark">' +
