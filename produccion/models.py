@@ -20,7 +20,7 @@ class Produccion(models.Model):
     patinador            = models.ForeignKey(Patinador, related_name='Produccion', blank=True, null=True, on_delete=models.CASCADE)
     
     
-    delProduccion = models.CharField(max_length=150, default='' , null=True)
+    delProduccion = models.CharField(max_length=200, default='' , null=True)
     
     ESTATUS       = (('A','Activo'),('I','Inactivo'))
     estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)

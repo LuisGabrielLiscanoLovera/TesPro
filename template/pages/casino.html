@@ -7,9 +7,9 @@
             <h1>Casino {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
         </center>
         <div class="row">
-            <div class="col-md-12 col-md-offset-10">
+            <!-- <div class="col-md-12 col-md-offset-10">
                 <h6 class="cioo" style="text-align: right;">Importe total $ {{totalCasino}}</h6>
-            </div>
+            </div> -->
             <div class="col-md-12">
                 <div class="col-md-9">
                     <form id="addCasino" autocomplete="off" class="form-wrapper ">{% csrf_token %}

@@ -1,3 +1,4 @@
+from ast import Import
 import json
 from casino.models import Casino, Importe
 from integrante.models import Integrante
@@ -32,9 +33,9 @@ def createProCasino(request,):
         casino_id      = int(request.data['idCasino'])
         )
         Casino.objects.all().filter(id=int(request.data['idCasino'])).update(can_total=F('can_total') + canTerminada)  
-        #obj = ProAcu.objects.latest('id')
-        #btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteAcumuladoUnico({})'> </button>".format(obj.id)
-        #obj = ProAcu.objects.all().filter(id=obj.id).update(delAcumulProc=btnDel)
+        obj = Importe.objects.latest('id')
+        btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteImporteUnico({})'> </button>".format(obj.id)
+        obj = Importe.objects.all().filter(id=obj.id).update(delCasinoImport=btnDel)
         
         data = {
             'Acumulado': "Casino guardado con exito!",
@@ -45,45 +46,52 @@ def createProCasino(request,):
         data = {'Errror': str(e),'estatus':False}        
         return Response(data)
     
-    return Response(data)
+    return Response(data)   
     
-    if request.session.has_key('username'):
+
+@api_view(['DELETE'])
+def deleteImporteUnico(request,id):
+    try:
+        canTerminada =  Importe.objects.filter(id=id).values('cantidad','casino_id')
+        Casino.objects.filter(id=canTerminada[0]['casino_id']).update(can_total= F('can_total') - canTerminada[0]['cantidad'])
+        
+        Importe.objects.get(id=id).delete()
+        data = {'deleted': True}        
+    except Exception as e:           
+        data = {
+            'error':str(e),
+            'deleted': False      
+        }        
+        Response(data)
+    return JsonResponse(data)
+@api_view(['GET'])
+def CasinoDataImporte(request):
+    if request.session.has_key('username'):        
         if 'username' in request.session:
             username = request.session['username']     
-            idUser   = MyUser.objects.get(username=username)            
-    lastEm = CambioEmpres.objects.filter(usuario_id=idUser).last()
-    lastEm = lastEm.lastEm    
-    try:        
-        patinadores     = Patinador.objects.all().filter(usuario=idUser,estatus='A' ,ctrlCasino=1 ,empresa_id=int(lastEm))
-        serializer      = PatinadorSerializer(patinadores, many=True)        
-        return Response(serializer.data)
-    except Exception as e:    
-        data={'error':str(e),'msj':"no tienes patinadores activos"}
-        return Response(data)
-
-
-
+            idUser   = MyUser.objects.get(username=username)
+    lastEm        = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
+    idCasino      = request.GET.get('idCasino', None)
+    importeGeneral=Importe.objects.filter(usuario_id=int(idUser.id),casino_id=idCasino,empresa_id=lastEm.lastEm).order_by("-id")
+    serializer = ImporteSerializer(importeGeneral, many=True)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def TotalImporteInte(request):
     if request.session.has_key('username'):        
         if 'username' in request.session:
             username = request.session['username']     
-            idUser   = MyUser.objects.get(username=username)
-            
-    lastEm        = CambioEmpres.objects.filter(usuario_id=idUser.id).last() 
-    
+            idUser   = MyUser.objects.get(username=username)    
+    lastEm             = CambioEmpres.objects.filter(usuario_id=idUser.id).last()    
     idCasino           = request.GET.get('idCasino', None)  
     idIntegranteSelect = request.GET.get('idIntegranteSelect', None)   
     casinoImporte      = Importe.objects.filter(empresa_id=lastEm.lastEm,
     usuario_id = idUser.id, integrante_id=idIntegranteSelect,casino_id=int(idCasino)).aggregate(cantidad=Sum('cantidad'))
-    
-    TotalCasinoImporte=casinoImporte['cantidad']
-    data = {'TotalCasinoImporte':TotalCasinoImporte}  
+    cedula             = Integrante.objects.filter(id=idIntegranteSelect,empresa_id=lastEm.lastEm,usuario_id=idUser.id ).distinct().values('cedula')
+    cedula = cedula[0]['cedula']
+    TotalCasinoImporte = casinoImporte['cantidad']
+    data = {'TotalCasinoImporte':TotalCasinoImporte,'cedulaIntegrante':cedula}  
     return JsonResponse(data)
-  
- 
-
 
 @api_view(['GET'])
 def apiOverview(request):
@@ -99,7 +107,6 @@ def casinoList(request):
         if 'username' in request.session:
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
-
     lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()
     lastEm     = lastEm.lastEm
     casinos    = Casino.objects.filter(empresa_id=lastEm,usuario_id=idUser,estatus='A').order_by('-id')
@@ -112,16 +119,13 @@ def createCasino(request,):
     if request.session.has_key('username'):        
         if 'username' in request.session:
             username = request.session['username']     
-            idUser   = MyUser.objects.get(username=username)
-        
-    lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
-    
+            idUser   = MyUser.objects.get(username=username)        
+    lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()    
     try: 
         obj = Casino.objects.create(
         usuario_id     = int(idUser.id),
         empresa_id     = int(lastEm.lastEm),
-        nom_casino     = request.data['nom_casino'],
-        
+        nom_casino     = request.data['nom_casino'],        
         )
                 
         data = {'Casino': "Casino guardado con exito!",

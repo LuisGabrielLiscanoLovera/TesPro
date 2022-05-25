@@ -22,7 +22,7 @@ class Despacho(models.Model):
     
     
     
-    btnDelDespacho  = models.CharField(max_length=300, blank=True ,default="-" , null=True)
+    btnDelDespacho  = models.CharField(max_length=300, blank=True ,default="" , null=True)
     #integrante = models.ForeignKey(Integrante,related_name='DespachoI', null=False, blank=False,on_delete=models.CASCADE)
     
     ESTATUS       = (('A','Activo'),('I','Inactivo'))

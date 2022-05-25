@@ -45,7 +45,7 @@ class ProAcumulado(models.Model):
     patinador     = models.ForeignKey(Patinador, on_delete=models.CASCADE)
     tarea         = models.ForeignKey(Tarea, on_delete=models.CASCADE)
     can_prod_acum = models.IntegerField()
-    delAcumulProc = models.CharField(max_length=150, default='' , null=True)
+    delAcumulProc = models.CharField(max_length=300, default='' , null=True)
 
     created_at    = models.DateTimeField(auto_now_add=True)
     updated_at    = models.DateTimeField(auto_now=True)

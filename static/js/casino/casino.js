@@ -1,7 +1,6 @@
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
 
-
 function DetailFormatterButInfoCasino(index, row) {
     //crea y renderiza la tabla
     return '' +
@@ -12,19 +11,10 @@ function DetailFormatterButInfoCasino(index, row) {
         '<form @submit.prevent="submitFormCasino" class="form animated fadeIn border-info ">' +
         '<div hidden=True>{% csrf_token %}</div>' +
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number"/>' +
-
-        '<h3 id="TotalImporte-' + row.id + '" style="position:;"></h3>' +
         '<div class="row">' +
-
-
-
         '<div class="col-md-6 " style="position:absolute; left:1;top:1   ">' +
-
-
         '<div id="sectIntegreOCasino-' + row.id + '" class="dataTable_width_auto resutatatIntegranteCasino-' + row.id +
         '">' +
-
-
         '</div>' +
         '</div>' +
 
@@ -53,14 +43,38 @@ function DetailFormatterButInfoCasino(index, row) {
         '</div>' +
         '</form>' +
         '</div>' +
-        '</div><br><br><br><br><br>' +
+        '</div>' +
+        '<h5 id="TotalImporte-' + row.id + '" style="position:;right:5;top:1"></h3>' +
+        '<br><br><br>' +
         '</template>';
 }
 
-function DetailFormatterButAccionCasino(index, row) { return 'XD DetailFormatterButAccionCasino'; }
+function DetailFormatterButAccionCasino(index, row) {
+    //r = parseInt("[[progressRest]]");
+    return '<div class="row">' +
 
+        '<div class="col-md-12">' +
+        '<table  class="table animated fadeIn "  id="items-table-CasinoGene-' + row.id +
+        '">' +
+        '<thead class="thead-dark">' +
+        '<tr>' +
+        '<th class="text-center">id</th>' +
+        '<th class="text-center">Cedula</th>' +
+        '<th class="text-center">Nombre</th>' +
+        '<th class="text-center">Apellido</th>' +
+        '<th class="text-center">Cantidad</th>' +
+        '<th class="text-center">Fecha</th>' +
+        '<th class="text-center">Eliminar</th>' +
+        '</tr>' +
+        '</thead>' +
+        '<tbody calss="table-striped table  table-sm  table-bordered table-hover" id="casinoKill-' + row.id + '">' +
 
-
+        '</tbody>' +
+        '</table>' +
+        '<script type="application/javascript">' + 'CasinoProd(' + row.id + ',' + row.usuario + ');' +
+        '</' + 'script>' +
+        '</div>';
+}
 
 
 
@@ -108,12 +122,14 @@ function formCasino(idCasino, idUsuario) {
                         '<thead class="thead-dark">' +
                         '<tr>' +
                         '<th class="" >ID</th>' +
+
                         '<th class="text-center">Fecha</th>' +
                         '<th class="text-center">Cantidad</th>' +
                         '</tr>' +
                         '</thead>' +
                         '<tbody calss="" id="casinoKill-' + idCasino + '">' +
                         '<td class="text-center">ID</td>' +
+
                         '<td class="text-center">Cantidad</td>' +
                         '<td class="text-center">Fecha</td></tr>' +
                         '</tbody>' +
@@ -188,9 +204,6 @@ function formCasino(idCasino, idUsuario) {
 
 }
 
-
-
-
 function CasinoImporte(idCasino, idIntegranteSelect) {
     $(document).ready(function() {
         let table = $("#items-table-Casino-" + idCasino).removeAttr("width").dataTable({
@@ -211,9 +224,7 @@ function CasinoImporte(idCasino, idIntegranteSelect) {
             columns: [
                 { data: "id", "visible": false },
                 { data: "created_at" },
-                { data: "cantidad" }
-
-
+                { data: "cantidad", render: $.fn.dataTable.render.number(',', '.', 2, ' ') },
             ],
             "columnDefs": [
                 { "className": "dt-center", "targets": "_all" }
@@ -239,9 +250,76 @@ function CasinoImporte(idCasino, idIntegranteSelect) {
         .then((resp) => {
 
             this.total = resp.data.TotalCasinoImporte;
+            this.cedulaIntegrante = resp.data.cedulaIntegrante;
             if (this.total == null) { this.total = 0 }
-            document.getElementById('TotalImporte-' + idCasino).innerHTML = "Total importe : " + this.total;
+
+            var T = (this.total).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+            });
+
+
+            document.getElementById('TotalImporte-' + idCasino).innerHTML =
+                "Total importe : <b>" + T + '</b><br class="mb-3" >Cedula: ' + cedulaIntegrante;
 
         })
         .catch(error => console.log(error));
+}
+
+
+
+
+function CasinoProd(idCasino, idUsuario) {
+    $(document).ready(function() {
+        let table = $("#items-table-CasinoGene-" + idCasino).removeAttr("width").dataTable({
+            ajax: {
+                url: 'casino/dataCasino-list/',
+                data: { idCasino: idCasino, idUsuario: idUsuario },
+                dataSrc: ''
+            },
+            language: { "sProcessing": "Procesando...", "sLengthMenu": "Mostrar _MENU_ registros", "sZeroRecords": "No se encontraron resutatatIntegrantes", "sEmptyTable": "Ningún dato disponible", "sInfo": "Registros del _START_ al _END_ de un total de _TOTAL_ registros", "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros", "sInfoFiltered": "(filtrado de un total de _MAX_ registros)", "sInfoPostFix": "", "sSearch": "Buscar:", "sUrl": "", "sInfoThousands": ",", "sLoadingRecords": "Cargando...", "oPaginate": { "sFirst": "Primero", "sLast": "Último", "sNext": "Siguiente", "sPrevious": "Anterior" }, "oAria": { "sSortAscending": ": Activar para ordenar la columna de manera ascendente", "sSortDescending": ": Activar para ordenar la columna de manera descendente" } },
+            // scrollY: '500px',
+            scrollCollapse: true,
+            scrollY: "250px",
+            order: [
+                [5, 'dsc']
+            ],
+            "columnDefs": [
+                { "className": "dt-center", "targets": "_all" }
+
+            ],
+            columns: [
+                { data: "id", "visible": false },
+                { data: "cedulaIntegrante" },
+                { data: "nomIntegrante" },
+                { data: "apelIntegrante" },
+                { data: "cantidad", render: $.fn.dataTable.render.number(',', '.', 2, ' ') },
+                { data: "created_at" },
+                { data: "delCasinoImport" },
+
+
+            ]
+
+        });
+        $("#items-table-CasinoGene-" + idCasino).on("click", "button", function() {
+            $("#items-table-CasinoGene-" + idCasino).DataTable().ajax.reload();
+            sleepThenAct();
+        })
+
+        function sleepThenAct() {
+            $("#items-table-CasinoGene-" + idCasino).DataTable().ajax.reload();
+        }
+    })
+}
+
+
+
+
+function deleteImporteUnico(id_casino) {
+
+    axios.delete('casino/deleteImporteUnico/' + id_casino + '/')
+        .then(res => {
+            console.log(res);
+        }).catch(error => console.log(error));
+
 }

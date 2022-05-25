@@ -50,13 +50,7 @@ class Produccion(TemplateView):
             context['allPatinador']     = allPatinadores     #todos los patinadores de la empresa
             return context
           finally:
-            return context
-          
-         
-          
-          
-          
-          return context
+            return context        
 
 @api_view(['GET'])  
 def ProduccionOPList(request):
