@@ -1,0 +1,126 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-table.js' %}"></script>
+
+
+
+
+
+
+
+<div class="modalBase">
+
+
+
+    <center>
+        <h1>Casino {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
+    </center>
+
+
+
+    <div class="row">
+        <!-- <div class="col-md-12 col-md-offset-10">
+            <h6 class="cioo" style="text-align: right;">Importe total $ {{totalCasino}}</h6>
+        </div> -->
+        <div class="col-md-12">
+            <div class="col-md-9">
+                <form id="addCasino" autocomplete="off" class="form-wrapper ">{% csrf_token %}
+                    <input type="number" hidden="True" name="empresaIntegrante" value="{{ lastIdEmpresa }}">
+                    <!--                     <input type="number" hidden="Tre" name="idUser" value="{{ login_user_id}}">
+ -->
+                    <h4 class="text-cent" name="heading">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Registo de Casino</h4>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-1  form-group-sm">
+                            <input class="form-control" id="nom_casino" name="nom_casino" placeholder="Nom Casino" required>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6 ">
+                        <input class="submit bt mb-xl-1 of" type="submit" onclick="location.href='/'" value="Guardar">
+
+                    </div>
+
+
+                </form>
+
+                <script>
+                    $("form#addCasino").submit(function() {
+
+                        var nom_casino = $('input[name="nom_casino"]').val().trim();
+                        // var idUser = $('input[name="idUser"]').val().trim();
+                        var empresaIntegrante = $('input[name="empresaIntegrante"]').val().trim();
+                        console.log('nom_casino ', nom_casino, ' empresaIntegrante ', empresaIntegrante);
+
+                        if (empresaIntegrante && nom_casino) {
+                            axios.post('/casino/create/', {
+                                nom_casino: nom_casino,
+                                empresa_id: empresaIntegrante,
+
+                            }).then(response => {
+                                console.log("guardado con exito")
+                            })
+
+                        } else {
+                            alert("All fields must have a valid value.");
+                        }
+                        $('form#addIntegrante').trigger("reset");
+                        return false;
+                    });
+                </script>
+
+
+
+
+
+
+            </div>
+            <table id="table" data-id-field="id" class="table" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-search="true" data-show-fullscreen="true" data-show-export="true" data-locale="es-SP" data-pagination="true"
+                data-url="/casino/casino-list/">
+                <thead class="thead-dark">
+                    <tr>
+                        <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoCasino" class="text-center">Info</th>
+                        <th data-field="nom_casino" class="text-center">Reg Casino</th>
+                        <th data-field="can_total" class="text-center">Total</th>
+                        <th data-field="estatus" class="text-center">Estatus</th>
+                        <th data-field="created_at" class="text-center">Fecha</th>
+                        <th data-field="btnccion" data-detail-formatter="DetailFormatterButAccionCasino" class="text-center"> Accion</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+</div>
+</div>
+</div>

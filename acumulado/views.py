@@ -21,12 +21,9 @@ from django.http import JsonResponse, HttpResponse,Http404
 from django.db.models import F
 from acumulado.serializers import AcumuladoSerializer,AcuSerializerProc
 
-class Acumulado(TemplateView):
-    
-     
+class Acumulado(TemplateView):     
      template_name = "pages/acumulado.html"
-     success_url = '/'
-     
+     success_url = '/'     
      def get_context_data(self, **kwargs):
           context = super(Acumulado, self).get_context_data(**kwargs)
           s = SessionStore()
@@ -107,7 +104,7 @@ def createAcumulado(request,):
         empresa_id     = int(lastEm.lastEm),
         nom_acumulado  = request.data['nom_acumulado'],
         nota           = request.data['nota_acu'],
-        can_total      = canTerminada,      
+       # can_total      = canTerminada,      
         )
                 
         data = {            'Acumulado': "Acumulado guardado con exito!",
@@ -205,18 +202,16 @@ def AcumuladoDataIntegrante(request):
     
     
     
-    
+
 @api_view(['DELETE'])
 def deleteAcumulado(request,id):
-    try:      
+    try:
         ProAcu.objects.get(id=id).delete()
-        data = {'deleted': True}        
-    except Exception as e:           
+        data = {'deleted': True}
+    except Exception as e:
         data = {
             'error':str(e),
-            'deleted': False      
-        }        
+            'deleted': False
+        }
         Response(data)
     return JsonResponse(data)
-    
-        

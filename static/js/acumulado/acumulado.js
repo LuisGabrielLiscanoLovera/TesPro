@@ -19,7 +19,7 @@ function DetailFormatterButInfoAcumulado(index, row) {
         '<div class="col-md-6 " style="position:absolute; left:0; margin: 10px 0 0 10px">' +
 
 
-        '<div id="sectIntegreOC-' + row.id + '" class="resutatatIntegranteAcu-' + row.id +
+        '<div id="sectIntegreOC-' + row.id + '" class="table thead-dark  animated fadeIn resutatatIntegranteAcu-' + row.id +
         '">' +
         '<table class="thead-dark animated fadeIn">' +
         '<thead class="">' +

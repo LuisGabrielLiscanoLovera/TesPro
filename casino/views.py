@@ -12,6 +12,81 @@ from empresa.models import Empresa,RelacionEmpresa,CambioEmpres
 from casino.serializers import CasinoSerializer,ImporteSerializer
 from django.db.models import Sum, F
 from patinador.serializers import PatinadorSerializer
+from talla.models import Talla
+from produccion.models import Operacion
+from django.views.generic.base import TemplateView
+
+
+
+class CasinoHome(TemplateView):     
+     template_name = "pages/casinoActivo.html"
+     success_url = '/' 
+     def get_context_data(self, **kwargs):
+          context = super(CasinoHome, self).get_context_data(**kwargs)
+          s = SessionStore()
+          s['last_login'] = self.request.user.pk
+          s.create()      
+          
+          AllEmpresa      = RelacionEmpresa.objects.filter(usuario_id=s['last_login'])       
+          lastEm          = CambioEmpres.objects.filter(usuario_id=s['last_login']).last()
+          Tallas          = Talla.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm)).values('id','nom_talla','num_talla')
+          EmpresaActual   = Empresa.objects.filter(usuario=s['last_login'],id=int(lastEm.lastEm))
+          Operaciones     = Operacion.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm),estatus='A').values('nom_operacion','id')
+          context = super(CasinoHome, self).get_context_data(**kwargs)
+          context['lastIdEmpresa']    = int(lastEm.lastEm) #ids empresas
+          context['allTalla']         = Tallas             #todaslas las tallas
+          context['allOperaciones']   = Operaciones        #todaslas operaciones 
+          context['nomEmpresa']       = AllEmpresa         #nombre de todas las empresa
+          context['nomEmpresaU']      = EmpresaActual      # nombre de la empresa actual
+          context['last_login']       = s['last_login']    # ultimo inicio de seccion   
+          try:
+            patinadores     = Patinador.objects.all().filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm)).values('integrante_id')
+            allPatinadores  = Integrante.objects.all().filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm),id=int(patinadores[0].get('integrante_id'))).values('nombres','apellidos','id')
+            context['allPatinador']     = allPatinadores     #todos los patinadores de la empresa
+            return context
+          
+          finally:
+            return context
+       
+        
+   
+
+class CasinoHistorial(TemplateView):     
+     template_name = "pages/casinoHistorial.html"
+     success_url = '/' 
+     def get_context_data(self, **kwargs):
+          context = super(CasinoHistorial, self).get_context_data(**kwargs)
+          s = SessionStore()
+          s['last_login'] = self.request.user.pk
+          s.create()      
+          
+          AllEmpresa      = RelacionEmpresa.objects.filter(usuario_id=s['last_login'])       
+          lastEm          = CambioEmpres.objects.filter(usuario_id=s['last_login']).last()
+          Tallas          = Talla.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm)).values('id','nom_talla','num_talla')
+          EmpresaActual   = Empresa.objects.filter(usuario=s['last_login'],id=int(lastEm.lastEm))
+          Operaciones     = Operacion.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm),estatus='A').values('nom_operacion','id')
+          context = super(CasinoHistorial, self).get_context_data(**kwargs)
+          context['lastIdEmpresa']    = int(lastEm.lastEm) #ids empresas
+          context['allTalla']         = Tallas             #todaslas las tallas
+          context['allOperaciones']   = Operaciones        #todaslas operaciones 
+          context['nomEmpresa']       = AllEmpresa         #nombre de todas las empresa
+          context['nomEmpresaU']      = EmpresaActual      # nombre de la empresa actual
+          context['last_login']       = s['last_login']    # ultimo inicio de seccion   
+          try:
+            patinadores     = Patinador.objects.all().filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm)).values('integrante_id')
+            allPatinadores  = Integrante.objects.all().filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm),id=int(patinadores[0].get('integrante_id'))).values('nombres','apellidos','id')
+            context['allPatinador']     = allPatinadores     #todos los patinadores de la empresa
+            return context
+          
+          finally:
+            return context
+       
+        
+   
+
+
+
+
 
 
 @api_view(['POST'])
@@ -112,6 +187,19 @@ def casinoList(request):
     casinos    = Casino.objects.filter(empresa_id=lastEm,usuario_id=idUser,estatus='A').order_by('-id')
     serializer = CasinoSerializer(casinos, many=True)
     return Response(serializer.data)
+    
+    
+@api_view(['GET'])
+def casinoListHistorial(request):
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()
+    lastEm     = lastEm.lastEm
+    casinos    = Casino.objects.filter(empresa_id=lastEm,usuario_id=idUser,estatus='I').order_by('-id')
+    serializer = CasinoSerializer(casinos, many=True)
+    return Response(serializer.data)    
 
 @api_view(['POST'])
 def createCasino(request,):

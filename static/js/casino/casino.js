@@ -52,8 +52,7 @@ function DetailFormatterButInfoCasino(index, row) {
 function DetailFormatterButAccionCasino(index, row) {
     //r = parseInt("[[progressRest]]");
     return '<div class="row">' +
-
-        '<div class="col-md-12">' +
+        '<div class="col-md-9">' +
         '<table  class="table animated fadeIn "  id="items-table-CasinoGene-' + row.id +
         '">' +
         '<thead class="thead-dark">' +
@@ -212,7 +211,7 @@ function CasinoImporte(idCasino, idIntegranteSelect) {
     $(document).ready(function() {
         let table = $("#items-table-Casino-" + idCasino).removeAttr("width").dataTable({
             ajax: {
-                url: 'casino/dataCasinoInte-list/',
+                url: '/casino/dataCasinoInte-list/',
                 data: { idCasino: idCasino, idIntegranteSelect: idIntegranteSelect },
                 dataSrc: ''
             },
@@ -276,7 +275,7 @@ function CasinoProd(idCasino, idUsuario) {
     $(document).ready(function() {
         let table = $("#items-table-CasinoGene-" + idCasino).removeAttr("width").dataTable({
             ajax: {
-                url: 'casino/dataCasino-list/',
+                url: '/casino/dataCasino-list/',
                 data: { idCasino: idCasino, idUsuario: idUsuario },
                 dataSrc: ''
             },
@@ -320,7 +319,7 @@ function CasinoProd(idCasino, idUsuario) {
 
 function deleteImporteUnico(id_casino) {
 
-    axios.delete('casino/deleteImporteUnico/' + id_casino + '/')
+    axios.delete('/casino/deleteImporteUnico/' + id_casino + '/')
         .then(res => {
             console.log(res);
         }).catch(error => console.log(error));

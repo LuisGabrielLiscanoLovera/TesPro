@@ -12,7 +12,7 @@ class Acumulado(models.Model):
     
     empresa       = models.ForeignKey(Empresa,  on_delete=models.CASCADE)
     nom_acumulado = models.CharField(max_length=35, unique=True)
-    can_total     = models.IntegerField(blank=True, null=True,default=0)    
+    #can_total     = models.IntegerField(blank=True, null=True,default=0)    
     nota          = models.CharField(max_length=150,blank=True, null=True)
     ESTATUS       = (('A','Activo'),('I','Inactivo'))
     estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
@@ -45,7 +45,7 @@ class ProAcumulado(models.Model):
     patinador     = models.ForeignKey(Patinador, on_delete=models.CASCADE)
     tarea         = models.ForeignKey(Tarea, on_delete=models.CASCADE)
     can_prod_acum = models.IntegerField()
-    delAcumulProc = models.CharField(max_length=300, default='' , null=True)
+    delAcumulProc = models.CharField(max_length=200, default='' , null=True)
 
     created_at    = models.DateTimeField(auto_now_add=True)
     updated_at    = models.DateTimeField(auto_now=True)

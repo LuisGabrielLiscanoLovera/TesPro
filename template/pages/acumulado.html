@@ -40,7 +40,6 @@
                 <th data-field="id" class="text-center ">id</th> {% endcomment %}
                 <th data-field="nom_acumulado" class="text-center ">Nom. Acumulado</th>
                 <th data-field="estatus" class="text-center">Estatus</th>
-                <th data-field="can_total" class="text-center">Cant. Total</th>
                 <th data-field="created_at" class="text-center">Fecha creada</th>
                 <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionAcumulado" class="text-center">
                     Accion</th>
@@ -76,10 +75,10 @@
                                     <label for="nom_acumulado" class="">Nombre de registro</label>
                                     <input class="form-control" id="nom_acumulado" name="nom_acumulado" placeholder="Nombre">
                                 </div>
-                                <div class="col-md-6 md-6  form-group">
+                                <!--                               <div class="col-md-6 md-6  form-group">
                                     <label for="can_total_acu" class="">Cantida Total </label>
                                     <input name="can_total_acu" type="number" class="form-control" id="can_total_acu" placeholder="Cantidad Total">
-                                </div>
+                                </div> -->
                                 <div class="col-md-12 md-6  form-group">
                                     <label for="nota_acu" class="">Nota</label>
                                     <input name="nota_acu" type="nota_acu" class="form-control" id="nota_acu" placeholder="Nota">
@@ -143,8 +142,8 @@
         <script>
             $("form#addAcumulado").submit(function() {
 
-                var nom_acumulado = $('input[name="nom_acumulado"]').val().trim();
-                var can_total = $('input[name="can_total_acu"]').val().trim();
+                var nom_acumulado = $('input[name="nom_acumulado"]').val().trim();#
+                //var can_total = $('input[name="can_total_acu"]').val().trim();
                 var nota = $('input[name="nota_acu"]').val().trim();
                 var idEmpresa = $('input[name="empresaAcumulado"]').val().trim();
 
@@ -152,7 +151,7 @@
 
                 axios.post('/acumulado/create/', {
                     nom_acumulado: nom_acumulado,
-                    can_total_acu: can_total,
+                    // can_total_acu: can_total,
                     nota_acu: nota,
                     empresaAcumulado: idEmpresa,
 
