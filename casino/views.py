@@ -15,18 +15,16 @@ from patinador.serializers import PatinadorSerializer
 from talla.models import Talla
 from produccion.models import Operacion
 from django.views.generic.base import TemplateView
+from django.views.generic import  View
 
-
-
-class CasinoHome(TemplateView):     
+class CasinoHome(TemplateView):
      template_name = "pages/casinoActivo.html"
-     success_url = '/' 
+     success_url = '/'
      def get_context_data(self, **kwargs):
           context = super(CasinoHome, self).get_context_data(**kwargs)
           s = SessionStore()
           s['last_login'] = self.request.user.pk
-          s.create()      
-          
+          s.create()
           AllEmpresa      = RelacionEmpresa.objects.filter(usuario_id=s['last_login'])       
           lastEm          = CambioEmpres.objects.filter(usuario_id=s['last_login']).last()
           Tallas          = Talla.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm)).values('id','nom_talla','num_talla')
@@ -44,12 +42,8 @@ class CasinoHome(TemplateView):
             allPatinadores  = Integrante.objects.all().filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm),id=int(patinadores[0].get('integrante_id'))).values('nombres','apellidos','id')
             context['allPatinador']     = allPatinadores     #todos los patinadores de la empresa
             return context
-          
           finally:
             return context
-       
-        
-   
 
 class CasinoHistorial(TemplateView):     
      template_name = "pages/casinoHistorial.html"
@@ -58,8 +52,7 @@ class CasinoHistorial(TemplateView):
           context = super(CasinoHistorial, self).get_context_data(**kwargs)
           s = SessionStore()
           s['last_login'] = self.request.user.pk
-          s.create()      
-          
+          s.create()
           AllEmpresa      = RelacionEmpresa.objects.filter(usuario_id=s['last_login'])       
           lastEm          = CambioEmpres.objects.filter(usuario_id=s['last_login']).last()
           Tallas          = Talla.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm)).values('id','nom_talla','num_talla')
@@ -77,7 +70,6 @@ class CasinoHistorial(TemplateView):
             allPatinadores  = Integrante.objects.all().filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm),id=int(patinadores[0].get('integrante_id'))).values('nombres','apellidos','id')
             context['allPatinador']     = allPatinadores     #todos los patinadores de la empresa
             return context
-          
           finally:
             return context
        
@@ -262,3 +254,34 @@ def patinadoresActCasino(request):
         data={'error':str(e),'msj':"no tienes patinadores activos"}
         return Response(data)
         
+
+@api_view(['GET'])
+def cerrarCasino(request):
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)        
+    lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
+    idCasino=int(request.GET['idCasino'])
+    try:
+        Casino.objects.filter(id=idCasino).update(estatus="I", fecha_cierre=( Casino.objects.filter(id=idCasino).values('updated_at')))
+        Importe.objects.filter(casino_id=idCasino).update(estatus="I", fecha_cierre=( Casino.objects.filter(id=idCasino).values('updated_at')))
+        
+        data={"casino":True,"msj":"casnino cerrardo"}
+        return Response(data)
+    except Exception as e:
+        data={"casino":False,"msj":"casnino No cerrardo"}
+        return Response(data)
+        
+    
+    
+class deleteCasino(View):
+    def  get(self, request):
+        idCasino = request.GET.get('idCasino', None)
+        Casino.objects.get(id=idCasino).delete()
+        data = {
+            'deleted': True
+            
+        }
+        return JsonResponse(data)
+

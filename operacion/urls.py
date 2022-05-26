@@ -1,5 +1,5 @@
 from django.urls import path
-from operacion.views import CreateOperacion,DeleteOperacion,UpdateOperacion,operacionList,cerarOP
+from operacion.views import CreateOperacion,DeleteOperacion,UpdateOperacion,operacionList,cerrarOP
 
 urlpatterns = [
     path('operacion-list/', operacionList, name="operacion-list"),
@@ -8,7 +8,7 @@ urlpatterns = [
     path('operacion/crud/Update/', UpdateOperacion.as_view(), name='Operacion_ajax_update'),
     
     
-    path('cerrarOP/', cerarOP, name='cerarOP'),
+    path('cerrarOP/', cerrarOP, name='cerrarOP'),
     
 
 

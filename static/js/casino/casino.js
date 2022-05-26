@@ -72,10 +72,18 @@ function DetailFormatterButAccionCasino(index, row) {
         '</table>' +
         '<script type="application/javascript">' + 'CasinoProd(' + row.id + ',' + row.usuario + ');' +
         '</' + 'script>' +
+
+
+
+
+        '</div>' +
+        '<div class="">' +
+
+        '<button class="btn btn-outline-success " type="submit" onclick="carrarCasino(' + row.id + ')">Cerrar Casino</button>' +
+
+        '</div>' +
         '</div>';
 }
-
-
 
 
 function formCasino(idCasino, idUsuario) {
@@ -268,9 +276,6 @@ function CasinoImporte(idCasino, idIntegranteSelect) {
         .catch(error => console.log(error));
 }
 
-
-
-
 function CasinoProd(idCasino, idUsuario) {
     $(document).ready(function() {
         let table = $("#items-table-CasinoGene-" + idCasino).removeAttr("width").dataTable({
@@ -314,14 +319,32 @@ function CasinoProd(idCasino, idUsuario) {
     })
 }
 
-
-
-
 function deleteImporteUnico(id_casino) {
 
     axios.delete('/casino/deleteImporteUnico/' + id_casino + '/')
         .then(res => {
             console.log(res);
         }).catch(error => console.log(error));
+
+}
+
+
+
+
+
+
+function carrarCasino(idCasino) {
+
+    axios.get('/casino/cerrarCasino/', {
+            params: {
+                idCasino: idCasino,
+            }
+        })
+        .then((resp) => {
+
+            window.location.reload();
+        })
+        .catch(error => console.log(error));
+
 
 }

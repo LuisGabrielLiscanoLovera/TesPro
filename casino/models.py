@@ -17,6 +17,8 @@ class Casino (models.Model):
     estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
     created_at    = models.DateTimeField(auto_now_add=True)
     updated_at    = models.DateTimeField(auto_now=True)
+    fecha_cierre  = models.DateTimeField(blank=True,null=True )
+
     class Meta:
         ordering = ['id']
         indexes = [
@@ -36,9 +38,11 @@ class Importe(models.Model):
     integrante      = models.ForeignKey(Integrante, on_delete=models.CASCADE)
     patinador       = models.ForeignKey(Patinador, on_delete=models.CASCADE)
     delCasinoImport = models.CharField(max_length=300, default='' , null=True)
-    
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    ESTATUS         = (('A','Activo'),('I','Inactivo'))
+    estatus         = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
+    created_at      = models.DateTimeField(auto_now_add=True)
+    updated_at      = models.DateTimeField(auto_now=True)
+    fecha_cierre    = models.DateTimeField(blank=True,null=True )
     class Meta:
         ordering = ['id']
         indexes = [

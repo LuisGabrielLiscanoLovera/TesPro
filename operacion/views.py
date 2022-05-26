@@ -151,7 +151,7 @@ class UpdateOperacion(TemplateView):
         except Exception as e:  print("reparar peo de cors header crsf token")
 
 @api_view(['GET'])
-def cerarOP(request):
+def cerrarOP(request):
     if request.session.has_key('username'):        
         if 'username' in request.session:
             username = request.session['username']     
