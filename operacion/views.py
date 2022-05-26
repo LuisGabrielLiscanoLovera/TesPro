@@ -159,15 +159,12 @@ def cerrarOP(request):
         
     lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
 
-    
-    idOP=int(request.GET['idOP'])
-    
-    
-    
-    Operacion.objects.filter(id=idOP).update(estatus="I", fecha_cierre=( Operacion.objects.filter(id=idOP).values('updated_at')))
-    Prod.objects.filter(operacion_id=idOP).update(estatus="I", fecha_cierre=( Operacion.objects.filter(id=idOP).values('updated_at')))
-    
-    
-    
-    
-    return Response(66) 
+    try:
+        idOP=int(request.GET['idOP'])   
+        Operacion.objects.filter(id=idOP,empresa_id=lastEm.lastEm).update(estatus="I", fecha_cierre=( Operacion.objects.filter(id=idOP).values('updated_at')))
+        Prod.objects.filter(operacion_id=idOP,empresa_id=lastEm.lastEm).update(estatus="I", fecha_cierre=( Operacion.objects.filter(id=idOP).values('updated_at')))
+        data={"casino":True,"msj":"operacion cerrardo"}
+        return Response(data)
+    except Exception as e:
+        data={"casino":False,"msj":"operacion No cerrardo","error":str(e)}
+        return Response(data)

@@ -21,7 +21,8 @@ class Acumulado(models.Model):
     btnInfo       = models.CharField(max_length=300,default=btnInfo , null=True)
     created_at    = models.DateTimeField(auto_now_add=True)
     updated_at    = models.DateTimeField(auto_now=True)
-    
+    fecha_cierre  = models.DateTimeField(blank=True,null=True )
+
     class Meta:
         ordering = ['id']
         indexes = [
@@ -46,9 +47,12 @@ class ProAcumulado(models.Model):
     tarea         = models.ForeignKey(Tarea, on_delete=models.CASCADE)
     can_prod_acum = models.IntegerField()
     delAcumulProc = models.CharField(max_length=200, default='' , null=True)
-
+    ESTATUS       = (('A','Activo'),('I','Inactivo'))
+    estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
+   
     created_at    = models.DateTimeField(auto_now_add=True)
     updated_at    = models.DateTimeField(auto_now=True)
+    fecha_cierre  = models.DateTimeField(blank=True,null=True )
 
     
     class Meta:

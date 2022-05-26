@@ -217,7 +217,7 @@ function DetailFormatterButAccionAcumulado(index, row) {
     //r = parseInt("[[progressRest]]");
     return '<div class="row">' +
 
-        '<div class="">' +
+        '<div class="col-md-10">' +
         '<table  class="table animated fadeIn "  id="items-table-Acumulado-' + row.id +
         '">' +
         '<thead class="thead-dark">' +
@@ -234,8 +234,17 @@ function DetailFormatterButAccionAcumulado(index, row) {
         '<tbody calss="table-striped table  table-sm  table-bordered table-hover" id="produccionKill-' + row.id + '">' +
         '</tbody>' +
         '</table>' +
+
+        //'</div>' +
+        // '<div class="">' + '<button value="" onclick="deleteAllAcumulado(' + row.id + ')"  id="buttonEliminarAllacumulado" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>' +
+        // '</div>' +
         '<script type="application/javascript">' + 'AcumuladoProd(' + row.id + ',' + row.usuario + ');' +
         '</' + 'script>' +
+        '</div>' +
+        '<div class="">' +
+
+        '<button class="btn btn-outline-success " type="submit" onclick="carrarAcumulado(' + row.id + ')">Cerrar Acu</button>' +
+
         '</div>';
 }
 
@@ -285,5 +294,30 @@ function deleteAcumuladoUnico(id_acumulado) {
         .then(res => {
             console.log(res);
         }).catch(error => console.log(error));
+
+}
+
+
+
+
+
+
+
+
+
+function carrarAcumulado(id_acumulado) {
+
+    axios.get('/acumulado/cerrarAcumulado/', {
+            params: {
+                idAcumulado: id_acumulado,
+            }
+        })
+        .then((resp) => {
+            console.log("dddddddddddd");
+
+            window.location.reload();
+        })
+        .catch(error => console.log(error));
+
 
 }

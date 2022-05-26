@@ -1,11 +1,14 @@
 from django.urls import path
 from rest_framework import routers
 
-from produccion.views import Produccion,ProduccionOPList,createProduccion,deleteProduccion,ProduccionDataIntegrante,patinadoresActProd
+from produccion.views import Produccion,ProduccionOPList,ValorProduccion,createProduccion,deleteProduccion,ProduccionDataIntegrante,patinadoresActProd
 router = routers.DefaultRouter()
 urlpatterns = [
  
    path('', Produccion.as_view(), name='produccion'),
+   path('ValorProduccion', ValorProduccion.as_view(), name='ValorProduccion'),
+   
+   
    path('produccionOP-list/', ProduccionOPList, name="produccionOP-list"),
    path('dataProduccionInte-list/', ProduccionDataIntegrante, name="dataProduccionInte-list"),
    path('lista_patinadoresAct-prod/', patinadoresActProd, name="patinadoresAct-list-prod"),

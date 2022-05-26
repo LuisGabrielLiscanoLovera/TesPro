@@ -20,13 +20,13 @@
 
                         <div class="row">
                             <div class="col-md-4 mb-1  form-group-sm">
-                                <input class="form-control" id="nom_casino" name="nom_casino" placeholder="Nom Casino" required>
+                                <input class="form-control" id="nom_casino" name="nom_casino" required placeholder="Nom Casino" required>
                             </div>
 
                         </div>
 
                         <div class="col-md-6 ">
-                            <input class="submit bt mb-xl-1 of" type="submit" onclick="location.href='/'" value="Guardar">
+                            <input class="submit bt mb-xl-1 of" type="submit" value="Guardar">
 
                         </div>
 
@@ -41,7 +41,7 @@
                             var empresaIntegrante = $('input[name="empresaIntegrante"]').val().trim();
 
 
-                            if (idUser && empresaIntegrante) {
+                            if (idUser && empresaIntegrante && nom_casino) {
                                 axios.post('/casino/create/', {
                                     nom_casino: nom_casino,
                                     usuario: idUser,
@@ -50,7 +50,7 @@
 
                                 }).then(response => {
 
-
+                                    window.location.reload('/casino/');
                                     console.log("guardado con exito")
                                 })
 

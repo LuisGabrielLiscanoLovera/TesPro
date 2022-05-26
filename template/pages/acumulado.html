@@ -71,7 +71,7 @@
                             <h3 name="heading">Registo de proceso acumulado
                                 <br>{% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h3>
                             <div class="row">
-                                <div class="col-md-6 md-6  form-group">
+                                <div class="col-md-12 md-6  form-group">
                                     <label for="nom_acumulado" class="">Nombre de registro</label>
                                     <input class="form-control" id="nom_acumulado" name="nom_acumulado" placeholder="Nombre">
                                 </div>
@@ -142,13 +142,9 @@
         <script>
             $("form#addAcumulado").submit(function() {
 
-                var nom_acumulado = $('input[name="nom_acumulado"]').val().trim();#
-                //var can_total = $('input[name="can_total_acu"]').val().trim();
+                var nom_acumulado = $('input[id="nom_acumulado"]').val().trim();
                 var nota = $('input[name="nota_acu"]').val().trim();
                 var idEmpresa = $('input[name="empresaAcumulado"]').val().trim();
-
-
-
                 axios.post('/acumulado/create/', {
                     nom_acumulado: nom_acumulado,
                     // can_total_acu: can_total,

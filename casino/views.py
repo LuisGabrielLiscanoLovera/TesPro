@@ -264,24 +264,20 @@ def cerrarCasino(request):
     lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
     idCasino=int(request.GET['idCasino'])
     try:
-        Casino.objects.filter(id=idCasino).update(estatus="I", fecha_cierre=( Casino.objects.filter(id=idCasino).values('updated_at')))
-        Importe.objects.filter(casino_id=idCasino).update(estatus="I", fecha_cierre=( Casino.objects.filter(id=idCasino).values('updated_at')))
+        Casino.objects.filter(id=idCasino,empresa_id=lastEm.lastEm).update(estatus="I", fecha_cierre=( Casino.objects.filter(id=idCasino).values('updated_at')))
+        Importe.objects.filter(casino_id=idCasino,empresa_id=lastEm.lastEm).update(estatus="I", fecha_cierre=( Casino.objects.filter(id=idCasino).values('updated_at')))
         
         data={"casino":True,"msj":"casnino cerrardo"}
         return Response(data)
     except Exception as e:
-        data={"casino":False,"msj":"casnino No cerrardo"}
+        data={"casino":False,"msj":"casnino No cerrardo","error":str(e)}
         return Response(data)
-        
-    
-    
+
+
 class deleteCasino(View):
     def  get(self, request):
         idCasino = request.GET.get('idCasino', None)
         Casino.objects.get(id=idCasino).delete()
-        data = {
-            'deleted': True
-            
-        }
+        data = {'deleted': True}
         return JsonResponse(data)
 
