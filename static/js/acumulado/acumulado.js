@@ -38,21 +38,21 @@ function DetailFormatterButInfoAcumulado(index, row) {
         '<div class="col-sm-6   offset-6" >' +
         '<div class="form-group"> ' + //<label>Integrante</label>
         '<select  id="OccionId_integrante_Acu-' + row.id +
-        '" class="sectIntegrenteOnChanAcu-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteAcumulado"><option value="">Selecciones Integrante</option>' +
+        '" class="sectIntegrenteOnChanAcu-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteAcumulado"><option value="" disabled>Selecciones Integrante</option>' +
         '<option id="id_integrante"  v-for="(optionIntegranteACU) in allIntegrantesAcumuladoss" v-bind:value="optionIntegranteACU.id">[[optionIntegranteACU.nombres]]  [[optionIntegranteACU.apellidos]]</option></select></div>' +
         '</div>' +
 
         '<div class="col-sm-6 mb-2 offset-6  ">' +
         '<div class="form-group">' +
         '<select  class="form-select form-select-sm form-control" v-model="selectIDPatinadorAcumulado" id="OccionId_pantinador_Acu-' + row.id +
-        '"><option  value="">Selecciones Patinador</option>' +
+        '"><option  value="" disabled>Selecciones Patinador</option>' +
         '<option  v-for="option in allPatinadoresAcumulados" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]]</option></select></div>' +
         '</div>' +
 
         '<div class="col-sm-6 mb-2 offset-6">' +
         '<div class="form-group">' +
         '<select  id="OccionId_tarea_Acu-' + row.id +
-        '" class="form-select form-select-sm form-control " v-model="selectIdTareaAcumulado"><option value="">Selecciones Tarea</option>' +
+        '" class="form-select form-select-sm form-control " v-model="selectIdTareaAcumulado"><option value="" disable>Selecciones Tarea</option>' +
         '<option id="id_tarea"  v-for="(optionTareaAcu) in allTareasAcumulados" v-bind:value="optionTareaAcu.id">[[optionTareaAcu.nom_tarea]] / [[optionTareaAcu.detalle]]</option></select></div>' +
         '</div>' +
 
@@ -60,7 +60,7 @@ function DetailFormatterButInfoAcumulado(index, row) {
         '<div class="col-sm-6 mb-2 offset-6">' +
         '<div class="form-group">' +
         '<select  id="OccionId_talla_Acu-' + row.id +
-        '" class="form-select form-control form-select-sm" v-model="selectIdTallaAcumulado"><option value="">Selecciones Talla</option>' +
+        '" class="form-select form-control form-select-sm" v-model="selectIdTallaAcumulado"><option value="" disabled>Selecciones Talla</option>' +
         '<option id="id_talla"  v-for="(opcTareaAcu) in allTallasAcumulados"  v-bind:value="opcTareaAcu.id">[[opcTareaAcu.num_talla]] / [[opcTareaAcu.nom_talla]]</option></select></div>' +
         '</div>' +
 
@@ -313,7 +313,6 @@ function carrarAcumulado(id_acumulado) {
             }
         })
         .then((resp) => {
-            console.log("dddddddddddd");
 
             window.location.reload();
         })

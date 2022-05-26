@@ -46,12 +46,12 @@ function DetailFormatterButInfoDespacho(index, row) {
 
 
         '<select  class="form-control mb-2" v-model="selectIDPatinador" id="OccionId_pantinador-' + row.id +
-        '"><option disabled value="">Selecciones Patinador</option>' +
+        '"><option disabled value="" disabled>Selecciones Patinador</option>' +
         '<option  v-for="option in allPatinadoresOPs" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]] </option></select>' +
 
 
         '<select  id="OccionId_talla-' + row.id +
-        '" class="form-control mb-2" v-model="selectIdTalla"><option  value="">Selecciones Talla</option>' +
+        '" class="form-control mb-2" v-model="selectIdTalla"><option  value="" disabled>Selecciones Talla</option>' +
 
         '<option id="id_talla"  v-for="(optionTalla) in allTallasOPs"  v-bind:value="optionTalla.talla"  >[[optionTalla.num_talla]] / [[optionTalla.nom_talla]]</option></select>' +
         '<input class="form-control big-button" autocomplete="off" placeholder="Cantidad terminada" id="cant" name="cantOpDespacho-' + row.id +

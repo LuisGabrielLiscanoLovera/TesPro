@@ -216,38 +216,45 @@ def AcumuladoDataIntegranteValor(request):
     lastEm          = CambioEmpres.objects.filter(usuario_id=idUser).last()   
     idAcumulado     = request.GET.get('idAcumulado',None)    
     idIntegrante    = request.GET.get('idIntegranteSelect')   
+    
+    totalGenerado=0
     dontrepeYorself=[]
     tareas=[]
     patinadores=[]    
     for tareasIntegrante in ProAcu.objects.filter(usuario_id=idUser,empresa_id=lastEm.lastEm,acumulado_id=int(idAcumulado), 
     integrante_id=idIntegrante).distinct().values('tarea_id','patinador_id'):       
-        tareaIntegrante = (Tarea.objects.filter(usuario_id=idUser,empresa_id=lastEm.lastEm,id=tareasIntegrante['tarea_id']).values('nom_tarea','id')[0])  
+        tareaIntegrante = (Tarea.objects.filter(usuario_id=idUser,empresa_id=lastEm.lastEm,id=tareasIntegrante['tarea_id']).values('nom_tarea','valor','id')[0])  
         totalIntegrante = ProAcu.objects.filter(usuario_id=idUser,empresa_id=lastEm.lastEm,acumulado_id=int(idAcumulado),integrante_id=idIntegrante,tarea_id=tareaIntegrante['id']).values('tarea_id','can_prod_acum').aggregate(can_prod_acum=Sum('can_prod_acum'))
         patinador       = Patinador.objects.filter(usuario_id=idUser,empresa_id=lastEm.lastEm,id=tareasIntegrante['patinador_id']).distinct().values('integrante_id')
         patinador       = Integrante.objects.filter(usuario_id=idUser,empresa_id=lastEm.lastEm,id=patinador[0]['integrante_id']).values('nombres','apellidos')
         patinador       = "{} {}".format(patinador[0]['nombres'],patinador[0]['apellidos'] )
         
         if patinador in patinadores:pass
-        else:patinadores.append(patinador)       
+        else:patinadores.append(patinador)
+        
+        
         if tareaIntegrante['nom_tarea'] in dontrepeYorself:pass
         else:           
             dontrepeYorself.append(tareaIntegrante['nom_tarea'])
+            ValorTotalTarea=int(int(tareaIntegrante['valor']))*(int(totalIntegrante['can_prod_acum']))
+         
+            
+            totalGenerado+=ValorTotalTarea
+            
             tareas.append({
             'tarea':tareaIntegrante['nom_tarea'],
             'cat_total_tarea':totalIntegrante['can_prod_acum'],
+            'vlaorTarea':"$ {:0,.2f}".format(tareaIntegrante['valor']),            
+            'ValorTotalTarea':"$ {:0,.2f}".format(ValorTotalTarea),
+            #'totalGenerado':"$ {:0,.2f}".format(totalGenerado)
+           
         })       
     if tareas==[]:pass
     else:
-        if patinadores ==[]:pass 
-        else:tareas.append({'patinadores':patinadores})
+        if patinadores ==[]:pass
+        else:tareas.append({'patinadores':patinadores,'totalGenerado':"$ {:0,.2f}".format(totalGenerado)})
+    
     return Response(tareas)
-
-
-
-
-
-
-
 
 @api_view(['GET'])
 def cerrarAcumulado(request):
@@ -256,14 +263,11 @@ def cerrarAcumulado(request):
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)        
     lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
-    idAcumulado=int(request.GET['idAcumulado'])
-    
+    idAcumulado=int(request.GET['idAcumulado'])    
     try:
         ACUMULADO.objects.filter(id=idAcumulado,empresa_id=lastEm.lastEm).update(estatus="I", fecha_cierre=( ACUMULADO.objects.filter(id=idAcumulado).values('updated_at')))
         ProAcu.objects.filter(casino_id=idAcumulado,empresa_id=lastEm.lastEm).update(estatus="I", fecha_cierre=( ACUMULADO.objects.filter(id=idAcumulado).values('updated_at')))
-        
-        data={"casino":True,"msj":"Acumulado cerrardo"}
-        print(data)
+        data={"casino":True,"msj":"Acumulado cerrardo"}        
         return Response(data)
     except Exception as e:
         
@@ -323,6 +327,4 @@ class ValorAcumulado(TemplateView):
             return context
           finally:
             return context
-       
-        
-   
+

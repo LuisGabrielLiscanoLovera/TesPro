@@ -112,7 +112,7 @@ class UpdateTarea(TemplateView):
         idempresaTarea 	 = int(request.GET.get('empresaTareaUP', None))
         idUserTarea      = int(request.GET.get('idUserTareaUP', None))
         idTareaUP        = int(request.GET.get('idTareaUP', None))
-        estatusUP          = int(request.GET.get('estatusTarea', None))
+        estatusUP        = request.GET.get('estatusTarea', None)
         
         obj = Tarea.objects.get(id=idTareaUP)
         obj.empresa_id = idempresaTarea

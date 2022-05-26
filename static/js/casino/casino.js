@@ -21,14 +21,14 @@ function DetailFormatterButInfoCasino(index, row) {
         '<div class="col-sm-6   offset-6" >' +
         '<div class="form-group"> ' + //<label>Integrante</label>
         '<select  id="OccionId_integrante_Casino-' + row.id +
-        '" class="sectIntegrenteOnChanAcu-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteAcumulado"><option value="">Selecciones Integrante</option>' +
+        '" class="sectIntegrenteOnChanAcu-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteAcumulado"><option value="" disabled>Selecciones Integrante</option>' +
         '<option id="id_integrante"  v-for="(optionIntegranteACU) in allIntegrantesAcumuladoss" v-bind:value="optionIntegranteACU.id">[[optionIntegranteACU.nombres]]  [[optionIntegranteACU.apellidos]]</option></select></div>' +
         '</div>' +
 
         '<div class="col-sm-6 mb-2 offset-6  ">' +
         '<div class="form-group">' +
         '<select  class="form-select form-select-sm form-control" v-model="selectIDPatinadorAcumulado" id="OccionId_pantinador_Casino-' + row.id +
-        '"><option  value="">Selecciones Patinador</option>' +
+        '"><option  value="" disabled >Selecciones Patinador</option>' +
         '<option  v-for="option in allPatinadoresAcumulados" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]]</option></select></div>' +
         '</div>' +
 
@@ -108,44 +108,55 @@ function formCasino(idCasino, idUsuario) {
         },
         methods: {
             getAcumuladoDataIntegrante: function() {
+
                 const selectElement = document.querySelector(".sectIntegrenteOnChanAcu-" + idCasino);
-                selectElement.addEventListener("change", (event) => {
-                    const resutatatIntegranteCasino = document.querySelector(".resutatatIntegranteCasino-" + idCasino);
-                    const idIntegranteSelect = event.target.value;
-                    Vue.prototype.$varGlobalSelectIntegrAcu = idIntegranteSelect;
-                    axios
-                        .get('/casino/totalImporteInte/', {
-                            params: {
-                                idCasino: idCasino,
-                                idIntegranteSelect: idIntegranteSelect
-                            }
-                        })
-                        .then((resp) => { this.total = resp.data.TotalCasinoImporte; })
-                        .catch(error => console.log(error));
-                    document.getElementById('sectIntegreOCasino-' + idCasino).innerHTML =
-                        '<div class="text-center"">' +
-                        '<table  class="table text-center animated fadeIn"  id="items-table-Casino-' + idCasino +
-                        '">' +
-                        '<thead class="thead-dark">' +
-                        '<tr>' +
-                        '<th>id</th>' +
+                if (selectElement) {
+                    selectElement.addEventListener("change", (event) => {
+                        const resutatatIntegranteCasino = document.querySelector(".resutatatIntegranteCasino-" + idCasino);
+                        const idIntegranteSelect = event.target.value;
+                        console.log("s" + idIntegranteSelect + "s");
+                        if (idIntegranteSelect != '') {
+                            Vue.prototype.$varGlobalSelectIntegrAcu = idIntegranteSelect;
+                            axios
+                                .get('/casino/totalImporteInte/', {
+                                    params: {
+                                        idCasino: idCasino,
+                                        idIntegranteSelect: idIntegranteSelect
+                                    }
+                                })
+                                .then((resp) => { this.total = resp.data.TotalCasinoImporte; })
+                                .catch(error => console.log(error));
+                            document.getElementById('sectIntegreOCasino-' + idCasino).innerHTML =
+                                '<div class="text-center"">' +
+                                '<table  class="table text-center animated fadeIn"  id="items-table-Casino-' + idCasino +
+                                '">' +
+                                '<thead class="thead-dark">' +
+                                '<tr>' +
+                                '<th>id</th>' +
 
-                        '<th class="text-center">Fecha</th>' +
-                        '<th class="text-center">Cantidad</th>' +
-                        '</tr>' +
-                        '</thead>' +
-                        '<tbody calss="" id="casinoKill-' + idCasino + '">' +
-                        '<td class="text-center">ID</td>' +
+                                '<th class="text-center">Fecha</th>' +
+                                '<th class="text-center">Cantidad</th>' +
+                                '</tr>' +
+                                '</thead>' +
+                                '<tbody calss="" id="casinoKill-' + idCasino + '">' +
+                                '<td class="text-center">ID</td>' +
 
-                        '<td class="text-center">Cantidad</td>' +
-                        '<td class="text-center">Fecha</td></tr>' +
-                        '</tbody>' +
-                        '</table>' +
-                        '</div>';
-                    CasinoImporte(idCasino, idIntegranteSelect);
+                                '<td class="text-center">Cantidad</td>' +
+                                '<td class="text-center">Fecha</td></tr>' +
+                                '</tbody>' +
+                                '</table>' +
+                                '</div>';
+                            CasinoImporte(idCasino, idIntegranteSelect);
 
 
-                });
+                        } else {
+                            document.getElementById('sectIntegreOCasino-' + idCasino).innerHTML = '';
+                            document.getElementById('TotalImporte-' + idCasino).innerHTML = '';
+                        }
+                    });
+
+                }
+
             },
             getAcumuladoData: function() {
                 axios
@@ -273,7 +284,10 @@ function CasinoImporte(idCasino, idIntegranteSelect) {
                 '<div class="col-md-5 offset-7 alert border btn-cyan bt ">Importe total  : <b>' + T + '</b><br class="mb-3" >Cedula: ' + cedulaIntegrante + '</div>';
 
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+            document.getElementById('TotalImporte-' + idCasino).innerHTML = '',
+                console.log(error)
+        });
 }
 
 function CasinoProd(idCasino, idUsuario) {

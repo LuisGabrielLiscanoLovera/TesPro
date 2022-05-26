@@ -80,31 +80,41 @@
 
             '<div id="sectIntegreOC-' + row.id + '" class="table thead-dark  animated fadeIn resutatatIntegranteAcuValor-' + row.id +
             '">' +
-            '<table class="thead-dark animated fadeIn">' +
+            '<table  class="thead-dark animated fadeIn">' +
             '<thead class="">' +
             '<tr><th scope="col" class="text-center">Tareas</th>' +
-            '<th scope="col" class="text-center">Cantidad</th></tr>' + '</thead>' +
+            '<th scope="col" class="text-center">Cantidad</th>' + //ValorTotalTarea
+            '<th scope="col" class="text-center">Valor Tarea</th>' +
+            '<th scope="col" class="text-center">Valor general</th></tr>' +
+            '</thead>' +
             '<tbody>' +
             '<tr v-for="i in allTareaAcumulados">' +
             '<td class="text-center">[[i.tarea]]</td>' +
             '<td class="text-center">[[i.cat_total_tarea]]</td>' +
+            '<td class="text-center">[[i.vlaorTarea ]]</td>' +
+            '<td class="text-center">[[i.ValorTotalTarea ]]</td>' +
             '</tr>' +
             '</tbody>' +
             '</table>' +
+
+
             '</div>' +
             '</div>' +
 
             '<div class="col-sm-6   offset-6" >' +
             '<div class="form-group"> ' + //<label>Integrante</label>
             '<select  id="OccionId_integrante_Acu-' + row.id +
-            '" class="sectIntegrenteOnChanAcu-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteAcumulado"><option value="">Selecciones Integrante</option>' +
+            '" class="sectIntegrenteOnChanAcu-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteAcumulado"><option value="" disabled>Selecciones Integrante</option>' +
             '<option id="id_integrante"  v-for="(optionIntegranteACU) in allIntegrantesAcumuladossValor" v-bind:value="optionIntegranteACU.id">[[optionIntegranteACU.nombres]]  [[optionIntegranteACU.apellidos]]</option></select></div>' +
-            '</div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>' +
+            '</div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>' +
 
 
             '</form>' +
             '</div>' +
             '</div>' +
+
+            '<h5 id="totalGenerado-' + row.id + '" style="position:;right:5;top:1"></h3>' +
+            '<br><br><br>' +
             '</template>';
     }
 
@@ -113,6 +123,8 @@
         new Vue({
             el: '#FormuAcumulado-' + idAcumulado,
             delimiters: ['[[', ']]'],
+
+
             data: function() {
                 return {
                     allTareaAcumulados: [],
@@ -124,12 +136,15 @@
                     selectIDPatinadorAcumulado: '',
                     selectIdTareaAcumulado: '',
                     selectIdTallaAcumulado: '',
+                    totalGenerado: '',
                     cant_prod_Acum: '',
                     usuario: idUsuario,
                     idAcumulado: idAcumulado,
 
                 }
             },
+
+
             methods: {
 
                 getAcumuladoDataValorIntegranteValor: function() {
@@ -142,23 +157,41 @@
                         querySelector(".resutatatIntegranteAcuValor-" + idAcumulado);
                         const idIntegranteSelect = event.target.value;
                         //variable global prototype idIntegranteSelect
-                        Vue.prototype.$varGlobalSelectIntegrAcuValor = idIntegranteSelect;
+
+                        if (idIntegranteSelect != '') {
+                            Vue.prototype.$varGlobalSelectIntegrAcuValor = idIntegranteSelect;
 
 
-                        axios.get('/acumulado/dataAcumuladoInte-list/', {
-                            params: {
-                                idIntegranteSelect: this.$varGlobalSelectIntegrAcuValor,
-                                idAcumulado: idAcumulado,
-                            }
-                        }).then((resp) => {
-                            this.allTareaAcumulados = resp.data;
-                        }).catch(error => console.log(error));
+                            axios.get('{% url "dataAcumuladoInte-listValor" %}', {
+                                params: {
+                                    idIntegranteSelect: this.$varGlobalSelectIntegrAcuValor,
+                                    idAcumulado: idAcumulado,
+                                }
+                            }).then((resp) => {
+                                this.allTareaAcumulados = resp.data;
+                                if (this.allTareaAcumulados.length == 0) {
+                                    document.getElementById('totalGenerado-' + idAcumulado).innerHTML =
+                                        '<div class="col-md-5 offset-7 alert border btn-cyan bt ">Total Generado  : <b>' + 0 + '</b>';
+                                } else {
+                                    this.totalGenerado = resp.data[resp.data.length - 1]['totalGenerado'];
+                                    document.getElementById('totalGenerado-' + idAcumulado).innerHTML =
+                                        '<div class="col-md-5 offset-7 alert border btn-cyan bt ">Total Generado  : <b>' + this.totalGenerado + '</b>';
+                                }
+                            }).catch(error => {
+                                console.log(error);
+                            });
 
 
 
 
 
+                        } //else {
 
+
+                        //  document.getElementById('totalGenerado-' + idAcumulado).innerHTML = '';
+                        //document.getElementById('sectIntegreOC-' + idAcumulado).innerHTML = '';
+
+                        //}
 
                     });
                 },
@@ -333,5 +366,5 @@
 
 {% endblock %}
 </div>
-</div>
+</b>
 </div>
