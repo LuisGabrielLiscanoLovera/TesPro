@@ -31,6 +31,7 @@ class CasinoHome(TemplateView):
           EmpresaActual   = Empresa.objects.filter(usuario=s['last_login'],id=int(lastEm.lastEm))
           Operaciones     = Operacion.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm),estatus='A').values('nom_operacion','id')
           context = super(CasinoHome, self).get_context_data(**kwargs)
+          context['login_user_id']    = s['last_login']   # aqui se obtiene el user id
           context['lastIdEmpresa']    = int(lastEm.lastEm) #ids empresas
           context['allTalla']         = Tallas             #todaslas las tallas
           context['allOperaciones']   = Operaciones        #todaslas operaciones 

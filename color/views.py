@@ -66,10 +66,7 @@ class CreateColor(View):
         else:
             data = {
             'user': "enviar un mensaje de error color repetido"
-        }
-            print("enviar un mensaje de error color repetida") 
-        
-        
+        }     
         return JsonResponse(data)
 
 

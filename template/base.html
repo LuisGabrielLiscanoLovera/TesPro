@@ -646,10 +646,11 @@
                                 {% for i in nomEmpresa %}
                                 <nav class="mdc-list mdc-drawer-submenu">
                                     <div class="mdc-list-item mdc-drawer-item">
-                                        <form id="CambioEmpresa" action="cambioEmpresa/">
+                                        <form id="CambioEmpresa" action="/cambioEmpresa/">
                                             {% csrf_token %}
                                             <input type="number" hidden="True" name="idEmpresa" value="{{ i.id }}">
                                             <input type="number" hidden="True" name="idUser" value="{{ login_user_id }}">
+
                                             <button class="btn btn-underline text-white" type="submit">{{ i.Empresa|title }}</button>
 
                                         </form>
