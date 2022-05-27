@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework import routers
 
-from produccion.views import Produccion,ProduccionOPList,ValorProduccion,createProduccion,deleteProduccion,ProduccionDataIntegrante,patinadoresActProd
+from produccion.views import Produccion, ProduccionDataIntegranteValor,ProduccionOPList,ValorProduccion,createProduccion,deleteProduccion,ProduccionDataIntegrante,patinadoresActProd
 router = routers.DefaultRouter()
 urlpatterns = [
  
@@ -11,6 +11,8 @@ urlpatterns = [
    
    path('produccionOP-list/', ProduccionOPList, name="produccionOP-list"),
    path('dataProduccionInte-list/', ProduccionDataIntegrante, name="dataProduccionInte-list"),
+   path('dataProduccionInte-listValor/', ProduccionDataIntegranteValor, name="dataProduccionInte-listValor"),
+
    path('lista_patinadoresAct-prod/', patinadoresActProd, name="patinadoresAct-list-prod"),
    path('create/', createProduccion, name="newProduccion"),
    path('eliminar_produccion/<str:id>/', deleteProduccion, name="delete-produccion")

@@ -180,7 +180,7 @@ def AcumuladoDataIntegrante(request):
     idIntegrante    = request.GET.get('idIntegranteSelect')   
     dontrepeYorself=[]
     tareas=[]
-    patinadores=[]    
+    patinadores=[]
     for tareasIntegrante in ProAcu.objects.filter(usuario_id=idUser,empresa_id=lastEm.lastEm,acumulado_id=int(idAcumulado), 
     integrante_id=idIntegrante).distinct().values('tarea_id','patinador_id'):       
         tareaIntegrante = (Tarea.objects.filter(usuario_id=idUser,empresa_id=lastEm.lastEm,id=tareasIntegrante['tarea_id']).values('nom_tarea','id')[0])  
@@ -237,16 +237,13 @@ def AcumuladoDataIntegranteValor(request):
         else:           
             dontrepeYorself.append(tareaIntegrante['nom_tarea'])
             ValorTotalTarea=int(int(tareaIntegrante['valor']))*(int(totalIntegrante['can_prod_acum']))
-         
-            
-            totalGenerado+=ValorTotalTarea
-            
+            totalGenerado+=ValorTotalTarea            
             tareas.append({
             'tarea':tareaIntegrante['nom_tarea'],
             'cat_total_tarea':totalIntegrante['can_prod_acum'],
-            'vlaorTarea':"$ {:0,.2f}".format(tareaIntegrante['valor']),            
+            'valorTarea':"$ {:0,.2f}".format(tareaIntegrante['valor']),            
             'ValorTotalTarea':"$ {:0,.2f}".format(ValorTotalTarea),
-            #'totalGenerado':"$ {:0,.2f}".format(totalGenerado)
+            'ValorTotalTarea':"$ {:0,.2f}".format(ValorTotalTarea),
            
         })       
     if tareas==[]:pass

@@ -117,17 +117,15 @@ def ProduccionDataIntegrante(request):
     idIntegrante    = request.GET.get('idIntegranteSelect')
     dontrepeYorself = []
     tareas = []
-    patinadores = []
-    
-    for tareasIntegrante in Prod.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(idOperacion),
-    integrante_id=idIntegrante).distinct().values('tarea_id','patinador_id'):       
+    patinadores = []   
+    for tareasIntegrante in Prod.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(idOperacion),integrante_id=idIntegrante).distinct().values('tarea_id','patinador_id'):
         tareaIntegrante = (Tarea.objects.filter(empresa_id=lastEm.lastEm,id=tareasIntegrante['tarea_id']).values('nom_tarea','id')[0])  
         totalIntegrante = Prod.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(idOperacion),integrante_id=idIntegrante,tarea_id=tareaIntegrante['id']).values('tarea_id','can_terminada').aggregate(can_terminada=Sum('can_terminada'))
         patinador       = Patinador.objects.filter(empresa_id=lastEm.lastEm,id=tareasIntegrante['patinador_id']).distinct().values('integrante_id')
         patinador       = Integrante.objects.filter(empresa_id=lastEm.lastEm,id=patinador[0]['integrante_id']).values('nombres','apellidos')
         patinador       = "{} {}".format(patinador[0]['nombres'],patinador[0]['apellidos'] ) 
         if patinador in patinadores:pass
-        else:patinadores.append(patinador)       
+        else:patinadores.append(patinador)
         if tareaIntegrante['nom_tarea'] in dontrepeYorself:pass
         else:           
             dontrepeYorself.append(tareaIntegrante['nom_tarea'])
@@ -140,6 +138,50 @@ def ProduccionDataIntegrante(request):
         if patinadores ==[]:pass 
         else:tareas.append({'patinadores':patinadores})
     return Response(tareas)
+    
+    
+    
+    
+    
+@api_view(['GET'])
+def ProduccionDataIntegranteValor(request):
+    if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username = username)    
+    lastEm          = CambioEmpres.objects.filter(usuario_id=idUser).last()   
+    idOperacion     = request.GET.get('idOp',None)    
+    idIntegrante    = request.GET.get('idIntegranteSelect')
+    totalGenerado=0
+    dontrepeYorself = []
+    tareas = []
+    patinadores = []   
+    for tareasIntegrante in Prod.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(idOperacion),integrante_id=idIntegrante).distinct().values('tarea_id','patinador_id'):
+        tareaIntegrante = (Tarea.objects.filter(empresa_id=lastEm.lastEm,id=tareasIntegrante['tarea_id']).values('nom_tarea','id','valor')[0])  
+        totalIntegrante = Prod.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(idOperacion),integrante_id=idIntegrante,tarea_id=tareaIntegrante['id']).values('tarea_id','can_terminada').aggregate(can_terminada=Sum('can_terminada'))
+        patinador       = Patinador.objects.filter(empresa_id=lastEm.lastEm,id=tareasIntegrante['patinador_id']).distinct().values('integrante_id')
+        patinador       = Integrante.objects.filter(empresa_id=lastEm.lastEm,id=patinador[0]['integrante_id']).values('nombres','apellidos')
+        patinador       = "{} {}".format(patinador[0]['nombres'],patinador[0]['apellidos'] ) 
+        if patinador in patinadores:pass
+        else:patinadores.append(patinador)
+        if tareaIntegrante['nom_tarea'] in dontrepeYorself:pass
+        else:           
+            dontrepeYorself.append(tareaIntegrante['nom_tarea'])
+            ValorTotalTarea=int(int(tareaIntegrante['valor']))*(int(totalIntegrante['can_terminada']))
+            totalGenerado+=ValorTotalTarea
+            tareas.append({
+            'tarea':tareaIntegrante['nom_tarea'],
+            'cat_total_tarea':totalIntegrante['can_terminada'],
+            'valorTarea':"$ {:0,.2f}".format(tareaIntegrante['valor']),
+            'ValorTotalTarea':"$ {:0,.2f}".format(ValorTotalTarea),
+        })       
+    if tareas==[]:pass
+    else:
+        if patinadores ==[]:pass 
+        else:tareas.append({'patinadores':patinadores,'totalGenerado':"$ {:0,.2f}".format(totalGenerado)})
+    
+    return Response(tareas)    
+    
 
 @api_view(['POST'])
 def createProduccion(request,):

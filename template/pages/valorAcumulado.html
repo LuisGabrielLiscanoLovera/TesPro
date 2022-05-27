@@ -17,7 +17,7 @@
 
 <div class="modalBase">
     <center>
-        <h1 class="title">V- Acumulado</h1>
+        <h1 class="title">Destajo por Acumulado</h1>
         <hr>
     </center>
 
@@ -91,7 +91,7 @@
             '<tr v-for="i in allTareaAcumulados">' +
             '<td class="text-center">[[i.tarea]]</td>' +
             '<td class="text-center">[[i.cat_total_tarea]]</td>' +
-            '<td class="text-center">[[i.vlaorTarea ]]</td>' +
+            '<td class="text-center">[[i.valorTarea ]]</td>' +
             '<td class="text-center">[[i.ValorTotalTarea ]]</td>' +
             '</tr>' +
             '</tbody>' +
@@ -151,7 +151,6 @@
 
                     //evento de escucha de integrante
                     const selectElementValor = document.querySelector(".sectIntegrenteOnChanAcu-" + idAcumulado);
-
                     selectElementValor.addEventListener("change", (event) => {
                         const resutatatIntegranteAcuValor = document.
                         querySelector(".resutatatIntegranteAcuValor-" + idAcumulado);
@@ -169,6 +168,7 @@
                                 }
                             }).then((resp) => {
                                 this.allTareaAcumulados = resp.data;
+
                                 if (this.allTareaAcumulados.length == 0) {
                                     document.getElementById('totalGenerado-' + idAcumulado).innerHTML =
                                         '<div class="col-md-5 offset-7 alert border btn-cyan bt ">Total Generado  : <b>' + 0 + '</b>';
