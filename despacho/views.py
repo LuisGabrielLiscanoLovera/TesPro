@@ -20,23 +20,16 @@ from django.http import JsonResponse, Http404, HttpResponse
 from django.db.models import F
 from django_serverside_datatable.views import ServerSideDatatableView
 
-class ItemListView(ServerSideDatatableView):   
-    
-    #columns = ['id', 'can_terminada','created_at','patinador_id','empresa','talla','nomPatinadorDespacho','nomTallaDespacho']    
-
-    
+class ItemListView(ServerSideDatatableView):  
     columns = ['nomPatinadorDespacho','nomTallaDespacho','can_terminada','created_at','btnDelDespacho','id']
     
     def get_queryset(self):
         if self.request.method == 'GET':           
             idOp = self.request.GET.get('idOp', None)
-            idUser = self.request.GET.get('usuario', None)            
-            
+            idUser = self.request.GET.get('usuario', None)
             if idOp and idUser is not None:
                 lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()      
                 queryset   = Despacho.objects.filter(empresa_id=lastEm.lastEm,operacion_id=idOp).order_by('-id')          
-                
-                
             return queryset
     
     
@@ -55,44 +48,27 @@ def despacho_list(request):
     tSerializer = DespachoSerializer(despachos, many = True)
     data=""
     return JsonResponse(data, safe=False)
-    #return Response(tSerializer.data)
-    
-#
 
 @api_view(['DELETE'])
 def deleteDespacho(request,id):   
     try:
         canTerminada =  Despacho.objects.filter(id=id).values('can_terminada','operacion_id','talla_id')
-        
         for event in canTerminada:
             canTerminada = (event['can_terminada'])
             operacion_id = (event['operacion_id'])
             tallaid     = (event['talla_id'])    
-        
         CanTalla.objects.all().filter(operacion_id=operacion_id,talla_id=tallaid).update(res_talla= F('res_talla') + canTerminada)
         Operacion.objects.all().filter(id=operacion_id).update(can_restante= F('can_restante') + canTerminada)
         Despacho.objects.get(id=id).delete()
-        
         data = {
             'deleted': True
         }
-        
+        return JsonResponse(data)       
     except Exception as e:
-        print(str(e))
-        
-        data = {
-            'deleted': False
-            
-        }
-        
+        data = {'deleted': False,'msj':str(e)}
         Response("Unable to Delete Task!")
-    return JsonResponse(data)
-    #return Response("Task Deleted Sucessfully")
+        return JsonResponse(data)
         
-    
-    
-
-
 
 @api_view(['GET'])  
 def operacionesList(request):     
@@ -100,14 +76,11 @@ def operacionesList(request):
         if 'username' in request.session:
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
-            
-    
+
     lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()   
     despacho   = Operacion.objects.filter(empresa_id=lastEm.lastEm,estatus='A').order_by('-id')
     serializer = OperacionSerializer(despacho, many=True)
     return Response(serializer.data)
-
-
 
 @api_view(['GET'])  
 def patinadoresAct(request):
@@ -115,28 +88,24 @@ def patinadoresAct(request):
         if 'username' in request.session:
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
-            
+       
     lastEm = CambioEmpres.objects.filter(usuario_id=idUser).last()
     lastEm = lastEm.lastEm    
     try:        
         patinadores     = Patinador.objects.all().filter(usuario=idUser,estatus='A',ctrlDespacho=1, empresa_id=int(lastEm))
         serializer      = PatinadorSerializer(patinadores, many=True)
-        
-        
-        return Response(serializer.data)
+        data={'msj':'patinadores activos'}
+        return Response(serializer.data)    
     except Exception as e:    
-        print(str(e),"no tienes patinadores activos")   
-        return Response("no tienes patinadores activos")
-        
-
+        data={'msj':'no tienes patinadores activos','error':str(e)}
+        return Response(data)
+   
 class Despachos(TemplateView):
      
      template_name = "pages/despacho.html"
-     success_url = '/'
-     
+     success_url = '/'     
      def get_context_data(self, **kwargs):
           context = super(Despachos, self).get_context_data(**kwargs)
-
           s = SessionStore()
           s['last_login'] = self.request.user.pk
           s.create()      
@@ -160,16 +129,6 @@ class Despachos(TemplateView):
           finally:
             return context  
              
-          
-          
-          
-          
-
-
-
-
-
-
 
 @api_view(['POST'])
 def createDespacho(request,):
@@ -179,16 +138,10 @@ def createDespacho(request,):
             idUser   = MyUser.objects.get(username=username)
         
     lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
-    #serializer = DespachoSerializer(data = request.data)
-    
-    #print(request.data['id_OP'])
-    #print(request.data)
     canTerminada  = int(request.data['cant'])
-    
     nombreTalla   = Talla.objects.filter(empresa_id=int(lastEm.lastEm),usuario_id=int(idUser.id)     ,id=int(request.data['selectIdTalla'])).values('nom_talla')
     idPatinador   = Patinador.objects.filter(empresa_id=int(lastEm.lastEm),usuario_id=int(idUser.id) ,id=int(request.data['selectIDPatinador'])).values('integrante_id')   
     nomPatinador  = Integrante.objects.filter(empresa_id=int(lastEm.lastEm),usuario_id=int(idUser.id) ,id=int(idPatinador[0]['integrante_id'])).values('nombres','apellidos')
-    #print(nomPatinador,int(request.data['selectIDPatinador']))   
     nom_patinador = nomPatinador[0]['nombres']+" "+nomPatinador[0]['apellidos']
     
     try:
@@ -206,18 +159,10 @@ def createDespacho(request,):
         obj = Despacho.objects.latest('id')
         btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteDespachoUnico({})'> </button>".format(obj.id)
         obj = Despacho.objects.all().filter(id=obj.id).update(btnDelDespacho=btnDel)
-        
-        #print("last id",obj.id)
-        data = {
-            'despacho': True
-        }
-
+        data = {'despacho': True}
         CanTallaOP      = CanTalla.objects.all().filter(operacion_id=int(request.data['id_OP']),talla_id=int(request.data['selectIdTalla'])).update(res_talla= F('res_talla') - canTerminada)
         OpTallaRestante = Operacion.objects.all().filter(id=int(request.data['id_OP'])).update(can_restante= F('can_restante') - canTerminada)
-        
         return Response(data)
     except Exception as e:
-        print(str(e))
-        return Response("despacho no cargado")
- 
-   
+        data={'msj':'despacho no cargado','error':str(e)}
+        return Response(data)
