@@ -21,11 +21,12 @@ def signin(request):
         if forms.is_valid():
             username = forms.cleaned_data['username']
             password = forms.cleaned_data['password']
+           
             request.session['username'] = username
+            
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
-                
                 return redirect('home')
     context = {
         'form': forms

@@ -14,19 +14,6 @@ from django.http import JsonResponse
 from authapp.models import MyUser
 
 
-# Create your views here.
-
-
-
-
-    
-
-
-
-
-
-
-
 @api_view(['GET'])
 def apiOverview(request):
 	api_urls = {
@@ -63,29 +50,25 @@ class CreatePatinador(View):
         
         lastEm              = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
         #idEmpresa          = request.GET.get('idEmpresa', None)
-        idIntegrante        = request.GET.get('idIntegrante', None)
-        
-        
-        
+        idIntegrante   = request.GET.get('idIntegrante', None)     
+        passwordP      = request.GET.get('passwordP', None)
         #extraemos el numero de cedula
         newstr = ''.join((ch if ch in '0123456789.-e' else ' ') for ch in idIntegrante)
         listOfNumbers = [float(i) for i in newstr.split()]        
         num_cedula = (int(listOfNumbers[0]))
-        idIntegrante = Integrante.objects.filter(cedula=num_cedula,empresa=lastEm.lastEm).values('id')
-            
-        idIntegrante=idIntegrante[0]['id']
+        print(num_cedula,"numero de cedula",passwordP,'passwordP')
         
+        idIntegrante        = Integrante.objects.filter(cedula=num_cedula,empresa=lastEm.lastEm).values('id')
+        idIntegrante        = idIntegrante[0]['id']        
         estatus             = 'A'
         ctrlCasinoCheck     = request.GET.get('ctrlCasino', None)
         ctrlDespachoCheck   = request.GET.get('ctrlDespacho', None)
         ctrlProduccionCheck = request.GET.get('ctrlProduccion', None)
         #check box al agregar patinador para el control del despacho, produccion, casino 
         if (ctrlProduccionCheck=='true'):ctrlProduccionCheck=1
-        elif (ctrlProduccionCheck=='false'):ctrlProduccionCheck=0
-        
+        elif (ctrlProduccionCheck=='false'):ctrlProduccionCheck=0        
         if (ctrlDespachoCheck=='true'):ctrlDespachoCheck=1
         elif (ctrlDespachoCheck=='false'):ctrlDespachoCheck=0
-        
         if (ctrlCasinoCheck=='true'):ctrlCasinoCheck=1
         elif (ctrlCasinoCheck=='false'):ctrlCasinoCheck=0
         

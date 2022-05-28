@@ -31,7 +31,7 @@
 <!--                                 <input type="number" hidden="True" name="idIntegrantePatinador" value="{{ resultsInt.id }}"> 
  -->                                {% endfor %}
                             </datalist>
-                            <input type="text" name="passwordP" placeholder="clave patinador" class="form-control" style="width:150px;">
+                            <input type="text" name="passwordP" placeholder="clave patinador" class="form-control" style="width:150px;" required>
                             <div class="fullday">
                                 <input class="form-control" type="checkbox" id="check"> Control Despacho
                             </div>
@@ -43,7 +43,7 @@
                             </div>
                             <input type="number" hidden="True" name="idEmpresa" value="{{ lastIdEmpresa }}">
                             <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">
-                            <button class="btn button btn-outline-primary form-control" type="submit" onclick="location.href='/'">Agregar patinador</button>
+                            <button class="btn button btn-outline-primary form-control" type="submit">Agregar patinador</button>
                         </div>
                     </div>
                 </form>
@@ -170,8 +170,8 @@ data-auto-refresh-status="true"
 
         var idIntegrante = $('input[name="idIntegrantePatinador"]').val().trim();
         var idEmpresa = $('input[name="idEmpresa"]').val().trim();
+        var passwordP = $('input[name="passwordP"]').val().trim(); //
         var idUser = $('input[name="idUser"]').val().trim();
-
         var ctrlCasino = ctrlCasinoCheck;
         var ctrlDespach = ctrlDespachoCheck;
         var ctrlProduccion = ctrlProduccionoCheck;
@@ -197,6 +197,7 @@ data-auto-refresh-status="true"
                     'ctrlCasino': ctrlCasino,
                     'ctrlProduccion': ctrlProduccion,
                     'idEmpresa': idEmpresa,
+                    'passwordP': passwordP,
                     'idUser': idUser
 
                 },
@@ -204,10 +205,11 @@ data-auto-refresh-status="true"
                 success: function(data) {
                     if (data.user) {
                         appendToUsrTable(data.user);
+
                     }
                 }
             });
-
+            window.location.reload();
         } else {
             alert("All fields must have a valid value.");
         }

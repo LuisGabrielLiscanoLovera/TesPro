@@ -10,10 +10,8 @@ from .serializers import IntegranteSerializer
 from empresa.models import CambioEmpres
 from authapp.models import MyUser
 
+
 # Create your views here.
-
-
-
 
 @api_view(['GET'])
 def apiOverview(request):

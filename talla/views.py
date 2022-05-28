@@ -56,9 +56,9 @@ def TallaList(request):
             
     
     lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()
-    lastEm=lastEm.lastEm
+   
     
-    cantalla   = Talla.objects.filter(empresa_id=lastEm).order_by('-id')
+    cantalla   = Talla.objects.filter(empresa_id=lastEm.lastEm).order_by('-id')
     serializer = TallaSerializer(cantalla, many=True)
     
     return Response(serializer.data)
