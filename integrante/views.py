@@ -10,7 +10,7 @@ from .serializers import IntegranteSerializer
 from empresa.models import CambioEmpres
 from authapp.models import MyUser
 
-
+from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 # Create your views here.
 
 @api_view(['GET'])
@@ -111,7 +111,7 @@ class DeleteIntegrante(View):
 
 
 
-class UpdateIntegrante(TemplateView):
+class UpdateIntegrante(LoginRequiredMixin,TemplateView):
     def  get(self, request):
         
         idIntegrante     = request.GET.get('idIntegranteUP', None)

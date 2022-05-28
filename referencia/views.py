@@ -8,7 +8,6 @@ from rest_framework.response import Response
 from .serializers import ReferenciaSerializer
 from empresa.models import CambioEmpres
 from authapp.models import MyUser
-
 # Create your views here.
 
 

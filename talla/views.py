@@ -16,6 +16,7 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from despacho.models import Despacho
 from django.db.models import Sum, F 
+from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 
 # Create your views here.
 
@@ -244,7 +245,7 @@ class DeleteTallaOP(View):
         return JsonResponse(data)
 
 
-class UpdateTalla(TemplateView):
+class UpdateTalla(LoginRequiredMixin,TemplateView):
     def  get(self, request):
         idIptalla        = request.GET.get('idIptallaUP', None)
         idEmpresa        = request.GET.get('idEmpresaUP', None)

@@ -19,6 +19,8 @@ from django.views.generic import View
 from django.http import JsonResponse, Http404, HttpResponse
 from django.db.models import F
 from django_serverside_datatable.views import ServerSideDatatableView
+from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+
 
 class ItemListView(ServerSideDatatableView):  
     columns = ['nomPatinadorDespacho','nomTallaDespacho','can_terminada','created_at','btnDelDespacho','id']
@@ -100,7 +102,7 @@ def patinadoresAct(request):
         data={'msj':'no tienes patinadores activos','error':str(e)}
         return Response(data)
    
-class Despachos(TemplateView):
+class Despachos(LoginRequiredMixin,TemplateView):
      
      template_name = "pages/despacho.html"
      success_url = '/'     

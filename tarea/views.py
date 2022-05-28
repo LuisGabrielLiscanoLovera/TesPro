@@ -11,6 +11,7 @@ from empresa.models import CambioEmpres
 from authapp.models import MyUser
 
 # Create your views here.
+from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 
 
 
@@ -102,7 +103,7 @@ class DeleteTarea(View):
 
 
 
-class UpdateTarea(TemplateView):
+class UpdateTarea(LoginRequiredMixin,TemplateView):
     def  get(self, request):
         nombreTarea 	 = request.GET.get('nombreTareaUP', None).upper()
         minutoXTarea	 = int(request.GET.get('minutoXTareaUP', None))

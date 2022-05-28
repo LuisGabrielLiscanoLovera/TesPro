@@ -16,6 +16,7 @@ from empresa.models import CambioEmpres
 from django.shortcuts import render
 from talla.models import Talla
 from produccion.models import Produccion as Prod
+from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 
 from django.template.loader import render_to_string
 from django.contrib.sessions.backends.db import SessionStore
@@ -112,8 +113,7 @@ class DeleteOperacion(View):
             'deleted': True
         }
         return JsonResponse(data)
-
-class UpdateOperacion(TemplateView):
+class UpdateOperacion(LoginRequiredMixin,TemplateView):
     def  get(self, request):
         idIpoperacion    = request.GET.get('idIpoperacionUP', None)
         idEmpresa        = request.GET.get('idEmpresaUP', None)

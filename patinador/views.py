@@ -13,7 +13,7 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse
 from authapp.models import MyUser
 #from django.contrib.auth.models import User
-
+from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 @api_view(['GET'])
 def apiOverview(request):
 	api_urls = {
@@ -119,7 +119,7 @@ class DeletePatinador(View):
 
 
 
-class UpdatePatinador(TemplateView):
+class UpdatePatinador(LoginRequiredMixin,TemplateView):
     def  get(self, request):
         idIpatinador     = request.GET.get('idIpatinadorUP', None)
         idEmpresa        = request.GET.get('idEmpresaUP', None)

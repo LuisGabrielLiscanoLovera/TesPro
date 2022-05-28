@@ -18,9 +18,10 @@ from authapp.models import MyUser
 from .serializers import ProduccionSerializer
 from patinador.serializers import PatinadorSerializer
 from rest_framework.decorators import api_view
+from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 
 from django.http import HttpResponse
-class Produccion(TemplateView):
+class Produccion(LoginRequiredMixin,TemplateView):
      template_name = "pages/produccion.html"     
      success_url = '/'
      
@@ -52,7 +53,8 @@ class Produccion(TemplateView):
           finally:
             return context        
 
-class ValorProduccion(TemplateView):
+
+class ValorProduccion(LoginRequiredMixin,TemplateView):
      template_name = "pages/produccionValor.html"     
      success_url = '/'
      

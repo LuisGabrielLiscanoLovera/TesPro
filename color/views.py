@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from .serializers import ColorSerializer
 from empresa.models import CambioEmpres
 from authapp.models import MyUser
-
+from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 # Create your views here.
 @api_view(['GET'])
 def apiOverview(request):
@@ -83,7 +83,7 @@ class DeleteColor(View):
 
 
 
-class UpdateColor(TemplateView):
+class UpdateColor(LoginRequiredMixin,TemplateView):
     def  get(self, request):        
         idColor    = request.GET.get('idColor', None)
         nom_color = request.GET.get('nom_color', None)

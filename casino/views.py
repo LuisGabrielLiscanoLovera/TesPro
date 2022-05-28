@@ -16,8 +16,8 @@ from talla.models import Talla
 from produccion.models import Operacion
 from django.views.generic.base import TemplateView
 from django.views.generic import  View
-
-class CasinoHome(TemplateView):
+from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+class CasinoHome(LoginRequiredMixin,TemplateView):
      template_name = "pages/casinoActivo.html"
      success_url = '/'
      def get_context_data(self, **kwargs):
@@ -46,7 +46,7 @@ class CasinoHome(TemplateView):
           finally:
             return context
 
-class CasinoHistorial(TemplateView):     
+class CasinoHistorial(LoginRequiredMixin,TemplateView):     
      template_name = "pages/casinoHistorial.html"
      success_url = '/' 
      def get_context_data(self, **kwargs):
