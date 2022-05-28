@@ -12,7 +12,7 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from authapp.models import MyUser
-
+#from django.contrib.auth.models import User
 
 @api_view(['GET'])
 def apiOverview(request):
@@ -53,11 +53,9 @@ class CreatePatinador(View):
         idIntegrante   = request.GET.get('idIntegrante', None)     
         passwordP      = request.GET.get('passwordP', None)
         #extraemos el numero de cedula
-        newstr = ''.join((ch if ch in '0123456789.-e' else ' ') for ch in idIntegrante)
-        listOfNumbers = [float(i) for i in newstr.split()]        
-        num_cedula = (int(listOfNumbers[0]))
-        print(num_cedula,"numero de cedula",passwordP,'passwordP')
-        
+        newstr         = ''.join((ch if ch in '0123456789.-e' else ' ') for ch in idIntegrante)
+        listOfNumbers  = [float(i) for i in newstr.split()]        
+        num_cedula     = (int(listOfNumbers[0]))       
         idIntegrante        = Integrante.objects.filter(cedula=num_cedula,empresa=lastEm.lastEm).values('id')
         idIntegrante        = idIntegrante[0]['id']        
         estatus             = 'A'
@@ -75,7 +73,6 @@ class CreatePatinador(View):
         #puede existir pero no repetido en la misma empresa
         existeIntPat    =  Patinador.objects.extra(where=["integrante_id='%s' AND usuario_id = '%s' AND empresa_id = '%s'" %(idIntegrante,idUser.id,lastEm.lastEm) ])
        
-               
         if existeIntPat.count()==0:
           
             obj = Patinador.objects.create(
@@ -90,17 +87,24 @@ class CreatePatinador(View):
            
             data = {
             'user': "user",
-             'estatus':True
+            'estatus':True
         }
-        
+            
+    
+            #Aqui lo volvemos usuario box (crear delete patinador)          
+            idIntegrante        = Integrante.objects.filter(cedula=num_cedula,empresa=lastEm.lastEm).values('id','correo','nombres','apellidos')
+            MyUser.objects.create_user(username=num_cedula, password=passwordP,
+            email=idIntegrante[0]['correo'],first_name=idIntegrante[0]['nombres'] ,
+            last_name=idIntegrante[0]['apellidos'],patinador=True)
+            return JsonResponse(data)
+            
+            
         else:
             data = {
             'user': "enviar un mensaje de error patinador repetido",
-             'estatus':False
+            'estatus':False
         }
-            print("enviar un mensaje de error patinador repetida") 
-        
-        return JsonResponse(data)
+            return JsonResponse(data)
 
 class DeletePatinador(View):
     def  get(self, request):

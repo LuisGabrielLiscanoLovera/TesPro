@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
+from authapp.models import MyUser
 
 
 
@@ -21,17 +22,49 @@ def signin(request):
         if forms.is_valid():
             username = forms.cleaned_data['username']
             password = forms.cleaned_data['password']
-           
+            perfilPatinador= forms.cleaned_data['perfilPatinador']
+            perfilPatinadores=forms.cleaned_data.get('perfilPatinadores')
             request.session['username'] = username
-            
+    
+    
             user = authenticate(username=username, password=password)
-            if user:
-                login(request, user)
-                return redirect('home')
+            if user:                              
+                loginPatinador  = MyUser.objects.filter(username=username).values('patinador')
+                if (loginPatinador[0]['patinador']):                
+                    
+                    if (int(perfilPatinador) ==1):                     
+                        login(request, user)
+                        return redirect('SegimientoOp')
+                        
+                    
+                                        
+                    
+                    
+                    
+                    if(int(perfilPatinador)==2):pass#produccion
+                    if(int(perfilPatinador)==3):pass#acumulado
+                    if(int(perfilPatinador)==4):pass#casino
+                    
+                    
+                    
+                    else:return redirect('signin')       
+                
+                
+                
+                
+                else:
+                    
+                    login(request, user)  
+                    return redirect('home')
     context = {
         'form': forms
     }
     return render(request, 'signin.html', context)
+
+
+
+
+
 
 def signout(request):
     logout(request)
