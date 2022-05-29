@@ -1,0 +1,84 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-table.js' %}"></script>
+
+<!-- <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
+<link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css">
+
+
+
+
+
+
+ -->
+
+
+
+
+
+
+
+
+
+
+
+<div class="modalBasePeriles">
+    <div style="overflow-x:auto;">
+
+        <center>
+            <h5 class="title">Producción Patinador</h5>
+
+        </center>
+
+
+        <table id="produccionTable" data-id-field="id" class="" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-show-columns="true" data-search="true" data-show-fullscreen="true" data-pagination="true"
+            data-show-refresh="true" data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-url="{% url 'produccionListPatinadores'%}">
+            <thead class="thead-dark ">
+                <tr>
+                    <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoProduccion" class="text-center">Info
+                    </th>
+                    {% comment %}
+                    <th data-field="id" class="text-center ">id</th> {% endcomment %}
+                    <th data-field="nom_operacion" class="text-center ">OP</th>
+                    <th data-field="nomReferencia" class="text-center">Referencia</th>
+                    <th data-field="nomColor" class="text-center">Color</th>
+                    <th data-field="can_restante" class="text-center">Por terminar OP</th>
+                    <!--                 
+                <th data-field="can_total" class="text-center">Cant. Total</th>
+-->
+
+                    <th data-field="created_at" class="text-center">Fecha creada</th>
+                    <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionProduccion" class="text-center">
+                        Accion</th>
+                </tr>
+            </thead>
+            <section class="h-full w-full flex justify-content items-center">
+                <div class="w-full h-1 max-w-2xl relative overflow-hidden mx-auto">
+                    <div class="h-full rounded bg-pink-200">
+                        <div class="first-beam absolute bg-pink-600 rounded"></div>
+                        <div class="second-beam absolute bg-pink-400 rounded"></div>
+                    </div>
+                </div>
+            </section>
+        </table>
+
+
+
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        document.getElementById('navMiao').remove();
+
+        document.getElementById('miaoHeader').remove();
+        document.getElementById('miaoFoter').remove();
+        document.getElementById('miaoMenuButon').remove();
+
+    });
+</script>
+{% endblock %}
+</div>
+</div>
+</div>

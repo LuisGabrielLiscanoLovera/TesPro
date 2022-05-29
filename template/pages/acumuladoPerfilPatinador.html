@@ -1,0 +1,201 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-table.js' %}"></script>
+
+
+
+
+
+
+
+
+
+
+
+<div class="modalBasePeriles">
+    <div style="overflow-x:auto;">
+        <center>
+            <h1 class="title">Acumulado</h1>
+            <hr>
+        </center>
+        <div class="col-sm-2">
+            <a href="#openModalHijoAddAcumulado">
+                <i class="btn text-center btn-outline-success icofont-ui-add"> Nuevo registro </i>
+            </a>
+        </div>
+
+
+        <table id="produccionTable" data-id-field="id" class="" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-show-columns="true" data-search="true" data-show-fullscreen="true" data-pagination="true"
+            data-show-refresh="true" data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-url="{% url 'prodAcumulado-list-patinadores'%}">
+            <thead class="thead-dark ">
+                <tr>
+                    <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoAcumulado" class="text-center">Info
+                    </th>
+                    {% comment %}
+                    <th data-field="id" class="text-center ">id</th> {% endcomment %}
+                    <th data-field="nom_acumulado" class="text-center ">Nom. Acumulado</th>
+                    <th data-field="estatus" class="text-center">Estatus</th>
+                    <th data-field="created_at" class="text-center">Fecha creada</th>
+                    <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionAcumulado" class="text-center">
+                        Accion</th>
+                </tr>
+            </thead>
+        </table>
+
+
+
+
+
+
+
+
+
+
+        <div id="openModalHijoAddAcumulado" class="modalDialogHijo">
+            <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>
+
+
+                <div class="container">
+                    <div class="wrapper">
+                        <ul class="steps">
+                            <li class="is-active">Acumulado</li>
+                        </ul>
+                        <form id="addAcumulado" autocomplete="off" class="form-wrapper formf">{% csrf_token %}
+                            <input type="number" hidden="True" name="empresaAcumulado" value="{{ lastIdEmpresa }}">
+                            <fieldset class="section is-active">
+                                <h3 name="heading">Registo de proceso acumulado
+                                    <br>{% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h3>
+                                <div class="row">
+                                    <div class="col-md-12 md-6  form-group">
+                                        <label for="nom_acumulado" class="">Nombre de registro</label>
+                                        <input class="form-control" id="nom_acumulado" name="nom_acumulado" placeholder="Nombre">
+                                    </div>
+                                    <!--                               <div class="col-md-6 md-6  form-group">
+                                    <label for="can_total_acu" class="">Cantida Total </label>
+                                    <input name="can_total_acu" type="number" class="form-control" id="can_total_acu" placeholder="Cantidad Total">
+                                </div> -->
+                                    <div class="col-md-12 md-6  form-group">
+                                        <label for="nota_acu" class="">Nota</label>
+                                        <input name="nota_acu" type="nota_acu" class="form-control" id="nota_acu" placeholder="Nota">
+                                    </div>
+
+                                    <div class="">
+                                        <input class="submit button" type="submit" onclick="location.href='/acumulado/'" value="Guardar">
+                                    </div>
+
+                                </div>
+
+
+                            </fieldset>
+
+
+
+
+
+
+                            <!-- 
+                    <fieldset class="section">
+                        <br>
+                        <h3>¡Operación creada con exito!</h3>
+                        <p></p> 
+                    <div class="button">Reset Form</div>
+                   </fieldset> -->
+                        </form>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!--create Acumulado-->
+            <script>
+                $("form#addAcumulado").submit(function() {
+
+                    var nom_acumulado = $('input[id="nom_acumulado"]').val().trim();
+                    var nota = $('input[name="nota_acu"]').val().trim();
+                    var idEmpresa = $('input[name="empresaAcumulado"]').val().trim();
+                    axios.post('/acumulado/create/', {
+                        nom_acumulado: nom_acumulado,
+                        // can_total_acu: can_total,
+                        nota_acu: nota,
+                        empresaAcumulado: idEmpresa,
+
+                    }).then(response => {
+                        console.log("passss");
+                    });
+
+                    $('form#addAcumulado').trigger("reset");
+                    return false;
+                });
+            </script>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        document.getElementById('navMiao').remove();
+        document.getElementById('miaoHeader').remove();
+        document.getElementById('miaoFoter').remove();
+        document.getElementById('miaoMenuButon').remove();
+
+    });
+</script>
+
+
+
+{% endblock %}
+</div>
+</div>
+</div>

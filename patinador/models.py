@@ -17,7 +17,7 @@ class Patinador(models.Model):
     ctrlDespacho   = models.BooleanField(default=False)
     ctrlProduccion = models.BooleanField(default=False)
     ctrlCasino     = models.BooleanField(default=False) 
-    btnAcci        = models.CharField(max_length=97, default='<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>' )
+    btnAcci        = models.CharField(max_length=150, default='<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>' )
     ESTATUS        = (('A','Activo'),('I','Inactivo'))
     estatus        = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
     created_at     = models.DateTimeField(auto_now_add=True)

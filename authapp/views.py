@@ -23,7 +23,7 @@ def signin(request):
             username = forms.cleaned_data['username']
             password = forms.cleaned_data['password']
             perfilPatinador= forms.cleaned_data['perfilPatinador']
-            perfilPatinadores=forms.cleaned_data.get('perfilPatinadores')
+            #perfilPatinadores=forms.cleaned_data.get('perfilPatinadores')
             request.session['username'] = username
     
     
@@ -32,17 +32,19 @@ def signin(request):
                 loginPatinador  = MyUser.objects.filter(username=username).values('patinador')
                 if (loginPatinador[0]['patinador']):                
                     
-                    if (int(perfilPatinador) ==1):                     
+                    
+                    if (perfilPatinador =='1'):                     
                         login(request, user)
-                        return redirect('despachoPatinador')                                   
-                    
-                    
-                    
-                    if(int(perfilPatinador)==2):pass#produccion
-                    if(int(perfilPatinador)==3):pass#acumulado
-                    if(int(perfilPatinador)==4):pass#casino
-                    
-                    
+                        return redirect('despachoPatinador')#50% 
+                    if(perfilPatinador=='2'):
+                        login(request, user)
+                        return redirect('produccionPatinador')#50%
+                    if(perfilPatinador=='3'):                        
+                        login(request, user)
+                        return redirect('acumuladoPatinador')#50%
+                    if(perfilPatinador=='4'):
+                        login(request, user)
+                        return redirect('casinoPatinador')#50%
                     
                     else:return redirect('signin')       
                 

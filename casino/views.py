@@ -18,6 +18,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic import  View
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 class CasinoHome(LoginRequiredMixin,TemplateView):
+    
      template_name = "pages/casinoActivo.html"
      success_url = '/'
      def get_context_data(self, **kwargs):
@@ -177,7 +178,7 @@ def casinoList(request):
             idUser   = MyUser.objects.get(username=username)
     lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()
     lastEm     = lastEm.lastEm
-    casinos    = Casino.objects.filter(empresa_id=lastEm,usuario_id=idUser,estatus='A').order_by('-id')
+    casinos    = Casino.objects.filter(empresa_id=lastEm,estatus='A').order_by('-id')
     serializer = CasinoSerializer(casinos, many=True)
     return Response(serializer.data)
     

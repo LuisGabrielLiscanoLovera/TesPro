@@ -109,7 +109,7 @@ class DeleteOperacion(View):
     def  get(self, request):
         id1 = request.GET.get('id', None)
         Operacion.objects.get(id=id1).delete()
-        data = {
+        data = {    
             'deleted': True
         }
         return JsonResponse(data)
