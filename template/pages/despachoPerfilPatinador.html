@@ -19,7 +19,7 @@
             data-show-refresh="true" data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-url='{% url "operaciones-operacionesListPatinadores" %}'>
             <thead class="thead-dark ">
                 <tr>
-                    <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoDespacho" class="text-center">Info
+                    <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoDespachoPerfilPatinadores" class="text-center">Info
                     </th>
                     {% comment %}
                     <th data-field="id" class="text-center ">id</th> {% endcomment %}
@@ -40,6 +40,92 @@
 </div>
 <script>
 </script>
+
+
+
+
+
+
+
+
+
+<script>
+    function DetailFormatterButInfoDespachoPerfilPatinadores(index, row) {
+        //r = parseInt("[[progressRest]]");
+
+        //crea y renderiza la tabla
+        return '<div class="row">' +
+            '<div class="col-sm-1">' +
+            '</div>' +
+            '<div class="col-sm-6">' +
+            '<div id="despachoVue-' + row.id + '"><template>' +
+            '<table class="table  animated fadeIn  border-info ">' +
+            '<thead class="thead-dark">' +
+            '<tr class="" >' +
+            '<th class="text-center">Nombre Talla</th>' +
+            '<th class="text-center">Talla Total</th>' +
+            '<th class="text-center">Talla Restante</th>' +
+            '</tr>' +
+            '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '">' +
+            '<tr v-for="allTallaOP in allTallaOPs" :key="allTallaOP.id">' +
+            '<td class="text-center">[[allTallaOP.nom_talla]]</td><td class="text-center">[[allTallaOP.can_talla]]' +
+            '</td><td class=" text-center">[[allTallaOP.res_talla]]</td></tr>' +
+            '</tbody></template></div>' +
+            '</table>' + '<script type="application/javascript">' + 'formOP(' + row.id + ',' + row.usuario + ');' +
+            '</' + 'script>' +
+            '</div>' +
+            '<div class="col-sm-4"><div id="FormuTallaOP-' + row.id +
+            '"><template>' +
+            '<div class="border border-info alert"><b><h6>Restante &nbsp;&nbsp;<b class="big-button">[[cantRestante]] <hrr></b> de [[total]]</b></h6></div>' +
+            '<form @submit.prevent="submitFormDespacho" class="form dark"><div hidden=True>{% csrf_token %}</div>' +
+            '<div>' +
+
+            //'<div class="progress progress-striped"><div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1" style="width:' +
+            //'% ' +
+            //'">Faltante</div></div>' +
+            '<input  id="operacion-' + row.id +
+            '" name="operacion-' + row.id +
+            '"  type="number" hidden=True value="' + row.id +
+            '"  required/>' +
+
+
+
+
+            '<select  id="OccionId_talla-' + row.id +
+            '" class="form-control mb-2" v-model="selectIdTalla">' +
+            '<option  value="" disabled>Selecciones Talla</option>' +
+            '<option id="id_talla"  v-for="(optionTalla) in allTallasOPs"  v-bind:value="optionTalla.talla"  >[[optionTalla.num_talla]] / [[optionTalla.nom_talla]]</option></select>' +
+
+            '<input class="form-control big-button" autocomplete="off" placeholder="Cantidad terminada" id="cant" name="cantOpDespacho-' + row.id +
+            '"  type="number" v-model="cant" required/>' +
+            '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number"/>' +
+
+
+
+            '<br><input class="form-control btn btn-block" type="submit"  value="Guardar"></form></div></div>' + '</div>' +
+
+            '</div></template>' +
+
+            '</div>';
+
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

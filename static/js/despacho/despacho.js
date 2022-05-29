@@ -306,7 +306,39 @@ function deleteDespacho(id_despacho) {
 
 }
 
+function tallasOP(idOp) {
+    new Vue({
+        el: '#despachoVue-' + idOp,
+        delimiters: ['[[', ']]'],
+        data: function() {
+            return {
+                allTallaOPs: [],
+            }
+        },
+        methods: {
+            getDespachosTallas: function() {
+                axios
+                    .get('/talla/tallaOP-list/?idOp=' + idOp)
+                    .then((resp) => {
+                        this.allTallaOPs = resp.data;
+                        if (resp.data == '') {
+                            //alert("no hay un coño");
+                            document.getElementById('despachoVue-' + idOp).innerHTML = '<h3>No hay tallas cargada</h3>';
 
+                        }
+                        //console.log(resp.data);
+
+                    })
+                    .catch(error => console.log(error))
+            }
+        },
+        mounted: function() {
+            this.getDespachosTallas()
+        }
+
+    });
+
+}
 /* function despachoOP(idOp, usuario) {
     new Vue({
         el: '#despachoVueAccion',
@@ -343,36 +375,3 @@ function deleteDespacho(id_despacho) {
     });
 
 } */
-function tallasOP(idOp) {
-    new Vue({
-        el: '#despachoVue-' + idOp,
-        delimiters: ['[[', ']]'],
-        data: function() {
-            return {
-                allTallaOPs: [],
-            }
-        },
-        methods: {
-            getDespachosTallas: function() {
-                axios
-                    .get('/talla/tallaOP-list/?idOp=' + idOp)
-                    .then((resp) => {
-                        this.allTallaOPs = resp.data;
-                        if (resp.data == '') {
-                            //alert("no hay un coño");
-                            document.getElementById('despachoVue-' + idOp).innerHTML = '<h3>No hay tallas cargada</h3>';
-
-                        }
-                        //console.log(resp.data);
-
-                    })
-                    .catch(error => console.log(error))
-            }
-        },
-        mounted: function() {
-            this.getDespachosTallas()
-        }
-
-    });
-
-}
