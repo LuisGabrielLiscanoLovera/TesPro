@@ -113,6 +113,7 @@ class DeleteOperacion(View):
             'deleted': True
         }
         return JsonResponse(data)
+
 class UpdateOperacion(LoginRequiredMixin,TemplateView):
     def  get(self, request):
         idIpoperacion    = request.GET.get('idIpoperacionUP', None)

@@ -118,7 +118,7 @@ class UpdateTarea(LoginRequiredMixin,TemplateView):
         obj = Tarea.objects.get(id=idTareaUP)
         obj.empresa_id = idempresaTarea
         obj.usuario_id = idUserTarea
-        obj.nom_tarea  = nombreTarea  
+        obj.nom_tarea  = nombreTarea
         obj.min_minuto = minutoXTarea 
         obj.min_hora   = horaXTarea     
         obj.valor      = valorTarea

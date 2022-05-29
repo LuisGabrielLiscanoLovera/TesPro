@@ -68,9 +68,6 @@ function DetailFormatterButInfoDespacho(index, row) {
 
 }
 
-
-
-
 function DetailFormatterButAccionDespacho(index, row) {
     //crea y renderiza la tabla
     return '<div class="row">' +
@@ -166,7 +163,6 @@ function carrarOp(id_OP) {
 
 
 }
-
 
 
 function deleteDespachoUnico(id_despacho) {

@@ -3,10 +3,10 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 STATES = (
   
-    ('1', 'Despacho'),
-    ('2', 'Prod'),
-    ('3', 'Acum'),
-    ('4', 'Casino')
+    (1, 'Despacho'),
+    (2, 'Prod'),
+    (3, 'Acum'),
+    (4, 'Casino')
 )
 
 class LoginForm(forms.Form):

@@ -233,17 +233,19 @@ class DeleteTalla(View):
 class DeleteTallaOP(View):
     def  get(self, request):
         id1 = request.GET.get('id', None)
-        #boorar en tabla despacho
         idOpCantalla = CanTalla.objects.filter(id=id1).values('id','operacion_id','talla_id')       
+        canT=0
+          
+        for canTerminada in Despacho.objects.filter(operacion_id=idOpCantalla[0]['operacion_id'],talla_id=idOpCantalla[0]['talla_id']).values('can_terminada'):canT+=canTerminada['can_terminada']
+        Operacion.objects.all().filter(id=idOpCantalla[0]['operacion_id']).update(can_restante= F('can_restante') - int(canT))
         Despacho.objects.filter(operacion_id=idOpCantalla[0]['operacion_id'],talla_id=idOpCantalla[0]['talla_id']).delete()
-        #boorar en tabla CanTalla
         CanTalla.objects.get(id=id1).delete()
         data = {
             'deleted': True
-        }
-        
+        }        
         return JsonResponse(data)
-
+    
+    
 
 class UpdateTalla(LoginRequiredMixin,TemplateView):
     def  get(self, request):

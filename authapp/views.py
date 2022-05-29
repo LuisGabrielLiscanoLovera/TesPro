@@ -34,10 +34,7 @@ def signin(request):
                     
                     if (int(perfilPatinador) ==1):                     
                         login(request, user)
-                        return redirect('SegimientoOp')
-                        
-                    
-                                        
+                        return redirect('despachoPatinador')                                   
                     
                     
                     

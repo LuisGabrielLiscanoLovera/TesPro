@@ -49,6 +49,8 @@ def despacho_list(request):
     despachos  = Despacho.objects.all().filter(empresa_id=lastEm.lastEm,operacion_id=idOp).order_by('-id')
     tSerializer = DespachoSerializer(despachos, many = True)
     data=""
+    
+ 
     return JsonResponse(data, safe=False)
 
 @api_view(['DELETE'])
@@ -82,7 +84,16 @@ def operacionesList(request):
     lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()   
     despacho   = Operacion.objects.filter(empresa_id=lastEm.lastEm,estatus='A').order_by('-id')
     serializer = OperacionSerializer(despacho, many=True)
+    
     return Response(serializer.data)
+
+
+
+
+
+
+
+
 
 @api_view(['GET'])  
 def patinadoresAct(request):

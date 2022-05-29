@@ -4,14 +4,13 @@ from django.db import models
 #from django.contrib.auth.models import User
 from authapp.models import MyUser as User
 class Empresa(models.Model):    
-    usuario = models.ForeignKey(User,related_name='Empresa',on_delete=models.CASCADE)
-    nom_empresa = models.CharField(max_length=30)
-    direccion = models.CharField(max_length=150)
-    descripcion = models.CharField(max_length=100)
-    logo_empresa = models.ImageField(upload_to='uploads/',null=True, height_field=None, width_field=None, max_length=100)
-    
-    ESTATUS       = (('A','Activo'),('I','Inactivo'))
-    estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
+    usuario       = models.ForeignKey(User,related_name='Empresa',on_delete=models.CASCADE)
+    nom_empresa   = models.CharField(max_length=150,unique=True)
+    direccion     = models.CharField(max_length=150)
+    descripcion   = models.CharField(max_length=100)
+    logo_empresa  = models.ImageField(upload_to='uploads/',null=True, height_field=None, width_field=None, max_length=100)
+    ESTATUS    = (('A','Activo'),('I','Inactivo'))
+    estatus    = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
