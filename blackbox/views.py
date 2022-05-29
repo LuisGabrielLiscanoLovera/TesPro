@@ -34,9 +34,9 @@ def operacionesListPatinadores(request):
     if request.session.has_key('username'):        
         if 'username' in request.session:
             username = request.session['username']     
-            idUse.idr   = MyUser.objects.get(username=username)
+            idUser   = MyUser.objects.get(username=username)
     
-    lastEm=Integrante.objects.filter(id=idUse.idr.id).values('empresa_id')
+    lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
     lastEm=int(lastEm[0]['empresa_id'])
     #vamos bien
     despacho   = Operacion.objects.filter(empresa_id=lastEm,estatus='A').order_by('-id')
