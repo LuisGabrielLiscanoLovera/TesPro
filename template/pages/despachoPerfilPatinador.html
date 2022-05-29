@@ -12,38 +12,32 @@
 
 
 
-<div class="modalBase">
-    <center>
-        <h1 class="title">Despacho black box</h1>
-        <hr>
-    </center>
+<div class="modalBasePeriles">
 
-
-    <table id="despachoTable" data-id-field="id" class="" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-show-columns="true" data-search="true" data-show-fullscreen="true" data-pagination="true"
-        data-show-refresh="true" data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-url='{% url "operaciones-operacionesListPatinadores" %}'>
-        <thead class="thead-dark ">
-            <tr>
-                <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoDespacho" class="text-center">Info
-                </th>
-                {% comment %}
-                <th data-field="id" class="text-center ">id</th> {% endcomment %}
-                <th data-field="nom_operacion" class="text-center ">OP</th>
-                <th data-field="nomReferencia" class="text-center">Referencia</th>
-                <th data-field="nomColor" class="text-center">Color</th>
-                <!--                 <th data-field="can_total" class="text-center">Cant. Faltante</th>
+    <div style="overflow-x:auto;">
+        <table id="despachoTable" data-id-field="id" class="" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-show-columns="true" data-search="true" data-show-fullscreen="true" data-pagination="true"
+            data-show-refresh="true" data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-url='{% url "operaciones-operacionesListPatinadores" %}'>
+            <thead class="thead-dark ">
+                <tr>
+                    <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoDespacho" class="text-center">Info
+                    </th>
+                    {% comment %}
+                    <th data-field="id" class="text-center ">id</th> {% endcomment %}
+                    <th data-field="nom_operacion" class="text-center ">OP</th>
+                    <th data-field="nomReferencia" class="text-center">Referencia</th>
+                    <!--      <th data-field="nomColor" class="text-center">Color</th> -->
+                    <!--                 <th data-field="can_total" class="text-center">Cant. Faltante</th>
  -->
-                <th data-field="can_total" class="text-center">Cant. Total</th>
-                <th data-field="created_at" class="text-center">Fecha creada</th>
-                <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionDespacho" class="text-center">
-                    Accion</th>
-            </tr>
-        </thead>
-    </table>
+                    <th data-field="can_total" class="text-center">Cant. Total</th>
+                    <!-- <th data-field="created_at" class="text-center">Fecha creada</th> -->
+                    <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionDespacho" class="text-center">
+                        Accion</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
 </div>
-
-
-
-
 <script>
 </script>
 
@@ -52,14 +46,16 @@
 
 
 
+<script>
+    $(document).ready(function() {
+        document.getElementById('navMiao').remove();
 
+        document.getElementById('miaoHeader').remove();
+        document.getElementById('miaoFoter').remove();
+        document.getElementById('miaoMenuButon').remove();
 
-
-
-
-
-
-{% endblock %}
+    });
+</script>{% endblock %}
 </div>
 </div>
 </div>

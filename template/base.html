@@ -386,6 +386,14 @@
             background: -o-linear-gradient(#fff, #999);
         }
         
+        .modalBasePeriles {
+            border-radius: 10px;
+            background: #fff;
+            background: -moz-linear-gradient(#fff, #999);
+            background: -webkit-linear-gradient(#fff, #999);
+            background: -o-linear-gradient(#fff, #999);
+        }
+        
         .modalDialogPadre {
             position: fixed;
             font-family: Arial, Helvetica, sans-serif;
@@ -620,210 +628,193 @@
     <script src="{% static 'js/preloader.js' %}"></script>
     <div class="body-wrapper">
         <!-- partial:partials/_sidebar.html -->
-        <aside class="mdc-drawer mdc-drawer--dismissible mdc-drawer--open">
-            <div class="mdc-drawer__header">
-                <a href="{% url 'home'%}" class="brand-logo">
-                    <img src="{% static 'images/logo.svg' %}" alt="logo">
 
-                </a>
-            </div>
-            <div class="mdc-drawer__content">
-                <div class="user-info">
-                    <!-- <p class="name">Usuario  {Jefe}</p>
-			  <p class="email">Casa del Polo</p> -->
+
+
+
+        <aside id="navMiao" class="mdc-drawer mdc-drawer--dismissible mdc-drawer--open">
+            <div>
+                <div class="mdc-drawer__header">
+                    <a href="{% url 'home'%}" class="brand-logo">
+                        <img src="{% static 'images/logo.svg' %}" alt="logo">
+
+                    </a>
                 </div>
-                <div class="mdc-list-group">
-                    <nav class="mdc-list mdc-drawer-menu">
 
+                <div class="mdc-drawer__content">
+                    <div class="user-info">
+                        <!-- <p class="name">Usuario  {Jefe}</p>
+			  <p class="email">Casa del Polo</p> -->
+                    </div>
 
-                        <div class="mdc-list-item mdc-drawer-item">
-                            <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-Empresas">
-                                <i class="material-icons mdc-list-item__start-detai mdc-drawer-item-ico" aria-hidden="true">account_balance</i>&nbsp;&nbsp;Empresas
-                                <i class="mdc-drawer-arrow material-icons">chevron_right</i>
-                            </a>
-                            <div class="mdc-expansion-panel" id="ui-sub-menu-Empresas">
+                    <div class="mdc-list-group">
 
-                                {% for i in nomEmpresa %}
-                                <nav class="mdc-list mdc-drawer-submenu">
-                                    <div class="mdc-list-item mdc-drawer-item">
-                                        <form id="CambioEmpresa" action="/cambioEmpresa/">
-                                            {% csrf_token %}
-                                            <input type="number" hidden="True" name="idEmpresa" value="{{ i.id }}">
-                                            <input type="number" hidden="True" name="idUser" value="{{ login_user_id }}">
+                        <nav class="mdc-list mdc-drawer-menu">
 
-                                            <button class="btn btn-underline text-white" type="submit">{{ i.Empresa|title }}</button>
+                            <div class="mdc-list-item mdc-drawer-item">
+                                <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-Empresas">
+                                    <i class="material-icons mdc-list-item__start-detai mdc-drawer-item-ico" aria-hidden="true">account_balance</i>&nbsp;&nbsp;Empresas
+                                    <i class="mdc-drawer-arrow material-icons">chevron_right</i>
+                                </a>
+                                <div class="mdc-expansion-panel" id="ui-sub-menu-Empresas">
 
-                                        </form>
-                                    </div>
-                                </nav>
-                                {% endfor %}
-
-
-
-                            </div>
-                        </div>
-
-                        <div class="mdc-list-item mdc-drawer-item">
-                            <a class="mdc-drawer-link" href="{% url 'SegimientoOp' %}">
-                                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">zoom_in</i> Seguimiento de OP </a>
-                        </div>
-
-
-                        <div class="mdc-list-item mdc-drawer-item">
-                            <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-contabilidad">
-                                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i> Contador
-                                <i class="mdc-drawer-arrow material-icons">chevron_right</i>
-                            </a>
-                            <div class="mdc-expansion-panel" id="ui-sub-menu-contabilidad">
-                                <nav class="mdc-list mdc-drawer-submenu">
-                                    <div class="mdc-list-item mdc-drawer-item">
-                                        <a class="mdc-drawer-link" href="{% url 'ValorAcumulado'%}" data-toggle="modazxl" data-target="destajo">
-V- Acumulado
-                                        </a>
-                                    </div>
-
-
-                                </nav>
-                                <nav class="mdc-list mdc-drawer-submenu">
-                                    <div class="mdc-list-item mdc-drawer-item">
-                                        <a class="text-white" href="{% url 'ValorProduccion'%}" data-toggle="modazxl" data-target="destajo">
-                                            &nbsp;&nbsp;&nbsp;V- Producción
-                                        </a>
-                                    </div>
-
-
-                                </nav>
-                            </div>
-
-
-
-
-
-                        </div>
-
-
-
-
-
-
-
-                        <div class="mdc-list-item mdc-drawer-item">
-                            <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-act">
-                                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i> Procedimientos
-                                <i class="mdc-drawer-arrow material-icons">chevron_right</i>
-                            </a>
-                            <div class="mdc-expansion-panel" id="ui-sub-menu-act">
-                                <nav class="mdc-list mdc-drawer-submenu">
-                                    <div class="mdc-list-item mdc-drawer-item">
-                                        <a class="mdc-drawer-link" href="{% url 'Acumulado' %}" data-toggle="modazxl" data-target="acumulado">
-						   Acumulado
-						</a>
-                                    </div>
-
+                                    {% for i in nomEmpresa %}
                                     <nav class="mdc-list mdc-drawer-submenu">
                                         <div class="mdc-list-item mdc-drawer-item">
-                                            <a class="mdc-drawer-link" href="{% url 'produccion'%}" data-toggle="modazxl" data-target="act_tarea">
-							 Producción
-						  </a>
+                                            <form id="CambioEmpresa" action="/cambioEmpresa/">
+                                                {% csrf_token %}
+                                                <input type="number" hidden="True" name="idEmpresa" value="{{ i.id }}">
+                                                <input type="number" hidden="True" name="idUser" value="{{ login_user_id }}">
+
+                                                <button class="btn btn-underline text-white" type="submit">{{ i.Empresa|title }}</button>
+
+                                            </form>
+                                        </div>
+                                    </nav>
+                                    {% endfor %}
+
+
+
+                                </div>
+                            </div>
+
+                            <div class="mdc-list-item mdc-drawer-item">
+                                <a class="mdc-drawer-link" href="{% url 'SegimientoOp' %}">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">zoom_in</i> Seguimiento de OP </a>
+                            </div>
+
+                            <div class="mdc-list-item mdc-drawer-item">
+                                <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-contabilidad">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i> Contador
+                                    <i class="mdc-drawer-arrow material-icons">chevron_right</i>
+                                </a>
+                                <div class="mdc-expansion-panel" id="ui-sub-menu-contabilidad">
+                                    <nav class="mdc-list mdc-drawer-submenu">
+                                        <div class="mdc-list-item mdc-drawer-item">
+                                            <a class="mdc-drawer-link" href="{% url 'ValorAcumulado'%}" data-toggle="modazxl" data-target="destajo">
+V- Acumulado
+                                        </a>
                                         </div>
 
 
+                                    </nav>
+                                    <nav class="mdc-list mdc-drawer-submenu">
+                                        <div class="mdc-list-item mdc-drawer-item">
+                                            <a class="text-white" href="{% url 'ValorProduccion'%}" data-toggle="modazxl" data-target="destajo">
+                                            &nbsp;&nbsp;&nbsp;V- Producción
+                                        </a>
+                                        </div>
 
 
+                                    </nav>
+                                </div>
+
+
+
+
+
+                            </div>
+
+
+
+                            <div class="mdc-list-item mdc-drawer-item">
+                                <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-act">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i> Procedimientos
+                                    <i class="mdc-drawer-arrow material-icons">chevron_right</i>
+                                </a>
+                                <div class="mdc-expansion-panel" id="ui-sub-menu-act">
+                                    <nav class="mdc-list mdc-drawer-submenu">
+                                        <div class="mdc-list-item mdc-drawer-item">
+                                            <a class="mdc-drawer-link" href="{% url 'Acumulado' %}" data-toggle="modazxl" data-target="acumulado">
+						   Acumulado
+						</a>
+                                        </div>
 
                                         <nav class="mdc-list mdc-drawer-submenu">
                                             <div class="mdc-list-item mdc-drawer-item">
-                                                <a class="mdc-drawer-link" href="{% url 'despacho'%}" data-toggle="modazxl" data-target="act">
+                                                <a class="mdc-drawer-link" href="{% url 'produccion'%}" data-toggle="modazxl" data-target="act_tarea">
+							 Producción
+						  </a>
+                                            </div>
+
+
+
+
+
+                                            <nav class="mdc-list mdc-drawer-submenu">
+                                                <div class="mdc-list-item mdc-drawer-item">
+                                                    <a class="mdc-drawer-link" href="{% url 'despacho'%}" data-toggle="modazxl" data-target="act">
 							 Depacho
 							</a>
-                                            </div>
-                                        </nav>
+                                                </div>
+                                            </nav>
+                                </div>
                             </div>
-                        </div>
 
 
+                            <div class="mdc-list-item mdc-drawer-item">
+                                <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-casino">
+                                    <i class="material-icons mdc-list-item__start-detai mdc-drawer-item-ico" aria-hidden="true">account_balance</i>&nbsp;&nbsp;Casino
+                                    <i class="mdc-drawer-arrow material-icons">chevron_right</i>
+                                </a>
+                                <div class="mdc-expansion-panel" id="ui-sub-menu-casino">
 
 
-
-
-                        <div class="mdc-list-item mdc-drawer-item">
-                            <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-casino">
-                                <i class="material-icons mdc-list-item__start-detai mdc-drawer-item-ico" aria-hidden="true">account_balance</i>&nbsp;&nbsp;Casino
-                                <i class="mdc-drawer-arrow material-icons">chevron_right</i>
-                            </a>
-                            <div class="mdc-expansion-panel" id="ui-sub-menu-casino">
-
-
-                                <nav class="mdc-list mdc-drawer-submenu">
-                                    <div class="mdc-list-item mdc-drawer-item">
-                                        <a class="mdc-drawer-link" href="{% url 'CasinoActivo'%}" data-toggle="modazxl" data-target="act">
+                                    <nav class="mdc-list mdc-drawer-submenu">
+                                        <div class="mdc-list-item mdc-drawer-item">
+                                            <a class="mdc-drawer-link" href="{% url 'CasinoActivo'%}" data-toggle="modazxl" data-target="act">
                                             Casino Activo
                                            </a>
-                                    </div>
-                                </nav>
+                                        </div>
+                                    </nav>
 
-                                <nav class="mdc-list mdc-drawer-submenu">
-                                    <div class="mdc-list-item mdc-drawer-item">
-                                        <a class="text-white" href="{% url 'CasinoHistorial'%}" data-toggle="modazxl" data-target="act">
+                                    <nav class="mdc-list mdc-drawer-submenu">
+                                        <div class="mdc-list-item mdc-drawer-item">
+                                            <a class="text-white" href="{% url 'CasinoHistorial'%}" data-toggle="modazxl" data-target="act">
                                           &nbsp;&nbsp;&nbsp;&nbsp;Historial
                                             </a>
-                                    </div>
-                                </nav>
+                                        </div>
+                                    </nav>
 
 
 
+                                </div>
                             </div>
-                        </div>
+
+
+                            </nav>
+                    </div>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        </nav>
                 </div>
-
-
-
-            </div>
         </aside>
+
+
+
         <!-- partial -->
         <div class="main-wrapper mdc-drawer-app-content ">
             <!-- partial:partials/_navbar.html -->
-            <header class="mdc-top-app-bar ">
+            <header id="miaoHeader" class="mdc-top-app-bar ">
                 <div class="mdc-top-app-bar__row ">
-                    <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start ">
-                        <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler ">menu</button>
+                    <div id="miao" class=" mdc-top-app-bar__section mdc-top-app-bar__section--align-start ">
+                        <button id="miaoMenuButon " class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler ">menu</button>
                         <span class="bar__title title ">				 
 					{% for i in nomEmpresaU %}
 					      <h4><b><u class="text-dark title ">{{ i|title }}</u></b></h4>
+					
 					{% endfor %}
 					
-				</span>
-
-
-
+				  </span>
                     </div>
+
+
                     <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right ">
                         <div class="menu-button-container menu-profile d-none d-md-block ">
                             <button class="mdc-button mdc-menu-button ">
 					<span class="d-flex align-items-center ">
-					  <span class="figure ">
-	<!--     ---------------------------------------------------------------   face              -->
+					  <span class="figure">
+	                            <!--     ---------------------------------------------------------------   face              -->
 						
 					  <img src="{% static 'images/faces/face9.jpg' %} " alt="user " class="user ">
 					  </span>
@@ -865,7 +856,7 @@ V- Acumulado
                     </main>
                 </div>
                 <!-- partial:partials/_footer.html -->
-                <footer>
+                <footer id="miaoFoter">
                     <div class="mdc-layout-grid ">
                         <div class="mdc-layout-grid__inner ">
                             <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop ">
@@ -880,96 +871,102 @@ V- Acumulado
                 <!-- partial -->
             </div>
         </div>
-    </div>
 
 
 
 
-    <script>
-        function ModalOperacion() {
-            window.location.href = "/ ";
-        };
-        $(document).ready(function() {
-            $(".form-wrapper .button ").click(function() {
-                var button = $(this);
-                var currentSection = button.parents(".section ");
-                var currentSectionIndex = currentSection.index();
-                var headerSection = $('.steps li').eq(currentSectionIndex);
-                currentSection.removeClass("is-active ").next().addClass("is-active ");
-                headerSection.removeClass("is-active ").next().addClass("is-active ");
 
-                $(".form-wrapper ").submit(function(e) {
-                    e.preventDefault();
+
+        </div>
+
+
+
+
+        <script>
+            function ModalOperacion() {
+                window.location.href = "/ ";
+            };
+            $(document).ready(function() {
+                $(".form-wrapper .button ").click(function() {
+                    var button = $(this);
+                    var currentSection = button.parents(".section ");
+                    var currentSectionIndex = currentSection.index();
+                    var headerSection = $('.steps li').eq(currentSectionIndex);
+                    currentSection.removeClass("is-active ").next().addClass("is-active ");
+                    headerSection.removeClass("is-active ").next().addClass("is-active ");
+
+                    $(".form-wrapper ").submit(function(e) {
+                        e.preventDefault();
+                    });
+
+                    if (currentSectionIndex === 3) {
+                        $(document).find(".form-wrapper .section ").first().addClass("is-active ");
+                        $(document).find(".steps li ").first().addClass("is-active ");
+                    }
                 });
-
-                if (currentSectionIndex === 3) {
-                    $(document).find(".form-wrapper .section ").first().addClass("is-active ");
-                    $(document).find(".steps li ").first().addClass("is-active ");
-                }
             });
-        });
-    </script>
-    <script src="{% static 'js/axios.min.js' %} "></script>
-    <script src="{% static 'js/vue.js' %} "></script>
-    <script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %} "></script>
-    <!--  <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js "></script> -->
-    <!-- datatable:js -->
-    <!-- <script src=" static 'js/jquery.dataTables.min.js' "></script>
+        </script>
+        <script src="{% static 'js/axios.min.js' %} "></script>
+        <script src="{% static 'js/vue.js' %} "></script>
+        <script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %} "></script>
+        <!--  <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js "></script> -->
+        <!-- datatable:js -->
+        <!-- <script src=" static 'js/jquery.dataTables.min.js' "></script>
 <script src=" static 'js/dTablesgrou.min.js' "></script> -->
-    <script src="{% static 'js/bootstrap.min.js' %} "></script>
-    <script src="{% static 'js/plugins/jquery-validation/jquery.validate.min.js' %} "></script>
-    <script src="{% static 'js/app.js' %} "></script>
-    <!-- plugins:js -->
-    <script src="{% static 'vendors/js/vendor.bundle.base.js' %} "></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page-->
-    <script src="{% static 'vendors/chartjs/Chart.min.js' %} "></script>
-    <script src="{% static 'vendors/jvectormap/jquery-jvectormap.min.js' %} "></script>
-    <script src="{% static 'vendors/jvectormap/jquery-jvectormap-world-mill-en.js' %} "></script>
-    <!-- End plugin js for this page-->
-    <!-- inject:js -->
-    <script src="{% static 'js/material.js' %} "></script>
-    <script src="{% static 'js/misc.js' %} "></script>
-    <!-- endinject -->
-    <!-- Custom js for this page-->
-    <script src="{% static 'js/dashboard.js' %} "></script>
-    <!-- End custom js for this page-->
-    <!--===============================================================================================-->
-    <!--===============================================================================================-->
-    <script src="{% static 'vendors/animsition/js/animsition.min.js' %} "></script>
-    <!--===============================================================================================-->
-    <script src="{% static 'vendors/bootstrap/js/popper.js' %} "></script>
-    <script src="{% static 'vendors/bootstrap/js/bootstrap.min.js' %} "></script>
-    <!--===============================================================================================-->
-    <script src="{% static 'vendors/select2/select2.min.js' %} "></script>
-    <!--===============================================================================================-->
-    <script src="{% static 'vendors/daterangepicker/moment.min.js' %} "></script>
-    <script src="{% static 'vendors/daterangepicker/daterangepicker.js' %} "></script>
-    <!--===============================================================================================-->
-    <script src="{% static 'vendors/countdowntime/countdowntime.js' %} "></script>
-    <!--===============================================================================================-->
-    <!--         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js "></script>
+        <script src="{% static 'js/bootstrap.min.js' %} "></script>
+        <script src="{% static 'js/plugins/jquery-validation/jquery.validate.min.js' %} "></script>
+        <script src="{% static 'js/app.js' %} "></script>
+        <!-- plugins:js -->
+        <script src="{% static 'vendors/js/vendor.bundle.base.js' %} "></script>
+        <!-- endinject -->
+        <!-- Plugin js for this page-->
+        <script src="{% static 'vendors/chartjs/Chart.min.js' %} "></script>
+        <script src="{% static 'vendors/jvectormap/jquery-jvectormap.min.js' %} "></script>
+        <script src="{% static 'vendors/jvectormap/jquery-jvectormap-world-mill-en.js' %} "></script>
+        <!-- End plugin js for this page-->
+        <!-- inject:js -->
+        <script src="{% static 'js/material.js' %} "></script>
+        <script src="{% static 'js/misc.js' %} "></script>
+        <!-- endinject -->
+        <!-- Custom js for this page-->
+        <script src="{% static 'js/dashboard.js' %} "></script>
+        <!-- End custom js for this page-->
+        <!--===============================================================================================-->
+        <!--===============================================================================================-->
+        <script src="{% static 'vendors/animsition/js/animsition.min.js' %} "></script>
+        <!--===============================================================================================-->
+        <script src="{% static 'vendors/bootstrap/js/popper.js' %} "></script>
+        <script src="{% static 'vendors/bootstrap/js/bootstrap.min.js' %} "></script>
+        <!--===============================================================================================-->
+        <script src="{% static 'vendors/select2/select2.min.js' %} "></script>
+        <!--===============================================================================================-->
+        <script src="{% static 'vendors/daterangepicker/moment.min.js' %} "></script>
+        <script src="{% static 'vendors/daterangepicker/daterangepicker.js' %} "></script>
+        <!--===============================================================================================-->
+        <script src="{% static 'vendors/countdowntime/countdowntime.js' %} "></script>
+        <!--===============================================================================================-->
+        <!--         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js "></script>
  -->
-    <!--         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js " integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM " crossorigin="anonymous "></script>
+        <!--         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js " integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM " crossorigin="anonymous "></script>
  -->
-    <script src="{% static 'js/main.js' %} "></script>
-    <script src="{% static 'js/axios.min.js' %} "></script>
-    <script src="{% static 'js/vue.js' %} "></script>
-    <!--==========================================EScrip vue=====================================================-->
-    <script src="{% static 'js/despacho/despacho.js' %} "></script>
-    <script src="{% static 'js/acumulado/acumulado.js' %} "></script>
-    <script src="{% static 'js/casino/casino.js' %} "></script>
-    <script src="{% static 'js/produccion/produccion.js' %} "></script>
-    <script src="{% static 'js/dataTables.jqueryui.min-dataTables.jqueryui.min.js' %} "></script>
-    <script src="{% static 'js/jquery.dataTables.min-jquery.dataTables.min.js' %} "></script>
-    <!--   <link rel="stylesheet " href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css ">
+        <script src="{% static 'js/main.js' %} "></script>
+        <script src="{% static 'js/axios.min.js' %} "></script>
+        <script src="{% static 'js/vue.js' %} "></script>
+        <!--==========================================EScrip vue=====================================================-->
+        <script src="{% static 'js/despacho/despacho.js' %} "></script>
+        <script src="{% static 'js/acumulado/acumulado.js' %} "></script>
+        <script src="{% static 'js/casino/casino.js' %} "></script>
+        <script src="{% static 'js/produccion/produccion.js' %} "></script>
+        <script src="{% static 'js/dataTables.jqueryui.min-dataTables.jqueryui.min.js' %} "></script>
+        <script src="{% static 'js/jquery.dataTables.min-jquery.dataTables.min.js' %} "></script>
+        <!--   <link rel="stylesheet " href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css ">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js "></script>
         
         <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js "></script>
 
         <script src="https://cdn.datatables.net/1.11.5/js/dataTables.jqueryui.min.js "></script>
 -->
-    {% block javascript %} {% endblock javascript%}
+        {% block javascript %} {% endblock javascript%}
 </body>
 
 </html>
