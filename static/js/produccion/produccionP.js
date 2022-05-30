@@ -14,7 +14,7 @@ function DetailFormatterButInfoProduccionPatinador(index, row) {
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number"/>' +
         '<div class="row">' +
 
-        '<div class="col-md-6 " style="position:absolute; left:0; margin: 10px 0 0 10px">' +
+        '<div class="col-md-4 " style="position:absolute; left:0; margin: 10px 0 0 10px">' +
         '<div id="sectIntegreOC-' + row.id + '" class="table animated fadeIn resutatatIntegrante-' + row.id +
         '">' +
 
