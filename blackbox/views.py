@@ -529,7 +529,6 @@ def AcumuladoListProcPatinador(request):
     integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
     lastEm=int(integranteConten[0]['empresa_id'])
     idAcumulado     = request.GET.get('idAcumuladoPatinador',None)    
-    print(idAcumulado,'=idacumulado',integranteConten,'=queri')
     acumuladoProc= ProAcu.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']),empresa_id=lastEm,acumulado_id=idAcumulado).order_by('-id')
     serializer = AcuSerializerProc(acumuladoProc, many=True)
     return Response(serializer.data)   
@@ -537,7 +536,51 @@ def AcumuladoListProcPatinador(request):
 
 
 
+  
+@api_view(['POST'])
+def createProAcumuladoPatinador(request,):
 
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+        
+    
+    integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
+    lastEm=int(integranteConten[0]['empresa_id'])
+    canTerminada  = int(request.data['Cantidad_AcuPatinador'])
+    
+    idPatinador   = Patinador.objects.filter(integrante_id=idUser.id).values('id')
+    idPatinador  = idPatinador[0]['id']
+    
+    try: 
+        obj = ProAcu.objects.create(
+        usuario_id     = int(integranteConten[0]['usuario_id']),
+        empresa_id     = int(lastEm),
+        integrante_id  = int(request.data['OccionId_integrante_AcuPatinador']),
+        patinador_id   = idPatinador,
+        tarea_id       = int(request.data['OccionId_tarea_AcuPatinador']),
+        talla_id       = int(request.data['OccionId_talla_AcuPatinador']),
+        can_prod_acum  = canTerminada,      
+        acumulado_id    =int(request.data['acumulado_idPatinador'])
+        )
+                
+        obj = ProAcu.objects.latest('id')
+        btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteAcumuladoUnico({})'> </button>".format(obj.id)
+        obj = ProAcu.objects.all().filter(id=obj.id).update(delAcumulProc=btnDel)
+        
+        data = {
+            'Acumulado': "Acumulado guardado con exito!",
+            'estatus':True
+        }
+       
+      
+
+    except Exception as e:
+        data = {'Acumulado': str(e),'estatus':False}        
+        return Response(data)
+    
+    return Response(data)
 
 
 

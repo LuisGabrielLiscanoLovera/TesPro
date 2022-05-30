@@ -1,5 +1,5 @@
 from django.urls import path
-from blackbox.views import DespachoPatinador,AcumuladoListProcPatinador,AcumuladoDataIntegrantePatinador,TallaEmpresaListPatinador,createProduccionPatinador,patinadoresActProdPatinador,integranteListPatinador,TareaListPatinador,ProduccionOPListPatinador,ItemListViewPatinador,ProduccionDataIntegrantePatinador,createDespachoPatinador,TallaOpCanIncosistentePatinadores,TallaOPListPatinador,casinoListPatinador,CasinoHomePatinador,AcumuladoPatinador,AcumuladoListPatinadores,operacionesListPatinadores,ProduccionPatinador,produccionesListPatinadores
+from blackbox.views import DespachoPatinador,createProAcumuladoPatinador,AcumuladoListProcPatinador,AcumuladoDataIntegrantePatinador,TallaEmpresaListPatinador,createProduccionPatinador,patinadoresActProdPatinador,integranteListPatinador,TareaListPatinador,ProduccionOPListPatinador,ItemListViewPatinador,ProduccionDataIntegrantePatinador,createDespachoPatinador,TallaOpCanIncosistentePatinadores,TallaOPListPatinador,casinoListPatinador,CasinoHomePatinador,AcumuladoPatinador,AcumuladoListPatinadores,operacionesListPatinadores,ProduccionPatinador,produccionesListPatinadores
 urlpatterns = [
    path('despachoPatinador/', DespachoPatinador.as_view(), name='despachoPatinador'),
    path('lista_operacionesPatinador/', operacionesListPatinadores, name="operacionesListPatinadores"),
@@ -22,7 +22,8 @@ urlpatterns = [
    path('tallaEmpresa-listPatinador/', TallaEmpresaListPatinador, name="tallaEmpresa-listPatinador"),
    path('dataAcumuladoInte-listPatinador/', AcumuladoDataIntegrantePatinador, name="dataAcumuladoInte-listPatinador"),
    path('AcumuladoProc-listPatinador/', AcumuladoListProcPatinador, name="AcumuladoProc-listPatinador"),
-   
+   path('cproAcumuladoPatinador/', createProAcumuladoPatinador, name="NewsproAcumuladoPatinador"),
+
   
    
    path('casinoPatinador/', CasinoHomePatinador.as_view(), name='casinoPatinador'),

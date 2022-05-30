@@ -45,7 +45,7 @@ function DetailFormatterButInfoAcumuladoPatinador(index, row) {
 
         '<div class="col-sm-6 mb-2 offset-6">' +
         '<div class="form-group">' +
-        '<select  id="OccionId_tarea_Acu-' + row.id +
+        '<select  id="OccionId_tarea_AcuPatinador-' + row.id +
         '" class="form-select form-select-sm form-control " v-model="selectIdTareaAcumulado"><option value="" disable>Selecciones Tarea</option>' +
         '<option id="id_tarea"  v-for="(optionTareaAcu) in allTareasAcumuladosPatinador" v-bind:value="optionTareaAcu.id">[[optionTareaAcu.nom_tarea]] / [[optionTareaAcu.detalle]]</option></select></div>' +
         '</div>' +
@@ -75,7 +75,7 @@ function DetailFormatterButInfoAcumuladoPatinador(index, row) {
         '</template>';
 }
 
-function formAcumuladoPatinador(idAcumuladoPatinador, idUsuario) {
+function formAcumuladoPatinador(idAcumuladoPatinador, idUsuarioPatinador) {
 
     new Vue({
         el: '#FormuAcumuladoPatinador-' + idAcumuladoPatinador,
@@ -92,7 +92,7 @@ function formAcumuladoPatinador(idAcumuladoPatinador, idUsuario) {
                 selectIdTareaAcumulado: '',
                 selectIdTallaAcumulado: '',
                 cant_prod_AcumPatinador: '',
-                usuario: idUsuario,
+                usuario: idUsuarioPatinador,
                 idAcumuladoPatinador: idAcumuladoPatinador,
 
             }
@@ -158,29 +158,27 @@ function formAcumuladoPatinador(idAcumuladoPatinador, idUsuario) {
 
             submitFormAcumuladoPatinador: function() {
                 var OccionId_integrante_AcuPatinador = $('select[id="OccionId_integrante_AcuPatinador-' + this.idAcumuladoPatinador + '"]').val().trim();
-                var OccionId_pantinador_Acu = $('select[id="OccionId_pantinador_Acu-' + this.idAcumuladoPatinador + '"]').val().trim();
-                var OccionId_tarea_Acu = $('select[id="OccionId_tarea_Acu-' + this.idAcumuladoPatinador + '"]').val().trim();
+                var OccionId_tarea_AcuPatinador = $('select[id="OccionId_tarea_AcuPatinador-' + this.idAcumuladoPatinador + '"]').val().trim();
                 var OccionId_talla_AcuPatinador = $('select[id="OccionId_talla_AcuPatinador-' + this.idAcumuladoPatinador + '"]').val().trim();
-                var Cantidad_Acu = $('input[name="cant_prod_AcumPatinador-' + this.idAcumuladoPatinador + '"]').val().trim();
+                var Cantidad_AcuPatinador = $('input[name="cant_prod_AcumPatinador-' + this.idAcumuladoPatinador + '"]').val().trim();
                 //crear la evaluacion de solo puede guardar los datos si cantidad esta llenna con if
 
-                if (Cantidad_Acu && OccionId_integrante_AcuPatinador && OccionId_pantinador_Acu &&
-                    OccionId_tarea_Acu && OccionId_talla_AcuPatinador) {
-                    axios.post('/acumulado/cproAcumulado/', {
+                if (Cantidad_AcuPatinador && OccionId_integrante_AcuPatinador &&
+                    OccionId_tarea_AcuPatinador && OccionId_talla_AcuPatinador) {
+                    axios.post('/blackbox/cproAcumuladoPatinador/', {
                         idAcumuladoPatinador: idAcumuladoPatinador,
-                        usuario: idUsuario,
-                        acumulado_id: idAcumuladoPatinador,
+                        usuarioPatinador: idUsuarioPatinador,
+                        acumulado_idPatinador: idAcumuladoPatinador,
                         OccionId_integrante_AcuPatinador: OccionId_integrante_AcuPatinador,
-                        OccionId_pantinador_Acu: OccionId_pantinador_Acu, //l
-                        OccionId_tarea_Acu: OccionId_tarea_Acu,
+                        OccionId_tarea_AcuPatinador: OccionId_tarea_AcuPatinador,
                         OccionId_talla_AcuPatinador: OccionId_talla_AcuPatinador,
-                        Cantidad_Acu: Cantidad_Acu,
+                        Cantidad_AcuPatinador: Cantidad_AcuPatinador,
                     }).then(response => {
 
 
-                        axios.get('dataAcumuladoInte-list/', {
+                        axios.get('/blackbox/dataAcumuladoInte-listPatinador/', {
                             params: {
-                                idIntegranteSelect: this.$varGlobalSelectIntegrAcu,
+                                idIntegranteSelectPatinador: this.$varGlobalSelectIntegrAcu,
                                 idAcumuladoPatinador: idAcumuladoPatinador,
                             }
                         }).then((resp) => {
@@ -241,7 +239,7 @@ function DetailFormatterButAccionAcumuladoPatinador(index, row) {
     //'</div>';
 }
 
-function AcumuladoProdPatinador(idAcumuladoPatinador, idUsuario) {
+function AcumuladoProdPatinador(idAcumuladoPatinador, idUsuarioPatinador) {
     $(document).ready(function() {
         let table = $("#items-table-AcumuladoPatinador-" + idAcumuladoPatinador).removeAttr("width").dataTable({
             ajax: {
@@ -278,38 +276,4 @@ function AcumuladoProdPatinador(idAcumuladoPatinador, idUsuario) {
             $("#items-table-AcumuladoPatinador-" + idAcumuladoPatinador).DataTable().ajax.reload();
         }
     })
-}
-
-
-function deleteAcumuladoUnico(id_acumulado) {
-
-    axios.delete('eliminar_acumulado/' + id_acumulado + '/')
-        .then(res => {
-            console.log(res);
-        }).catch(error => console.log(error));
-
-}
-
-
-
-
-
-
-
-
-
-function carrarAcumulado(id_acumulado) {
-
-    axios.get('/acumulado/cerrarAcumulado/', {
-            params: {
-                idAcumuladoPatinador: id_acumulado,
-            }
-        })
-        .then((resp) => {
-
-            window.location.reload();
-        })
-        .catch(error => console.log(error));
-
-
 }
