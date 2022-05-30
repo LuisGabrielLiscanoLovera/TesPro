@@ -20,6 +20,7 @@ from rest_framework.response import Response
 from authapp.models import MyUser
 from despacho.serializers import DespachoSerializer,OperacionSerializer
 from patinador.serializers import PatinadorSerializer
+from talla.serializers import TallaSerializer,CanTallaSerializer
 from operacion.models import Operacion
 from django.views.generic import View
 from django.http import JsonResponse, Http404, HttpResponse
@@ -43,7 +44,7 @@ def operacionesListPatinadores(request):
     serializer = OperacionSerializer(despacho, many=True)
     
     return Response(serializer.data)
-
+  
 
 class DespachoPatinador(LoginRequiredMixin,TemplateView):
      
@@ -77,6 +78,132 @@ class DespachoPatinador(LoginRequiredMixin,TemplateView):
           finally:
             return context  
     
+
+
+
+@api_view(['POST'])
+def createDespachoPatinador(request,):
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+        
+    
+    integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
+    lastEm=int(integranteConten[0]['empresa_id'])   
+    canTerminada  = int(request.data['cantPatinador'])
+    
+    #nombreTalla   = Talla.objects.filter(empresa_id=int(lastEm.lastEm),usuario_id=int(idUser.id)     ,id=int(request.data['selectIdTalla'])).values('nom_talla')
+                                                                                                                                       
+    nombreTalla   = Talla.objects.filter(empresa_id=int(lastEm),usuario_id=int(integranteConten[0]['usuario_id']),id=int(request.data['selectIdTallaPatinador'])).values('nom_talla','id')
+    idPatinador   = Patinador.objects.filter(integrante_id=idUser.id).values('id')
+    idPatinador  = idPatinador[0]['id']
+    
+  
+    
+    
+    nomPatinador  = Integrante.objects.filter(empresa_id=int(lastEm),usuario_id=int(integranteConten[0]['usuario_id']) ,id=int(idUser.id)).values('nombres','apellidos')
+    nom_patinador = nomPatinador[0]['nombres']+" "+nomPatinador[0]['apellidos']
+    print("int(integranteConten[0]['usuario_id'])=",int(integranteConten[0]['usuario_id']))
+    print("int(idUser.id)=",int(idUser.id))
+    print("int(lastEm),=",int(lastEm))
+    print("int(request.data['id_OPPatinador'])=",int(request.data['id_OPPatinador']))
+    print("nombreTalla[0]['id']=",nombreTalla[0]['id'])
+    print("nom_patinador=",nom_patinador)
+    print("canTerminada=",canTerminada)
+    try:
+        obj = Despacho.objects.create(
+        usuario_id           = int(integranteConten[0]['usuario_id']),
+        patinador_id         = idPatinador,
+        empresa_id           = int(lastEm),
+        operacion_id         = int(request.data['id_OPPatinador']), 
+        talla_id             = nombreTalla[0]['id'],
+        can_terminada        = canTerminada,
+        nomTallaDespacho     = nombreTalla[0]['nom_talla'],
+        nomPatinadorDespacho = nom_patinador
+
+        )
+        obj = Despacho.objects.latest('id')
+        btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteDespachoUnico({})'> </button>".format(obj.id)
+        obj = Despacho.objects.all().filter(id=obj.id).update(btnDelDespacho=btnDel)
+        data = {'despacho': True}
+        CanTallaOP      = CanTalla.objects.all().filter(operacion_id=int(request.data['id_OPPatinador']),talla_id=int(request.data['selectIdTallaPatinador'])).update(res_talla= F('res_talla') - canTerminada)
+        OpTallaRestante = Operacion.objects.all().filter(id=int(request.data['id_OPPatinador'])).update(can_restante= F('can_restante') - canTerminada)
+        return Response(data)
+    except Exception as e:
+        print(str(e))
+        data={'msj':'despacho no cargado','error':str(e)}
+        return Response(data)
+
+
+
+#can tallas de la op
+@api_view(['GET'])  
+def TallaOPListPatinador(request):
+    if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username=username)             
+    lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm=int(lastEm[0]['empresa_id'])
+    ptalla   = CanTalla.objects.filter(empresa_id=lastEm,operacion_id=int(request.GET.get('idOp', None))).order_by('-id')
+    serializer = CanTallaSerializer(ptalla, many=True)
+    return Response(serializer.data)
+ 
+
+
+
+
+
+
+@api_view(['GET'])  
+def TallaOpCanIncosistentePatinadores(request):
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+            
+    
+    
+    
+    
+    
+    lastEm        = CambioEmpres.objects.filter(usuario_id=idUser.id).last() 
+    idOP          = request.GET.get('idOperacion', None) 
+    CanOperacion  = Operacion.objects.filter(id=int(idOP)).values('can_total')
+    CanOperacion  = CanOperacion[0]['can_total']    
+    CanTallaTotal   = CanTalla.objects.filter(empresa_id=lastEm,operacion_id=idOP).aggregate(can_talla=Sum('can_talla'))
+    CanTallaTotal   = CanTallaTotal['can_talla']
+    TotalOpRestante = Operacion.objects.filter(id=idOP).values('can_restante','fecha_cierre') 
+    FechaCierre     = TotalOpRestante[0]['fecha_cierre']
+    TotalOpRestante = TotalOpRestante[0]['can_restante']
+    
+    data = {
+        'CanTallaTotal':CanTallaTotal,
+        'CanOperacion':CanOperacion,
+        'TotalOpRestante':TotalOpRestante,
+        'FechaCierre':FechaCierre
+        }
+    
+   
+    
+    return JsonResponse(data)
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
 
 class ProduccionPatinador(LoginRequiredMixin,TemplateView):
      template_name = "pages/produccionPerfilPatinador.html"     
