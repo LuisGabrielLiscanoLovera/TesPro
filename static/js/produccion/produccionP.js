@@ -126,7 +126,6 @@ function formProduccionOPPatinador(idOperacionPatinador, idUsuario) {
         delimiters: ['[[', ']]'],
         data: function() {
             return {
-                allPatinadoresProduccions: [],
                 allTallasProduccions: [],
                 allTareasProduccions: [],
                 allIntegrantesProduccions: [],
@@ -183,11 +182,7 @@ function formProduccionOPPatinador(idOperacionPatinador, idUsuario) {
                     .then((resp) => {
                         this.allIntegrantesProduccions = resp.data
                     }).catch(error => console.log(error));
-                axios
-                    .get('/blackbox/lista_patinadoresAct-prodPatinador/')
-                    .then((resp) => {
-                        this.allPatinadoresProduccions = resp.data
-                    }).catch(error => console.log(error));
+
                 axios
                     .get('/blackbox/tallaOP-list-patinador/?idOp=' + idOperacionPatinador)
                     .then((resp) => {

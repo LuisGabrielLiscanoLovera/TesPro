@@ -20,6 +20,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from authapp.models import MyUser
 from despacho.serializers import DespachoSerializer,OperacionSerializer
+from acumulado.serializers import AcumuladoSerializer,AcuSerializerProc
 from acumulado.serializers import AcumuladoSerializer
 from integrante.serializers import IntegranteSerializer
 from patinador.serializers import PatinadorSerializer
@@ -33,7 +34,8 @@ from django.db.models import F
 from django_serverside_datatable.views import ServerSideDatatableView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 # Create your views here.
-
+from acumulado.models import Acumulado as ACUMULADO
+from acumulado.models import ProAcumulado as  ProAcu
     
 @api_view(['GET'])  
 def operacionesListPatinadores(request):     
@@ -395,9 +397,6 @@ def createProduccionPatinador(request,):
         obj = Prod.objects.create(
         usuario_id           = int(integranteConten[0]['usuario_id']),
         patinador_id         = idPatinador,
-        
-        
-        
         integrante_id        = int(request.data['OccionId_integrante_prodPatinador']),
         empresa_id           = int(lastEm),
         operacion_id         = int(request.data['idOperacionPatinador']),
@@ -466,21 +465,107 @@ def AcumuladoListPatinadores(request):
     if request.session.has_key('username'):
             if 'username' in request.session:
                 username = request.session['username']
-                idUse.idr   = MyUser.objects.get(username = username)
+                idUse   = MyUser.objects.get(username = username)
     
  
-    lastEm=Integrante.objects.filter(id=idUse.idr.id).values('empresa_id')
+    lastEm=Integrante.objects.filter(id=idUse.id).values('empresa_id')
     lastEm=int(lastEm[0]['empresa_id'])  
     acumuladoQsect  = ACUMULADO.objects.filter(empresa_id = lastEm,estatus='A').order_by('-id')
     AcumuladoSe     = AcumuladoSerializer(acumuladoQsect, many=True)   
     dump            = json.dumps(AcumuladoSe.data)   #dump serializer to json reponse 
     
     return HttpResponse(dump, content_type='application/json')
+
+
+
+@api_view(['GET'])
+def AcumuladoDataIntegrantePatinador(request):
+    if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username = username)    
+
+    integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
+    lastEm=int(integranteConten[0]['empresa_id'])
+    idAcumulado     = request.GET.get('idAcumuladoPatinador',None) 
     
+    idIntegrante    = request.GET.get('idIntegranteSelectPatinador')   
+    dontrepeYorself=[]
+    tareas=[]
+    patinadores=[]
     
+    for tareasIntegrante in ProAcu.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']),empresa_id=lastEm,acumulado_id=int(idAcumulado), 
+    integrante_id=idIntegrante).distinct().values('tarea_id','patinador_id'):       
+        tareaIntegrante = (Tarea.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']),empresa_id=lastEm,id=tareasIntegrante['tarea_id']).values('nom_tarea','id')[0])  
+        totalIntegrante = ProAcu.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']),empresa_id=lastEm,acumulado_id=int(idAcumulado),integrante_id=idIntegrante,tarea_id=tareaIntegrante['id']).values('tarea_id','can_prod_acum').aggregate(can_prod_acum=Sum('can_prod_acum'))
+        patinador       = Patinador.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']),empresa_id=lastEm,id=tareasIntegrante['patinador_id']).distinct().values('integrante_id')
+        patinador       = Integrante.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']),empresa_id=lastEm,id=patinador[0]['integrante_id']).values('nombres','apellidos')
+        patinador       = "{} {}".format(patinador[0]['nombres'],patinador[0]['apellidos'] )
+        
+        if patinador in patinadores:pass
+        else:patinadores.append(patinador)       
+        if tareaIntegrante['nom_tarea'] in dontrepeYorself:pass
+        else:           
+            dontrepeYorself.append(tareaIntegrante['nom_tarea'])
+            tareas.append({
+            'tarea':tareaIntegrante['nom_tarea'],
+            'cat_total_tarea':totalIntegrante['can_prod_acum'],
+        })       
+    if tareas==[]:pass
+    else:
+        if patinadores ==[]:pass 
+        else:tareas.append({'patinadores':patinadores})
+    return Response(tareas)
 
 
 
+@api_view(['GET'])  
+def AcumuladoListProcPatinador(request):
+    if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username = username)    
+    
+    integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
+    lastEm=int(integranteConten[0]['empresa_id'])
+    idAcumulado     = request.GET.get('idAcumuladoPatinador',None)    
+    print(idAcumulado,'=idacumulado',integranteConten,'=queri')
+    acumuladoProc= ProAcu.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']),empresa_id=lastEm,acumulado_id=idAcumulado).order_by('-id')
+    serializer = AcuSerializerProc(acumuladoProc, many=True)
+    return Response(serializer.data)   
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@api_view(['GET'])  
+def TallaEmpresaListPatinador(request):
+    if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username=username)
+    
+    lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm=int(lastEm[0]['empresa_id'])    
+    ptalla   = Talla.objects.filter(empresa_id=lastEm).order_by('-id')
+    
+    serializer = TallaSerializer(ptalla, many=True)
+   
+    return Response(serializer.data)
+ 
 
 class CasinoHomePatinador(LoginRequiredMixin,TemplateView):
      template_name = "pages/casinoActivoPerfilPatinador.html"
