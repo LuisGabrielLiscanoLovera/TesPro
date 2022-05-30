@@ -104,13 +104,7 @@ def createDespachoPatinador(request,):
     
     nomPatinador  = Integrante.objects.filter(empresa_id=int(lastEm),usuario_id=int(integranteConten[0]['usuario_id']) ,id=int(idUser.id)).values('nombres','apellidos')
     nom_patinador = nomPatinador[0]['nombres']+" "+nomPatinador[0]['apellidos']
-    print("int(integranteConten[0]['usuario_id'])=",int(integranteConten[0]['usuario_id']))
-    print("int(idUser.id)=",int(idUser.id))
-    print("int(lastEm),=",int(lastEm))
-    print("int(request.data['id_OPPatinador'])=",int(request.data['id_OPPatinador']))
-    print("nombreTalla[0]['id']=",nombreTalla[0]['id'])
-    print("nom_patinador=",nom_patinador)
-    print("canTerminada=",canTerminada)
+  
     try:
         obj = Despacho.objects.create(
         usuario_id           = int(integranteConten[0]['usuario_id']),
@@ -134,6 +128,39 @@ def createDespachoPatinador(request,):
         print(str(e))
         data={'msj':'despacho no cargado','error':str(e)}
         return Response(data)
+
+ 
+ 
+ 
+ 
+
+ 
+class ItemListViewPatinador(ServerSideDatatableView):  
+    columns = ['nomPatinadorDespacho','nomTallaDespacho','can_terminada','created_at','btnDelDespacho','id']
+    
+    def get_queryset(self):
+        if self.request.method == 'GET':           
+            idOp = self.request.GET.get('idOpPatinador', None)
+            idUser = self.request.GET.get('usuarioPatinador', None)
+            #integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
+
+            
+            if idOp and idUser is not None:
+                lastEm=Integrante.objects.filter(id=idUser).values('empresa_id')
+                lastEm=int(lastEm[0]['empresa_id'])               
+                queryset   = Despacho.objects.filter(empresa_id=int(lastEm),operacion_id=idOp).order_by('-id')          
+            return queryset
+    
+
+
+
+
+
+
+
+
+
+
 
 
 

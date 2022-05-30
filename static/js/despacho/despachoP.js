@@ -70,8 +70,8 @@ function DetailFormatterButAccionDespachoPatinador(index, row) {
 
 
 
-        '<div class="col-md-10">' +
-        '<table class="animated fadeIn table thead-dark text-center " id="items-table' + row.id +
+        '<div class="col-md-12">' +
+        '<table class="animated fadeIn table thead-dark text-center " id="items-tablePatinador' + row.id +
         '"><thead><tr>' +
 
 
@@ -94,7 +94,7 @@ function DetailFormatterButAccionDespachoPatinador(index, row) {
         '<script type="application/javascript">' +
         '$(document).ready(function() {' +
 
-        'var table= $("#items-table' + row.id +
+        'var table= $("#items-tablePatinador' + row.id +
         '").removeAttr("width").dataTable({  "searching": true' +
         ',serverSide: true, scrollY: "250px", scrollCollapse: true,' +
         'order:[[4,"desc"]],' +
@@ -103,7 +103,7 @@ function DetailFormatterButAccionDespachoPatinador(index, row) {
 
 
         'sAjaxSource:' +
-        '"data/?idOp= ' + row.id + ' &usuario=' + row.usuario + '",' +
+        '"/blackbox/dataPatinador/?idOpPatinador= ' + row.id + ' &usuarioPatinador=' + row.usuario + '",' +
         'columns: [' +
         ' {' +
         'name: "nomPatinadorDespacho",' +
@@ -115,7 +115,7 @@ function DetailFormatterButAccionDespachoPatinador(index, row) {
 
         '{name:"can_terminada",data:2}, ' +
         '{name:"created_at",data:3},' +
-        '{name:"btnDelDespacho",data:4 },' +
+        '{name:"btnDelDespacho",data:4 ,visible: false},' +
 
 
         '],' +
@@ -128,9 +128,9 @@ function DetailFormatterButAccionDespachoPatinador(index, row) {
         //reload data table despues de eliminar
 
 
-        '$("#items-table' + row.id + '").on("click", "button", function(){ ' +
-        '$("#items-table' + row.id + '").DataTable().ajax.reload();' +
-        '$("#items-table' + row.id + '").DataTable().ajax.reload();' +
+        '$("#items-tablePatinador' + row.id + '").on("click", "button", function(){ ' +
+        '$("#items-tablePatinador' + row.id + '").DataTable().ajax.reload();' +
+        '$("#items-tablePatinador' + row.id + '").DataTable().ajax.reload();' +
 
         'sleepThenAct();' +
 
@@ -138,7 +138,7 @@ function DetailFormatterButAccionDespachoPatinador(index, row) {
         '});' +
 
         'function sleepThenAct() {' +
-        '$("#items-table' + row.id + '").DataTable().ajax.reload();' +
+        '$("#items-tablePatinador' + row.id + '").DataTable().ajax.reload();' +
         '}' +
 
         '</script>' +

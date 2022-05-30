@@ -1,12 +1,12 @@
 from django.urls import path
-from blackbox.views import DespachoPatinador,createDespachoPatinador,TallaOpCanIncosistentePatinadores,TallaOPListPatinador,casinoListPatinador,CasinoHomePatinador,AcumuladoPatinador,AcumuladoListPatinadores,operacionesListPatinadores,ProduccionPatinador,produccionesListPatinadores
+from blackbox.views import DespachoPatinador,ItemListViewPatinador,createDespachoPatinador,TallaOpCanIncosistentePatinadores,TallaOPListPatinador,casinoListPatinador,CasinoHomePatinador,AcumuladoPatinador,AcumuladoListPatinadores,operacionesListPatinadores,ProduccionPatinador,produccionesListPatinadores
 urlpatterns = [
    path('despachoPatinador/', DespachoPatinador.as_view(), name='despachoPatinador'),
    path('lista_operacionesPatinador/', operacionesListPatinadores, name="operacionesListPatinadores"),
    path('tallaOP-list-patinador/', TallaOPListPatinador, name="tallaOP-list-patinador"),
    path('tallaOP-IncosistentePatinadores/', TallaOpCanIncosistentePatinadores, name="tallaOP-IncosistentePatinadores"),
    path('createPatinador/', createDespachoPatinador, name="newDespachoPatinador"),
-
+   path('dataPatinador/', ItemListViewPatinador.as_view()),  
    
    
    
