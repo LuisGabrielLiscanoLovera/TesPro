@@ -40,11 +40,6 @@ def TareaList(request):
     serializer = TareaSerializer(tarea, many=True)
     return Response(serializer.data)
 
-    #return JsonResponse({'data':dt})
-    #return JsonResponse({'data':serializer.data})
-    
-    #return jsonResponse()
-
 
 class CreateTarea(View):
     

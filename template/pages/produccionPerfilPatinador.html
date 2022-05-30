@@ -3,7 +3,7 @@
 <script src="{% static 'vendors/bootstrap/js/popper.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/bootstrap-table.js' %}"></script>
-
+<script src="{% static 'js/produccion/produccionP.js' %}"></script>
 <!-- <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
 <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css">
 
@@ -37,7 +37,7 @@
             data-show-refresh="true" data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-url="{% url 'produccionListPatinadores'%}">
             <thead class="thead-dark ">
                 <tr>
-                    <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoProduccion" class="text-center">Info
+                    <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoProduccionPatinador" class="text-center">Info
                     </th>
                     {% comment %}
                     <th data-field="id" class="text-center ">id</th> {% endcomment %}
@@ -50,7 +50,7 @@
 -->
 
                     <th data-field="created_at" class="text-center">Fecha creada</th>
-                    <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionProduccion" class="text-center">
+                    <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionProduccionPatinador" class="text-center">
                         Accion</th>
                 </tr>
             </thead>

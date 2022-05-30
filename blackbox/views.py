@@ -8,18 +8,23 @@ from django.shortcuts import redirect, render
 from empresa.models import Empresa,RelacionEmpresa,CambioEmpres
 from despacho.models import Despacho
 from casino.models import Casino
+from tarea.models import Tarea
 from casino.serializers import CasinoSerializer
 from acumulado.models import Acumulado as ACUMULADO
-from acumulado.serializers import AcumuladoSerializer
 from integrante.models import Integrante
 from patinador.models import Patinador
+from produccion.models import Produccion as Prod
 from talla.models import Talla,CanTalla
 from django.db.models import Sum, F 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from authapp.models import MyUser
 from despacho.serializers import DespachoSerializer,OperacionSerializer
+from acumulado.serializers import AcumuladoSerializer
+from integrante.serializers import IntegranteSerializer
 from patinador.serializers import PatinadorSerializer
+from tarea.serializers import TareaSerializer
+from produccion.serializers import ProduccionSerializer
 from talla.serializers import TallaSerializer,CanTallaSerializer
 from operacion.models import Operacion
 from django.views.generic import View
@@ -78,9 +83,6 @@ class DespachoPatinador(LoginRequiredMixin,TemplateView):
           finally:
             return context  
     
-
-
-
 @api_view(['POST'])
 def createDespachoPatinador(request,):
     if request.session.has_key('username'):        
@@ -93,7 +95,7 @@ def createDespachoPatinador(request,):
     lastEm=int(integranteConten[0]['empresa_id'])   
     canTerminada  = int(request.data['cantPatinador'])
     
-    #nombreTalla   = Talla.objects.filter(empresa_id=int(lastEm.lastEm),usuario_id=int(idUser.id)     ,id=int(request.data['selectIdTalla'])).values('nom_talla')
+    #nombreTalla   = Talla.objects.filter(empresa_id=int(lastEm),usuario_id=int(idUser.id)     ,id=int(request.data['selectIdTalla'])).values('nom_talla')
                                                                                                                                        
     nombreTalla   = Talla.objects.filter(empresa_id=int(lastEm),usuario_id=int(integranteConten[0]['usuario_id']),id=int(request.data['selectIdTallaPatinador'])).values('nom_talla','id')
     idPatinador   = Patinador.objects.filter(integrante_id=idUser.id).values('id')
@@ -129,12 +131,6 @@ def createDespachoPatinador(request,):
         data={'msj':'despacho no cargado','error':str(e)}
         return Response(data)
 
- 
- 
- 
- 
-
- 
 class ItemListViewPatinador(ServerSideDatatableView):  
     columns = ['nomPatinadorDespacho','nomTallaDespacho','can_terminada','created_at','btnDelDespacho','id']
     
@@ -151,20 +147,6 @@ class ItemListViewPatinador(ServerSideDatatableView):
                 queryset   = Despacho.objects.filter(empresa_id=int(lastEm),operacion_id=idOp).order_by('-id')          
             return queryset
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-#can tallas de la op
 @api_view(['GET'])  
 def TallaOPListPatinador(request):
     if request.session.has_key('username'):        
@@ -177,11 +159,6 @@ def TallaOPListPatinador(request):
     serializer = CanTallaSerializer(ptalla, many=True)
     return Response(serializer.data)
  
-
-
-
-
-
 
 @api_view(['GET'])  
 def TallaOpCanIncosistentePatinadores(request):
@@ -220,18 +197,21 @@ def TallaOpCanIncosistentePatinadores(request):
  
  
  
-
-
-
-
-
-
-
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 class ProduccionPatinador(LoginRequiredMixin,TemplateView):
      template_name = "pages/produccionPerfilPatinador.html"     
      success_url = '/'
@@ -275,15 +255,185 @@ def produccionesListPatinadores(request):
     if request.session.has_key('username'):        
         if 'username' in request.session:
             username = request.session['username']     
-            idUse.idr   = MyUser.objects.get(username=username)
+            idUser   = MyUser.objects.get(username=username)
     
-    lastEm=Integrante.objects.filter(id=idUse.idr.id).values('empresa_id')
+    lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
     lastEm=int(lastEm[0]['empresa_id'])
     #vamos bien
     despacho   = Operacion.objects.filter(empresa_id=lastEm,estatus='A').order_by('-id')
     serializer = OperacionSerializer(despacho, many=True)
     
     return Response(serializer.data)
+
+
+
+#dataProduccionInte-list/
+@api_view(['GET'])
+def ProduccionDataIntegrantePatinador(request):
+    if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username = username)    
+    
+    lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm=int(lastEm[0]['empresa_id'])
+    
+    idOperacion     = request.GET.get('idOpPatinador',None)    
+    idIntegrante    = request.GET.get('idIntegranteSelectPatinador')
+    dontrepeYorself = []
+    tareas = []
+    patinadores = []   
+    for tareasIntegrante in Prod.objects.filter(empresa_id=lastEm,operacion_id=int(idOperacion),integrante_id=idIntegrante).distinct().values('tarea_id','patinador_id'):
+        tareaIntegrante = (Tarea.objects.filter(empresa_id=lastEm,id=tareasIntegrante['tarea_id']).values('nom_tarea','id')[0])  
+        totalIntegrante = Prod.objects.filter(empresa_id=lastEm,operacion_id=int(idOperacion),integrante_id=idIntegrante,tarea_id=tareaIntegrante['id']).values('tarea_id','can_terminada').aggregate(can_terminada=Sum('can_terminada'))
+        patinador       = Patinador.objects.filter(empresa_id=lastEm,id=tareasIntegrante['patinador_id']).distinct().values('integrante_id')
+        patinador       = Integrante.objects.filter(empresa_id=lastEm,id=patinador[0]['integrante_id']).values('nombres','apellidos')
+        patinador       = "{} {}".format(patinador[0]['nombres'],patinador[0]['apellidos'] ) 
+        if patinador in patinadores:pass
+        else:patinadores.append(patinador)
+        if tareaIntegrante['nom_tarea'] in dontrepeYorself:pass
+        else:           
+            dontrepeYorself.append(tareaIntegrante['nom_tarea'])
+            tareas.append({
+            'tarea':tareaIntegrante['nom_tarea'],
+            'cat_total_tarea':totalIntegrante['can_terminada'],
+        })       
+    if tareas==[]:pass
+    else:
+        if patinadores ==[]:pass 
+        else:tareas.append({'patinadores':patinadores})
+    return Response(tareas)
+  
+  
+@api_view(['GET'])
+def TareaListPatinador(request):
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+    
+    lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm=int(lastEm[0]['empresa_id'])
+    
+    
+   
+    tarea = Tarea.objects.all().filter(empresa_id=lastEm,estatus='A').order_by('-id')
+    serializer = TareaSerializer(tarea, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def integranteListPatinador(request):
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+  
+  
+  
+  
+    lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm=int(lastEm[0]['empresa_id'])  
+    
+    
+    
+    integrante = Integrante.objects.all().filter(empresa_id=lastEm,estatus='A').order_by('-id')
+    try:
+        serializer = IntegranteSerializer(integrante, many=True)
+        return Response(serializer.data)
+    except Exception as e:    
+        print(str(e),"no tienes patinadores activos")   
+        return Response("no tienes patinadores activos")
+
+
+
+
+
+
+
+
+@api_view(['GET'])  
+def patinadoresActProdPatinador(request):
+    if request.session.has_key('username'):
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)            
+    lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm=int(lastEm[0]['empresa_id'])  
+    try:        
+        patinadores     = Patinador.objects.all().filter(usuario=idUser,estatus='A',ctrlProduccion=1, empresa_id=int(lastEm))
+        serializer      = PatinadorSerializer(patinadores, many=True)        
+        return Response(serializer.data)
+    except Exception as e:    
+        print(str(e),"no tienes patinadores activos")   
+        return Response("no tienes patinadores activos")
+        
+        
+        
+     
+
+
+
+
+@api_view(['POST'])
+def createProduccionPatinador(request,):
+    #Prod = Models Produccion
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+        
+    integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
+    lastEm=int(integranteConten[0]['empresa_id'])
+    idPatinador   = Patinador.objects.filter(integrante_id=idUser.id).values('id')
+    idPatinador  = idPatinador[0]['id']
+    
+    
+    
+    canTerminada  = int(request.data['cantidadProdPatinador'])
+    
+    try: 
+        obj = Prod.objects.create(
+        usuario_id           = int(integranteConten[0]['usuario_id']),
+        patinador_id         = idPatinador,
+        
+        
+        
+        integrante_id        = int(request.data['OccionId_integrante_prodPatinador']),
+        empresa_id           = int(lastEm),
+        operacion_id         = int(request.data['idOperacionPatinador']),
+        talla_id             = int(request.data['OccionId_tallaPatinador']),
+        tarea_id             = int(request.data['OccionId_tareaPatinador']),
+        can_terminada        = canTerminada       
+        )
+        
+        
+        
+        
+        
+        obj = Prod.objects.latest('id')
+        btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteProduccionUnico({})'> </button>".format(obj.id)
+        obj = Prod.objects.all().filter(id=obj.id).update(delProduccion=btnDel)
+        data = {
+            'produccion': "Produccion guardado con exito!",
+            'estatus':True
+        }
+       
+        return Response(data)
+
+    except Exception as e:
+        print(str(e))
+        return Response("PRODUCCION no cargadA " +str(e) )
+   
+  
+
+
+
+
+
+
+
+
+
 
 
 class AcumuladoPatinador(LoginRequiredMixin,TemplateView):     
@@ -383,3 +533,24 @@ def casinoListPatinador(request):
     serializer = CasinoSerializer(casinos, many=True)
     return Response(serializer.data)
  
+ 
+ 
+ 
+@api_view(['GET'])  
+def ProduccionOPListPatinador(request):
+    if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username = username)
+    
+    lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm=int(lastEm[0]['empresa_id'])            
+    
+    produccion = Prod.objects.filter(empresa_id = lastEm,operacion_id=int(request.GET.get('idOp', None))).order_by('-id')
+    ProduccionSe = ProduccionSerializer(produccion, many=True)   
+    dump = json.dumps(ProduccionSe.data)   #dump serializer to json reponse 
+    
+ 
+    return HttpResponse(dump, content_type='application/json')
+    
+    
