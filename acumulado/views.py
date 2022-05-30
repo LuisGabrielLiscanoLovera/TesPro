@@ -90,7 +90,9 @@ def AcumuladoListValor(request):
                 idUser   = MyUser.objects.get(username = username)
     
     lastEm          = CambioEmpres.objects.filter(usuario_id = idUser.id).last()
-    acumuladoQsect  = ACUMULADO.objects.filter(empresa_id = lastEm.lastEm,estatus='A').order_by('-id')
+    #acumuladoQsect  = ACUMULADO.objects.filter(empresa_id = lastEm.lastEm,estatus='A').order_by('-id')
+    acumuladoQsect  = ACUMULADO.objects.filter(empresa_id = lastEm.lastEm).order_by('-id')
+    
     AcumuladoSe     = AcumuladoSerializer(acumuladoQsect, many=True)   
     dump            = json.dumps(AcumuladoSe.data)   #dump serializer to json reponse 
     
