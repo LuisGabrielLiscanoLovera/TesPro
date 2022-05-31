@@ -93,11 +93,9 @@ def operacionesListHistorial(request):
         if 'username' in request.session:
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
-
     lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()   
     despacho   = Operacion.objects.filter(empresa_id=lastEm.lastEm,estatus="I").order_by('-id')
-    serializer = OperacionSerializer(despacho, many=True)
-    
+    serializer = OperacionSerializer(despacho, many=True)    
     return Response(serializer.data)
 
 
@@ -106,29 +104,17 @@ class deleteAllDespacho(View):
         id_despacho = request.GET.get('id_despacho', None)
         canTerminada=0
         idOp=0
-        for despacho in Despacho.objects.filter(operacion_id=id_despacho).values('can_terminada','operacion_id'):
+        for despacho in Despacho.objects.filter(operacion_id=id_despacho).values('can_terminada','operacion_id','talla_id'):
             CT = int(despacho['can_terminada'])
             idOp = int(despacho['operacion_id'])
-            canTerminada+=CT
-        
-        OpTallaRestante = Operacion.objects.filter(id=idOp).update(
-            can_restante=F('can_restante') - canTerminada)
-        
-        
-        CanTallaOP      = CanTalla.objects.all().filter(operacion_id=idOp).update(res_talla= F('res_talla') * 0)
-
-        #Despacho.objects.filter(operacion_id=id_despacho).delete()
-        
+            CanTalla.objects.all().filter(operacion_id=idOp, talla_id=despacho['talla_id']).update(
+                res_talla=CanTalla.objects.all().filter(operacion_id=idOp, talla_id=despacho['talla_id']).values('can_talla'))
+            
+            canTerminada+=CT       
+        OpTallaRestante = Operacion.objects.filter(id=idOp).update(can_restante=F('can_restante') + canTerminada)       
+        Despacho.objects.filter(operacion_id=id_despacho).delete()
         data = {'deleted': True}
         return JsonResponse(data)
-
-
-
-
-
-
-
-
 
 
 
