@@ -246,7 +246,7 @@
         //r = parseInt("[[progressRest]]");
         return '<div class="row">' +
 
-            '<div class="col-md-10">' +
+            '<div class="col-md-12">' +
             '<table  class="table animated fadeIn "  id="items-table-Acumulado-' + row.id +
             '">' +
             '<thead class="thead-dark">' +
@@ -264,8 +264,7 @@
             '</tbody>' +
             '</table>' +
             '</div>' +
-            '<div class="">' + '<button value="" onclick="deleteAllAcumuladoValor(' + row.id + ')"  id="buttonEliminarAllacumulado" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>' +
-            '</div>' +
+
             '<script type="application/javascript">' + 'AcumuladoProdValor(' + row.id + ',' + row.usuario + ');' +
             '</' + 'script>' +
             '</div>';
@@ -336,27 +335,6 @@
                 $("#items-table-Acumulado-" + idAcumulado).DataTable().ajax.reload();
             }
         })
-    }
-
-
-
-
-
-
-
-
-    function deleteAllAcumuladoValor(id_acumulado) {
-        $.ajax({
-            url: '{% url "Acumulado_ajax_Alldelete" %}',
-            data: {
-                'id_acumulado': id_acumulado,
-            },
-            dataType: 'json',
-            success: function(data) {
-                window.location.reload();
-
-            }
-        });
     }
 </script>
 

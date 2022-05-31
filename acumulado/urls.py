@@ -23,8 +23,8 @@ urlpatterns = [
    path('dataAcumuladoInte-listValor/', AcumuladoDataIntegranteValor, name="dataAcumuladoInte-listValor"),
    path('eliminar_acumulado/<str:id>/', deleteAcumulado, name="delete-produccion"),
    path('cerrarAcumulado/', cerrarAcumulado, name='cerrarAcumulado'),
-   path('/delete/all/', deleteAllAcumulado.as_view(), name='Acumulado_ajax_Alldelete'),
-
+   #path('delete/all/', deleteAllAcumulado.as_view(), name='Acumulado_ajax_Alldelete'),
+   path('deleteAllAcumuldo/', deleteAllAcumulado.as_view(), name='deleteAllAcumuldo'),
    #historial Acumulado-historial
    path('acumuladoHistorial', AcumuladoHistorial.as_view(), name='acumuladoHistorial'),
    path('prodAcumulado-listHistorial/', AcumuladoListHistorial, name="prodAcumulado-listHistorial"),

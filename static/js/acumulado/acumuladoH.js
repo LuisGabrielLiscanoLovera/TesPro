@@ -215,13 +215,28 @@ function DetailFormatterButAccionAcumuladoHistorial(index, row) {
         '<button class="btn btn-outline-success " type="submit" onclick="abrirAcumulado(' + row.id + ')">Activar</button>' +
         '</div>' +
 
-
+        '<div class="">' + '<button value="" onclick="deleteAllAcumuladohistorial(' + row.id + ')"  id="buttonEliminarAllacumulado" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>' +
+        '</div>' +
 
         // '<div class="">' + '<button value="" onclick="deleteAllAcumulado(' + row.id + ')"  id="buttonEliminarAllacumulado" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>' +
         // '</div>' +
         '<script type="application/javascript">' + 'AcumuladoProdHistorial(' + row.id + ',' + row.usuario + ');' +
         '</' + 'script>' +
         '</div>';
+}
+
+function deleteAllAcumuladohistorial(id_acumulado) {
+    $.ajax({
+        url: 'deleteAllAcumuldo/',
+        data: {
+            'id_acumulado': id_acumulado,
+        },
+        dataType: 'json',
+        success: function(data) {
+            window.location.reload();
+
+        }
+    });
 }
 
 function AcumuladoProdHistorial(idAcumulado, idUsuario) {
