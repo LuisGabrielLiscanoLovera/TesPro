@@ -683,38 +683,6 @@
                                     <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">zoom_in</i> Seguimiento de OP </a>
                             </div>
 
-                            <div class="mdc-list-item mdc-drawer-item">
-                                <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-contabilidad">
-                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i> Contador
-                                    <i class="mdc-drawer-arrow material-icons">chevron_right</i>
-                                </a>
-                                <div class="mdc-expansion-panel" id="ui-sub-menu-contabilidad">
-                                    <nav class="mdc-list mdc-drawer-submenu">
-                                        <div class="mdc-list-item mdc-drawer-item">
-                                            <a class="mdc-drawer-link" href="{% url 'ValorAcumulado'%}" data-toggle="modazxl" data-target="destajo">
-V- Acumulado
-                                        </a>
-                                        </div>
-
-
-                                    </nav>
-                                    <nav class="mdc-list mdc-drawer-submenu">
-                                        <div class="mdc-list-item mdc-drawer-item">
-                                            <a class="text-white" href="{% url 'ValorProduccion'%}" data-toggle="modazxl" data-target="destajo">
-                                            &nbsp;&nbsp;&nbsp;V- Producción
-                                        </a>
-                                        </div>
-
-
-                                    </nav>
-                                </div>
-
-
-
-
-
-                            </div>
-
 
 
                             <div class="mdc-list-item mdc-drawer-item">
@@ -752,6 +720,55 @@ V- Acumulado
                             </div>
 
 
+
+
+
+
+
+
+
+
+
+                            <div class="mdc-list-item mdc-drawer-item">
+                                <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-contabilidad">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i> Contador
+                                    <i class="mdc-drawer-arrow material-icons">chevron_right</i>
+                                </a>
+                                <div class="mdc-expansion-panel" id="ui-sub-menu-contabilidad">
+                                    <nav class="mdc-list mdc-drawer-submenu">
+                                        <div class="mdc-list-item mdc-drawer-item">
+                                            <a class="mdc-drawer-link" href="{% url 'ValorAcumulado'%}" data-toggle="modazxl" data-target="destajo">
+V- Acumulado
+                                        </a>
+                                        </div>
+
+
+                                    </nav>
+                                    <nav class="mdc-list mdc-drawer-submenu">
+                                        <div class="mdc-list-item mdc-drawer-item">
+                                            <a class="text-white" href="{% url 'ValorProduccion'%}" data-toggle="modazxl" data-target="destajo">
+                                            &nbsp;&nbsp;&nbsp;V- Producción
+                                        </a>
+                                        </div>
+
+
+                                    </nav>
+                                </div>
+
+
+
+
+
+                            </div>
+
+
+
+
+
+
+
+
+
                             <div class="mdc-list-item mdc-drawer-item">
                                 <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu-casino">
                                     <i class="material-icons mdc-list-item__start-detai mdc-drawer-item-ico" aria-hidden="true">account_balance</i>&nbsp;&nbsp;Casino
@@ -780,6 +797,55 @@ V- Acumulado
 
                                 </div>
                             </div>
+
+
+
+
+
+
+
+
+
+                            <div class="mdc-list-item mdc-drawer-item">
+                                <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-historial">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i> Historial
+                                    <i class="mdc-drawer-arrow material-icons">chevron_right</i>
+                                </a>
+                                <div class="mdc-expansion-panel" id="ui-sub-historial">
+                                    <nav class="mdc-list mdc-drawer-submenu">
+                                        <div class="mdc-list-item mdc-drawer-item">
+                                            <a class="mdc-drawer-link" href="{% url 'acumuladoHistorial' %}" data-toggle="modazxl" data-target="acumulado">
+						   H-Acumulado
+						</a>
+                                        </div>
+
+                                        <nav class="mdc-list mdc-drawer-submenu">
+                                            <div class="mdc-list-item mdc-drawer-item">
+                                                <a class="mdc-drawer-link" href="{% url 'produccion'%}" data-toggle="modazxl" data-target="act_tarea">
+							 H-Producción
+						  </a>
+                                            </div>
+
+
+
+
+
+                                            <nav class="mdc-list mdc-drawer-submenu">
+                                                <div class="mdc-list-item mdc-drawer-item">
+                                                    <a class="mdc-drawer-link" href="{% url 'despacho'%}" data-toggle="modazxl" data-target="act">
+							 H-Depacho
+							</a>
+                                                </div>
+                                            </nav>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
 
 
                             </nav>

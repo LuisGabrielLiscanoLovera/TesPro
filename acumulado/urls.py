@@ -2,7 +2,7 @@ import imp
 from django.urls import path
 from rest_framework import routers
 
-from acumulado.views import Acumulado,cerrarAcumulado,AcumuladoListValor,AcumuladoList,AcumuladoDataIntegranteValor,ValorAcumulado,deleteAllAcumulado,createAcumulado,createProAcumulado,AcumuladoDataIntegrante,AcumuladoListProc,deleteAcumulado
+from acumulado.views import Acumulado,cerrarAcumulado,AcumuladoHistorial,AcumuladoListValor,AcumuladoList,AcumuladoDataIntegranteValor,ValorAcumulado,deleteAllAcumulado,createAcumulado,createProAcumulado,AcumuladoDataIntegrante,AcumuladoListProc,deleteAcumulado
 
 router = routers.DefaultRouter()
 urlpatterns = [
@@ -24,7 +24,7 @@ urlpatterns = [
    path('cerrarAcumulado/', cerrarAcumulado, name='cerrarAcumulado'),
    path('/delete/all/', deleteAllAcumulado.as_view(), name='Acumulado_ajax_Alldelete'),
 
-
-
+   #historial Acumulado-historial
+   path('Acumulado-historial', AcumuladoHistorial.as_view(), name='acumuladoHistorial'),
 
 ]
