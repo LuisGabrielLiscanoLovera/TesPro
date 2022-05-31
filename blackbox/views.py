@@ -53,22 +53,27 @@ def operacionesListPatinadores(request):
     return Response(serializer.data)
   
 
-class DespachoPatinador(LoginRequiredMixin,TemplateView):
-     
+class DespachoPatinador(LoginRequiredMixin,TemplateView):     
      template_name = "pages/despachoPerfilPatinador.html"
      success_url = '/'     
      def get_context_data(self, **kwargs):
           context = super(DespachoPatinador, self).get_context_data(**kwargs)
           s = SessionStore()
           s['last_login'] = self.request.user.pk
-          s.create()
-          lastEm=Integrante.objects.filter(id=s['last_login']).values('empresa_id')
-          lastEm=int(lastEm[0]['empresa_id'])
+          s.create()          
           
-          AllEmpresa      = RelacionEmpresa.objects.filter(usuario_id=s['last_login'])          
+          integranteConten = Integrante.objects.filter(id=s['last_login']).values('empresa_id', 'usuario_id')
+          lastEm=int(integranteConten[0]['empresa_id'])   
+          
+          AllEmpresa = RelacionEmpresa.objects.filter(
+              usuario_id=int(integranteConten[0]['usuario_id']))
          # Tallas          = Talla.objects.filter(usuario=s['last_login'],empresa_id=lastEm).values('id','nom_talla','num_talla')
-          EmpresaActual   = Empresa.objects.filter(usuario=s['last_login'],id=int(lastEm))
-          Operaciones     = Operacion.objects.filter(usuario=s['last_login'],empresa_id=lastEm,estatus='A').values('nom_operacion','id')
+          EmpresaActual = Empresa.objects.filter(
+              usuario=int(integranteConten[0]['usuario_id']), id=int(lastEm))
+          
+          Operaciones = Operacion.objects.filter(usuario=int(integranteConten[0]['usuario_id']), id=int(
+              lastEm), empresa_id=lastEm, estatus='A').values('nom_operacion', 'id')
+          
           context = super(DespachoPatinador, self).get_context_data(**kwargs)
           context['login_user_id']    = s['last_login']   # aqui se obtiene el user id
           context['lastIdEmpresa']    = int(lastEm) # ids empresas
@@ -78,8 +83,9 @@ class DespachoPatinador(LoginRequiredMixin,TemplateView):
           context['nomEmpresaU']      = EmpresaActual      # nombre de la empresa actual
           context['last_login']       = s['last_login']    # ultimo inicio de seccion
           try:
-              patinadores     = Patinador.objects.all().filter(usuario=s['last_login'],empresa_id=lastEm).values('integrante_id')
-              allPatinadores  = Integrante.objects.all().filter(usuario=s['last_login'],empresa_id=lastEm,id=int(patinadores[0].get('integrante_id'))).values('nombres','apellidos','id')
+              patinadores     = Patinador.objects.all().filter(usuario=int(integranteConten[0]['usuario_id']), id=int(lastEm),empresa_id=lastEm).values('integrante_id')
+              allPatinadores = Integrante.objects.all().filter(usuario=int(integranteConten[0]['usuario_id']), empresa_id=lastEm, id=int(
+                  patinadores[0].get('integrante_id'))).values('nombres', 'apellidos', 'id')
               context['allPatinador']     = allPatinadores     #todos los patinadores de la empresa
               return context
           finally:
@@ -169,11 +175,7 @@ def TallaOpCanIncosistentePatinadores(request):
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
             
-    
-    
-    
-    
-    
+       
     lastEm        = CambioEmpres.objects.filter(usuario_id=idUser.id).last() 
     idOP          = request.GET.get('idOperacion', None) 
     CanOperacion  = Operacion.objects.filter(id=int(idOP)).values('can_total')
@@ -196,45 +198,28 @@ def TallaOpCanIncosistentePatinadores(request):
     return JsonResponse(data)
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+  
  
  
 class ProduccionPatinador(LoginRequiredMixin,TemplateView):
      template_name = "pages/produccionPerfilPatinador.html"     
-     success_url = '/'
-     
+     success_url = '/'     
      def get_context_data(self, **kwargs):
           context = super(ProduccionPatinador, self).get_context_data(**kwargs)
-
           s = SessionStore()
           s['last_login'] = self.request.user.pk
           s.create()
           
-          lastEm=Integrante.objects.filter(id=s['last_login']).values('empresa_id')
-          lastEm=int(lastEm[0]['empresa_id'])
+          integranteConten = Integrante.objects.filter(id=s['last_login']).values('empresa_id', 'usuario_id')
+          lastEm=int(integranteConten[0]['empresa_id'])   
           
           
-          
-          AllEmpresa      = RelacionEmpresa.objects.filter(usuario_id=s['last_login'])       
+          AllEmpresa = RelacionEmpresa.objects.filter(
+              usuario_id=int(integranteConten[0]['usuario_id'])) 
           #lastEm          = CambioEmpres.objects.filter(usuario_id=s['last_login']).last()
           #Tallas          = Talla.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm)).values('id','nom_talla','num_talla')
-          EmpresaActual   = Empresa.objects.filter(usuario=s['last_login'],id=int(lastEm))
-          Operaciones     = Operacion.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm),estatus='A').values('nom_operacion','id')
+          EmpresaActual   = Empresa.objects.filter(usuario=int(integranteConten[0]['usuario_id']),id=int(lastEm))
+          Operaciones     = Operacion.objects.filter(usuario=int(integranteConten[0]['usuario_id']),empresa_id=int(lastEm),estatus='A').values('nom_operacion','id')
           context = super(ProduccionPatinador, self).get_context_data(**kwargs)
           context['login_user_id']    = s['last_login']   # aqui se obtiene el user id
           context['lastIdEmpresa']    = int(lastEm) # ids empresas
@@ -245,8 +230,8 @@ class ProduccionPatinador(LoginRequiredMixin,TemplateView):
           context['last_login']       = s['last_login']    # ultimo inicio de seccion
 
           try:
-            patinadores     = Patinador.objects.all().filter(usuario=s['last_login'],empresa_id=int(lastEm)).values('integrante_id')
-            allPatinadores  = Integrante.objects.all().filter(usuario=s['last_login'],empresa_id=int(lastEm),id=int(patinadores[0].get('integrante_id'))).values('nombres','apellidos','id')
+            patinadores     = Patinador.objects.all().filter(usuario=int(integranteConten[0]['usuario_id']),empresa_id=int(lastEm)).values('integrante_id')
+            allPatinadores  = Integrante.objects.all().filter(usuario=int(integranteConten[0]['usuario_id']),empresa_id=int(lastEm),id=int(patinadores[0].get('integrante_id'))).values('nombres','apellidos','id')
             context['allPatinador']     = allPatinadores     #todos los patinadores de la empresa
             return context
           finally:
@@ -443,18 +428,22 @@ class AcumuladoPatinador(LoginRequiredMixin,TemplateView):
           s = SessionStore()
           s['last_login'] = self.request.user.pk
           s.create()        
-          lastEm=Integrante.objects.filter(id=s['last_login']).values('empresa_id')
-          lastEm=int(lastEm[0]['empresa_id'])
-          AllEmpresa      = RelacionEmpresa.objects.filter(usuario_id=s['last_login'])       
-          EmpresaActual   = Empresa.objects.filter(usuario=s['last_login'],id=int(lastEm))
+          
+          integranteConten = Integrante.objects.filter(id=s['last_login']).values('empresa_id', 'usuario_id')
+          lastEm=int(integranteConten[0]['empresa_id'])   
+          
+          AllEmpresa = RelacionEmpresa.objects.filter(
+              usuario_id=int(integranteConten[0]['usuario_id'])) 
+          
+          EmpresaActual   = Empresa.objects.filter(usuario=int(integranteConten[0]['empresa_id']),id=int(lastEm))
           context = super(AcumuladoPatinador, self).get_context_data(**kwargs)
           context['lastIdEmpresa']    = int(lastEm) #ids empresas
           context['nomEmpresa']       = AllEmpresa         #nombre de todas las empresa
           context['nomEmpresaU']      = EmpresaActual      # nombre de la empresa actual
           context['last_login']       = s['last_login']    # ultimo inicio de seccion   
           try:
-            patinadores     = Patinador.objects.all().filter(usuario=s['last_login'],empresa_id=int(lastEm)).values('integrante_id')
-            allPatinadores  = Integrante.objects.all().filter(usuario=s['last_login'],empresa_id=int(lastEm),id=int(patinadores[0].get('integrante_id'))).values('nombres','apellidos','id')
+            patinadores     = Patinador.objects.all().filter(usuario=int(integranteConten[0]['empresa_id']),empresa_id=int(lastEm)).values('integrante_id')
+            allPatinadores  = Integrante.objects.all().filter(usuario=int(integranteConten[0]['empresa_id']),empresa_id=int(lastEm),id=int(patinadores[0].get('integrante_id'))).values('nombres','apellidos','id')
             context['allPatinador']     = allPatinadores     #todos los patinadores de la empresa
             return context          
           finally:
@@ -618,14 +607,19 @@ class CasinoHomePatinador(LoginRequiredMixin,TemplateView):
           s = SessionStore()
           s['last_login'] = self.request.user.pk
           s.create()
-          AllEmpresa      = RelacionEmpresa.objects.filter(usuario_id=s['last_login'])       
           
-          lastEm=Integrante.objects.filter(id=s['last_login']).values('empresa_id')
-          lastEm=int(lastEm[0]['empresa_id'])
           
-          Tallas          = Talla.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm)).values('id','nom_talla','num_talla')
-          EmpresaActual   = Empresa.objects.filter(usuario=s['last_login'],id=int(lastEm))
-          Operaciones     = Operacion.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm),estatus='A').values('nom_operacion','id')
+          integranteConten=Integrante.objects.filter(id=s['last_login']).values('empresa_id','usuario_id')
+          AllEmpresa = RelacionEmpresa.objects.filter(usuario_id=(integranteConten[0]['usuario_id']))
+
+          #lastEm=Integrante.objects.filter(id=s['last_login']).values('empresa_id')
+          lastEm = int(integranteConten[0]['empresa_id'])
+          
+          Tallas          = Talla.objects.filter(usuario=int(integranteConten[0]['usuario_id']),empresa_id=int(lastEm)).values('id','nom_talla','num_talla')
+          EmpresaActual   = Empresa.objects.filter(usuario=int(integranteConten[0]['usuario_id']),id=int(lastEm))
+          
+
+          Operaciones     = Operacion.objects.filter(usuario=int(integranteConten[0]['usuario_id']),empresa_id=int(lastEm),estatus='A').values('nom_operacion','id')
           context = super(CasinoHomePatinador, self).get_context_data(**kwargs)
           context['login_user_id']    = s['last_login']   # aqui se obtiene el user id
           context['lastIdEmpresa']    = int(lastEm) #ids empresas
@@ -635,8 +629,9 @@ class CasinoHomePatinador(LoginRequiredMixin,TemplateView):
           context['nomEmpresaU']      = EmpresaActual      # nombre de la empresa actual
           context['last_login']       = s['last_login']    # ultimo inicio de seccion   
           try:
-            patinadores     = Patinador.objects.all().filter(usuario=s['last_login'],empresa_id=int(lastEm)).values('integrante_id')
-            allPatinadores  = Integrante.objects.all().filter(usuario=s['last_login'],empresa_id=int(lastEm),id=int(patinadores[0].get('integrante_id'))).values('nombres','apellidos','id')
+            patinadores     = Patinador.objects.all().filter(usuario=int(integranteConten[0]['usuario_id']),empresa_id=int(lastEm)).values('integrante_id')
+            allPatinadores = Integrante.objects.all().filter(usuario=int(integranteConten[0]['usuario_id']), empresa_id=int(
+                lastEm), id=int(patinadores[0].get('integrante_id'))).values('nombres', 'apellidos', 'id')
             context['allPatinador']     = allPatinadores     #todos los patinadores de la empresa
             return context
           finally:

@@ -30,27 +30,22 @@ def signin(request):
             user = authenticate(username=username, password=password)
             if user:                              
                 loginPatinador  = MyUser.objects.filter(username=username).values('patinador')
-                if (loginPatinador[0]['patinador']):                
-                    
+                if (loginPatinador[0]['patinador']):       
                     
                     if (perfilPatinador =='1'):                     
                         login(request, user)
-                        return redirect('despachoPatinador')#50% 
+                        return redirect('despachoPatinador')#80% 
                     if(perfilPatinador=='2'):
                         login(request, user)
-                        return redirect('produccionPatinador')#50%
+                        return redirect('produccionPatinador')#80%
                     if(perfilPatinador=='3'):                        
                         login(request, user)
-                        return redirect('acumuladoPatinador')#50%
+                        return redirect('acumuladoPatinador')#80%
                     if(perfilPatinador=='4'):
                         login(request, user)
-                        return redirect('casinoPatinador')#50%
+                        return redirect('casinoPatinador')#80%
                     
-                    else:return redirect('signin')       
-                
-                
-                
-                
+                    else:return redirect('signin')                
                 else:
                     
                     login(request, user)  
