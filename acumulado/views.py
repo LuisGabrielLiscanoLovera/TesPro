@@ -87,7 +87,19 @@ class AcumuladoHistorial(LoginRequiredMixin,TemplateView):
             return context
        
 
-
+@api_view(['GET'])  
+def AcumuladoListHistorial(request):
+    if request.session.has_key('username'):
+            if 'username' in request.session:
+                username = request.session['username']
+                idUser   = MyUser.objects.get(username = username)
+    
+    lastEm          = CambioEmpres.objects.filter(usuario_id = idUser.id).last()
+    acumuladoQsect  = ACUMULADO.objects.filter(empresa_id = lastEm.lastEm,estatus='I').order_by('-id')
+    AcumuladoSe     = AcumuladoSerializer(acumuladoQsect, many=True)   
+    dump            = json.dumps(AcumuladoSe.data)   #dump serializer to json reponse 
+    
+    return HttpResponse(dump, content_type='application/json')
 
 
 

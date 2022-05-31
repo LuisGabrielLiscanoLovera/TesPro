@@ -17,7 +17,7 @@ class Acumulado(models.Model):
     ESTATUS       = (('A','Activo'),('I','Inactivo'))
     estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
     btnAcci       = models.CharField(max_length=300,default=btnAccion , null=True)
-    delAcumulado  = models.CharField(max_length=150, default='' , null=True)
+    delAcumulado  = models.CharField(max_length=150, default='' ,blank=True, null=True)
     btnInfo       = models.CharField(max_length=300,default=btnInfo , null=True)
     created_at    = models.DateTimeField(auto_now_add=True)
     updated_at    = models.DateTimeField(auto_now=True)
