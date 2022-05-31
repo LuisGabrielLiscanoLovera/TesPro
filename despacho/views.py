@@ -82,10 +82,25 @@ def operacionesList(request):
             idUser   = MyUser.objects.get(username=username)
 
     lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()   
-    despacho   = Operacion.objects.filter(empresa_id=lastEm.lastEm).order_by('-id')
+    despacho   = Operacion.objects.filter(empresa_id=lastEm.lastEm,estatus='A').order_by('-id')
     serializer = OperacionSerializer(despacho, many=True)
     
     return Response(serializer.data)
+
+@api_view(['GET'])  
+def operacionesListHistorial(request):     
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+
+    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()   
+    despacho   = Operacion.objects.filter(empresa_id=lastEm.lastEm,estatus="I").order_by('-id')
+    serializer = OperacionSerializer(despacho, many=True)
+    
+    return Response(serializer.data)
+
+
 
 
 

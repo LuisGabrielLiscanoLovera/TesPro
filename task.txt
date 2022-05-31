@@ -11,3 +11,5 @@
 #limpiar unica casilla en cantdad input 
 #modificar referencia color talla con referente a campos de esttatus
 #crear casino 
+
+#esta produccion te esta costando
