@@ -101,6 +101,15 @@ def operacionesListHistorial(request):
     return Response(serializer.data)
 
 
+class deleteAllDespacho(View):
+    def  get(self, request):
+        id_despacho = request.GET.get('id_despacho', None)
+        Despacho.objects.filter(operacion_id=id_despacho).delete()
+        data = {'deleted': True}
+        return JsonResponse(data)
+
+
+
 
 
 

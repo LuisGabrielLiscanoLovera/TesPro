@@ -1,7 +1,7 @@
 import imp
 from django.urls import path
 
-from .views import despacho_list,Despachos,DespachosHistorial,operacionesListHistorial,deleteDespacho,operacionesList,patinadoresAct,createDespacho,ItemListView
+from .views import despacho_list,Despachos,DespachosHistorial,operacionesListHistorial,deleteDespacho,operacionesList,patinadoresAct,createDespacho,ItemListView,deleteAllDespacho
 from rest_framework import routers
 router = routers.DefaultRouter()
 urlpatterns = [
@@ -21,6 +21,7 @@ urlpatterns = [
     #historial
     path('despachoHistorial', DespachosHistorial.as_view(), name='despachoHistorial'),
     path('lista_operacionesHistorial/', operacionesListHistorial, name="operaciones-listHistorial"),
+    path('deleteAllDespachoHistorial/', deleteAllDespacho.as_view(), name='deleteAllDespacho'),
 
 ]
 

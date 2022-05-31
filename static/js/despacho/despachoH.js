@@ -32,8 +32,9 @@ function DetailFormatterButAccionDespachoHistorial(index, row) {
         '<center><div class="col-md-6 col-md-offset-1 align-self-center">' +
         //'<button class="btn btn-sm btn-block btn-outline-danger  icofont-ui-remove" type="submit" onclick="deleteDespacho(' + row.id + ')">' +
 
-        '<button class="btn btn-outline-success " type="submit" onclick="abrirOp(' + row.id + ')"> <h5>Activar</h5></button>' +
-
+        '<button class="btn btn-outline-success " type="submit" onclick="abrirOp(' + row.id + ')"> <h5>Activar op</h5></button>' +
+        '<div class="">' + '<button value="" onclick="deleteAllDespachoHistorial(' + row.id + ')"  id="buttonEliminarAllacumulado" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>' +
+        '</div>' +
         '</div></center>' +
         '<script type="application/javascript">' +
         '$(document).ready(function() {' +
@@ -89,6 +90,29 @@ function DetailFormatterButAccionDespachoHistorial(index, row) {
         '</div>';
 
 }
+
+
+
+
+
+
+
+function deleteAllDespachoHistorial(id_despacho) {
+    $.ajax({
+        url: 'deleteAllDespachoHistorial/',
+
+        data: {
+            'id_despacho': id_despacho,
+        },
+        dataType: 'json',
+        success: function(data) {
+            window.location.reload();
+
+        }
+    });
+}
+
+
 
 
 function abrirOp(id_OP) {
