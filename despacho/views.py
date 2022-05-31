@@ -115,6 +115,8 @@ class deleteAllDespacho(View):
             can_restante=F('can_restante') - canTerminada)
         
         
+        CanTallaOP      = CanTalla.objects.all().filter(operacion_id=idOp).update(res_talla= F('res_talla') * 0)
+
         #Despacho.objects.filter(operacion_id=id_despacho).delete()
         
         data = {'deleted': True}
