@@ -90,7 +90,7 @@ function DetailFormatterButAccionProduccion(index, row) {
     //r = parseInt("[[progressRest]]");
     return '<div class="row">' +
 
-        '<div style="overflow-x:auto;" class="col-md-10">' +
+        '<div style="overflow-x:auto;" class="col-md-12">' +
         '<table  class="table animated fadeIn "  id="items-table-produccion-' + row.id +
         '">' +
         '<thead class="thead-dark">' +
