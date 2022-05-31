@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-table.js' %}"></script>
+<script src="{% static 'js/despacho/despachoH.js' %}"></script>
+
+<!-- <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
+<link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css"> -->
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+ -->
+
+
+
+
+<div class="modalBase">
+    <center>
+        <h1 class="title">Despacho Historial</h1>
+        <hr>
+    </center>
+
+
+    <table id="despachoTable" data-id-field="id" class="" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-show-columns="true" data-search="true" data-show-fullscreen="true" data-pagination="true"
+        data-show-refresh="true" data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-url='lista_operaciones/'>
+        <thead class="thead-dark ">
+            <tr>
+                <!--   <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoDespachoHistorial" class="text-center">Info
+                </th> -->
+                {% comment %}
+                <th data-field="id" class="text-center ">id</th> {% endcomment %}
+                <th data-field="nom_operacion" class="text-center ">OP</th>
+                <th data-field="nomReferencia" class="text-center">Referencia</th>
+                <th data-field="estatus" class="text-center">Estatus</th>
+                <th data-field="nomColor" class="text-center">Color</th>
+                <th data-field="can_total" class="text-center">Cant. Faltante</th>
+
+                <th data-field="can_total" class="text-center">Cant. Total</th>
+                <th data-field="created_at" class="text-center">Fecha creada</th>
+                <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionDespachoHistorial" class="text-center">
+                    Accion</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+{% endblock %}
+</div>
+</div>
+</div>
