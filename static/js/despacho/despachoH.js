@@ -32,7 +32,7 @@ function DetailFormatterButAccionDespachoHistorial(index, row) {
         '<center><div class="col-md-6 col-md-offset-1 align-self-center">' +
         //'<button class="btn btn-sm btn-block btn-outline-danger  icofont-ui-remove" type="submit" onclick="deleteDespacho(' + row.id + ')">' +
 
-        '<button class="btn btn-outline-success " type="submit" onclick="carrarOp(' + row.id + ')"> <h5>Cerrar op</h5></button>' +
+        '<button class="btn btn-outline-success " type="submit" onclick="abrirOp(' + row.id + ')"> <h5>Activar</h5></button>' +
 
         '</div></center>' +
         '<script type="application/javascript">' +
@@ -91,9 +91,9 @@ function DetailFormatterButAccionDespachoHistorial(index, row) {
 }
 
 
-function carrarOp(id_OP) {
+function abrirOp(id_OP) {
 
-    axios.get('/operacion/cerrarOP/?idOP=' + id_OP)
+    axios.get('/operacion/abrirOP/?idOP=' + id_OP)
         .then((resp) => {
 
             window.location.reload();

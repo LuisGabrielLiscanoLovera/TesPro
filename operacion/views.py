@@ -169,3 +169,25 @@ def cerrarOP(request):
     except Exception as e:
         data={"casino":False,"msj":"operacion No cerrardo","error":str(e)}
         return Response(data)
+
+
+
+
+@api_view(['GET'])
+def abrirOP(request):
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+        
+    lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
+
+    try:
+        idOP=int(request.GET['idOP'])   
+        Operacion.objects.filter(id=idOP,empresa_id=lastEm.lastEm).update(estatus="A", fecha_cierre=( Operacion.objects.filter(id=idOP).values('updated_at')))
+        Prod.objects.filter(operacion_id=idOP,empresa_id=lastEm.lastEm).update(estatus="A", fecha_cierre=( Operacion.objects.filter(id=idOP).values('updated_at')))
+        data={"casino":True,"msj":"operacion abierta"}
+        return Response(data)
+    except Exception as e:
+        data={"casino":False,"msj":"operacion No abierta","error":str(e)}
+        return Response(data)

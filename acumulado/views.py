@@ -320,11 +320,28 @@ def cerrarAcumulado(request):
         data={"casino":True,"msj":"Acumulado cerrardo"}        
         return Response(data)
     except Exception as e:
-        
-
         data={"casino":False,"msj":"Acumulado No cerrardo","error":str(e)}
         print(data)
         return Response(data)
+
+@api_view(['GET'])
+def abrirAcumulado(request):
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)        
+    lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
+    idAcumulado=int(request.GET['idAcumuladoHistorial'])    
+    try:
+        ACUMULADO.objects.filter(id=idAcumulado,empresa_id=lastEm.lastEm).update(estatus="A", fecha_cierre=( ACUMULADO.objects.filter(id=idAcumulado).values('updated_at')))
+        ProAcu.objects.filter(casino_id=idAcumulado,empresa_id=lastEm.lastEm).update(estatus="A", fecha_cierre=( ACUMULADO.objects.filter(id=idAcumulado).values('updated_at')))
+        data={"casino":True,"msj":"Acumulado abierto"}        
+        return Response(data)
+    except Exception as e:
+        data={"casino":False,"msj":"Acumulado No abierto","error":str(e)}
+        print(data)
+        return Response(data)
+
 
 
 

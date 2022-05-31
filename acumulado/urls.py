@@ -2,7 +2,7 @@ import imp
 from django.urls import path
 from rest_framework import routers
 
-from acumulado.views import Acumulado,cerrarAcumulado,AcumuladoHistorial,AcumuladoListHistorial,AcumuladoListValor,AcumuladoList,AcumuladoDataIntegranteValor,ValorAcumulado,deleteAllAcumulado,createAcumulado,createProAcumulado,AcumuladoDataIntegrante,AcumuladoListProc,deleteAcumulado
+from acumulado.views import Acumulado,cerrarAcumulado,abrirAcumulado,AcumuladoHistorial,AcumuladoListHistorial,AcumuladoListValor,AcumuladoList,AcumuladoDataIntegranteValor,ValorAcumulado,deleteAllAcumulado,createAcumulado,createProAcumulado,AcumuladoDataIntegrante,AcumuladoListProc,deleteAcumulado
 
 router = routers.DefaultRouter()
 urlpatterns = [
@@ -28,5 +28,6 @@ urlpatterns = [
    #historial Acumulado-historial
    path('acumuladoHistorial', AcumuladoHistorial.as_view(), name='acumuladoHistorial'),
    path('prodAcumulado-listHistorial/', AcumuladoListHistorial, name="prodAcumulado-listHistorial"),
+   path('abrirAcumulado/', abrirAcumulado, name='abrirAcumulado'),
 
 ]

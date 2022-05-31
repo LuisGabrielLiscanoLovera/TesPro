@@ -191,6 +191,7 @@ function DetailFormatterButAccionAcumuladoHistorial(index, row) {
     return '<div class="row">' +
 
         '<div class="col-md-10">' +
+
         '<table  class="table animated fadeIn "  id="items-table-Acumulado-' + row.id +
         '">' +
         '<thead class="thead-dark">' +
@@ -209,16 +210,17 @@ function DetailFormatterButAccionAcumuladoHistorial(index, row) {
         '</tbody>' +
         '</table>' +
 
-        //'</div>' +
+        '</div>' +
+        '<div class="">' +
+        '<button class="btn btn-outline-success " type="submit" onclick="abrirAcumulado(' + row.id + ')">Activar</button>' +
+        '</div>' +
+
+
+
         // '<div class="">' + '<button value="" onclick="deleteAllAcumulado(' + row.id + ')"  id="buttonEliminarAllacumulado" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>' +
         // '</div>' +
         '<script type="application/javascript">' + 'AcumuladoProdHistorial(' + row.id + ',' + row.usuario + ');' +
         '</' + 'script>' +
-        '</div>' +
-        '<div class="">' +
-
-        '<button class="btn btn-outline-success " type="submit" onclick="carrarAcumulado(' + row.id + ')">Cerrar Acu</button>' +
-
         '</div>';
 }
 
@@ -279,11 +281,11 @@ function deleteAcumuladoUnico(id_acumulado) {
 
 
 
-function carrarAcumulado(id_acumulado) {
+function abrirAcumulado(id_acumulado) {
 
-    axios.get('/acumulado/cerrarAcumulado/', {
+    axios.get('/acumulado/abrirAcumulado/', {
             params: {
-                idAcumulado: id_acumulado,
+                idAcumuladoHistorial: id_acumulado,
             }
         })
         .then((resp) => {

@@ -1,5 +1,5 @@
 from django.urls import path
-from operacion.views import CreateOperacion,DeleteOperacion,UpdateOperacion,operacionList,cerrarOP
+from operacion.views import CreateOperacion,abrirOP,DeleteOperacion,UpdateOperacion,operacionList,cerrarOP
 
 urlpatterns = [
     path('operacion-list/', operacionList, name="operacion-list"),
@@ -10,6 +10,6 @@ urlpatterns = [
     
     path('cerrarOP/', cerrarOP, name='cerrarOP'),
     
-
+    path('abrirOP/', abrirOP, name='abrirOP'),
 
 ]
