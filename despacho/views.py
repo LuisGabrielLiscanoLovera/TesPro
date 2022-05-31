@@ -104,7 +104,16 @@ def operacionesListHistorial(request):
 class deleteAllDespacho(View):
     def  get(self, request):
         id_despacho = request.GET.get('id_despacho', None)
+        
+        
+        
+           
+        CanTallaOP      = CanTalla.objects.all().filter(operacion_id=int(request.data['id_OP']),talla_id=int(request.data['selectIdTalla'])).update(res_talla= F('res_talla') - canTerminada)
+        OpTallaRestante = Operacion.objects.all().filter(id=int(request.data['id_OP'])).update(can_restante= F('can_restante') - canTerminada)
+        
+        
         Despacho.objects.filter(operacion_id=id_despacho).delete()
+        
         data = {'deleted': True}
         return JsonResponse(data)
 
@@ -228,8 +237,13 @@ def createDespacho(request,):
         btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteDespachoUnico({})'> </button>".format(obj.id)
         obj = Despacho.objects.all().filter(id=obj.id).update(btnDelDespacho=btnDel)
         data = {'despacho': True}
+        
+        
         CanTallaOP      = CanTalla.objects.all().filter(operacion_id=int(request.data['id_OP']),talla_id=int(request.data['selectIdTalla'])).update(res_talla= F('res_talla') - canTerminada)
         OpTallaRestante = Operacion.objects.all().filter(id=int(request.data['id_OP'])).update(can_restante= F('can_restante') - canTerminada)
+        
+        
+        
         return Response(data)
     except Exception as e:
         data={'msj':'despacho no cargado','error':str(e)}

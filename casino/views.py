@@ -27,7 +27,12 @@ class CasinoHome(LoginRequiredMixin,TemplateView):
           s['last_login'] = self.request.user.pk
           s.create()
           AllEmpresa      = RelacionEmpresa.objects.filter(usuario_id=s['last_login'])       
+          
+          
           lastEm          = CambioEmpres.objects.filter(usuario_id=s['last_login']).last()
+          
+          
+          
           Tallas          = Talla.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm)).values('id','nom_talla','num_talla')
           EmpresaActual   = Empresa.objects.filter(usuario=s['last_login'],id=int(lastEm.lastEm))
           Operaciones     = Operacion.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm.lastEm),estatus='A').values('nom_operacion','id')
@@ -176,8 +181,8 @@ def casinoList(request):
         if 'username' in request.session:
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
+    
     lastEm     = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
-   
     lastEm     = lastEm.lastEm
     casinos    = Casino.objects.filter(empresa_id=lastEm,estatus='A').order_by('-id')
     serializer = CasinoSerializer(casinos, many=True)
