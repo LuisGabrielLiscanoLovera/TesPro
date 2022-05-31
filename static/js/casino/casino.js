@@ -34,7 +34,7 @@ function DetailFormatterButInfoCasino(index, row) {
 
         '<div class="col-sm-6 mb-2 offset-6">' +
         '<div class="form-group">' +
-        '<input class="form-control big-button" autocomplete="off" placeholder="Cantidad terminada" id="cant_casino" name="cant_casino-' + row.id +
+        '<input class="form-control big-button" autocomplete="off" placeholder="Cantidad" id="cant_casino" name="cant_casino-' + row.id +
         '" type="number" v-model="cant_casino" required/> </div>' +
         '</div>' +
 
