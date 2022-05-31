@@ -228,6 +228,7 @@ function DetailFormatterButAccionAcumuladoHistorial(index, row) {
 function deleteAllAcumuladohistorial(id_acumulado) {
     $.ajax({
         url: 'deleteAllAcumuldo/',
+
         data: {
             'id_acumulado': id_acumulado,
         },

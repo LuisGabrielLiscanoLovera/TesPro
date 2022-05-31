@@ -1,4 +1,4 @@
-# Create your views here
+from django.views.generic import View
 import json
 from textwrap import indent
 from traceback import print_tb
@@ -121,6 +121,12 @@ class ValorProduccion(LoginRequiredMixin,TemplateView):
 
 
 
+class deleteAllProduccion(View):
+    def  get(self, request):
+        idProduccion = request.GET.get('idOperacion', None)
+        Prod.objects.filter(operacion_id=idProduccion).delete()
+        data = {'deleted': True}
+        return JsonResponse(data)
 
 
 @api_view(['GET'])  

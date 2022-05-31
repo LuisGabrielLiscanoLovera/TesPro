@@ -74,6 +74,8 @@ function DetailFormatterButAccionProduccionHistorial(index, row) {
         '<tbody calss="table-striped table  table-sm  table-bordered table-hover" id="produccionKill-' + row.id + '">' +
         '</tbody>' +
         '</table>' +
+        '<div class="">' + '<button value="" onclick="deleteAllProduccionHistorial(' + row.id + ')"  id="buttonEliminarAllacumulado" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>' +
+        '</div>' +
         '<script type="application/javascript">' + 'ProduccionOPHistorial(' + row.id + ',' + row.usuario + ');' +
         '</' + 'script>' +
         '</div>';
@@ -206,4 +208,19 @@ function ProduccionOPHistorial(idOperacion, idUsuario) {
             $("#items-table-produccion-" + idOperacion).DataTable().ajax.reload();
         }
     })
+}
+
+function deleteAllProduccionHistorial(idOperacion) {
+    $.ajax({
+        url: 'deleteAllProduccion/',
+
+        data: {
+            'idOperacion': idOperacion,
+        },
+        dataType: 'json',
+        success: function(data) {
+            window.location.reload();
+
+        }
+    });
 }
