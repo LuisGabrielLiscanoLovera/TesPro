@@ -1,5 +1,5 @@
 from django.urls import path
-from blackbox.views import DespachoPatinador,createProAcumuladoPatinador,AcumuladoListProcPatinador,AcumuladoDataIntegrantePatinador,TallaEmpresaListPatinador,createProduccionPatinador,patinadoresActProdPatinador,integranteListPatinador,TareaListPatinador,ProduccionOPListPatinador,ItemListViewPatinador,ProduccionDataIntegrantePatinador,createDespachoPatinador,TallaOpCanIncosistentePatinadores,TallaOPListPatinador,casinoListPatinador,CasinoHomePatinador,AcumuladoPatinador,AcumuladoListPatinadores,operacionesListPatinadores,ProduccionPatinador,produccionesListPatinadores
+from blackbox.views import DespachoPatinador,createProCasinoPatinador,CasinoDataImportePatinador,CasinoDataIntegranteImportePatinador,totalImporteIntePatinador,createProAcumuladoPatinador,AcumuladoListProcPatinador,AcumuladoDataIntegrantePatinador,TallaEmpresaListPatinador,createProduccionPatinador,patinadoresActProdPatinador,integranteListPatinador,TareaListPatinador,ProduccionOPListPatinador,ItemListViewPatinador,ProduccionDataIntegrantePatinador,createDespachoPatinador,TallaOpCanIncosistentePatinadores,TallaOPListPatinador,casinoListPatinador,CasinoHomePatinador,AcumuladoPatinador,AcumuladoListPatinadores,operacionesListPatinadores,ProduccionPatinador,produccionesListPatinadores
 urlpatterns = [
    path('despachoPatinador/', DespachoPatinador.as_view(), name='despachoPatinador'),
    path('lista_operacionesPatinador/', operacionesListPatinadores, name="operacionesListPatinadores"),
@@ -24,9 +24,16 @@ urlpatterns = [
    path('AcumuladoProc-listPatinador/', AcumuladoListProcPatinador, name="AcumuladoProc-listPatinador"),
    path('cproAcumuladoPatinador/', createProAcumuladoPatinador, name="NewsproAcumuladoPatinador"),
 
-  
+   path('dataCasinoInte-listPatinador/', CasinoDataIntegranteImportePatinador, name="dataCasinoInte-listPatinador"),
    
    path('casinoPatinador/', CasinoHomePatinador.as_view(), name='casinoPatinador'),
    path('casinoListPatinador/', casinoListPatinador, name="casinoListPatinador"),
+   path('totalImporteIntePatinador/', totalImporteIntePatinador, name="totalImporteIntePatinador"),
+   path('dataCasino-listPatinador/', CasinoDataImportePatinador, name="dataCasino-listPatinador"),
+   path('cproCasinoPatinador/', createProCasinoPatinador, name="NewsproCasinoPatinador"),
 
-] 
+   
+   
+]
+
+

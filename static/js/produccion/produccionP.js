@@ -18,7 +18,7 @@ function DetailFormatterButInfoProduccionPatinador(index, row) {
         '<div id="sectIntegreOC-' + row.id + '" class="table animated fadeIn resutatatIntegrante-' + row.id +
         '">' +
 
-        '<table class="thead-dark animated fadeIn">' +
+        '<div style="overflow-x:auto;"><table class="thead-dark animated fadeIn">' +
         '<thead class="">' +
         '<tr><th scope="col" class="text-center">Tareas</th><th scope="col" class="text-center">Cantidad</th></tr>' +
         '</thead>' +
@@ -32,7 +32,7 @@ function DetailFormatterButInfoProduccionPatinador(index, row) {
 
 
         '</tbody>' +
-        '</table>' +
+        '</table></div>' +
 
         '</div>' +
         '</div>' +
@@ -89,7 +89,7 @@ function DetailFormatterButAccionProduccionPatinador(index, row) {
     //r = parseInt("[[progressRest]]");
     return '<div class="row">' +
 
-        '<div class="col-md-12">' +
+        '<div style="overflow-x:auto;" class="col-md-12">' +
         '<table  class="table animated fadeIn "  id="items-table-produccionPatinador-' + row.id +
         '">' +
         '<thead class="thead-dark">' +

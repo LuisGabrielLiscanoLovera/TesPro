@@ -7,9 +7,9 @@ from django.contrib.sessions.backends.db import SessionStore
 from django.shortcuts import redirect, render
 from empresa.models import Empresa,RelacionEmpresa,CambioEmpres
 from despacho.models import Despacho
-from casino.models import Casino
+from casino.models import Casino,Importe
 from tarea.models import Tarea
-from casino.serializers import CasinoSerializer
+from casino.serializers import CasinoSerializer,ImporteSerializer
 from acumulado.models import Acumulado as ACUMULADO
 from integrante.models import Integrante
 from patinador.models import Patinador
@@ -546,7 +546,7 @@ def createProAcumuladoPatinador(request,):
             idUser   = MyUser.objects.get(username=username)
         
     
-    integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
+    integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id','id')
     lastEm=int(integranteConten[0]['empresa_id'])
     canTerminada  = int(request.data['Cantidad_AcuPatinador'])
     
@@ -656,7 +656,6 @@ def casinoListPatinador(request):
     
     lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
     lastEm=int(lastEm[0]['empresa_id'])
-    
     casinos    = Casino.objects.filter(empresa_id=lastEm,estatus='A').order_by('-id')
     serializer = CasinoSerializer(casinos, many=True)
     return Response(serializer.data)
@@ -682,3 +681,102 @@ def ProduccionOPListPatinador(request):
     return HttpResponse(dump, content_type='application/json')
     
     
+@api_view(['GET'])
+def totalImporteIntePatinador(request):
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)    
+    integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
+    lastEm=int(integranteConten[0]['empresa_id'])
+        
+    
+    
+    idCasino           = request.GET.get('idCasinoPatinador', None)  
+    idIntegranteSelect = request.GET.get('idIntegranteSelectPatinador', None)   
+    casinoImporte      = Importe.objects.filter(empresa_id=lastEm, usuario_id = int(integranteConten[0]['usuario_id']), integrante_id=idIntegranteSelect,casino_id=int(idCasino)).aggregate(cantidad=Sum('cantidad'))
+    cedula             = Integrante.objects.filter(id=idIntegranteSelect,empresa_id=lastEm,usuario_id=int(integranteConten[0]['usuario_id']) ).distinct().values('cedula')
+    cedula = cedula[0]['cedula']
+    TotalCasinoImporte = casinoImporte['cantidad']
+    data = {'TotalCasinoImporte':TotalCasinoImporte,'cedulaIntegrante':cedula}  
+    return JsonResponse(data)
+
+
+@api_view(['GET'])
+def CasinoDataIntegranteImportePatinador(request):
+    if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username = username)    
+    integranteConten = Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
+    lastEm           = int(integranteConten[0]['empresa_id'])
+    idCasino         = request.GET.get('idCasinoPatinador',None)     
+    idIntegrante     = request.GET.get('idIntegranteSelectPatinador')
+    importeCasino    = Importe.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']),empresa_id=lastEm,casino_id=int(idCasino),
+    integrante_id    = idIntegrante)
+    serializer       = ImporteSerializer(importeCasino, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def CasinoDataImportePatinador(request):
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+    
+    integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
+    lastEm=int(integranteConten[0]['empresa_id'])
+    
+    
+    idCasino      = request.GET.get('idCasinoPatinador', None)
+    
+
+    importeGeneral  =   Importe.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']),casino_id=idCasino,empresa_id=lastEm).order_by("-id")
+    serializer      =   ImporteSerializer(importeGeneral, many=True)
+    return Response(serializer.data)
+
+
+
+@api_view(['POST'])
+def createProCasinoPatinador(request,):
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+        
+    
+    integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id','id')
+    lastEm=int(integranteConten[0]['empresa_id'])
+    idCasino = request.data['idccp']  
+    idPatinador   = Patinador.objects.filter(integrante_id=idUser.id).values('id')
+    idPatinador  = idPatinador[0]['id']
+    
+    
+    canTerminada  = int(request.data['Cantidad_CasinoPatinador'])
+    
+    
+    try: 
+        obj = Importe.objects.create(
+        usuario_id     = int(integranteConten[0]['usuario_id']),
+        empresa_id     = int(lastEm),
+        integrante_id  = int(request.data['OccionId_integrante_CasinoPatinador']),
+        patinador_id   = int(idPatinador),      
+        cantidad       = canTerminada,      
+        casino_id      = int(idCasino)
+        )
+        Casino.objects.all().filter(id=int(idCasino)).update(can_total=F('can_total') + canTerminada)  
+        obj = Importe.objects.latest('id')
+        btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteImporteUnico({})'> </button>".format(obj.id)
+        obj = Importe.objects.all().filter(id=obj.id).update(delCasinoImport=btnDel)
+        
+        data = {
+            'Acumulado': "Casino guardado con exito!",
+            'estatus':True
+        }  
+
+    except Exception as e:
+        print(str(e))
+        data = {'Errror': str(e),'estatus':False}        
+        return Response(data)
+    
+    return Response(data)   

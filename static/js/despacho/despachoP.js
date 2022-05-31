@@ -14,7 +14,7 @@ function DetailFormatterButInfoDespachoPerfilPatinadores(index, row) {
         '</div>' +
         '<div class="col-sm-6">' +
         '<div id="despachoVue-' + row.id + '"><template>' +
-        '<table class="table  animated fadeIn  border-info ">' +
+        '<div style="overflow-x:auto;" ><table class="table  animated fadeIn  border-info ">' +
         '<thead class="thead-dark">' +
         '<tr class="" >' +
         '<th class="text-center">Nombre Talla</th>' +
@@ -25,7 +25,7 @@ function DetailFormatterButInfoDespachoPerfilPatinadores(index, row) {
         '<tr v-for="allTallaOP in allTallaOPs" :key="allTallaOP.id">' +
         '<td class="text-center">[[allTallaOP.nom_talla]]</td><td class="text-center">[[allTallaOP.can_talla]]' +
         '</td><td class=" text-center">[[allTallaOP.res_talla]]</td></tr>' +
-        '</tbody></template></div>' +
+        '</tbody></template></div></div>' +
         '</table>' + '<script type="application/javascript">' + 'formOPPatinador(' + row.id + ',' + row.usuario + ');' +
         '</' + 'script>' +
         '</div>' +

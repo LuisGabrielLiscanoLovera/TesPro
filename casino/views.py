@@ -176,7 +176,8 @@ def casinoList(request):
         if 'username' in request.session:
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
-    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()
+    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
+   
     lastEm     = lastEm.lastEm
     casinos    = Casino.objects.filter(empresa_id=lastEm,estatus='A').order_by('-id')
     serializer = CasinoSerializer(casinos, many=True)

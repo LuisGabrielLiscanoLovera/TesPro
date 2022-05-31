@@ -26,7 +26,7 @@ def referenciaList(request):
             idUser   = MyUser.objects.get(username=username)
             
     
-    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()
+    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
     lastEm=lastEm.lastEm
     referencias = Referencia.objects.all().filter(empresa_id=lastEm).order_by('-id')
     

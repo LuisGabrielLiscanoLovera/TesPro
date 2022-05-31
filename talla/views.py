@@ -53,15 +53,10 @@ def TallaList(request):
     if request.session.has_key('username'):        
         if 'username' in request.session:
             username = request.session['username']     
-            idUser   = MyUser.objects.get(username=username)
-            
-    
-    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()
-   
-    
+            idUser   = MyUser.objects.get(username=username) 
+    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
     cantalla   = Talla.objects.filter(empresa_id=lastEm.lastEm).order_by('-id')
     serializer = TallaSerializer(cantalla, many=True)
-    
     return Response(serializer.data)
 
 

@@ -34,7 +34,7 @@ def TareaList(request):
             idUser   = MyUser.objects.get(username=username)
             
     
-    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()
+    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
     lastEm=lastEm.lastEm
     tarea = Tarea.objects.all().filter(empresa_id=lastEm,estatus='A').order_by('-id')
     serializer = TareaSerializer(tarea, many=True)

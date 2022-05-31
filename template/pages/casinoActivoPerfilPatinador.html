@@ -3,7 +3,7 @@
 <script src="{% static 'vendors/bootstrap/js/popper.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/bootstrap-table.js' %}"></script>
-
+<script src="{% static 'js/casino/casinoP.js' %}"></script>
 
 
 
@@ -21,18 +21,18 @@
             <!-- <div class="col-md-12 col-md-offset-10">
             <h6 class="cioo" style="text-align: right;">Importe total $ {{totalCasino}}</h6>
         </div> -->
-            <div class="col-md-12">
+            <div style="overflow-x:auto;" class="col-md-12">
 
                 <table id="table" data-id-field="id" class="table" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-search="true" data-show-fullscreen="true" data-show-export="true" data-locale="es-SP" data-pagination="true"
                     data-url="{% url 'casinoListPatinador' %}">
                     <thead class="thead-dark">
                         <tr>
-                            <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoCasino" class="text-center">Info</th>
+                            <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoCasinoPatinador" class="text-center">Info</th>
                             <th data-field="nom_casino" class="text-center">Reg Casino</th>
                             <th data-field="can_total" class="text-center">Total</th>
-                            <th data-field="estatus" class="text-center">Estatus</th>
+
                             <th data-field="created_at" class="text-center">Fecha</th>
-                            <th data-field="btnccion" data-detail-formatter="DetailFormatterButAccionCasino" class="text-center"> Accion</th>
+                            <th data-field="btnccion" data-detail-formatter="DetailFormatterButAccionCasinoPatinador" class="text-center"> Accion</th>
                         </tr>
                     </thead>
                 </table>

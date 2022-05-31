@@ -21,7 +21,7 @@ function DetailFormatterButInfoAcumuladoPatinador(index, row) {
 
         '<div id="sectIntegreOC-' + row.id + '" class="table thead-dark  animated fadeIn resutatatIntegranteAcuPatinador-' + row.id +
         '">' +
-        '<table class="thead-dark animated fadeIn">' +
+        '<div style="overflow-x:auto;"><table class="thead-dark animated fadeIn">' +
         '<thead class="">' +
         '<tr><th scope="col" class="text-center">Tareas</th>' +
         '<th scope="col" class="text-center">Cantidad</th></tr>' + '</thead>' +
@@ -32,7 +32,7 @@ function DetailFormatterButInfoAcumuladoPatinador(index, row) {
         '</tr>' +
         '</tbody>' +
         '</table>' +
-        '</div>' +
+        '</div></div>' +
         '</div>' +
 
         '<div class="col-sm-6   offset-6" >' +
@@ -208,7 +208,7 @@ function DetailFormatterButAccionAcumuladoPatinador(index, row) {
     //r = parseInt("[[progressRest]]");
     return '<div class="row">' +
 
-        '<div class="col-md-12">' +
+        '<div style="overflow-x:auto;" class="col-md-12">' +
         '<table  class="table animated fadeIn "  id="items-table-AcumuladoPatinador-' + row.id +
         '">' +
         '<thead class="thead-dark">' +
