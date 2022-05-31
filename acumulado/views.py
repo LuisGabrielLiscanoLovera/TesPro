@@ -57,7 +57,7 @@ class Acumulado(LoginRequiredMixin,TemplateView):
 
 
 class AcumuladoHistorial(LoginRequiredMixin,TemplateView):     
-     template_name = "pages/acumuladoHistorial.html"
+     template_name = "pages/historial/acumuladoHistorial.html"
      success_url = '/'     
      def get_context_data(self, **kwargs):
           context = super(AcumuladoHistorial, self).get_context_data(**kwargs)

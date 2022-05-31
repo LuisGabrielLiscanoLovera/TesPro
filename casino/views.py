@@ -53,7 +53,7 @@ class CasinoHome(LoginRequiredMixin,TemplateView):
             return context
 
 class CasinoHistorial(LoginRequiredMixin,TemplateView):     
-     template_name = "pages/casinoHistorial.html"
+     template_name = "pages/historial/casinoHistorial.html"
      success_url = '/' 
      def get_context_data(self, **kwargs):
           context = super(CasinoHistorial, self).get_context_data(**kwargs)

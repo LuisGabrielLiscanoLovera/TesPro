@@ -54,7 +54,7 @@ def operacionesListPatinadores(request):
   
 
 class DespachoPatinador(LoginRequiredMixin,TemplateView):     
-     template_name = "pages/despachoPerfilPatinador.html"
+     template_name = "pages/blackbox/despachoPerfilPatinador.html"
      success_url = '/'     
      def get_context_data(self, **kwargs):
           context = super(DespachoPatinador, self).get_context_data(**kwargs)
@@ -202,7 +202,7 @@ def TallaOpCanIncosistentePatinadores(request):
  
  
 class ProduccionPatinador(LoginRequiredMixin,TemplateView):
-     template_name = "pages/produccionPerfilPatinador.html"     
+     template_name = "pages/blackbox/produccionPerfilPatinador.html"     
      success_url = '/'     
      def get_context_data(self, **kwargs):
           context = super(ProduccionPatinador, self).get_context_data(**kwargs)
@@ -421,7 +421,7 @@ def createProduccionPatinador(request,):
 
 
 class AcumuladoPatinador(LoginRequiredMixin,TemplateView):     
-     template_name = "pages/acumuladoPerfilPatinador.html"
+     template_name = "pages/blackbox/acumuladoPerfilPatinador.html"
      success_url = '/'     
      def get_context_data(self, **kwargs):
           context = super(AcumuladoPatinador, self).get_context_data(**kwargs)
@@ -600,7 +600,7 @@ def TallaEmpresaListPatinador(request):
  
 
 class CasinoHomePatinador(LoginRequiredMixin,TemplateView):
-     template_name = "pages/casinoActivoPerfilPatinador.html"
+     template_name = "pages/blackbox/casinoActivoPerfilPatinador.html"
      success_url = '/'
      def get_context_data(self, **kwargs):
           context = super(CasinoHomePatinador, self).get_context_data(**kwargs)

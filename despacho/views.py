@@ -104,15 +104,18 @@ def operacionesListHistorial(request):
 class deleteAllDespacho(View):
     def  get(self, request):
         id_despacho = request.GET.get('id_despacho', None)
+        canTerminada=0
+        idOp=0
+        for despacho in Despacho.objects.filter(operacion_id=id_despacho).values('can_terminada','operacion_id'):
+            CT = int(despacho['can_terminada'])
+            idOp = int(despacho['operacion_id'])
+            canTerminada+=CT
+        
+        OpTallaRestante = Operacion.objects.filter(id=idOp).update(
+            can_restante=F('can_restante') - canTerminada)
         
         
-        
-           
-        CanTallaOP      = CanTalla.objects.all().filter(operacion_id=int(request.data['id_OP']),talla_id=int(request.data['selectIdTalla'])).update(res_talla= F('res_talla') - canTerminada)
-        OpTallaRestante = Operacion.objects.all().filter(id=int(request.data['id_OP'])).update(can_restante= F('can_restante') - canTerminada)
-        
-        
-        Despacho.objects.filter(operacion_id=id_despacho).delete()
+        #Despacho.objects.filter(operacion_id=id_despacho).delete()
         
         data = {'deleted': True}
         return JsonResponse(data)
@@ -178,7 +181,7 @@ class Despachos(LoginRequiredMixin,TemplateView):
              
 class DespachosHistorial(LoginRequiredMixin,TemplateView):
      
-     template_name = "pages/despachoHistorial.html"
+     template_name = "pages/historial/despachoHistorial.html"
      success_url = '/'     
      def get_context_data(self, **kwargs):
           context = super(DespachosHistorial, self).get_context_data(**kwargs)
