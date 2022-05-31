@@ -6,21 +6,13 @@ function DetailFormatterButInfoProduccion(index, row) {
     //crea y renderiza la tabla
     return '' +
         '<script type="application/javascript">' + 'formProduccionOP(' + row.id + ',' + row.usuario + ');' +
-
-
-
         '</' + 'script>' +
-
-
         '<div id="FormuProduccionOP-' + row.id + '">' +
         '<template>' +
-
         '<form @submit.prevent="submitFormProduccion" class="form animated fadeIn border-info ">' +
         '<div hidden=True>{% csrf_token %}</div>' +
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number"/>' +
-
         '<div class="row">' +
-
 
         '<div class="col-md-6 " style="position:absolute; left:0; margin: 10px 0 0 10px">' +
         '<div id="sectIntegreOC-' + row.id + '" class="table animated fadeIn resutatatIntegrante-' + row.id +
@@ -55,18 +47,12 @@ function DetailFormatterButInfoProduccion(index, row) {
         '</div>' +
 
 
-
-
-
-
         '<div class="col-sm-6 mb-2 offset-6  ">' +
         '<div class="form-group">' +
         '<select  class="form-select form-select-sm form-control" v-model="selectIDPatinadorProduccion" id="OccionId_pantinador_prod-' + row.id +
         '"><option  value="">Selecciones Patinador</option>' +
         '<option  v-for="option in allPatinadoresProduccions" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]]</option></select></div>' +
         '</div>' +
-
-
 
 
         '<div class="col-sm-6 mb-2 offset-6">' +
@@ -104,7 +90,7 @@ function DetailFormatterButAccionProduccion(index, row) {
     //r = parseInt("[[progressRest]]");
     return '<div class="row">' +
 
-        '<div class="">' +
+        '<div style="overflow-x:auto;" class="col-md-10">' +
         '<table  class="table animated fadeIn "  id="items-table-produccion-' + row.id +
         '">' +
         '<thead class="thead-dark">' +
