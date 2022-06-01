@@ -15,13 +15,58 @@ function DetailFormatterButInfoAcumuladoPatinador(index, row) {
         '<div hidden=True>{% csrf_token %}</div>' +
 
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number"/>' +
+
         '<div class="row">' +
-        '<div class="col-md-6 " style="position:absolute; left:0; margin: 10px 0 0 10px">' +
+
+        '<div class="col-sm-3 offset-" >' +
+        '<div class="form-group"> ' + //<label>Integrante</label>
+        '<select  id="OccionId_integrante_AcuPatinador-' + row.id +
+        '" class="sectIntegrenteOnChanAcuPatinador-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteAcumulado"><option value="" disabled>Selecciones Integrante</option>' +
+        '<option id="id_integranteP"  v-for="(optionIntegranteACU) in allIntegrantesAcumuladosPatinador" v-bind:value="optionIntegranteACU.id">[[optionIntegranteACU.nombres]]  [[optionIntegranteACU.apellidos]]</option></select></div>' +
+        '</div>' +
 
 
-        '<div id="sectIntegreOC-' + row.id + '" class="table thead-dark  animated fadeIn resutatatIntegranteAcuPatinador-' + row.id +
+        '<div class="col-sm-3 offset-">' +
+        '<div class="form-group">' +
+        '<select  id="OccionId_tarea_AcuPatinador-' + row.id +
+        '" class="form-select form-select-sm form-control " v-model="selectIdTareaAcumulado"><option value="" disable>Selecciones Tarea</option>' +
+        '<option id="id_tarea"  v-for="(optionTareaAcu) in allTareasAcumuladosPatinador" v-bind:value="optionTareaAcu.id">[[optionTareaAcu.nom_tarea]] / [[optionTareaAcu.detalle]]</option></select></div>' +
+        '</div>' +
+
+
+        '<div class="col-sm-3 offset-">' +
+        '<div class="form-group">' +
+        '<select  id="OccionId_talla_AcuPatinador-' + row.id +
+        '" class="form-select form-control form-select-sm" v-model="selectIdTallaAcumulado"><option value="" disabled>Selecciones Talla</option>' +
+        '<option id="id_talla"  v-for="(opcTareaAcu) in allTallasAcumulados"  v-bind:value="opcTareaAcu.id">[[opcTareaAcu.num_talla]] / [[opcTareaAcu.nom_talla]]</option></select></div>' +
+        '</div>' +
+
+        '<div class="col-sm-3 offset-">' +
+        '<div class="form-group">' +
+        '<input class="form-control big-button" autocomplete="off" placeholder="Cantidad terminada" id="cant_prod_AcumPatinador" name="cant_prod_AcumPatinador-' + row.id +
+        '" type="number" v-model="cant_prod_AcumPatinador" required/> </div>' +
+        '</div>' +
+
+
+
+        '<div class="col-sm-12 offset-">' +
+        '<div class="form-group  "><input class="form-control btn-success btn-block" type="submit"  value="Guardar"></div>' +
+        '</div>' +
+        '</form>' +
+
+
+        '</div>' +
+        '<div class="col-sm-12">' +
+        '<div  style="overflow-x:auto;">' +
+        '<div id="sectIntegreOC-' + row.id + '" class="resutatatIntegranteAcuPatinador-' + row.id +
         '">' +
-        '<div style="overflow-x:auto;"><table class="thead-dark animated fadeIn">' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+
+        '<div class="col-sm-12 offset-">' +
+        '<div style="overflow-x:auto;">' +
+        '<table class="thead-dark table-fill animated fadeIn">' +
         '<thead class="">' +
         '<tr><th scope="col" class="text-center">Tareas</th>' +
         '<th scope="col" class="text-center">Cantidad</th></tr>' + '</thead>' +
@@ -32,44 +77,10 @@ function DetailFormatterButInfoAcumuladoPatinador(index, row) {
         '</tr>' +
         '</tbody>' +
         '</table>' +
-        '</div></div>' +
         '</div>' +
-
-        '<div class="col-sm-6   offset-6" >' +
-        '<div class="form-group"> ' + //<label>Integrante</label>
-        '<select  id="OccionId_integrante_AcuPatinador-' + row.id +
-        '" class="sectIntegrenteOnChanAcuPatinador-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteAcumulado"><option value="" disabled>Selecciones Integrante</option>' +
-        '<option id="id_integranteP"  v-for="(optionIntegranteACU) in allIntegrantesAcumuladosPatinador" v-bind:value="optionIntegranteACU.id">[[optionIntegranteACU.nombres]]  [[optionIntegranteACU.apellidos]]</option></select></div>' +
         '</div>' +
 
 
-        '<div class="col-sm-6 mb-2 offset-6">' +
-        '<div class="form-group">' +
-        '<select  id="OccionId_tarea_AcuPatinador-' + row.id +
-        '" class="form-select form-select-sm form-control " v-model="selectIdTareaAcumulado"><option value="" disable>Selecciones Tarea</option>' +
-        '<option id="id_tarea"  v-for="(optionTareaAcu) in allTareasAcumuladosPatinador" v-bind:value="optionTareaAcu.id">[[optionTareaAcu.nom_tarea]] / [[optionTareaAcu.detalle]]</option></select></div>' +
-        '</div>' +
-
-
-        '<div class="col-sm-6 mb-2 offset-6">' +
-        '<div class="form-group">' +
-        '<select  id="OccionId_talla_AcuPatinador-' + row.id +
-        '" class="form-select form-control form-select-sm" v-model="selectIdTallaAcumulado"><option value="" disabled>Selecciones Talla</option>' +
-        '<option id="id_talla"  v-for="(opcTareaAcu) in allTallasAcumulados"  v-bind:value="opcTareaAcu.id">[[opcTareaAcu.num_talla]] / [[opcTareaAcu.nom_talla]]</option></select></div>' +
-        '</div>' +
-
-        '<div class="col-sm-6 mb-2 offset-6">' +
-        '<div class="form-group">' +
-        '<input class="form-control big-button" autocomplete="off" placeholder="Cantidad terminada" id="cant_prod_AcumPatinador" name="cant_prod_AcumPatinador-' + row.id +
-        '" type="number" v-model="cant_prod_AcumPatinador" required/> </div>' +
-        '</div>' +
-
-
-
-        '<div class="col-sm-6 mb-3 offset-6">' +
-        '<div class="form-group  "><input class="form-control btn btn-block" type="submit"  value="Guardar"></div>' +
-        '</div>' +
-        '</form>' +
         '</div>' +
         '</div>' +
         '</template>';
@@ -209,7 +220,7 @@ function DetailFormatterButAccionAcumuladoPatinador(index, row) {
     return '<div class="row">' +
 
         '<div style="overflow-x:auto;" class="col-md-12">' +
-        '<table  class="table animated fadeIn "  id="items-table-AcumuladoPatinador-' + row.id +
+        '<table  class="table-fill animated fadeIn "  id="items-table-AcumuladoPatinador-' + row.id +
         '">' +
         '<thead class="thead-dark">' +
         '<tr>' +

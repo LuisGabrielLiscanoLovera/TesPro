@@ -76,7 +76,7 @@ function DetailFormatterButInfoProduccionPatinador(index, row) {
         '</div>' +
 
         '<div class="col-sm-6 mb-3 offset-6">' +
-        '<div class="form-group  "><input class="form-control btn btn-block" type="submit"  value="Guardar"></div>' +
+        '<div class="form-group  "><input class="form-control btn btn-success btn-block" type="submit"  value="Guardar"></div>' +
         '</div>' +
         '</form>' +
 
