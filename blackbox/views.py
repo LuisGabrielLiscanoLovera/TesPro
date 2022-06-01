@@ -1,4 +1,5 @@
 import json
+from turtle import speed
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
@@ -36,7 +37,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 # Create your views here.
 from acumulado.models import Acumulado as ACUMULADO
 from acumulado.models import ProAcumulado as  ProAcu
-    
+
+
+
+
+
+
+
 @api_view(['GET'])  
 def operacionesListPatinadores(request):     
     if request.session.has_key('username'):        
@@ -55,13 +62,16 @@ def operacionesListPatinadores(request):
 
 class DespachoPatinador(LoginRequiredMixin,TemplateView):     
      template_name = "pages/blackbox/despachoPerfilPatinador.html"
-     success_url = '/'     
+     success_url = '/'    
+     
      def get_context_data(self, **kwargs):
           context = super(DespachoPatinador, self).get_context_data(**kwargs)
           s = SessionStore()
           s['last_login'] = self.request.user.pk
-          s.create()          
+          s.create()
+          print("TTTTTTTTTTTTTTttt=", self.request.userg)
           
+
           integranteConten = Integrante.objects.filter(id=s['last_login']).values('empresa_id', 'usuario_id')
           lastEm=int(integranteConten[0]['empresa_id'])   
           
@@ -210,7 +220,11 @@ class ProduccionPatinador(LoginRequiredMixin,TemplateView):
           s['last_login'] = self.request.user.pk
           s.create()
           
-          integranteConten = Integrante.objects.filter(id=s['last_login']).values('empresa_id', 'usuario_id')
+          
+          
+          
+          integranteConten = Integrante.objects.filter(
+              id=s['last_login']).values('empresa_id', 'usuario_id')
           lastEm=int(integranteConten[0]['empresa_id'])   
           
           

@@ -5,8 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from authapp.models import MyUser
-
-
+from django.contrib.sessions.backends.db import SessionStore
 
 
 User = get_user_model()
@@ -26,16 +25,17 @@ def signin(request):
             #perfilPatinadores=forms.cleaned_data.get('perfilPatinadores')
             request.session['username'] = username
     
-    
+            
             user = authenticate(username=username, password=password)
             if user:                              
                 loginPatinador  = MyUser.objects.filter(username=username).values('patinador')
                 if (loginPatinador[0]['patinador']):       
                     
-                    if (perfilPatinador =='1'):                     
+                    if (perfilPatinador == '1'):  # despachoPatinador
                         login(request, user)
-                        return redirect('despachoPatinador')#80% 
-                    if(perfilPatinador=='2'):
+                        userg=666
+                        return redirect('despachoPatinador',userg)  # 80%
+                    if(perfilPatinador == '2'):
                         login(request, user)
                         return redirect('produccionPatinador')#80%
                     if(perfilPatinador=='3'):                        
