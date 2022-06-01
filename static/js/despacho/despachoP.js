@@ -39,8 +39,6 @@ function DetailFormatterButInfoDespachoPerfilPatinadores(index, row) {
 
 
         '</div><br><br><br><br>' +
-        '<div class="col-md-1">' +
-        '</div>' +
 
 
         '<div class="col-md-6">' +
