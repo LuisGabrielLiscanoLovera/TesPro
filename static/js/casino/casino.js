@@ -44,7 +44,7 @@ function DetailFormatterButInfoCasino(index, row) {
         '</form>' +
         '</div>' +
         '</div>' +
-        '<h5 id="TotalImporte-' + row.id + '" style="position:;right:5;top:1"></h3>' +
+        '<h5 id="TotalImporte-' + row.id + '" style="position:;right:5;top:1"></h5>' +
         '<br><br><br>' +
         '</template>';
 }

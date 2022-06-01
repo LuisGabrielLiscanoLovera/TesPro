@@ -13,21 +13,22 @@
 
 
 
-<div class="modalBasePeriles">
-    <div style="overflow-x:auto;">
-        <center>
-            <header class="mdc-top-app-bar ">
-
-                <div class="mdc-top-app-bar__row">
-                    <center>
-                        <h1 class="title">Despacho Patinador {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
-                    </center>
-
-                    <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right ">
+<div class="">
 
 
-                        <div class="menu-button-container menu-profile d-none d-md-block ">
-                            <button class="btn btn-blue-grey btn-outline-amber mdc-button mdc-menu-button ">
+    <center>
+        <header class="mdc-top-app-bar ">
+
+            <div class="mdc-top-app-bar__row">
+                <center>
+                    <h1 class="title">Despacho Patinador {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
+                </center>
+
+                <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right ">
+
+
+                    <div class="menu-button-container menu-profile d-none d-md-block ">
+                        <button class="btn btn-blue-grey btn-outline-amber mdc-button mdc-menu-button ">
 					<span class="d-flex align-items-center ">                        
                         <span class="figure">						
 					<i class="fa fa-sign-out" aria-hidden="true"></i>
@@ -35,29 +36,29 @@
 					  <span class="user-name ">&nbsp;&nbsp; {{ request.user.first_name|title }} {{ request.user.last_name|title }}</span>
 				   </button>
 
-                            <div class="mdc-menu mdc-menu-surface " tabindex="-1 ">
-                                <ul class="mdc-list " role="menu " aria-hidden="true " aria-orientation="vertical ">
-                                    <li class="btn-outline-secondary mdc-list-item " role="menuitem ">
-                                        <div class=" ">
-                                        </div>
-                                        <div>
-                                            <a href="{% url 'signout' %} ">
-                                                <class class="text-danger "><u>Cerrar seccion</u>
-                                                    <i class="btn-outline-danger material-icons ">exit_to_app</i>
-                                            </a>
+                        <div class="mdc-menu mdc-menu-surface " tabindex="-1 ">
+                            <ul class="mdc-list " role="menu " aria-hidden="true " aria-orientation="vertical ">
+                                <li class="btn-outline-secondary mdc-list-item " role="menuitem ">
+                                    <div class=" ">
+                                    </div>
+                                    <div>
+                                        <a href="{% url 'signout' %} ">
+                                            <class class="text-danger "><u>Cerrar seccion</u>
+                                                <i class="btn-outline-danger material-icons ">exit_to_app</i>
+                                        </a>
 
 
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="divider d-none d-md-block "></div>
                     </div>
-
+                    <div class="divider d-none d-md-block "></div>
                 </div>
 
-            </header>
+            </div>
+
+        </header>
 
 
 
@@ -68,10 +69,11 @@
 
 
 
-        </center>
+    </center>
 
 
-        <table id="despachoTable" data-id-field="id" class="" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-show-columns="true" data-search="true" data-show-fullscreen="true" data-pagination="true"
+    <div style="overflow-x:auto" class="col-md-12">
+        <table id="despachoTable" data-id-field="id" class="table-fill" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-show-columns="true" data-search="true" data-show-fullscreen="true" data-pagination="true"
             data-show-refresh="true" data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-url='{% url "operacionesListPatinadores" %}'>
             <thead class="thead-dark ">
                 <tr>

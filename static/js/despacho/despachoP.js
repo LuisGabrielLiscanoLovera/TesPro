@@ -10,31 +10,16 @@ function DetailFormatterButInfoDespachoPerfilPatinadores(index, row) {
 
     //crea y renderiza la tabla
     return '<div class="row">' +
-        '<div class="col-sm-1">' +
-        '</div>' +
-        '<div class="col-sm-6">' +
-        '<div id="despachoVue-' + row.id + '"><template>' +
-        '<div style="overflow-x:auto;" ><table class="table  animated fadeIn  border-info ">' +
-        '<thead class="thead-dark">' +
-        '<tr class="" >' +
-        '<th class="text-center">Nombre Talla</th>' +
-        '<th class="text-center">Talla Total</th>' +
-        '<th class="text-center">Talla Restante</th>' +
-        '</tr>' +
-        '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '">' +
-        '<tr v-for="allTallaOP in allTallaOPs" :key="allTallaOP.id">' +
-        '<td class="text-center">[[allTallaOP.nom_talla]]</td><td class="text-center">[[allTallaOP.can_talla]]' +
-        '</td><td class=" text-center">[[allTallaOP.res_talla]]</td></tr>' +
-        '</tbody></template></div></div>' +
-        '</table>' + '<script type="application/javascript">' + 'formOPPatinador(' + row.id + ',' + row.usuario + ');' +
-        '</' + 'script>' +
-        '</div>' +
-        '<div class="col-sm-4"><div id="FormuTallaOPPatinador-' + row.id +
-        '"><template>' +
-        '<div class="border border-info alert"><b><h6>Restante &nbsp;&nbsp;<b class="big-button">[[cantRestantePatinador]] <hrr></b> de [[total]]</b></h6></div>' +
+
+
+        '<div class="col-md-5">' +
+        '<div id="FormuTallaOPPatinador-' + row.id +
+        '">' +
+
+        '<template>' +
+        '<div class="border-info alert"><b><h6>Restante &nbsp;&nbsp;<b class="big-button">[[cantRestantePatinador]] <hrr></b> de [[total]]</b></h6></div>' +
         '<form @submit.prevent="submitFormDespachoPatinador" class="form dark"><div hidden=True>{% csrf_token %}</div>' +
         '<div>' +
-
         //'<div class="progress progress-striped"><div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1" style="width:' +
         //'% ' +
         //'">Faltante</div></div>' +
@@ -42,23 +27,75 @@ function DetailFormatterButInfoDespachoPerfilPatinadores(index, row) {
         '" name="operacionPatinador-' + row.id +
         '"  type="number" hidden=True value="' + row.id +
         '"  required/>' +
-
-
-
-
         '<select  id="OccionId_tallaPatinador-' + row.id +
-        '" class="form-control mb-2" v-model="selectIdTallaPatinador"><option  value="" disabled>Selecciones Talla</option>' +
-
+        '" class="form-control mb-1" v-model="selectIdTallaPatinador"><option  value="" disabled>Selecciones Talla</option>' +
         '<option id="id_talla"  v-for="(optionTalla) in allTallasOPsPatinador"  v-bind:value="optionTalla.talla"  >[[optionTalla.num_talla]] / [[optionTalla.nom_talla]]</option></select>' +
         '<input class="form-control big-button" autocomplete="off" placeholder="Cantidad terminada" id="cant" name="cantOpDespachoPatinador-' + row.id +
         '"  type="number" v-model="cant" required/>' +
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number"/>' +
+        '<br><input class="form-control form-control btn btn-success " type="submit"  value="Guardar"></form></div></div>' +
+        '</template>' +
+        '</div>' +
+
+
+        '</div><br><br><br><br>' +
+        '<div class="col-md-1">' +
+        '</div>' +
+
+
+        '<div class="col-md-6">' +
+
+        '<div id="despachoVue-' + row.id + '"><template>' +
+        '<div style="overflow-x:auto;" ><table class="table-fill animated fadeIn  border-info ">' +
+        '<thead class="thead-dark">' +
+        '<tr>' +
+        '<th class="text-center">Nombre Talla</th>' +
+        '<th class="text-center">Talla Total</th>' +
+        '<th class="text-center">Talla Restante</th>' +
+        '</tr>' +
+        '</thead><tbody id="listKill' + row.id + '">' +
+        '<tr v-for="allTallaOP in allTallaOPs" :key="allTallaOP.id">' +
+        '<td class="text-center">[[allTallaOP.nom_talla]]</td><td class="text-center">[[allTallaOP.can_talla]]' +
+        '</td><td class=" text-center">[[allTallaOP.res_talla]]</td></tr>' +
+        '</tbody></template></div></div>' +
+        '</table>' + '<script type="application/javascript">' + 'formOPPatinador(' + row.id + ',' + row.usuario + ');' +
+        '</' + 'script>' +
+
+        '</div>' +
 
 
 
-        '<br><input class="form-control btn btn-block" type="submit"  value="Guardar"></form></div></div>' + '</div>' +
 
-        '</div></template>' +
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        '</div>' +
+
+
+
+
+
+
+
+
 
         '</div>';
 

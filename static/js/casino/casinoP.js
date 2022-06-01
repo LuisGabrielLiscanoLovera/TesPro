@@ -12,13 +12,8 @@ function DetailFormatterButInfoCasinoPatinador(index, row) {
         '<div hidden=True>{% csrf_token %}</div>' +
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number"/>' +
         '<div class="row">' +
-        '<div class="col-md-6 " style="position:absolute; left:1;top:1   ">' +
-        '<div id="sectIntegreOCasinoPatinador-' + row.id + '" class="dataTable_width_auto resutatatIntegranteCasino-' + row.id +
-        '">' +
-        '</div>' +
-        '</div>' +
 
-        '<div class="col-sm-6   offset-6" >' +
+        '<div class="col-sm-4 " >' +
         '<div class="form-group"> ' + //<label>Integrante</label>
         '<select  id="OccionId_integrante_CasinoPatinador-' + row.id +
         '" class="sectIntegrenteOnChanAcuPatinador-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteAcumuladoPatinador"><option value="" disabled>Selecciones Integrante</option>' +
@@ -26,19 +21,39 @@ function DetailFormatterButInfoCasinoPatinador(index, row) {
         '</div>' +
 
 
-        '<div class="col-sm-6 mb-2 offset-6">' +
+        '<div class="col-sm-4 ">' +
         '<div class="form-group">' +
-        '<input class="form-control big-button" autocomplete="off" placeholder="Cantidad " id="cant_casinoPatinador" name="cant_casinoPatinador-' + row.id +
+        '<input class="form-control big-button" autocomplete="off" placeholder="Cantidad" id="cant_casinoPatinador" name="cant_casinoPatinador-' + row.id +
         '" type="number" v-model="cant_casinoPatinador" required/> </div>' +
         '</div>' +
 
-        '<div class="col-sm-6 mb-3 offset-6">' +
-        '<div class="form-group  "><input class="form-control btn btn-block" type="submit"  value="Guardar"></div>' +
+
+
+        '<div class="col-sm-4 ">' +
+        '<div class="form-group  ">' +
+        '<input class="form-control btn btn-success" type="submit"  value="Guardar">' +
         '</div>' +
+
+        '</div>' +
+
+
+
+
+
+
+
         '</form>' +
+
+        '<div class="col-sm-12">' +
+        '<div id="sectIntegreOCasinoPatinador-' + row.id + '" class="dataTable_width_auto resutatatIntegranteCasino-' + row.id +
+        '">' +
         '</div>' +
         '</div>' +
-        '<h5 id="TotalImportePatinador-' + row.id + '" style="position:;right:5;top:1"></h3>' +
+
+        '</div>' +
+        '<div class="col-md-12" ><h5 class="alert" id="TotalImportePatinador-' + row.id + '" ></h3></div>' +
+
+        '</div>' +
         '<br><br><br>' +
         '</template>';
 }
@@ -264,7 +279,7 @@ function CasinoImportePatinador(idCasino, idIntegranteSelectPatinador) {
             });
 
             document.getElementById('TotalImportePatinador-' + idCasino).innerHTML =
-                '<div class="col-md-5 offset-7 alert border btn-cyan bt ">Importe total  : <b>' + T + '</b><br class="mb-3" >Cedula: ' + cedulaIntegrante + '</div>';
+                '<div class="col-md-12 text-center   offset- alert alert-info  ">Importe total  : <b>' + T + '</b><br class="mb-3" >Cedula: ' + cedulaIntegrante + '</div>';
 
         })
         .catch(error => {
