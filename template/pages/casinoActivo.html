@@ -40,7 +40,7 @@
                     </div>
 
                     <div class="col-md-6 ">
-                        <input class="submit bt mb-xl-1 of" type="submit" onclick="location.href='/'" value="Guardar">
+                        <input class="submit bt mb-xl-1 of" type="submit" value="Guardar">
 
                     </div>
 
@@ -61,7 +61,12 @@
                                 empresa_id: empresaIntegrante,
 
                             }).then(response => {
-                                console.log("guardado con exito")
+                                console.log("guardado con exito");
+                                window.location.reload();
+
+
+
+
                             })
 
                         } else {

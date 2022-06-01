@@ -12,7 +12,58 @@
     <div style="overflow-x:auto;">
 
         <center>
-            <h1>Casino patinador {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
+            <header class="mdc-top-app-bar ">
+
+                <div class="mdc-top-app-bar__row">
+                    <center>
+                        <h1 class="title">Casino Patinador {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
+                    </center>
+
+                    <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right ">
+
+
+                        <div class="menu-button-container menu-profile d-none d-md-block ">
+                            <button class="btn btn-blue-grey btn-outline-amber mdc-button mdc-menu-button ">
+					<span class="d-flex align-items-center ">                        
+                        <span class="figure">						
+					<i class="fa fa-sign-out" aria-hidden="true"></i>
+					  </span>
+					  <span class="user-name ">&nbsp;&nbsp; {{ request.user.first_name|title }} {{ request.user.last_name|title }}</span>
+				   </button>
+
+                            <div class="mdc-menu mdc-menu-surface " tabindex="-1 ">
+                                <ul class="mdc-list " role="menu " aria-hidden="true " aria-orientation="vertical ">
+                                    <li class="btn-outline-secondary mdc-list-item " role="menuitem ">
+                                        <div class=" ">
+                                        </div>
+                                        <div>
+                                            <a href="{% url 'signout' %} ">
+                                                <class class="text-danger "><u>Cerrar seccion</u>
+                                                    <i class="btn-outline-danger material-icons ">exit_to_app</i>
+                                            </a>
+
+
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="divider d-none d-md-block "></div>
+                    </div>
+
+                </div>
+
+            </header>
+
+
+
+
+
+
+
+
+
+
         </center>
 
 

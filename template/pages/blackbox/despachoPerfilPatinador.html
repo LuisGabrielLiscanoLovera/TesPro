@@ -20,7 +20,7 @@
 
                 <div class="mdc-top-app-bar__row">
                     <center>
-                        <h1 class="title text-center">Despacho Patinador {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
+                        <h1 class="title">Despacho Patinador {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
                     </center>
 
                     <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right ">
@@ -69,6 +69,8 @@
 
 
         </center>
+
+
         <table id="despachoTable" data-id-field="id" class="" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-show-columns="true" data-search="true" data-show-fullscreen="true" data-pagination="true"
             data-show-refresh="true" data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-url='{% url "operacionesListPatinadores" %}'>
             <thead class="thead-dark ">
