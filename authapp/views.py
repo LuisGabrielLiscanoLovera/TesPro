@@ -20,39 +20,35 @@ def signin(request):
             request.session['username'] = username           
             user = authenticate(username=username, password=password)
             if user:                              
-                loginPatinador = MyUser.objects.filter(
-                    username=username).values('patinador', 'username','integrante_id')                
+                loginPatinador = MyUser.objects.filter(username=username).values('patinador', 'username','integrante_id')                
                 if (loginPatinador[0]['patinador']):                    
                     if (perfilPatinador == '1'):
                         ctrlDespacho = Patinador.objects.filter(integrante_id=loginPatinador[0]['integrante_id']).values('ctrlDespacho')
-                        print(ctrlDespacho,"ttttttttttttttttt")
-                        
-                        
-                        if (ctrlDespacho[0]['ctrlDespacho']==''):
-                            
-                            return redirect('signin')
-                        
-                        
-                        if (ctrlDespacho[0]['ctrlDespacho']):
-                            login(request, user) 
-                            return redirect('despachoPatinador')  # 80%
-                        else:redirect('signin')
+                        if(ctrlDespacho.count()>0):
+                            if (ctrlDespacho[0]['ctrlDespacho']):
+                                login(request, user) 
+                                return redirect('despachoPatinador')  # 80%
+                            else:redirect('signin')
+                        else:
+                            redirect('signin')
                     if(perfilPatinador == '2'):
-                        ctrlProduccion = Patinador.objects.filter(
-                            integrante_id=loginPatinador[0]['integrante_id']).values('ctrlProduccion')
-                        if(ctrlProduccion[0]['ctrlProduccion']):
-                            login(request, user)
-                            return redirect('produccionPatinador')#80%
-                        else:redirect('signin')                    
+                        ctrlProduccion = Patinador.objects.filter(integrante_id=loginPatinador[0]['integrante_id']).values('ctrlProduccion')
+                        if(ctrlProduccion.count() > 0):
+                            if(ctrlProduccion[0]['ctrlProduccion']):
+                                login(request, user)
+                                return redirect('produccionPatinador')#80%
+                            else:redirect('signin')                    
+                        else:redirect('signin')               
                     if(perfilPatinador=='3'):                    
                         login(request, user)
                         return redirect('acumuladoPatinador')#80%                    
                     if(perfilPatinador=='4'):
-                        ctrlCasino = Patinador.objects.filter(
-                            integrante_id=loginPatinador[0]['integrante_id']).values('ctrlCasino')
-                        if(ctrlCasino[0]['ctrlCasino']):
-                            login(request, user)
-                            return redirect('casinoPatinador')#80%                    
+                        ctrlCasino = Patinador.objects.filter(integrante_id=loginPatinador[0]['integrante_id']).values('ctrlCasino')
+                        if(ctrlCasino.count() > 0):
+                            if(ctrlCasino[0]['ctrlCasino']):
+                                login(request, user)
+                                return redirect('casinoPatinador')#80%                    
+                            else:return redirect('signin')
                         else:return redirect('signin')
                     else:return redirect('signin')                
                 else:                    
