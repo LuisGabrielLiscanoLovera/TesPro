@@ -22,32 +22,26 @@ def signin(request):
             username = forms.cleaned_data['username']
             password = forms.cleaned_data['password']
             perfilPatinador= forms.cleaned_data['perfilPatinador']
-            #perfilPatinadores=forms.cleaned_data.get('perfilPatinadores')
-            request.session['username'] = username
-    
-            
+            request.session['username'] = username           
             user = authenticate(username=username, password=password)
             if user:                              
                 loginPatinador  = MyUser.objects.filter(username=username).values('patinador')
-                if (loginPatinador[0]['patinador']):       
-                    
-                    if (perfilPatinador == '1'):  # despachoPatinador
+                if (loginPatinador[0]['patinador']):                    
+                    if (perfilPatinador == '1'):
                         login(request, user)
-                        userg=666
-                        return redirect('despachoPatinador',userg)  # 80%
+                       
+                        return redirect('despachoPatinador')  # 80%
                     if(perfilPatinador == '2'):
                         login(request, user)
                         return redirect('produccionPatinador')#80%
-                    if(perfilPatinador=='3'):                        
+                    if(perfilPatinador=='3'):
                         login(request, user)
                         return redirect('acumuladoPatinador')#80%
                     if(perfilPatinador=='4'):
                         login(request, user)
-                        return redirect('casinoPatinador')#80%
-                    
+                        return redirect('casinoPatinador')#80%                    
                     else:return redirect('signin')                
-                else:
-                    
+                else:                    
                     login(request, user)  
                     return redirect('home')
     context = {

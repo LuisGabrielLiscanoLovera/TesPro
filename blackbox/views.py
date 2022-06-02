@@ -37,53 +37,44 @@ from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 # Create your views here.
 from acumulado.models import Acumulado as ACUMULADO
 from acumulado.models import ProAcumulado as  ProAcu
-
-
-
-
-
-
-
 @api_view(['GET'])  
 def operacionesListPatinadores(request):     
     if request.session.has_key('username'):        
         if 'username' in request.session:
             username = request.session['username']     
+            
             idUser   = MyUser.objects.get(username=username)
+            
+    
+    
     
     lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
     lastEm=int(lastEm[0]['empresa_id'])
     #vamos bien
     despacho   = Operacion.objects.filter(empresa_id=lastEm,estatus='A').order_by('-id')
     serializer = OperacionSerializer(despacho, many=True)
-    
+    print(serializer)
     return Response(serializer.data)
   
-
 class DespachoPatinador(LoginRequiredMixin,TemplateView):     
      template_name = "pages/blackbox/despachoPerfilPatinador.html"
-     success_url = '/'    
-     
+     success_url = '/'     
      def get_context_data(self, **kwargs):
           context = super(DespachoPatinador, self).get_context_data(**kwargs)
           s = SessionStore()
           s['last_login'] = self.request.user.pk
           s.create()
-          print("TTTTTTTTTTTTTTttt=", self.request.userg)
-          
-
           integranteConten = Integrante.objects.filter(id=s['last_login']).values('empresa_id', 'usuario_id')
-          lastEm=int(integranteConten[0]['empresa_id'])   
           
+          
+          lastEm=int(integranteConten[0]['empresa_id'])   
           AllEmpresa = RelacionEmpresa.objects.filter(
               usuario_id=int(integranteConten[0]['usuario_id']))
          # Tallas          = Talla.objects.filter(usuario=s['last_login'],empresa_id=lastEm).values('id','nom_talla','num_talla')
           EmpresaActual = Empresa.objects.filter(
               usuario=int(integranteConten[0]['usuario_id']), id=int(lastEm))
-          
           Operaciones = Operacion.objects.filter(usuario=int(integranteConten[0]['usuario_id']), id=int(
               lastEm), empresa_id=lastEm, estatus='A').values('nom_operacion', 'id')
-          
           context = super(DespachoPatinador, self).get_context_data(**kwargs)
           context['login_user_id']    = s['last_login']   # aqui se obtiene el user id
           context['lastIdEmpresa']    = int(lastEm) # ids empresas
@@ -107,24 +98,15 @@ def createDespachoPatinador(request,):
         if 'username' in request.session:
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
-        
-    
     integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
     lastEm=int(integranteConten[0]['empresa_id'])   
     canTerminada  = int(request.data['cantPatinador'])
-    
     #nombreTalla   = Talla.objects.filter(empresa_id=int(lastEm),usuario_id=int(idUser.id)     ,id=int(request.data['selectIdTalla'])).values('nom_talla')
-                                                                                                                                       
     nombreTalla   = Talla.objects.filter(empresa_id=int(lastEm),usuario_id=int(integranteConten[0]['usuario_id']),id=int(request.data['selectIdTallaPatinador'])).values('nom_talla','id')
     idPatinador   = Patinador.objects.filter(integrante_id=idUser.id).values('id')
     idPatinador  = idPatinador[0]['id']
-    
-  
-    
-    
     nomPatinador  = Integrante.objects.filter(empresa_id=int(lastEm),usuario_id=int(integranteConten[0]['usuario_id']) ,id=int(idUser.id)).values('nombres','apellidos')
     nom_patinador = nomPatinador[0]['nombres']+" "+nomPatinador[0]['apellidos']
-  
     try:
         obj = Despacho.objects.create(
         usuario_id           = int(integranteConten[0]['usuario_id']),
@@ -135,7 +117,6 @@ def createDespachoPatinador(request,):
         can_terminada        = canTerminada,
         nomTallaDespacho     = nombreTalla[0]['nom_talla'],
         nomPatinadorDespacho = nom_patinador
-
         )
         obj = Despacho.objects.latest('id')
         btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteDespachoUnico({})'> </button>".format(obj.id)
@@ -148,23 +129,17 @@ def createDespachoPatinador(request,):
         print(str(e))
         data={'msj':'despacho no cargado','error':str(e)}
         return Response(data)
-
 class ItemListViewPatinador(ServerSideDatatableView):  
     columns = ['nomPatinadorDespacho','nomTallaDespacho','can_terminada','created_at','btnDelDespacho','id']
-    
     def get_queryset(self):
         if self.request.method == 'GET':           
             idOp = self.request.GET.get('idOpPatinador', None)
-            idUser = self.request.GET.get('usuarioPatinador', None)
-            #integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
-
-            
-            if idOp and idUser is not None:
-                lastEm=Integrante.objects.filter(id=idUser).values('empresa_id')
-                lastEm=int(lastEm[0]['empresa_id'])               
-                queryset   = Despacho.objects.filter(empresa_id=int(lastEm),operacion_id=idOp).order_by('-id')          
+            IdEmpresa = self.request.GET.get('usuarioPatinador', None)
+            queryset = Despacho.objects.filter(empresa_id=int(IdEmpresa), operacion_id=idOp).order_by('-id')
             return queryset
-    
+
+
+
 @api_view(['GET'])  
 def TallaOPListPatinador(request):
     if request.session.has_key('username'):        
@@ -207,10 +182,7 @@ def TallaOpCanIncosistentePatinadores(request):
     
     return JsonResponse(data)
  
- 
-  
- 
- 
+
 class ProduccionPatinador(LoginRequiredMixin,TemplateView):
      template_name = "pages/blackbox/produccionPerfilPatinador.html"     
      success_url = '/'     
@@ -219,12 +191,12 @@ class ProduccionPatinador(LoginRequiredMixin,TemplateView):
           s = SessionStore()
           s['last_login'] = self.request.user.pk
           s.create()
-          
-          
-          
-          
           integranteConten = Integrante.objects.filter(
               id=s['last_login']).values('empresa_id', 'usuario_id')
+         
+
+
+          
           lastEm=int(integranteConten[0]['empresa_id'])   
           
           

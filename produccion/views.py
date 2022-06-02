@@ -87,7 +87,7 @@ class ProduccionHistorial(LoginRequiredMixin,TemplateView):
 
 
 class ValorProduccion(LoginRequiredMixin,TemplateView):
-     template_name = "pages/produccionValor.html"     
+     template_name = "pages/contador/produccionValor.html"     
      success_url = '/'
      
      def get_context_data(self, **kwargs):

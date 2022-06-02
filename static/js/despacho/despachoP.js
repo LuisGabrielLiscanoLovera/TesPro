@@ -56,7 +56,7 @@ function DetailFormatterButInfoDespachoPerfilPatinadores(index, row) {
         '<td class="text-center">[[allTallaOP.nom_talla]]</td><td class="text-center">[[allTallaOP.can_talla]]' +
         '</td><td class=" text-center">[[allTallaOP.res_talla]]</td></tr>' +
         '</tbody></template></div></div>' +
-        '</table>' + '<script type="application/javascript">' + 'formOPPatinador(' + row.id + ',' + row.usuario + ');' +
+        '</table>' + '<script type="application/javascript">' + 'formOPPatinador(' + row.id + ',' + row.empresa_id + ');' +
         '</' + 'script>' +
 
         '</div>' +

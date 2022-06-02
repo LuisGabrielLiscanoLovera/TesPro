@@ -368,7 +368,7 @@ class deleteAllAcumulado(View):
         return JsonResponse(data)
 
 class ValorAcumulado(LoginRequiredMixin,TemplateView): 
-     template_name = "pages/valorAcumulado.html"
+     template_name = "pages/contador/valorAcumulado.html"
      success_url = '/' 
      def get_context_data(self, **kwargs):
           context = super(ValorAcumulado, self).get_context_data(**kwargs)

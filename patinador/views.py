@@ -95,7 +95,7 @@ class CreatePatinador(View):
             idIntegrante        = Integrante.objects.filter(cedula=num_cedula,empresa=lastEm.lastEm).values('id','correo','nombres','apellidos')
             MyUser.objects.create_user(username=num_cedula, password=passwordP,
             email=idIntegrante[0]['correo'],first_name=idIntegrante[0]['nombres'] ,
-            last_name=idIntegrante[0]['apellidos'],patinador=True)
+                last_name=idIntegrante[0]['apellidos'], patinador=True, integrante_id=idIntegrante[0]['id'])
             return JsonResponse(data)
             
             
