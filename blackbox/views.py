@@ -53,7 +53,7 @@ def operacionesListPatinadores(request):
     #vamos bien
     despacho   = Operacion.objects.filter(empresa_id=lastEm,estatus='A').order_by('-id')
     serializer = OperacionSerializer(despacho, many=True)
-    print(serializer)
+
     return Response(serializer.data)
   
 class DespachoPatinador(LoginRequiredMixin,TemplateView):     

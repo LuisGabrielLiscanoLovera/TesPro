@@ -5,16 +5,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from authapp.models import MyUser
-from django.contrib.sessions.backends.db import SessionStore
-
-
+from patinador.models import Patinador 
 User = get_user_model()
-
-
 from .forms import LoginForm, RegistrationForm      
 
 def signin(request):
-    
     forms = LoginForm()
     if request.method == 'POST':
         forms = LoginForm(request.POST)
@@ -25,21 +20,40 @@ def signin(request):
             request.session['username'] = username           
             user = authenticate(username=username, password=password)
             if user:                              
-                loginPatinador  = MyUser.objects.filter(username=username).values('patinador')
+                loginPatinador = MyUser.objects.filter(
+                    username=username).values('patinador', 'username','integrante_id')                
                 if (loginPatinador[0]['patinador']):                    
                     if (perfilPatinador == '1'):
-                        login(request, user)
-                       
-                        return redirect('despachoPatinador')  # 80%
+                        ctrlDespacho = Patinador.objects.filter(integrante_id=loginPatinador[0]['integrante_id']).values('ctrlDespacho')
+                        print(ctrlDespacho,"ttttttttttttttttt")
+                        
+                        
+                        if (ctrlDespacho[0]['ctrlDespacho']==''):
+                            
+                            return redirect('signin')
+                        
+                        
+                        if (ctrlDespacho[0]['ctrlDespacho']):
+                            login(request, user) 
+                            return redirect('despachoPatinador')  # 80%
+                        else:redirect('signin')
                     if(perfilPatinador == '2'):
+                        ctrlProduccion = Patinador.objects.filter(
+                            integrante_id=loginPatinador[0]['integrante_id']).values('ctrlProduccion')
+                        if(ctrlProduccion[0]['ctrlProduccion']):
+                            login(request, user)
+                            return redirect('produccionPatinador')#80%
+                        else:redirect('signin')                    
+                    if(perfilPatinador=='3'):                    
                         login(request, user)
-                        return redirect('produccionPatinador')#80%
-                    if(perfilPatinador=='3'):
-                        login(request, user)
-                        return redirect('acumuladoPatinador')#80%
+                        return redirect('acumuladoPatinador')#80%                    
                     if(perfilPatinador=='4'):
-                        login(request, user)
-                        return redirect('casinoPatinador')#80%                    
+                        ctrlCasino = Patinador.objects.filter(
+                            integrante_id=loginPatinador[0]['integrante_id']).values('ctrlCasino')
+                        if(ctrlCasino[0]['ctrlCasino']):
+                            login(request, user)
+                            return redirect('casinoPatinador')#80%                    
+                        else:return redirect('signin')
                     else:return redirect('signin')                
                 else:                    
                     login(request, user)  
@@ -48,10 +62,6 @@ def signin(request):
         'form': forms
     }
     return render(request, 'signin.html', context)
-
-
-
-
 
 
 def signout(request):
