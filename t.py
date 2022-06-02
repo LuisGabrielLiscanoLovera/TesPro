@@ -1,30 +1,16 @@
-class Tesla:
-    #creating a class variable and making it a global variable
-    global speed
-    speed = 60
-
-    print("Accessing speed variable within the class:", speed)
-
-    def __init__(self, speed):
-        self.speed = speed
-
-        def display_speed():
-
-            print("Speed of the Tesla is:", speed)
+import socket
 
 
-print("Accessing the class variable", speed)
+def extract_ip():
+    st = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        st.connect(('10.255.255.255', 1))
+        IP = st.getsockname()[0]
+    except Exception:
+        IP = '127.0.0.1'
+    finally:
+        st.close()
+    return IP
 
 
-class Lucid:
-    print("Accessing the speed variable from a different class:", speed)
-
-    def __init__(self, speed):
-        self.speed = speed
-
-    def display_tesla_speed(self):
-        print("Accessing the speed variable from a method in another class:", speed)
-
-
-lucid_object = Lucid(speed)
-lucid_object.display_tesla_speed()
+print(extract_ip())

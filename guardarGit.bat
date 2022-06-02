@@ -5,4 +5,9 @@
  git push
  python keyE.py
  python keyD.py
- python .\manage.py runserver
+ 
+for /f "tokens=1-2 delims=:" %%a in ('ipconfig^|find "IPv4"') do set ip=%%b
+set ip=%ip:~1%
+echo %ip%
+
+python .\manage.py runserver echo %ip%:4433
