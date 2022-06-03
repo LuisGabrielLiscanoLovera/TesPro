@@ -178,10 +178,7 @@ def ProduccionDataIntegrante(request):
         if patinadores ==[]:pass 
         else:tareas.append({'patinadores':patinadores})
     return Response(tareas)
-    
-    
-    
-    
+     
     
 @api_view(['GET'])
 def ProduccionDataIntegranteValor(request):
@@ -276,6 +273,11 @@ def createProduccion(request,):
 @api_view(['DELETE'])
 def deleteProduccion(request,id):
     try:      
+        ProOp = Prod.objects.all().filter(id=id).values('can_terminada', 'operacion_id', 'tarea_id')
+        valor = Tarea.objects.get(id=int(ProOp[0]['tarea_id']))
+        costeA = Operacion.objects.get(id=ProOp[0]['operacion_id'])      
+        costeA.costeProd -= (int(ProOp[0]['can_terminada'])*valor.valor)
+        costeA.save()  # "{:10.4f}".format(x)
         Prod.objects.get(id=id).delete()
         data = {
             'deleted': True
