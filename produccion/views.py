@@ -19,7 +19,7 @@ from .serializers import ProduccionSerializer
 from patinador.serializers import PatinadorSerializer
 from rest_framework.decorators import api_view
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-
+from operacion.serializers import OperacionSerializer
 from django.http import HttpResponse
 
 
@@ -270,6 +270,23 @@ def ProduccionDataIntegranteValor(request):
                           'totalGenerado': "$ {:0,.2f}".format(totalGenerado)})
 
     return Response(tareas)
+
+
+@api_view(['GET'])  
+def operacionesListValor(request):     
+    if request.session.has_key('username'):        
+        if 'username' in request.session:
+            username = request.session['username']     
+            idUser   = MyUser.objects.get(username=username)
+
+    lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()   
+    despacho = Operacion.objects.filter(
+        empresa_id=lastEm.lastEm).order_by('-created_at')
+    serializer = OperacionSerializer(despacho, many=True)
+    
+    return Response(serializer.data)
+
+
 
 
 @api_view(['POST'])
