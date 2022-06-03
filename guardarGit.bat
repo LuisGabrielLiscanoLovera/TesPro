@@ -1,7 +1,11 @@
+@echo off
+set /p CommitName="Commit: "
+echo Commi es : %CommitName%
+ 
  python keyC.py
  git add .
  git status 
- git commit -m 'automatico'
+ git commit -m "%CommitName%"
  git push
  python keyE.py
  python keyD.py
