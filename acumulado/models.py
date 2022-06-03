@@ -9,7 +9,7 @@ class Acumulado(models.Model):
     btnInfo       = '<button type="button" class="btn btn-outline-info text-center btn-sm btn-block ">Info</button>'
     btnAccion     = '<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>'
     usuario       = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+    costeAcu      = models.IntegerField(blank=True,null=True)
     empresa       = models.ForeignKey(Empresa,  on_delete=models.CASCADE)
     nom_acumulado = models.CharField(max_length=35, unique=True)
     #can_total     = models.IntegerField(blank=True, null=True,default=0)    
@@ -31,8 +31,8 @@ class Acumulado(models.Model):
         ]
 
     def __str__(self):
-        return 'id:{} usuario:{} empresa:{} nom_acumulado:{} created_at:{} estatus:{} '.format(
-        self.id, self.usuario,self.empresa,
+        return 'id:{} usuario:{} costeAcu:{} empresa:{} nom_acumulado:{} created_at:{} estatus:{} '.format(
+        self.id, self.usuario,self.costeAcu,self.empresa,
         self.nom_acumulado,self.created_at, self.estatus)
 
 
