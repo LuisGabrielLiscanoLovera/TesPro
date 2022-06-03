@@ -233,7 +233,8 @@ def createProduccion(request,):
         
     lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
     canTerminada  = int(request.data['cantidadProd'])
-    
+    valor = Tarea.objects.get(id=int(request.data['OccionId_tarea']))
+
     try: 
         obj = Prod.objects.create(
         usuario_id           = int(idUser.id),
@@ -253,6 +254,12 @@ def createProduccion(request,):
         obj = Prod.objects.latest('id')
         btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteProduccionUnico({})'> </button>".format(obj.id)
         obj = Prod.objects.all().filter(id=obj.id).update(delProduccion=btnDel)
+        
+        costeProd = Operacion.objects.get(id=int(request.data['idOperacion']))
+        costeProd.costeProd += (canTerminada*valor.valor)
+        costeProd.save()
+        
+        
         data = {
             'produccion': "Produccion guardado con exito!",
             'estatus':True

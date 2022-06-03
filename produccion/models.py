@@ -15,7 +15,6 @@ class Produccion(models.Model):
     can_terminada = models.IntegerField()
     integrante    = models.ForeignKey(Integrante,related_name='ProduccionI',on_delete=models.CASCADE)
     patinador     = models.ForeignKey(Patinador,  blank=True, null=True, on_delete=models.CASCADE)
-    costeProd     = models.IntegerField(blank=True, null=True)
     delProduccion = models.CharField(max_length=200, default='' , null=True)
     ESTATUS       = (('A','Activo'),('I','Inactivo'))
     estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)

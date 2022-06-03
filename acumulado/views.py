@@ -216,6 +216,7 @@ def createProAcumulado(request,):
         obj = ProAcu.objects.latest('id')
         btnDel = "<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteAcumuladoUnico({})'> </button>".format(obj.id)
         obj = ProAcu.objects.all().filter(id=obj.id).update(delAcumulProc=btnDel)
+        
         costeA = ACUMULADO.objects.get(id=acumulado_id)
         costeA.costeAcu += (canTerminada*valor.valor)
         costeA.save()
