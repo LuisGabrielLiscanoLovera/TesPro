@@ -542,33 +542,37 @@ def createProAcumuladoPatinador(request,):
         if 'username' in request.session:
             username = request.session['username']
             idUser = MyUser.objects.get(username=username)
-
-    integranteConten = Integrante.objects.filter(
-        id=idUser.id).values('empresa_id', 'usuario_id', 'id')
+    integranteConten = Integrante.objects.filter(id=idUser.id).values('empresa_id', 'usuario_id', 'id')
     lastEm = int(integranteConten[0]['empresa_id'])
     canTerminada = int(request.data['Cantidad_AcuPatinador'])
-
-    idPatinador = Patinador.objects.filter(
-        integrante_id=idUser.id).values('id')
+        
+    acumulado_id = int(request.data['acumulado_idPatinador'])
+    valor = Tarea.objects.get(id=int(request.data['OccionId_tarea_AcuPatinador']))
+  
+    
+    idPatinador = Patinador.objects.filter(integrante_id=idUser.id).values('id')
     idPatinador = idPatinador[0]['id']
-
     try:
         obj = ProAcu.objects.create(
             usuario_id=int(integranteConten[0]['usuario_id']),
             empresa_id=int(lastEm),
-            integrante_id=int(
-                request.data['OccionId_integrante_AcuPatinador']),
+            integrante_id=int(request.data['OccionId_integrante_AcuPatinador']),
             patinador_id=idPatinador,
             tarea_id=int(request.data['OccionId_tarea_AcuPatinador']),
             talla_id=int(request.data['OccionId_talla_AcuPatinador']),
             can_prod_acum=canTerminada,
-            acumulado_id=int(request.data['acumulado_idPatinador'])
+            acumulado_id=acumulado_id
         )
 
         obj = ProAcu.objects.latest('id')
         btnDel = "<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteAcumuladoUnico({})'> </button>".format(
             obj.id)
         obj = ProAcu.objects.all().filter(id=obj.id).update(delAcumulProc=btnDel)
+
+        #suma de la cantidad 
+        costeA = ACUMULADO.objects.get(id=acumulado_id)
+        costeA.costeAcu += (canTerminada*valor.valor)
+        costeA.save()  # "{:10.4f}".format(x)
 
         data = {
             'Acumulado': "Acumulado guardado con exito!",

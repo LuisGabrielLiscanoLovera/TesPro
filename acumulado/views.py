@@ -200,9 +200,7 @@ def createProAcumulado(request,):
 
     acumulado_id = int(request.data['acumulado_id'])
     valor = Tarea.objects.get(id=int(request.data['OccionId_tarea_Acu']))
-    costeA = ACUMULADO.objects.get(id=acumulado_id)
-    costeA.costeAcu += (canTerminada*valor.valor)
-    costeA.save()  # "{:10.4f}".format(x)
+  
 
     try:
         obj = ProAcu.objects.create(
@@ -213,16 +211,16 @@ def createProAcumulado(request,):
             tarea_id=int(request.data['OccionId_tarea_Acu']),
             talla_id=int(request.data['OccionId_talla_Acu']),
             can_prod_acum=canTerminada,
-            acumulado_id=int(request.data['acumulado_id'])
+            acumulado_id=acumulado_id
         )
-        # Casino.objects.all().filter(id=int(request.data['idCasino']))
-        # .update(can_total=F('can_total') + canTerminada)
-
+    
         obj = ProAcu.objects.latest('id')
-        btnDel = "<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteAcumuladoUnico({})'> </button>".format(
-            obj.id)
+        btnDel = "<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteAcumuladoUnico({})'> </button>".format(obj.id)
         obj = ProAcu.objects.all().filter(id=obj.id).update(delAcumulProc=btnDel)
-
+        costeA = ACUMULADO.objects.get(id=acumulado_id)
+        costeA.costeAcu += (canTerminada*valor.valor)
+        costeA.save()
+        
         data = {
             'Acumulado': "Acumulado guardado con exito!",
             'estatus': True
