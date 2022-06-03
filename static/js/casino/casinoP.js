@@ -180,7 +180,7 @@ function formCasinoPatinador(idCasino, idUsuario) {
 
                 if (OccionId_integrante_CasinoPatinador) {
                     axios.post('/blackbox/cproCasinoPatinador/', {
-                        idccp: idCasino,
+                        idCasinoP: idCasino,
                         usuario: idUsuario,
                         OccionId_integrante_CasinoPatinador: OccionId_integrante_CasinoPatinador,
                         Cantidad_CasinoPatinador: Cantidad_CasinoPatinador,

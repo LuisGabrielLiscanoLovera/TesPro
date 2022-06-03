@@ -68,8 +68,16 @@ class DespachoPatinador(LoginRequiredMixin,TemplateView):
           
           
           lastEm=int(integranteConten[0]['empresa_id'])   
-          AllEmpresa = RelacionEmpresa.objects.filter(
-              usuario_id=int(integranteConten[0]['usuario_id']))
+          AllEmpresa = RelacionEmpresa.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']))
+              
+              
+              
+              
+              
+              
+              
+              
+              
          # Tallas          = Talla.objects.filter(usuario=s['last_login'],empresa_id=lastEm).values('id','nom_talla','num_talla')
           EmpresaActual = Empresa.objects.filter(
               usuario=int(integranteConten[0]['usuario_id']), id=int(lastEm))
@@ -726,10 +734,19 @@ def createProCasinoPatinador(request,):
             idUser   = MyUser.objects.get(username=username)
         
     
-    integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id','id')
+    integranteConten=Integrante.objects.filter(id=idUser.integrante_id).values('empresa_id','usuario_id','id')
+    
+    
+
     lastEm=int(integranteConten[0]['empresa_id'])
-    idCasino = request.data['idccp']  
-    idPatinador   = Patinador.objects.filter(integrante_id=idUser.id).values('id')
+    idCasino = request.data['idCasinoP']
+    idPatinador = Patinador.objects.filter(integrante_id=integranteConten[0]['id']).values('id')
+    print(idPatinador,"fffff")
+
+
+    
+    
+    
     idPatinador  = idPatinador[0]['id']
     
     
