@@ -284,7 +284,8 @@ def cerrarCasino(request):
 
 class deleteCasino(View):
     def  get(self, request):
-        idCasino = request.GET.get('idCasino', None)
+        idCasino = request.GET.get('idCasino', None)        
+        Casino.objects.all().filter(id=int(idCasino)).update(can_total=F('can_total')*0)  
         Casino.objects.get(id=idCasino).delete()
         data = {'deleted': True}
         return JsonResponse(data)
