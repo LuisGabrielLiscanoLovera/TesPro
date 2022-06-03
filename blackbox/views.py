@@ -380,8 +380,11 @@ def createProduccionPatinador(request,):
     idPatinador = Patinador.objects.filter(
         integrante_id=idUser.id).values('id')
     idPatinador = idPatinador[0]['id']
-
     canTerminada = int(request.data['cantidadProdPatinador'])
+
+    valor = Tarea.objects.get(id=int(request.data['OccionId_tareaPatinador']))
+
+
 
     try:
         obj = Prod.objects.create(
@@ -400,6 +403,13 @@ def createProduccionPatinador(request,):
         btnDel = "<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteProduccionUnico({})'> </button>".format(
             obj.id)
         obj = Prod.objects.all().filter(id=obj.id).update(delProduccion=btnDel)
+        
+        costeProd = Operacion.objects.get(id=int(request.data['idOperacionPatinador']))
+        costeProd.costeProd += (canTerminada*valor.valor)
+        costeProd.save()
+
+        
+        
         data = {
             'produccion': "Produccion guardado con exito!",
             'estatus': True
