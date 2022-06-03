@@ -1,13 +1,14 @@
 # Create your views here.
+from .forms import LoginForm, RegistrationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from authapp.models import MyUser
-from patinador.models import Patinador 
+from patinador.models import Patinador
 User = get_user_model()
-from .forms import LoginForm, RegistrationForm      
+
 
 def signin(request):
     forms = LoginForm()
@@ -16,43 +17,53 @@ def signin(request):
         if forms.is_valid():
             username = forms.cleaned_data['username']
             password = forms.cleaned_data['password']
-            perfilPatinador= forms.cleaned_data['perfilPatinador']
-            request.session['username'] = username           
+            perfilPatinador = forms.cleaned_data['perfilPatinador']
+            request.session['username'] = username
             user = authenticate(username=username, password=password)
-            if user:                              
-                loginPatinador = MyUser.objects.filter(username=username).values('patinador', 'username','integrante_id')                
-                if (loginPatinador[0]['patinador']):                    
+            if user:
+                loginPatinador = MyUser.objects.filter(username=username).values(
+                    'patinador', 'username', 'integrante_id')
+                if (loginPatinador[0]['patinador']):
                     if (perfilPatinador == '1'):
-                        ctrlDespacho = Patinador.objects.filter(integrante_id=loginPatinador[0]['integrante_id']).values('ctrlDespacho')
-                        if(ctrlDespacho.count()>0):
+                        ctrlDespacho = Patinador.objects.filter(
+                            integrante_id=loginPatinador[0]['integrante_id']).values('ctrlDespacho')
+                        if(ctrlDespacho.count() > 0):
                             if (ctrlDespacho[0]['ctrlDespacho']):
-                                login(request, user) 
+                                login(request, user)
                                 return redirect('despachoPatinador')  # 80%
-                            else:redirect('signin')
+                            else:
+                                redirect('signin')
                         else:
                             redirect('signin')
                     if(perfilPatinador == '2'):
-                        ctrlProduccion = Patinador.objects.filter(integrante_id=loginPatinador[0]['integrante_id']).values('ctrlProduccion')
+                        ctrlProduccion = Patinador.objects.filter(
+                            integrante_id=loginPatinador[0]['integrante_id']).values('ctrlProduccion')
                         if(ctrlProduccion.count() > 0):
                             if(ctrlProduccion[0]['ctrlProduccion']):
                                 login(request, user)
-                                return redirect('produccionPatinador')#80%
-                            else:redirect('signin')                    
-                        else:redirect('signin')               
-                    if(perfilPatinador=='3'):                    
+                                return redirect('produccionPatinador')  # 80%
+                            else:
+                                redirect('signin')
+                        else:
+                            redirect('signin')
+                    if(perfilPatinador == '3'):
                         login(request, user)
-                        return redirect('acumuladoPatinador')#80%                    
-                    if(perfilPatinador=='4'):
-                        ctrlCasino = Patinador.objects.filter(integrante_id=loginPatinador[0]['integrante_id']).values('ctrlCasino')
+                        return redirect('acumuladoPatinador')  # 80%
+                    if(perfilPatinador == '4'):
+                        ctrlCasino = Patinador.objects.filter(
+                            integrante_id=loginPatinador[0]['integrante_id']).values('ctrlCasino')
                         if(ctrlCasino.count() > 0):
                             if(ctrlCasino[0]['ctrlCasino']):
                                 login(request, user)
-                                return redirect('casinoPatinador')#80%                    
-                            else:return redirect('signin')
-                        else:return redirect('signin')
-                    else:return redirect('signin')                
-                else:                    
-                    login(request, user)  
+                                return redirect('casinoPatinador')  # 80%
+                            else:
+                                return redirect('signin')
+                        else:
+                            return redirect('signin')
+                    else:
+                        return redirect('signin')
+                else:
+                    login(request, user)
                     return redirect('home')
     context = {
         'form': forms
@@ -63,6 +74,7 @@ def signin(request):
 def signout(request):
     logout(request)
     return redirect('signin')
+
 
 def signup(request):
     forms = RegistrationForm()
@@ -77,8 +89,9 @@ def signup(request):
             confirm_password = forms.cleaned_data['confirm_password']
             if password == confirm_password:
                 try:
-                    User.objects.create_user(username=username, password=password, email=email, first_name=firstname, last_name=lastname)
-                   
+                    User.objects.create_user(
+                        username=username, password=password, email=email, first_name=firstname, last_name=lastname)
+
                     return redirect('signin')
                 except Exception as e:
                     print(str(e))

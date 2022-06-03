@@ -2,779 +2,781 @@ import json
 from turtle import speed
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django import views
 from django.contrib.sessions.backends.db import SessionStore
 from django.shortcuts import redirect, render
-from empresa.models import Empresa,RelacionEmpresa,CambioEmpres
+from empresa.models import Empresa, RelacionEmpresa, CambioEmpres
 from despacho.models import Despacho
-from casino.models import Casino,Importe
+from casino.models import Casino, Importe
 from tarea.models import Tarea
-from casino.serializers import CasinoSerializer,ImporteSerializer
+from casino.serializers import CasinoSerializer, ImporteSerializer
 from acumulado.models import Acumulado as ACUMULADO
 from integrante.models import Integrante
 from patinador.models import Patinador
 from produccion.models import Produccion as Prod
-from talla.models import Talla,CanTalla
-from django.db.models import Sum, F 
+from talla.models import Talla, CanTalla
+from django.db.models import Sum, F
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from authapp.models import MyUser
-from despacho.serializers import DespachoSerializer,OperacionSerializer
-from acumulado.serializers import AcumuladoSerializer,AcuSerializerProc
+from despacho.serializers import DespachoSerializer, OperacionSerializer
+from acumulado.serializers import AcumuladoSerializer, AcuSerializerProc
 from acumulado.serializers import AcumuladoSerializer
 from integrante.serializers import IntegranteSerializer
 from patinador.serializers import PatinadorSerializer
 from tarea.serializers import TareaSerializer
 from produccion.serializers import ProduccionSerializer
-from talla.serializers import TallaSerializer,CanTallaSerializer
+from talla.serializers import TallaSerializer, CanTallaSerializer
 from operacion.models import Operacion
 from django.views.generic import View
 from django.http import JsonResponse, Http404, HttpResponse
 from django.db.models import F
 from django_serverside_datatable.views import ServerSideDatatableView
-from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 # Create your views here.
 from acumulado.models import Acumulado as ACUMULADO
-from acumulado.models import ProAcumulado as  ProAcu
-@api_view(['GET'])  
-def operacionesListPatinadores(request):     
-    if request.session.has_key('username'):        
+from acumulado.models import ProAcumulado as ProAcu
+
+
+@api_view(['GET'])
+def operacionesListPatinadores(request):
+    if request.session.has_key('username'):
         if 'username' in request.session:
-            username = request.session['username']     
-            
-            idUser   = MyUser.objects.get(username=username)
-            
-    
-    
-    
-    lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
-    lastEm=int(lastEm[0]['empresa_id'])
+            username = request.session['username']
+
+            idUser = MyUser.objects.get(username=username)
+
+    lastEm = Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm = int(lastEm[0]['empresa_id'])
     #vamos bien
-    despacho   = Operacion.objects.filter(empresa_id=lastEm,estatus='A').order_by('-id')
+    despacho = Operacion.objects.filter(
+        empresa_id=lastEm, estatus='A').order_by('-id')
     serializer = OperacionSerializer(despacho, many=True)
 
     return Response(serializer.data)
-  
-class DespachoPatinador(LoginRequiredMixin,TemplateView):     
-     template_name = "pages/blackbox/despachoPerfilPatinador.html"
-     success_url = '/'     
-     def get_context_data(self, **kwargs):
-          context = super(DespachoPatinador, self).get_context_data(**kwargs)
-          s = SessionStore()
-          s['last_login'] = self.request.user.pk
-          s.create()
-          integranteConten = Integrante.objects.filter(id=s['last_login']).values('empresa_id', 'usuario_id')
-          
-          
-          lastEm=int(integranteConten[0]['empresa_id'])   
-          AllEmpresa = RelacionEmpresa.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']))
-              
-              
-              
-              
-              
-              
-              
-              
-              
-         # Tallas          = Talla.objects.filter(usuario=s['last_login'],empresa_id=lastEm).values('id','nom_talla','num_talla')
-          EmpresaActual = Empresa.objects.filter(
-              usuario=int(integranteConten[0]['usuario_id']), id=int(lastEm))
-          Operaciones = Operacion.objects.filter(usuario=int(integranteConten[0]['usuario_id']), id=int(
-              lastEm), empresa_id=lastEm, estatus='A').values('nom_operacion', 'id')
-          context = super(DespachoPatinador, self).get_context_data(**kwargs)
-          context['login_user_id']    = s['last_login']   # aqui se obtiene el user id
-          context['lastIdEmpresa']    = int(lastEm) # ids empresas
-          #context['allTalla']         = Tallas             #todaslas las tallas
-          context['allOperaciones']   = Operaciones        #todaslas operaciones 
-          context['nomEmpresa']       = AllEmpresa         #nombre de todas las empresa
-          context['nomEmpresaU']      = EmpresaActual      # nombre de la empresa actual
-          context['last_login']       = s['last_login']    # ultimo inicio de seccion
-          try:
-              patinadores     = Patinador.objects.all().filter(usuario=int(integranteConten[0]['usuario_id']), id=int(lastEm),empresa_id=lastEm).values('integrante_id')
-              allPatinadores = Integrante.objects.all().filter(usuario=int(integranteConten[0]['usuario_id']), empresa_id=lastEm, id=int(
-                  patinadores[0].get('integrante_id'))).values('nombres', 'apellidos', 'id')
-              context['allPatinador']     = allPatinadores     #todos los patinadores de la empresa
-              return context
-          finally:
-            return context  
-    
+
+
+class DespachoPatinador(LoginRequiredMixin, TemplateView):
+    template_name = "pages/blackbox/despachoPerfilPatinador.html"
+    success_url = '/'
+
+    def get_context_data(self, **kwargs):
+        context = super(DespachoPatinador, self).get_context_data(**kwargs)
+        s = SessionStore()
+        s['last_login'] = self.request.user.pk
+        s.create()
+        integranteConten = Integrante.objects.filter(
+            id=s['last_login']).values('empresa_id', 'usuario_id')
+
+        lastEm = int(integranteConten[0]['empresa_id'])
+        AllEmpresa = RelacionEmpresa.objects.filter(
+            usuario_id=int(integranteConten[0]['usuario_id']))
+
+        # Tallas          = Talla.objects.filter(usuario=s['last_login'],empresa_id=lastEm).values('id','nom_talla','num_talla')
+        EmpresaActual = Empresa.objects.filter(
+            usuario=int(integranteConten[0]['usuario_id']), id=int(lastEm))
+        Operaciones = Operacion.objects.filter(usuario=int(integranteConten[0]['usuario_id']), id=int(
+            lastEm), empresa_id=lastEm, estatus='A').values('nom_operacion', 'id')
+        context = super(DespachoPatinador, self).get_context_data(**kwargs)
+        # aqui se obtiene el user id
+        context['login_user_id'] = s['last_login']
+        context['lastIdEmpresa'] = int(lastEm)  # ids empresas
+         #context['allTalla']         = Tallas             #todaslas las tallas
+        context['allOperaciones'] = Operaciones  # todaslas operaciones
+        context['nomEmpresa'] = AllEmpresa  # nombre de todas las empresa
+          # nombre de la empresa actual
+        context['nomEmpresaU'] = EmpresaActual
+        context['last_login'] = s['last_login']    # ultimo inicio de seccion
+        
+        try:
+            patinadores = Patinador.objects.all().filter(usuario=int(integranteConten[0]['usuario_id']), id=int(lastEm), empresa_id=lastEm).values('integrante_id')
+            allPatinadores = Integrante.objects.all().filter(usuario=int(integranteConten[0]['usuario_id']), empresa_id=lastEm, id=int(
+            patinadores[0].get('integrante_id'))).values('nombres', 'apellidos', 'id')
+              # todos los patinadores de la empresa
+            context['allPatinador'] = allPatinadores
+            return context
+        finally:
+            return context
+
+
 @api_view(['POST'])
 def createDespachoPatinador(request,):
-    if request.session.has_key('username'):        
+    if request.session.has_key('username'):
         if 'username' in request.session:
-            username = request.session['username']     
-            idUser   = MyUser.objects.get(username=username)
-    integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
-    lastEm=int(integranteConten[0]['empresa_id'])   
-    canTerminada  = int(request.data['cantPatinador'])
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
+    integranteConten = Integrante.objects.filter(
+        id=idUser.id).values('empresa_id', 'usuario_id')
+    lastEm = int(integranteConten[0]['empresa_id'])
+    canTerminada = int(request.data['cantPatinador'])
     #nombreTalla   = Talla.objects.filter(empresa_id=int(lastEm),usuario_id=int(idUser.id)     ,id=int(request.data['selectIdTalla'])).values('nom_talla')
-    nombreTalla   = Talla.objects.filter(empresa_id=int(lastEm),usuario_id=int(integranteConten[0]['usuario_id']),id=int(request.data['selectIdTallaPatinador'])).values('nom_talla','id')
-    idPatinador   = Patinador.objects.filter(integrante_id=idUser.id).values('id')
-    idPatinador  = idPatinador[0]['id']
-    nomPatinador  = Integrante.objects.filter(empresa_id=int(lastEm),usuario_id=int(integranteConten[0]['usuario_id']) ,id=int(idUser.id)).values('nombres','apellidos')
+    nombreTalla = Talla.objects.filter(empresa_id=int(lastEm), usuario_id=int(
+        integranteConten[0]['usuario_id']), id=int(request.data['selectIdTallaPatinador'])).values('nom_talla', 'id')
+    idPatinador = Patinador.objects.filter(
+        integrante_id=idUser.id).values('id')
+    idPatinador = idPatinador[0]['id']
+    nomPatinador = Integrante.objects.filter(empresa_id=int(lastEm), usuario_id=int(
+        integranteConten[0]['usuario_id']), id=int(idUser.id)).values('nombres', 'apellidos')
     nom_patinador = nomPatinador[0]['nombres']+" "+nomPatinador[0]['apellidos']
     try:
         obj = Despacho.objects.create(
-        usuario_id           = int(integranteConten[0]['usuario_id']),
-        patinador_id         = idPatinador,
-        empresa_id           = int(lastEm),
-        operacion_id         = int(request.data['id_OPPatinador']), 
-        talla_id             = nombreTalla[0]['id'],
-        can_terminada        = canTerminada,
-        nomTallaDespacho     = nombreTalla[0]['nom_talla'],
-        nomPatinadorDespacho = nom_patinador
+            usuario_id=int(integranteConten[0]['usuario_id']),
+            patinador_id=idPatinador,
+            empresa_id=int(lastEm),
+            operacion_id=int(request.data['id_OPPatinador']),
+            talla_id=nombreTalla[0]['id'],
+            can_terminada=canTerminada,
+            nomTallaDespacho=nombreTalla[0]['nom_talla'],
+            nomPatinadorDespacho=nom_patinador
         )
         obj = Despacho.objects.latest('id')
-        btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteDespachoUnico({})'> </button>".format(obj.id)
+        btnDel = "<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteDespachoUnico({})'> </button>".format(
+            obj.id)
         obj = Despacho.objects.all().filter(id=obj.id).update(btnDelDespacho=btnDel)
         data = {'despacho': True}
-        CanTallaOP      = CanTalla.objects.all().filter(operacion_id=int(request.data['id_OPPatinador']),talla_id=int(request.data['selectIdTallaPatinador'])).update(res_talla= F('res_talla') - canTerminada)
-        OpTallaRestante = Operacion.objects.all().filter(id=int(request.data['id_OPPatinador'])).update(can_restante= F('can_restante') - canTerminada)
+        CanTallaOP = CanTalla.objects.all().filter(operacion_id=int(request.data['id_OPPatinador']), talla_id=int(
+            request.data['selectIdTallaPatinador'])).update(res_talla=F('res_talla') - canTerminada)
+        OpTallaRestante = Operacion.objects.all().filter(id=int(
+            request.data['id_OPPatinador'])).update(can_restante=F('can_restante') - canTerminada)
         return Response(data)
     except Exception as e:
         print(str(e))
-        data={'msj':'despacho no cargado','error':str(e)}
+        data = {'msj': 'despacho no cargado', 'error': str(e)}
         return Response(data)
-class ItemListViewPatinador(ServerSideDatatableView):  
-    columns = ['nomPatinadorDespacho','nomTallaDespacho','can_terminada','created_at','btnDelDespacho','id']
+
+
+class ItemListViewPatinador(ServerSideDatatableView):
+    columns = ['nomPatinadorDespacho', 'nomTallaDespacho',
+               'can_terminada', 'created_at', 'btnDelDespacho', 'id']
+
     def get_queryset(self):
-        if self.request.method == 'GET':           
+        if self.request.method == 'GET':
             idOp = self.request.GET.get('idOpPatinador', None)
             IdEmpresa = self.request.GET.get('usuarioPatinador', None)
-            queryset = Despacho.objects.filter(empresa_id=int(IdEmpresa), operacion_id=idOp).order_by('-id')
+            queryset = Despacho.objects.filter(empresa_id=int(
+                IdEmpresa), operacion_id=idOp).order_by('-id')
             return queryset
 
 
-
-@api_view(['GET'])  
+@api_view(['GET'])
 def TallaOPListPatinador(request):
-    if request.session.has_key('username'):        
-            if 'username' in request.session:
-                username = request.session['username']     
-                idUser   = MyUser.objects.get(username=username)             
-    lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
-    lastEm=int(lastEm[0]['empresa_id'])
-    ptalla   = CanTalla.objects.filter(empresa_id=lastEm,operacion_id=int(request.GET.get('idOp', None))).order_by('-id')
+    if request.session.has_key('username'):
+        if 'username' in request.session:
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
+    lastEm = Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm = int(lastEm[0]['empresa_id'])
+    ptalla = CanTalla.objects.filter(empresa_id=lastEm, operacion_id=int(
+        request.GET.get('idOp', None))).order_by('-id')
     serializer = CanTallaSerializer(ptalla, many=True)
     return Response(serializer.data)
- 
 
-@api_view(['GET'])  
+
+@api_view(['GET'])
 def TallaOpCanIncosistentePatinadores(request):
-    if request.session.has_key('username'):        
+    if request.session.has_key('username'):
         if 'username' in request.session:
-            username = request.session['username']     
-            idUser   = MyUser.objects.get(username=username)
-            
-       
-    lastEm        = CambioEmpres.objects.filter(usuario_id=idUser.id).last() 
-    idOP          = request.GET.get('idOperacion', None) 
-    CanOperacion  = Operacion.objects.filter(id=int(idOP)).values('can_total')
-    CanOperacion  = CanOperacion[0]['can_total']    
-    CanTallaTotal   = CanTalla.objects.filter(empresa_id=lastEm,operacion_id=idOP).aggregate(can_talla=Sum('can_talla'))
-    CanTallaTotal   = CanTallaTotal['can_talla']
-    TotalOpRestante = Operacion.objects.filter(id=idOP).values('can_restante','fecha_cierre') 
-    FechaCierre     = TotalOpRestante[0]['fecha_cierre']
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
+
+    lastEm = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
+    idOP = request.GET.get('idOperacion', None)
+    CanOperacion = Operacion.objects.filter(id=int(idOP)).values('can_total')
+    CanOperacion = CanOperacion[0]['can_total']
+    CanTallaTotal = CanTalla.objects.filter(
+        empresa_id=lastEm, operacion_id=idOP).aggregate(can_talla=Sum('can_talla'))
+    CanTallaTotal = CanTallaTotal['can_talla']
+    TotalOpRestante = Operacion.objects.filter(
+        id=idOP).values('can_restante', 'fecha_cierre')
+    FechaCierre = TotalOpRestante[0]['fecha_cierre']
     TotalOpRestante = TotalOpRestante[0]['can_restante']
-    
+
     data = {
-        'CanTallaTotal':CanTallaTotal,
-        'CanOperacion':CanOperacion,
-        'TotalOpRestante':TotalOpRestante,
-        'FechaCierre':FechaCierre
-        }
-    
-   
-    
+        'CanTallaTotal': CanTallaTotal,
+        'CanOperacion': CanOperacion,
+        'TotalOpRestante': TotalOpRestante,
+        'FechaCierre': FechaCierre
+    }
+
     return JsonResponse(data)
- 
-
-class ProduccionPatinador(LoginRequiredMixin,TemplateView):
-     template_name = "pages/blackbox/produccionPerfilPatinador.html"     
-     success_url = '/'     
-     def get_context_data(self, **kwargs):
-          context = super(ProduccionPatinador, self).get_context_data(**kwargs)
-          s = SessionStore()
-          s['last_login'] = self.request.user.pk
-          s.create()
-          integranteConten = Integrante.objects.filter(
-              id=s['last_login']).values('empresa_id', 'usuario_id')
-         
 
 
-          
-          lastEm=int(integranteConten[0]['empresa_id'])   
-          
-          
-          AllEmpresa = RelacionEmpresa.objects.filter(
-              usuario_id=int(integranteConten[0]['usuario_id'])) 
-          #lastEm          = CambioEmpres.objects.filter(usuario_id=s['last_login']).last()
-          #Tallas          = Talla.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm)).values('id','nom_talla','num_talla')
-          EmpresaActual   = Empresa.objects.filter(usuario=int(integranteConten[0]['usuario_id']),id=int(lastEm))
-          Operaciones     = Operacion.objects.filter(usuario=int(integranteConten[0]['usuario_id']),empresa_id=int(lastEm),estatus='A').values('nom_operacion','id')
-          context = super(ProduccionPatinador, self).get_context_data(**kwargs)
-          context['login_user_id']    = s['last_login']   # aqui se obtiene el user id
-          context['lastIdEmpresa']    = int(lastEm) # ids empresas
-          #context['allTalla']         = Tallas             #todaslas las tallas
-          context['allOperaciones']   = Operaciones        #todaslas operaciones 
-          context['nomEmpresa']       = AllEmpresa         #nombre de todas las empresa
-          context['nomEmpresaU']      = EmpresaActual      # nombre de la empresa actual
-          context['last_login']       = s['last_login']    # ultimo inicio de seccion
+class ProduccionPatinador(LoginRequiredMixin, TemplateView):
+    template_name = "pages/blackbox/produccionPerfilPatinador.html"
+    success_url = '/'
 
-          try:
-            patinadores     = Patinador.objects.all().filter(usuario=int(integranteConten[0]['usuario_id']),empresa_id=int(lastEm)).values('integrante_id')
-            allPatinadores  = Integrante.objects.all().filter(usuario=int(integranteConten[0]['usuario_id']),empresa_id=int(lastEm),id=int(patinadores[0].get('integrante_id'))).values('nombres','apellidos','id')
-            context['allPatinador']     = allPatinadores     #todos los patinadores de la empresa
+    def get_context_data(self, **kwargs):
+        context = super(ProduccionPatinador, self).get_context_data(**kwargs)
+        s = SessionStore()
+        s['last_login'] = self.request.user.pk
+        s.create()
+        integranteConten = Integrante.objects.filter(
+            id=s['last_login']).values('empresa_id', 'usuario_id')
+
+        lastEm = int(integranteConten[0]['empresa_id'])
+
+        AllEmpresa = RelacionEmpresa.objects.filter(
+            usuario_id=int(integranteConten[0]['usuario_id']))
+        #lastEm          = CambioEmpres.objects.filter(usuario_id=s['last_login']).last()
+        #Tallas          = Talla.objects.filter(usuario=s['last_login'],empresa_id=int(lastEm)).values('id','nom_talla','num_talla')
+        EmpresaActual = Empresa.objects.filter(usuario=int(
+            integranteConten[0]['usuario_id']), id=int(lastEm))
+        Operaciones = Operacion.objects.filter(usuario=int(integranteConten[0]['usuario_id']), empresa_id=int(
+            lastEm), estatus='A').values('nom_operacion', 'id')
+        context = super(ProduccionPatinador, self).get_context_data(**kwargs)
+        # aqui se obtiene el user id
+        context['login_user_id'] = s['last_login']
+        context['lastIdEmpresa'] = int(lastEm)  # ids empresas
+        #context['allTalla']         = Tallas             #todaslas las tallas
+        context['allOperaciones'] = Operaciones  # todaslas operaciones
+        context['nomEmpresa'] = AllEmpresa  # nombre de todas las empresa
+          # nombre de la empresa actual
+        context['nomEmpresaU'] = EmpresaActual
+        context['last_login'] = s['last_login']    # ultimo inicio de seccion
+
+        try:
+            patinadores = Patinador.objects.all().filter(usuario=int(
+                integranteConten[0]['usuario_id']), empresa_id=int(lastEm)).values('integrante_id')
+            allPatinadores = Integrante.objects.all().filter(usuario=int(integranteConten[0]['usuario_id']), empresa_id=int(
+                lastEm), id=int(patinadores[0].get('integrante_id'))).values('nombres', 'apellidos', 'id')
+            # todos los patinadores de la empresa
+            context['allPatinador'] = allPatinadores
             return context
-          finally:
-            return context        
+        finally:
+            return context
 
-@api_view(['GET'])  
-def produccionesListPatinadores(request):     
-    if request.session.has_key('username'):        
+
+@api_view(['GET'])
+def produccionesListPatinadores(request):
+    if request.session.has_key('username'):
         if 'username' in request.session:
-            username = request.session['username']     
-            idUser   = MyUser.objects.get(username=username)
-    
-    lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
-    lastEm=int(lastEm[0]['empresa_id'])
-    #vamos bien
-    despacho   = Operacion.objects.filter(empresa_id=lastEm,estatus='A').order_by('-id')
-    serializer = OperacionSerializer(despacho, many=True)
-    
-    return Response(serializer.data)
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
 
+    lastEm = Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm = int(lastEm[0]['empresa_id'])
+    #vamos bien
+    despacho = Operacion.objects.filter(
+        empresa_id=lastEm, estatus='A').order_by('-id')
+    serializer = OperacionSerializer(despacho, many=True)
+
+    return Response(serializer.data)
 
 
 #dataProduccionInte-list/
 @api_view(['GET'])
 def ProduccionDataIntegrantePatinador(request):
-    if request.session.has_key('username'):        
-            if 'username' in request.session:
-                username = request.session['username']     
-                idUser   = MyUser.objects.get(username = username)    
-    
-    lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
-    lastEm=int(lastEm[0]['empresa_id'])
-    
-    idOperacion     = request.GET.get('idOpPatinador',None)    
-    idIntegrante    = request.GET.get('idIntegranteSelectPatinador')
+    if request.session.has_key('username'):
+        if 'username' in request.session:
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
+
+    lastEm = Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm = int(lastEm[0]['empresa_id'])
+
+    idOperacion = request.GET.get('idOpPatinador', None)
+    idIntegrante = request.GET.get('idIntegranteSelectPatinador')
     dontrepeYorself = []
     tareas = []
-    patinadores = []   
-    for tareasIntegrante in Prod.objects.filter(empresa_id=lastEm,operacion_id=int(idOperacion),integrante_id=idIntegrante).distinct().values('tarea_id','patinador_id'):
-        tareaIntegrante = (Tarea.objects.filter(empresa_id=lastEm,id=tareasIntegrante['tarea_id']).values('nom_tarea','id')[0])  
-        totalIntegrante = Prod.objects.filter(empresa_id=lastEm,operacion_id=int(idOperacion),integrante_id=idIntegrante,tarea_id=tareaIntegrante['id']).values('tarea_id','can_terminada').aggregate(can_terminada=Sum('can_terminada'))
-        patinador       = Patinador.objects.filter(empresa_id=lastEm,id=tareasIntegrante['patinador_id']).distinct().values('integrante_id')
-        patinador       = Integrante.objects.filter(empresa_id=lastEm,id=patinador[0]['integrante_id']).values('nombres','apellidos')
-        patinador       = "{} {}".format(patinador[0]['nombres'],patinador[0]['apellidos'] ) 
-        if patinador in patinadores:pass
-        else:patinadores.append(patinador)
-        if tareaIntegrante['nom_tarea'] in dontrepeYorself:pass
-        else:           
+    patinadores = []
+    for tareasIntegrante in Prod.objects.filter(empresa_id=lastEm, operacion_id=int(idOperacion), integrante_id=idIntegrante).distinct().values('tarea_id', 'patinador_id'):
+        tareaIntegrante = (Tarea.objects.filter(
+            empresa_id=lastEm, id=tareasIntegrante['tarea_id']).values('nom_tarea', 'id')[0])
+        totalIntegrante = Prod.objects.filter(empresa_id=lastEm, operacion_id=int(idOperacion), integrante_id=idIntegrante, tarea_id=tareaIntegrante['id']).values(
+            'tarea_id', 'can_terminada').aggregate(can_terminada=Sum('can_terminada'))
+        patinador = Patinador.objects.filter(
+            empresa_id=lastEm, id=tareasIntegrante['patinador_id']).distinct().values('integrante_id')
+        patinador = Integrante.objects.filter(
+            empresa_id=lastEm, id=patinador[0]['integrante_id']).values('nombres', 'apellidos')
+        patinador = "{} {}".format(
+            patinador[0]['nombres'], patinador[0]['apellidos'])
+        if patinador in patinadores:
+            pass
+        else:
+            patinadores.append(patinador)
+        if tareaIntegrante['nom_tarea'] in dontrepeYorself:
+            pass
+        else:
             dontrepeYorself.append(tareaIntegrante['nom_tarea'])
             tareas.append({
-            'tarea':tareaIntegrante['nom_tarea'],
-            'cat_total_tarea':totalIntegrante['can_terminada'],
-        })       
-    if tareas==[]:pass
+                'tarea': tareaIntegrante['nom_tarea'],
+                'cat_total_tarea': totalIntegrante['can_terminada'],
+            })
+    if tareas == []:
+        pass
     else:
-        if patinadores ==[]:pass 
-        else:tareas.append({'patinadores':patinadores})
+        if patinadores == []:
+            pass
+        else:
+            tareas.append({'patinadores': patinadores})
     return Response(tareas)
-  
-  
+
+
 @api_view(['GET'])
 def TareaListPatinador(request):
-    if request.session.has_key('username'):        
+    if request.session.has_key('username'):
         if 'username' in request.session:
-            username = request.session['username']     
-            idUser   = MyUser.objects.get(username=username)
-    
-    lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
-    lastEm=int(lastEm[0]['empresa_id'])
-    
-    
-   
-    tarea = Tarea.objects.all().filter(empresa_id=lastEm,estatus='A').order_by('-id')
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
+
+    lastEm = Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm = int(lastEm[0]['empresa_id'])
+
+    tarea = Tarea.objects.all().filter(empresa_id=lastEm, estatus='A').order_by('-id')
     serializer = TareaSerializer(tarea, many=True)
     return Response(serializer.data)
 
+
 @api_view(['GET'])
 def integranteListPatinador(request):
-    if request.session.has_key('username'):        
+    if request.session.has_key('username'):
         if 'username' in request.session:
-            username = request.session['username']     
-            idUser   = MyUser.objects.get(username=username)
-  
-  
-  
-  
-    lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
-    lastEm=int(lastEm[0]['empresa_id'])  
-    
-    
-    
-    integrante = Integrante.objects.all().filter(empresa_id=lastEm,estatus='A').order_by('-id')
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
+
+    lastEm = Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm = int(lastEm[0]['empresa_id'])
+
+    integrante = Integrante.objects.all().filter(
+        empresa_id=lastEm, estatus='A').order_by('-id')
     try:
         serializer = IntegranteSerializer(integrante, many=True)
         return Response(serializer.data)
-    except Exception as e:    
-        print(str(e),"no tienes patinadores activos")   
+    except Exception as e:
+        print(str(e), "no tienes patinadores activos")
         return Response("no tienes patinadores activos")
 
 
-
-
-
-
-
-
-@api_view(['GET'])  
+@api_view(['GET'])
 def patinadoresActProdPatinador(request):
     if request.session.has_key('username'):
         if 'username' in request.session:
-            username = request.session['username']     
-            idUser   = MyUser.objects.get(username=username)            
-    lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
-    lastEm=int(lastEm[0]['empresa_id'])  
-    try:        
-        patinadores     = Patinador.objects.all().filter(usuario=idUser,estatus='A',ctrlProduccion=1, empresa_id=int(lastEm))
-        serializer      = PatinadorSerializer(patinadores, many=True)        
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
+    lastEm = Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm = int(lastEm[0]['empresa_id'])
+    try:
+        patinadores = Patinador.objects.all().filter(usuario=idUser, estatus='A',
+                                                     ctrlProduccion=1, empresa_id=int(lastEm))
+        serializer = PatinadorSerializer(patinadores, many=True)
         return Response(serializer.data)
-    except Exception as e:    
-        print(str(e),"no tienes patinadores activos")   
+    except Exception as e:
+        print(str(e), "no tienes patinadores activos")
         return Response("no tienes patinadores activos")
-        
-        
-        
-     
-
-
 
 
 @api_view(['POST'])
 def createProduccionPatinador(request,):
     #Prod = Models Produccion
-    if request.session.has_key('username'):        
+    if request.session.has_key('username'):
         if 'username' in request.session:
-            username = request.session['username']     
-            idUser   = MyUser.objects.get(username=username)
-        
-    integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
-    lastEm=int(integranteConten[0]['empresa_id'])
-    idPatinador   = Patinador.objects.filter(integrante_id=idUser.id).values('id')
-    idPatinador  = idPatinador[0]['id']
-    
-    
-    
-    canTerminada  = int(request.data['cantidadProdPatinador'])
-    
-    try: 
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
+
+    integranteConten = Integrante.objects.filter(
+        id=idUser.id).values('empresa_id', 'usuario_id')
+    lastEm = int(integranteConten[0]['empresa_id'])
+    idPatinador = Patinador.objects.filter(
+        integrante_id=idUser.id).values('id')
+    idPatinador = idPatinador[0]['id']
+
+    canTerminada = int(request.data['cantidadProdPatinador'])
+
+    try:
         obj = Prod.objects.create(
-        usuario_id           = int(integranteConten[0]['usuario_id']),
-        patinador_id         = idPatinador,
-        integrante_id        = int(request.data['OccionId_integrante_prodPatinador']),
-        empresa_id           = int(lastEm),
-        operacion_id         = int(request.data['idOperacionPatinador']),
-        talla_id             = int(request.data['OccionId_tallaPatinador']),
-        tarea_id             = int(request.data['OccionId_tareaPatinador']),
-        can_terminada        = canTerminada       
+            usuario_id=int(integranteConten[0]['usuario_id']),
+            patinador_id=idPatinador,
+            integrante_id=int(
+                request.data['OccionId_integrante_prodPatinador']),
+            empresa_id=int(lastEm),
+            operacion_id=int(request.data['idOperacionPatinador']),
+            talla_id=int(request.data['OccionId_tallaPatinador']),
+            tarea_id=int(request.data['OccionId_tareaPatinador']),
+            can_terminada=canTerminada
         )
-        
-        
-        
-        
-        
+
         obj = Prod.objects.latest('id')
-        btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteProduccionUnico({})'> </button>".format(obj.id)
+        btnDel = "<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteProduccionUnico({})'> </button>".format(
+            obj.id)
         obj = Prod.objects.all().filter(id=obj.id).update(delProduccion=btnDel)
         data = {
             'produccion': "Produccion guardado con exito!",
-            'estatus':True
+            'estatus': True
         }
-       
+
         return Response(data)
 
     except Exception as e:
         print(str(e))
-        return Response("PRODUCCION no cargadA " +str(e) )
-   
-  
+        return Response("PRODUCCION no cargadA " + str(e))
 
 
+class AcumuladoPatinador(LoginRequiredMixin, TemplateView):
+    template_name = "pages/blackbox/acumuladoPerfilPatinador.html"
+    success_url = '/'
 
+    def get_context_data(self, **kwargs):
+        context = super(AcumuladoPatinador, self).get_context_data(**kwargs)
+        s = SessionStore()
+        s['last_login'] = self.request.user.pk
+        s.create()
 
+        integranteConten = Integrante.objects.filter(
+            id=s['last_login']).values('empresa_id', 'usuario_id')
+        lastEm = int(integranteConten[0]['empresa_id'])
 
+        AllEmpresa = RelacionEmpresa.objects.filter(
+            usuario_id=int(integranteConten[0]['usuario_id']))
 
-
-
-
-
-
-class AcumuladoPatinador(LoginRequiredMixin,TemplateView):     
-     template_name = "pages/blackbox/acumuladoPerfilPatinador.html"
-     success_url = '/'     
-     def get_context_data(self, **kwargs):
-          context = super(AcumuladoPatinador, self).get_context_data(**kwargs)
-          s = SessionStore()
-          s['last_login'] = self.request.user.pk
-          s.create()        
-          
-          integranteConten = Integrante.objects.filter(id=s['last_login']).values('empresa_id', 'usuario_id')
-          lastEm=int(integranteConten[0]['empresa_id'])   
-          
-          AllEmpresa = RelacionEmpresa.objects.filter(
-              usuario_id=int(integranteConten[0]['usuario_id'])) 
-          
-          EmpresaActual   = Empresa.objects.filter(usuario=int(integranteConten[0]['empresa_id']),id=int(lastEm))
-          context = super(AcumuladoPatinador, self).get_context_data(**kwargs)
-          context['lastIdEmpresa']    = int(lastEm) #ids empresas
-          context['nomEmpresa']       = AllEmpresa         #nombre de todas las empresa
-          context['nomEmpresaU']      = EmpresaActual      # nombre de la empresa actual
-          context['last_login']       = s['last_login']    # ultimo inicio de seccion   
-          try:
-            patinadores     = Patinador.objects.all().filter(usuario=int(integranteConten[0]['empresa_id']),empresa_id=int(lastEm)).values('integrante_id')
-            allPatinadores  = Integrante.objects.all().filter(usuario=int(integranteConten[0]['empresa_id']),empresa_id=int(lastEm),id=int(patinadores[0].get('integrante_id'))).values('nombres','apellidos','id')
-            context['allPatinador']     = allPatinadores     #todos los patinadores de la empresa
-            return context          
-          finally:
+        EmpresaActual = Empresa.objects.filter(usuario=int(
+            integranteConten[0]['empresa_id']), id=int(lastEm))
+        context = super(AcumuladoPatinador, self).get_context_data(**kwargs)
+        context['lastIdEmpresa'] = int(lastEm)  # ids empresas
+        context['nomEmpresa'] = AllEmpresa  # nombre de todas las empresa
+         # nombre de la empresa actual
+        context['nomEmpresaU'] = EmpresaActual
+        context['last_login'] = s['last_login']    # ultimo inicio de seccion
+        try:
+            patinadores = Patinador.objects.all().filter(usuario=int(
+                integranteConten[0]['empresa_id']), empresa_id=int(lastEm)).values('integrante_id')
+            allPatinadores = Integrante.objects.all().filter(usuario=int(integranteConten[0]['empresa_id']), empresa_id=int(
+                lastEm), id=int(patinadores[0].get('integrante_id'))).values('nombres', 'apellidos', 'id')
+            # todos los patinadores de la empresa
+            context['allPatinador'] = allPatinadores
             return context
-       
-@api_view(['GET'])  
+        finally:
+            return context
+
+
+@api_view(['GET'])
 def AcumuladoListPatinadores(request):
     if request.session.has_key('username'):
-            if 'username' in request.session:
-                username = request.session['username']
-                idUse   = MyUser.objects.get(username = username)
-    
- 
-    lastEm=Integrante.objects.filter(id=idUse.id).values('empresa_id')
-    lastEm=int(lastEm[0]['empresa_id'])  
-    acumuladoQsect  = ACUMULADO.objects.filter(empresa_id = lastEm,estatus='A').order_by('-id')
-    AcumuladoSe     = AcumuladoSerializer(acumuladoQsect, many=True)   
-    dump            = json.dumps(AcumuladoSe.data)   #dump serializer to json reponse 
-    
-    return HttpResponse(dump, content_type='application/json')
+        if 'username' in request.session:
+            username = request.session['username']
+            idUse = MyUser.objects.get(username=username)
 
+    lastEm = Integrante.objects.filter(id=idUse.id).values('empresa_id')
+    lastEm = int(lastEm[0]['empresa_id'])
+    acumuladoQsect = ACUMULADO.objects.filter(
+        empresa_id=lastEm, estatus='A').order_by('-id')
+    AcumuladoSe = AcumuladoSerializer(acumuladoQsect, many=True)
+    dump = json.dumps(AcumuladoSe.data)  # dump serializer to json reponse
+
+    return HttpResponse(dump, content_type='application/json')
 
 
 @api_view(['GET'])
 def AcumuladoDataIntegrantePatinador(request):
-    if request.session.has_key('username'):        
-            if 'username' in request.session:
-                username = request.session['username']     
-                idUser   = MyUser.objects.get(username = username)    
+    if request.session.has_key('username'):
+        if 'username' in request.session:
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
 
-    integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
-    lastEm=int(integranteConten[0]['empresa_id'])
-    idAcumulado     = request.GET.get('idAcumuladoPatinador',None) 
-    
-    idIntegrante    = request.GET.get('idIntegranteSelectPatinador')   
-    dontrepeYorself=[]
-    tareas=[]
-    patinadores=[]
-    
-    for tareasIntegrante in ProAcu.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']),empresa_id=lastEm,acumulado_id=int(idAcumulado), 
-    integrante_id=idIntegrante).distinct().values('tarea_id','patinador_id'):       
-        tareaIntegrante = (Tarea.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']),empresa_id=lastEm,id=tareasIntegrante['tarea_id']).values('nom_tarea','id')[0])  
-        totalIntegrante = ProAcu.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']),empresa_id=lastEm,acumulado_id=int(idAcumulado),integrante_id=idIntegrante,tarea_id=tareaIntegrante['id']).values('tarea_id','can_prod_acum').aggregate(can_prod_acum=Sum('can_prod_acum'))
-        patinador       = Patinador.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']),empresa_id=lastEm,id=tareasIntegrante['patinador_id']).distinct().values('integrante_id')
-        patinador       = Integrante.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']),empresa_id=lastEm,id=patinador[0]['integrante_id']).values('nombres','apellidos')
-        patinador       = "{} {}".format(patinador[0]['nombres'],patinador[0]['apellidos'] )
-        
-        if patinador in patinadores:pass
-        else:patinadores.append(patinador)       
-        if tareaIntegrante['nom_tarea'] in dontrepeYorself:pass
-        else:           
+    integranteConten = Integrante.objects.filter(
+        id=idUser.id).values('empresa_id', 'usuario_id')
+    lastEm = int(integranteConten[0]['empresa_id'])
+    idAcumulado = request.GET.get('idAcumuladoPatinador', None)
+
+    idIntegrante = request.GET.get('idIntegranteSelectPatinador')
+    dontrepeYorself = []
+    tareas = []
+    patinadores = []
+
+    for tareasIntegrante in ProAcu.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']), empresa_id=lastEm, acumulado_id=int(idAcumulado),
+                                                  integrante_id=idIntegrante).distinct().values('tarea_id', 'patinador_id'):
+        tareaIntegrante = (Tarea.objects.filter(usuario_id=int(
+            integranteConten[0]['usuario_id']), empresa_id=lastEm, id=tareasIntegrante['tarea_id']).values('nom_tarea', 'id')[0])
+        totalIntegrante = ProAcu.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']), empresa_id=lastEm, acumulado_id=int(
+            idAcumulado), integrante_id=idIntegrante, tarea_id=tareaIntegrante['id']).values('tarea_id', 'can_prod_acum').aggregate(can_prod_acum=Sum('can_prod_acum'))
+        patinador = Patinador.objects.filter(usuario_id=int(
+            integranteConten[0]['usuario_id']), empresa_id=lastEm, id=tareasIntegrante['patinador_id']).distinct().values('integrante_id')
+        patinador = Integrante.objects.filter(usuario_id=int(
+            integranteConten[0]['usuario_id']), empresa_id=lastEm, id=patinador[0]['integrante_id']).values('nombres', 'apellidos')
+        patinador = "{} {}".format(
+            patinador[0]['nombres'], patinador[0]['apellidos'])
+
+        if patinador in patinadores:
+            pass
+        else:
+            patinadores.append(patinador)
+        if tareaIntegrante['nom_tarea'] in dontrepeYorself:
+            pass
+        else:
             dontrepeYorself.append(tareaIntegrante['nom_tarea'])
             tareas.append({
-            'tarea':tareaIntegrante['nom_tarea'],
-            'cat_total_tarea':totalIntegrante['can_prod_acum'],
-        })       
-    if tareas==[]:pass
+                'tarea': tareaIntegrante['nom_tarea'],
+                'cat_total_tarea': totalIntegrante['can_prod_acum'],
+            })
+    if tareas == []:
+        pass
     else:
-        if patinadores ==[]:pass 
-        else:tareas.append({'patinadores':patinadores})
+        if patinadores == []:
+            pass
+        else:
+            tareas.append({'patinadores': patinadores})
     return Response(tareas)
 
 
-
-@api_view(['GET'])  
+@api_view(['GET'])
 def AcumuladoListProcPatinador(request):
-    if request.session.has_key('username'):        
-            if 'username' in request.session:
-                username = request.session['username']     
-                idUser   = MyUser.objects.get(username = username)    
-    
-    integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
-    lastEm=int(integranteConten[0]['empresa_id'])
-    idAcumulado     = request.GET.get('idAcumuladoPatinador',None)    
-    acumuladoProc= ProAcu.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']),empresa_id=lastEm,acumulado_id=idAcumulado).order_by('-id')
+    if request.session.has_key('username'):
+        if 'username' in request.session:
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
+
+    integranteConten = Integrante.objects.filter(
+        id=idUser.id).values('empresa_id', 'usuario_id')
+    lastEm = int(integranteConten[0]['empresa_id'])
+    idAcumulado = request.GET.get('idAcumuladoPatinador', None)
+    acumuladoProc = ProAcu.objects.filter(usuario_id=int(
+        integranteConten[0]['usuario_id']), empresa_id=lastEm, acumulado_id=idAcumulado).order_by('-id')
     serializer = AcuSerializerProc(acumuladoProc, many=True)
-    return Response(serializer.data)   
-     
+    return Response(serializer.data)
 
 
-
-  
 @api_view(['POST'])
 def createProAcumuladoPatinador(request,):
 
-    if request.session.has_key('username'):        
+    if request.session.has_key('username'):
         if 'username' in request.session:
-            username = request.session['username']     
-            idUser   = MyUser.objects.get(username=username)
-        
-    
-    integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id','id')
-    lastEm=int(integranteConten[0]['empresa_id'])
-    canTerminada  = int(request.data['Cantidad_AcuPatinador'])
-    
-    idPatinador   = Patinador.objects.filter(integrante_id=idUser.id).values('id')
-    idPatinador  = idPatinador[0]['id']
-    
-    try: 
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
+
+    integranteConten = Integrante.objects.filter(
+        id=idUser.id).values('empresa_id', 'usuario_id', 'id')
+    lastEm = int(integranteConten[0]['empresa_id'])
+    canTerminada = int(request.data['Cantidad_AcuPatinador'])
+
+    idPatinador = Patinador.objects.filter(
+        integrante_id=idUser.id).values('id')
+    idPatinador = idPatinador[0]['id']
+
+    try:
         obj = ProAcu.objects.create(
-        usuario_id     = int(integranteConten[0]['usuario_id']),
-        empresa_id     = int(lastEm),
-        integrante_id  = int(request.data['OccionId_integrante_AcuPatinador']),
-        patinador_id   = idPatinador,
-        tarea_id       = int(request.data['OccionId_tarea_AcuPatinador']),
-        talla_id       = int(request.data['OccionId_talla_AcuPatinador']),
-        can_prod_acum  = canTerminada,      
-        acumulado_id    =int(request.data['acumulado_idPatinador'])
+            usuario_id=int(integranteConten[0]['usuario_id']),
+            empresa_id=int(lastEm),
+            integrante_id=int(
+                request.data['OccionId_integrante_AcuPatinador']),
+            patinador_id=idPatinador,
+            tarea_id=int(request.data['OccionId_tarea_AcuPatinador']),
+            talla_id=int(request.data['OccionId_talla_AcuPatinador']),
+            can_prod_acum=canTerminada,
+            acumulado_id=int(request.data['acumulado_idPatinador'])
         )
-                
+
         obj = ProAcu.objects.latest('id')
-        btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteAcumuladoUnico({})'> </button>".format(obj.id)
+        btnDel = "<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteAcumuladoUnico({})'> </button>".format(
+            obj.id)
         obj = ProAcu.objects.all().filter(id=obj.id).update(delAcumulProc=btnDel)
-        
+
         data = {
             'Acumulado': "Acumulado guardado con exito!",
-            'estatus':True
+            'estatus': True
         }
-       
-      
 
     except Exception as e:
-        data = {'Acumulado': str(e),'estatus':False}        
+        data = {'Acumulado': str(e), 'estatus': False}
         return Response(data)
-    
+
     return Response(data)
 
 
-
-
-
-
-
-
-
-
-
-
-
-@api_view(['GET'])  
+@api_view(['GET'])
 def TallaEmpresaListPatinador(request):
-    if request.session.has_key('username'):        
-            if 'username' in request.session:
-                username = request.session['username']     
-                idUser   = MyUser.objects.get(username=username)
-    
-    lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
-    lastEm=int(lastEm[0]['empresa_id'])    
-    ptalla   = Talla.objects.filter(empresa_id=lastEm).order_by('-id')
-    
+    if request.session.has_key('username'):
+        if 'username' in request.session:
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
+
+    lastEm = Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm = int(lastEm[0]['empresa_id'])
+    ptalla = Talla.objects.filter(empresa_id=lastEm).order_by('-id')
+
     serializer = TallaSerializer(ptalla, many=True)
-   
+
     return Response(serializer.data)
- 
 
-class CasinoHomePatinador(LoginRequiredMixin,TemplateView):
-     template_name = "pages/blackbox/casinoActivoPerfilPatinador.html"
-     success_url = '/'
-     def get_context_data(self, **kwargs):
-          context = super(CasinoHomePatinador, self).get_context_data(**kwargs)
-          s = SessionStore()
-          s['last_login'] = self.request.user.pk
-          s.create()
-          
-          
-          integranteConten=Integrante.objects.filter(id=s['last_login']).values('empresa_id','usuario_id')
-          AllEmpresa = RelacionEmpresa.objects.filter(usuario_id=(integranteConten[0]['usuario_id']))
 
-          #lastEm=Integrante.objects.filter(id=s['last_login']).values('empresa_id')
-          lastEm = int(integranteConten[0]['empresa_id'])
-          
-          Tallas          = Talla.objects.filter(usuario=int(integranteConten[0]['usuario_id']),empresa_id=int(lastEm)).values('id','nom_talla','num_talla')
-          EmpresaActual   = Empresa.objects.filter(usuario=int(integranteConten[0]['usuario_id']),id=int(lastEm))
-          
+class CasinoHomePatinador(LoginRequiredMixin, TemplateView):
+    template_name = "pages/blackbox/casinoActivoPerfilPatinador.html"
+    success_url = '/'
 
-          Operaciones     = Operacion.objects.filter(usuario=int(integranteConten[0]['usuario_id']),empresa_id=int(lastEm),estatus='A').values('nom_operacion','id')
-          context = super(CasinoHomePatinador, self).get_context_data(**kwargs)
-          context['login_user_id']    = s['last_login']   # aqui se obtiene el user id
-          context['lastIdEmpresa']    = int(lastEm) #ids empresas
-          context['allTalla']         = Tallas             #todaslas las tallas
-          context['allOperaciones']   = Operaciones        #todaslas operaciones 
-          context['nomEmpresa']       = AllEmpresa         #nombre de todas las empresa
-          context['nomEmpresaU']      = EmpresaActual      # nombre de la empresa actual
-          context['last_login']       = s['last_login']    # ultimo inicio de seccion   
-          try:
-            patinadores     = Patinador.objects.all().filter(usuario=int(integranteConten[0]['usuario_id']),empresa_id=int(lastEm)).values('integrante_id')
+    def get_context_data(self, **kwargs):
+        context = super(CasinoHomePatinador, self).get_context_data(**kwargs)
+        s = SessionStore()
+        s['last_login'] = self.request.user.pk
+        s.create()
+
+        integranteConten = Integrante.objects.filter(
+            id=s['last_login']).values('empresa_id', 'usuario_id')
+        AllEmpresa = RelacionEmpresa.objects.filter(
+            usuario_id=(integranteConten[0]['usuario_id']))
+
+        #lastEm=Integrante.objects.filter(id=s['last_login']).values('empresa_id')
+        lastEm = int(integranteConten[0]['empresa_id'])
+
+        Tallas = Talla.objects.filter(usuario=int(integranteConten[0]['usuario_id']), empresa_id=int(
+            lastEm)).values('id', 'nom_talla', 'num_talla')
+        EmpresaActual = Empresa.objects.filter(usuario=int(
+            integranteConten[0]['usuario_id']), id=int(lastEm))
+
+        Operaciones = Operacion.objects.filter(usuario=int(integranteConten[0]['usuario_id']), empresa_id=int(
+            lastEm), estatus='A').values('nom_operacion', 'id')
+        context = super(CasinoHomePatinador, self).get_context_data(**kwargs)
+         # aqui se obtiene el user id
+        context['login_user_id'] = s['last_login']
+        context['lastIdEmpresa'] = int(lastEm)  # ids empresas
+        context['allTalla'] = Tallas  # todaslas las tallas
+        context['allOperaciones'] = Operaciones  # todaslas operaciones
+        context['nomEmpresa'] = AllEmpresa  # nombre de todas las empresa
+        # nombre de la empresa actual
+        context['nomEmpresaU'] = EmpresaActual
+        context['last_login'] = s['last_login']    # ultimo inicio de seccion
+        try:
+            patinadores = Patinador.objects.all().filter(usuario=int(
+                integranteConten[0]['usuario_id']), empresa_id=int(lastEm)).values('integrante_id')
             allPatinadores = Integrante.objects.all().filter(usuario=int(integranteConten[0]['usuario_id']), empresa_id=int(
                 lastEm), id=int(patinadores[0].get('integrante_id'))).values('nombres', 'apellidos', 'id')
-            context['allPatinador']     = allPatinadores     #todos los patinadores de la empresa
+            # todos los patinadores de la empresa
+            context['allPatinador'] = allPatinadores
             return context
-          finally:
+        finally:
             return context
-
-
-
 
 
 @api_view(['GET'])
 def casinoListPatinador(request):
-    if request.session.has_key('username'):        
+    if request.session.has_key('username'):
         if 'username' in request.session:
-            username = request.session['username']     
-            idUser   = MyUser.objects.get(username=username)   
-    
-    
-    lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
-    lastEm=int(lastEm[0]['empresa_id'])
-    casinos    = Casino.objects.filter(empresa_id=lastEm,estatus='A').order_by('-id')
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
+
+    lastEm = Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm = int(lastEm[0]['empresa_id'])
+    casinos = Casino.objects.filter(
+        empresa_id=lastEm, estatus='A').order_by('-id')
     serializer = CasinoSerializer(casinos, many=True)
     return Response(serializer.data)
- 
- 
- 
- 
-@api_view(['GET'])  
+
+
+@api_view(['GET'])
 def ProduccionOPListPatinador(request):
-    if request.session.has_key('username'):        
-            if 'username' in request.session:
-                username = request.session['username']     
-                idUser   = MyUser.objects.get(username = username)
-    
-    lastEm=Integrante.objects.filter(id=idUser.id).values('empresa_id')
-    lastEm=int(lastEm[0]['empresa_id'])            
-    
-    produccion = Prod.objects.filter(empresa_id = lastEm,operacion_id=int(request.GET.get('idOp', None))).order_by('-id')
-    ProduccionSe = ProduccionSerializer(produccion, many=True)   
-    dump = json.dumps(ProduccionSe.data)   #dump serializer to json reponse 
-    
- 
+    if request.session.has_key('username'):
+        if 'username' in request.session:
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
+
+    lastEm = Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm = int(lastEm[0]['empresa_id'])
+
+    produccion = Prod.objects.filter(empresa_id=lastEm, operacion_id=int(
+        request.GET.get('idOp', None))).order_by('-id')
+    ProduccionSe = ProduccionSerializer(produccion, many=True)
+    dump = json.dumps(ProduccionSe.data)  # dump serializer to json reponse
+
     return HttpResponse(dump, content_type='application/json')
-    
-    
+
+
 @api_view(['GET'])
 def totalImporteIntePatinador(request):
-    if request.session.has_key('username'):        
+    if request.session.has_key('username'):
         if 'username' in request.session:
-            username = request.session['username']     
-            idUser   = MyUser.objects.get(username=username)    
-    integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
-    lastEm=int(integranteConten[0]['empresa_id'])
-        
-    
-    
-    idCasino           = request.GET.get('idCasinoPatinador', None)  
-    idIntegranteSelect = request.GET.get('idIntegranteSelectPatinador', None)   
-    casinoImporte      = Importe.objects.filter(empresa_id=lastEm, usuario_id = int(integranteConten[0]['usuario_id']), integrante_id=idIntegranteSelect,casino_id=int(idCasino)).aggregate(cantidad=Sum('cantidad'))
-    cedula             = Integrante.objects.filter(id=idIntegranteSelect,empresa_id=lastEm,usuario_id=int(integranteConten[0]['usuario_id']) ).distinct().values('cedula')
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
+    integranteConten = Integrante.objects.filter(
+        id=idUser.id).values('empresa_id', 'usuario_id')
+    lastEm = int(integranteConten[0]['empresa_id'])
+
+    idCasino = request.GET.get('idCasinoPatinador', None)
+    idIntegranteSelect = request.GET.get('idIntegranteSelectPatinador', None)
+    casinoImporte = Importe.objects.filter(empresa_id=lastEm, usuario_id=int(
+        integranteConten[0]['usuario_id']), integrante_id=idIntegranteSelect, casino_id=int(idCasino)).aggregate(cantidad=Sum('cantidad'))
+    cedula = Integrante.objects.filter(id=idIntegranteSelect, empresa_id=lastEm, usuario_id=int(
+        integranteConten[0]['usuario_id'])).distinct().values('cedula')
     cedula = cedula[0]['cedula']
     TotalCasinoImporte = casinoImporte['cantidad']
-    data = {'TotalCasinoImporte':TotalCasinoImporte,'cedulaIntegrante':cedula}  
+    data = {'TotalCasinoImporte': TotalCasinoImporte,
+            'cedulaIntegrante': cedula}
     return JsonResponse(data)
 
 
 @api_view(['GET'])
 def CasinoDataIntegranteImportePatinador(request):
-    if request.session.has_key('username'):        
-            if 'username' in request.session:
-                username = request.session['username']     
-                idUser   = MyUser.objects.get(username = username)    
-    integranteConten = Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
-    lastEm           = int(integranteConten[0]['empresa_id'])
-    idCasino         = request.GET.get('idCasinoPatinador',None)     
-    idIntegrante     = request.GET.get('idIntegranteSelectPatinador')
-    importeCasino    = Importe.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']),empresa_id=lastEm,casino_id=int(idCasino),
-    integrante_id    = idIntegrante)
-    serializer       = ImporteSerializer(importeCasino, many=True)
+    if request.session.has_key('username'):
+        if 'username' in request.session:
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
+    integranteConten = Integrante.objects.filter(
+        id=idUser.id).values('empresa_id', 'usuario_id')
+    lastEm = int(integranteConten[0]['empresa_id'])
+    idCasino = request.GET.get('idCasinoPatinador', None)
+    idIntegrante = request.GET.get('idIntegranteSelectPatinador')
+    importeCasino = Importe.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']), empresa_id=lastEm, casino_id=int(idCasino),
+                                           integrante_id=idIntegrante)
+    serializer = ImporteSerializer(importeCasino, many=True)
     return Response(serializer.data)
+
 
 @api_view(['GET'])
 def CasinoDataImportePatinador(request):
-    if request.session.has_key('username'):        
+    if request.session.has_key('username'):
         if 'username' in request.session:
-            username = request.session['username']     
-            idUser   = MyUser.objects.get(username=username)
-    
-    integranteConten=Integrante.objects.filter(id=idUser.id).values('empresa_id','usuario_id')
-    lastEm=int(integranteConten[0]['empresa_id'])
-    
-    
-    idCasino      = request.GET.get('idCasinoPatinador', None)
-    
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
 
-    importeGeneral  =   Importe.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']),casino_id=idCasino,empresa_id=lastEm).order_by("-id")
-    serializer      =   ImporteSerializer(importeGeneral, many=True)
+    integranteConten = Integrante.objects.filter(
+        id=idUser.id).values('empresa_id', 'usuario_id')
+    lastEm = int(integranteConten[0]['empresa_id'])
+    idCasino = request.GET.get('idCasinoPatinador', None)
+    importeGeneral = Importe.objects.filter(usuario_id=int(
+        integranteConten[0]['usuario_id']), casino_id=idCasino, empresa_id=lastEm).order_by("-id")
+    serializer = ImporteSerializer(importeGeneral, many=True)
+
     return Response(serializer.data)
-
 
 
 @api_view(['POST'])
 def createProCasinoPatinador(request,):
-    if request.session.has_key('username'):        
+    if request.session.has_key('username'):
         if 'username' in request.session:
-            username = request.session['username']     
-            idUser   = MyUser.objects.get(username=username)
-        
-    
-    integranteConten=Integrante.objects.filter(id=idUser.integrante_id).values('empresa_id','usuario_id','id')
-    
-    
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
 
-    lastEm=int(integranteConten[0]['empresa_id'])
+    integranteConten = Integrante.objects.filter(
+        id=idUser.integrante_id).values('empresa_id', 'usuario_id', 'id')
+
+    lastEm = int(integranteConten[0]['empresa_id'])
     idCasino = request.data['idCasinoP']
-    idPatinador = Patinador.objects.filter(integrante_id=integranteConten[0]['id']).values('id')
-    print(idPatinador,"fffff")
-
-
-    
-    
-    
-    idPatinador  = idPatinador[0]['id']
-    
-    
-    canTerminada  = int(request.data['Cantidad_CasinoPatinador'])
-    
-    
-    try: 
+    idPatinador = Patinador.objects.filter(
+        integrante_id=integranteConten[0]['id']).values('id')
+    idPatinador = idPatinador[0]['id']
+    canTerminada = int(request.data['Cantidad_CasinoPatinador'])
+    try:
         obj = Importe.objects.create(
-        usuario_id     = int(integranteConten[0]['usuario_id']),
-        empresa_id     = int(lastEm),
-        integrante_id  = int(request.data['OccionId_integrante_CasinoPatinador']),
-        patinador_id   = int(idPatinador),      
-        cantidad       = canTerminada,      
-        casino_id      = int(idCasino)
+            usuario_id=int(integranteConten[0]['usuario_id']),
+            empresa_id=int(lastEm),
+            integrante_id=int(
+                request.data['OccionId_integrante_CasinoPatinador']),
+            patinador_id=int(idPatinador),
+            cantidad=canTerminada,
+            casino_id=int(idCasino)
         )
-        Casino.objects.all().filter(id=int(idCasino)).update(can_total=F('can_total') + canTerminada)  
+        Casino.objects.all().filter(id=int(idCasino)).update(
+            can_total=F('can_total') + canTerminada)
         obj = Importe.objects.latest('id')
-        btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteImporteUnico({})'> </button>".format(obj.id)
+        btnDel = "<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteImporteUnico({})'> </button>".format(
+            obj.id)
         obj = Importe.objects.all().filter(id=obj.id).update(delCasinoImport=btnDel)
-        
+
         data = {
             'Acumulado': "Casino guardado con exito!",
-            'estatus':True
-        }  
+            'estatus': True
+        }
 
     except Exception as e:
         print(str(e))
-        data = {'Errror': str(e),'estatus':False}        
+        data = {'Errror': str(e), 'estatus': False}
         return Response(data)
-    
-    return Response(data)   
+
+    return Response(data)
