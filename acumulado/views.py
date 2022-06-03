@@ -384,17 +384,15 @@ def abrirAcumulado(request):
 
 @api_view(['DELETE'])
 def deleteAcumulado(request, id):
-    
     ProA = ProAcu.objects.all().filter(id=id).values('can_prod_acum', 'acumulado_id','tarea_id')
-    
     valor = Tarea.objects.get(id=int(ProA[0]['tarea_id']))
-
-    costeA = ACUMULADO.objects.get(id=ProA[0]['acumulado_id'])
-    costeA.costeAcu -= (int(ProA[0]['acumulado_id'])*valor.valor)
-    costeA.save()  # "{:10.4f}".format(x)
-
+    
     try:
         ProAcu.objects.get(id=id).delete()
+        costeA = ACUMULADO.objects.get(id=ProA[0]['acumulado_id'])
+        costeA.costeAcu -= (int(ProA[0]['acumulado_id'])*valor.valor)
+        costeA.save()  # "{:10.4f}".format(x)
+
         data = {'deleted': True}
     except Exception as e:
         data = {
