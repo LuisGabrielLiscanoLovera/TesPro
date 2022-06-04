@@ -716,7 +716,26 @@ st
             text-shadow: 0px 3px 3px rgba(206, 206, 206, 0.4), 0px -1px 1px rgba(0, 0, 0, 0.3);
             -webkit-background-clip: text;
             -moz-background-clip: text;
+            transition: color .3s ease-in-out;
             background-clip: text;
+        }
+        
+        a {
+            box-shadow: inset 0 0 0 0 #54b3d6;
+            color: #54b3d6;
+            margin: 0 -.25rem;
+            padding: 0 .25rem;
+            transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
+        }
+        
+        a:hover {
+            box-shadow: inset 300px 0 0 0 #54b3d6;
+            color: white;
+            background: linear-gradient( to right, rgba(100, 200, 200, 1), rgba(100, 200, 200, 1)), linear-gradient( to right, rgba(255, 0, 0, 1), rgba(255, 0, 180, 1), rgba(0, 100, 200, 1));
+            background-size: 100% 3px, 0 3px;
+            background-position: 100% 100%, 0 100%;
+            background-repeat: no-repeat;
+            transition: background-size 400ms;
         }
         
         h3 {
@@ -773,10 +792,10 @@ st
         <aside id="navMiao" class="mdc-drawer mdc-drawer--dismissible mdc-drawer--open">
             <div>
                 <div class="mdc-drawer__header">
-                    <a href="{% url 'home'%}" class="brand-logo">
+                    <b href="{% url 'home'%}" class="brand-logo">
                         <img src="{% static 'images/logo.svg' %}" alt="logo">
 
-                    </a>
+                    </b>
                 </div>
 
                 <div class="mdc-drawer__content">
@@ -804,7 +823,7 @@ st
                                                 <input type="number" hidden="True" name="idEmpresa" value="{{ i.id }}">
                                                 <input type="number" hidden="True" name="idUser" value="{{ login_user_id }}">
 
-                                                <button class="btn btn-underline text-white" type="submit">{{ i.Empresa|title }}</button>
+                                                <a href=""><button class="btn btn-underline text-white" type="submit">{{ i.Empresa|title }}</button></a>
 
                                             </form>
                                         </div>
@@ -1006,10 +1025,10 @@ V- Acumulado
                         <span class="bar__title title ">				 
 					{% for i in nomEmpresaU %}
 					      <h4><b><u class="text-dark title ">{{ i|title }}</u></b></h4>
-					
-					{% endfor %}
-					
-				  </span>
+
+                    {% endfor %}
+
+                    </span>
                     </div>
 
 
