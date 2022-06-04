@@ -1,15 +1,12 @@
-# Crear en el boton de eliminar en operacios con advertencia de tallas y en los dodos los delete
 # tomar en cuenta los temas de db on cascade
-# hacer reactivo los formularios
-# deicdir la estructura de los template
-
-# tadas las data tables pasara a vue
-#crear registro pdf para generar cda data de los registro
-#loguin patinador (caja negra de despacho y produccion) crear modo fon
-#(el patinador solo puede eliminar los tre ultimo registo de la bas ede datos en despacho y produccion )
-
-#limpiar unica casilla en cantdad input 
-#modificar referencia color talla con referente a campos de esttatus
-#crear casino 
-
-#esta produccion te esta costando
+# crear registro pdf para generar cda data de los registro
+# mejorar los formularios
+# crear modulo seguimiento 
+# crear modulo de record
+# botones de advertencia
+# en los campos imput de los formularios bordearlo de color azul si es obligatorio 
+# crear mensajes de ayuda
+# mejorar el estilo 
+# logotipo 
+# enviar mensaje al correo
+# calculador de tarea 
