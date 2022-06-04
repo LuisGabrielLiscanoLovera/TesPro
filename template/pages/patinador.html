@@ -2,13 +2,14 @@
 
 
 <div id="openModalPatinador" class="modalDialogPadre">
-    <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
+    <div>
+        <button onclick="location.href='#close'" class="close" type="button">
+            <i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i>
+        </button>
 
         <center>
             <br>
             <h1>Patinadores {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
-
-
             <hr>
         </center>
 
@@ -17,8 +18,7 @@
 
         <div class="row">
             <div class="col-sm-6">
-
-                <form id="addPatinador" autocomplete="off">
+                <form id="qq!" autocomplete="off">
                     <div class="form-inline">
                         <div class="container">
                             <h3 class="form">Agregar patinador</h3>
@@ -166,7 +166,7 @@ data-auto-refresh-status="true"
 
 
 
-    $("form#addPatinador").submit(function() {
+    $("form#qq!").submit(function() {
 
         var idIntegrante = $('input[name="idIntegrantePatinador"]').val().trim();
         var idEmpresa = $('input[name="idEmpresa"]').val().trim();

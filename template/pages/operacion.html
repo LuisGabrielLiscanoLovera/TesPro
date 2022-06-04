@@ -3,9 +3,9 @@
 
 <div id="openModalOperacion" class="modalDialogPadre">
     <div>
-        <a href="#close" title="Close" class="close">
+        <button onclick="location.href='#close'" class="close" type="button">
             <i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i>
-        </a>
+        </button>
         <center>
             <br>
             <h1>Operaciones {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
@@ -24,9 +24,12 @@ data-auto-refresh-status="true"
             <div class="row ">
 
                 <div class="col-sm-2">
-                    <a href="#openModalHijoAddOperacion">
-                        <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar OP </i>
-                    </a>
+                    <button onclick="location.href='#openModalHijoAddOperacion'" class="btn" type="button">
+                     
+                            <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar OP </i>
+                        
+                    </button>
+
                 </div>
 
                 <thead class="thead-dark">
@@ -59,7 +62,10 @@ data-auto-refresh-status="true"
 
 
 <div id="openModalHijoAddOperacion" class="modalDialogHijo">
-    <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>
+    <div> <button onclick="location.href='#close'" class="close" type="button">
+         <i class="btn-outline-danger icofont-ui-close"></i>
+    </button>
+
 
 
 

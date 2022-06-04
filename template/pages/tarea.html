@@ -4,7 +4,9 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
  -->
 <div id="openModalTarea" class="modalDialogPadre">
-    <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
+    <div><button onclick="location.href='#close'" class="close" type="button">
+        <i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i>
+    </button>
 
         <center>
             <br>
@@ -26,9 +28,12 @@ data-auto-refresh-status="true"
             data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-pagination="true" data-url="tarea/tarea-list/">
             <div class="row">
                 <div class="col-sm-2">
-                    <a href="#openModalHijoAddTarea">
+                    <button onclick="location.href='#openModalHijoAddTarea'" class="btn" type="button">
+                 
                         <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar </i>
-                    </a>
+                 
+                    </button>
+
                 </div>
                 <thead class="thead-dark">
                     <tr>
@@ -121,7 +126,9 @@ data-auto-refresh-status="true"
 
 
 <div id="openModalHijoAddTarea" class="modalDialogHijo">
-    <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>
+    <div> <button onclick="location.href='#close'" class="close" type="button">
+        <i class="btn-outline-danger icofont-ui-close"></i>
+    </button>
 
 
         <div class="container">

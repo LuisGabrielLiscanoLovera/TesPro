@@ -1,7 +1,7 @@
 <div id="openModalPadre" class="modalDialogPadre">
-    <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i>
-    </a>
-
+    <div> <button onclick="location.href='#close'" class="close" type="button"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i>
+    
+        </button>
         <center>
             <h1>Referencias {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
             <hr>
@@ -13,9 +13,9 @@
             data-url="">
             <div class="row">
                 <div class="col-sm-2">
-                    <a href="#openModalHijo">
+                    <button onclick="location.href='#openModalHijo'" class="btn" type="button">
                         <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar </i>
-                    </a>
+                    </button>
                 </div>
 
 

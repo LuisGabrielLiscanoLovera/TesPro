@@ -5,8 +5,12 @@
  -->
 <div id="openModalIntegrante" class="modalDialogPadre">
     <div>
+        <button onclick="location.href='#close'" class="close" type="button">
+        
+        
+        <i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i>
+        </button>
 
-        <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
         <center>
             <br>
             <h1>Integrantes {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
@@ -25,9 +29,13 @@ data-auto-refresh-status="true"
             data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-pagination="true" data-url="integrante/integrante-list/">
             <div class="row">
                 <div class="col-sm-2">
-                    <a href="#openModalHijoAddIntegrante">
-                        <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar Integrante </i>
-                    </a>
+
+                    <button onclick="location.href='#openModalHijoAddIntegrante'" class="btn" type="button">
+                   
+                           <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar Integrante </i>
+                   </button>
+
+
                 </div>
                 <thead class="thead-dark">
                     <tr>
@@ -109,7 +117,9 @@ data-auto-refresh-status="true"
     </div>
 
     <div id="openModalHijoAddIntegrante" class="modalDialogHijo">
-        <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger icofont-ui-close"></i></a>
+        <div> <button onclick="location.href='#close'" class="close" type="button">
+             <i class="btn-outline-danger icofont-ui-close"></i>
+        </button>
             <div class="container">
 
 
