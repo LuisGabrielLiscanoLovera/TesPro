@@ -243,7 +243,7 @@ function DetailFormatterButAccionAcumulado(index, row) {
         '</div>' +
         '<div class="">' +
 
-        '<button class="btn btn-outline-success " type="submit" onclick="carrarAcumulado(' + row.id + ')">Cerrar Acu</button>' +
+        '<button class="btn btn-outline-success " type="submit" onclick="carrarAcumulado(' + row.id + ')">Cerrar Acumulado</button>' +
 
         '</div>';
 }

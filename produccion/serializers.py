@@ -18,7 +18,7 @@ class ProduccionSerializer(serializers.ModelSerializer):
     
     created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
-
+    fecha_cierre = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")    
 #    nomTalla=serializers.CharField(source = 'talla.nom_talla')
 
     class Meta:

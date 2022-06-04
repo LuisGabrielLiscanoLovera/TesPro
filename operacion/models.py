@@ -7,6 +7,9 @@ from color.models import Color
 class Operacion(models.Model):
     btnInfo       = '<button type="button" class="btn btn-outline-info text-center btn-sm btn-block ">Info</button>'
     btnAccion     = '<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>'
+    
+    
+    
     costeProd     = models.IntegerField(blank=True, null=True, default=0)
     usuario       = models.ForeignKey(User, related_name='Operacion',on_delete=models.CASCADE)
     empresa       = models.ForeignKey(Empresa, related_name='Operacion', on_delete=models.CASCADE)

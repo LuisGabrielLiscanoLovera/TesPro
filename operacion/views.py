@@ -39,12 +39,10 @@ def operacionList(request):
         if 'username' in request.session:
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)
-            
-    
+
     lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()
     operacion  = Operacion.objects.filter(usuario_id=idUser,empresa_id=lastEm.lastEm).order_by('-id')
     serializer = OperacionSerializer(operacion, many=True)
-     
     return Response(serializer.data)
 
 

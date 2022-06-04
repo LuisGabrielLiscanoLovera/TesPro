@@ -466,6 +466,7 @@
             text-align: right;
         }
     </style>
+
     <!----------------------------------------------------------------------
 st
 	                              modal padre
@@ -496,15 +497,14 @@ st
         }
         
         .modalBase {
-            width: 1000px;
-            position: relative;
-            margin: 2.5% auto;
-            padding: 5px 20px 13px 20px;
-            border-radius: 10px;
-            background: #fff;
-            background: -moz-linear-gradient(#fff, #999);
-            background: -webkit-linear-gradient(#fff, #999);
-            background: -o-linear-gradient(#fff, #999);
+            color: rgba(252, 252, 252, 0.897);
+            text-decoration: none;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.813);
+            border: 1px solid #fdfbfb;
+            box-shadow: 2px 2px 0.5em rgba(211, 211, 211, 0.845), inset 1px 1px 0 rgba(255, 255, 255, 0.74), inset -1px -1px 0 rgba(243, 241, 241, 0.5);
+            background: -webkit-repeating-linear-gradient( top, #cbcbcb, #e7e3e3 2px, #e0dede 1px);
+            background: repeating-linear-gradient( top, #cfcece, #e7e5e5 2px, #d6d6d6 1px);
         }
         
         .modalBasePeriles {
@@ -513,6 +513,14 @@ st
             background: -moz-linear-gradient(#fff, #999);
             background: -webkit-linear-gradient(#fff, #999);
             background: -o-linear-gradient(#fff, #999);
+            color: rgba(252, 252, 252, 0.897);
+            text-decoration: none;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.813);
+            border: 1px solid #fdfbfb;
+            box-shadow: 2px 2px 0.5em rgba(211, 211, 211, 0.845), inset 1px 1px 0 rgba(255, 255, 255, 0.74), inset -1px -1px 0 rgba(243, 241, 241, 0.5);
+            background: -webkit-repeating-linear-gradient( top, #cbcbcb, #e7e3e3 2px, #e0dede 1px);
+            background: repeating-linear-gradient( top, #cfcece, #e7e5e5 2px, #d6d6d6 1px);
         }
         
         .modalDialogPadre {
@@ -551,6 +559,14 @@ st
             background: -moz-linear-gradient(#fff, #999);
             background: -webkit-linear-gradient(#fff, #999);
             background: -o-linear-gradient(#fff, #999);
+            color: rgba(252, 252, 252, 0.897);
+            text-decoration: none;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.813);
+            border: 1px solid #fdfbfb;
+            box-shadow: 2px 2px 0.5em rgba(211, 211, 211, 0.845), inset 1px 1px 0 rgba(255, 255, 255, 0.74), inset -1px -1px 0 rgba(243, 241, 241, 0.5);
+            background: -webkit-repeating-linear-gradient( top, #cbcbcb, #e7e3e3 2px, #e0dede 1px);
+            background: repeating-linear-gradient( top, #cfcece, #e7e5e5 2px, #d6d6d6 1px);
         }
         
         .closeM {
@@ -690,16 +706,17 @@ st
 	 */
         
         h1 {
-            text-align: center;
-            font-family: Arial Black;
-            font-weight: bold;
+            margin: 1em 0 0.5em 0;
+            color: #343434;
+            font-weight: normal;
             font-size: 30px;
-            background: #202020;
+            font-family: 'Ultra', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-shadow: 0px 3px 3px rgba(206, 206, 206, 0.4), 0px -1px 1px rgba(0, 0, 0, 0.3);
             -webkit-background-clip: text;
             -moz-background-clip: text;
             background-clip: text;
-            color: transparent;
-            text-shadow: 0px 3px 3px rgba(206, 206, 206, 0.4), 0px -1px 1px rgba(0, 0, 0, 0.3);
         }
         
         h3 {
@@ -1025,7 +1042,7 @@ V- Acumulado
                                 </ul>
                             </div>
                         </div>
-                        <div class="divider d-none d-md-block "></div>
+
                     </div>
 
                 </div>
@@ -1033,7 +1050,7 @@ V- Acumulado
             </header>
             <!-- partial -->
             <div class="page-wrapper mdc-toolbar-fixed-adjust ">
-                <div lass="bg-image " style="background-image: url( '{% static 'images/BACKGROUND_14.JPG ' %}'); height:150vh;background-repeat: no-repeat;background-attachment: fixed;background-size: cover; ">
+                <div class="bg-image " style="background-image: url( '{% static 'images/BACKGROUND_14.JPG ' %}'); height:150vh;background-repeat: no-repeat;background-attachment: fixed;background-size: cover; ">
                     <main class="content-wrapper ">
                         {% block content %} {% endblock %}
                     </main>
@@ -1053,7 +1070,7 @@ V- Acumulado
                 </footer>
                 <!-- partial -->
             </div>
-        </div>
+
 
 
 

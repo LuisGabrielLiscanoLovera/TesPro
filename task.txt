@@ -6,7 +6,9 @@
 # botones de advertencia
 # en los campos imput de los formularios bordearlo de color azul si es obligatorio 
 # crear mensajes de ayuda
-# mejorar el estilo 
+# mejorar el estilo
 # logotipo 
 # enviar mensaje al correo
 # calculador de tarea 
+# prueba full pxc
+# formulario colores Occion de varios colores
