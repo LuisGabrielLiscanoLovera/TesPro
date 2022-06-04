@@ -356,6 +356,7 @@ return false;
                     dataType: 'json',
                     success: function(data) {
                         console.log("borrado")
+
                     }
                 });
                 return row.id
@@ -394,9 +395,7 @@ return false;
                 },
                 dataType: 'json',
                 success: function(data) {
-                    if (data.user) {
-                        appendToUsrTable(data.user);
-                    }
+                    window.location.reload();
                 }
             });
 

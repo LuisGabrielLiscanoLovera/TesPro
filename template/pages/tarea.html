@@ -360,6 +360,7 @@ data-auto-refresh-status="true"
                     success: function(data) {
                         if (data.user) {
                             appendToUsrTable(data.user);
+                            window.location.reload();
                         }
                     }
                 });

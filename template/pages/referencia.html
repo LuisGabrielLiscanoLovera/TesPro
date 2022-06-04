@@ -281,9 +281,7 @@
                             },
                             dataType: 'json',
                             success: function(data) {
-                                if (data.editMsj) {
-                                    console.log("passsssssssssssssssssssssssssssssss");
-                                }
+                                window.location.reload();
                             }
                         });
 
@@ -369,6 +367,7 @@
                 success: function(data) {
                     if (data.user) {
                         appendToUsrTable(data.user);
+                        window.location.reload();
                     }
                 }
             });

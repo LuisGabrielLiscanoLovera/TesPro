@@ -93,7 +93,6 @@ data-auto-refresh-status="true"
                         <br>
                         <div class="button">Detalle</div>
                     </fieldset>
-
                     <fieldset class="section">
                         <h3> Detalles de Operación
 
@@ -534,6 +533,7 @@ data-auto-refresh-status="true"
                         },
                         dataType: 'json',
                         success: function(data) {
+                            window.location.reload();
                             console.log("passsssssss");
                         }
 
