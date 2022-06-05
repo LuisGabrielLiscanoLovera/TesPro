@@ -77,7 +77,8 @@
                 <table id="table" data-id-field="id" class="table-fill" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-search="true" data-show-fullscreen="true" data-show-export="true" data-locale="es-SP"
                     data-pagination="true" data-url="{% url 'casinoListPatinador' %}">
                     <thead class="thead-dark">
-                        <tr>
+                        <tr> {% comment %}
+                            <th data-field="id" class="text-center ">id</th> {% endcomment %}
                             <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoCasinoPatinador" class="text-center">Info</th>
                             <th data-field="nom_casino" class="text-center">Reg Casino</th>
                             <th data-field="can_total" class="text-center">Total</th>

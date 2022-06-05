@@ -33,7 +33,8 @@ data-auto-refresh-status="true"
                 </div>
 
                 <thead class="thead-dark">
-                    <tr>
+                    <tr> {% comment %}
+                        <th data-field="id" class="text-center ">id</th> {% endcomment %}
                         <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoOperacion" class="text-center">Info
                         </th>
                         <th data-field="nom_operacion" class="text-center">Operación</th>

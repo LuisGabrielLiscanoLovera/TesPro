@@ -7,8 +7,10 @@ from empresa.models import Empresa, RelacionEmpresa, CambioEmpres
 from django.contrib.sessions.backends.db import SessionStore
 from talla.models import Talla
 from operacion.models import Operacion
-
-
+from authapp.models import MyUser
+from operacion.serializers import OperacionSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 class SeguimientoOp(LoginRequiredMixin,TemplateView):
     
     template_name = "pages/seguimientoOp.html"
@@ -40,3 +42,18 @@ class SeguimientoOp(LoginRequiredMixin,TemplateView):
           return context
         finally:
           return context
+          
+          
+@api_view(['GET'])
+def operacionesListSeguimiento(request):
+    if request.session.has_key('username'):
+        if 'username' in request.session:
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
+
+    lastEm = CambioEmpres.objects.filter(usuario_id=idUser).last()
+    despacho = Operacion.objects.filter(
+        empresa_id=lastEm.lastEm, usuario_id=idUser).order_by('-id')
+    serializer = OperacionSerializer(despacho, many=True)
+
+    return Response(serializer.data)

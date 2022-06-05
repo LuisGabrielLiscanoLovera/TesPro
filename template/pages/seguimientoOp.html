@@ -45,10 +45,10 @@
 
     <div style="overflow-x:auto;">
         <table id="produccionTable" data-id-field="id" class="table-fill" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-show-columns="true" data-search="true" data-show-fullscreen="true" data-pagination="true"
-            data-show-refresh="true" data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-url="{% url 'operaciones-list'%}">
+            data-show-refresh="true" data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-url="{% url 'operaciones-listSeguimiento'%}">
             <thead class="thead-dark ">
                 <tr>
-                    <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoProduccion" class="text-center">Info
+                    <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoseguimientoOp" class="text-center">Info
                     </th>
                     {% comment %}
                     <th data-field="id" class="text-center ">id</th> {% endcomment %}
@@ -56,12 +56,12 @@
 
                     <th data-field="nomReferencia" class="text-center">Referencia</th>
                     <th data-field="estatus" class="text-center">Estatus</th>
-                    <!--  <th data-field="nomColor" class="text-center">Color</th> -->
+                    <th data-field="nomColor" class="text-center">Color</th>
                     <th data-field="can_restante" class="text-center">Por terminar OP</th>
-                    <!--                 
-                <th data-field="can_total" class="text-center">Cant. Total</th>
--->
 
+                    <th data-field="can_total" class="text-center">Cant. Total</th>
+
+                    <th data-field="costeProd" class="text-center">Coste Prod</th>
                     <th data-field="created_at" class="text-center">Fecha Creada</th>
                     <th data-field="fecha_cierre" class="text-center">Fecha Cerrada</th>
                     <!--   <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionProduccion" class="text-center">
