@@ -9,11 +9,11 @@ from talla.models import Talla
 from operacion.models import Operacion
 
 
-class SegimientoOp(LoginRequiredMixin,TemplateView):
+class SeguimientoOp(LoginRequiredMixin,TemplateView):
     
-    template_name = "pages/segimientoOp.html"
+    template_name = "pages/seguimientoOp.html"
     def get_context_data(self, **kwargs):        
-        context = super(SegimientoOp, self).get_context_data(**kwargs)
+        context = super(SeguimientoOp, self).get_context_data(**kwargs)
         s = SessionStore()
         s['last_login'] = self.request.user.pk
         s.create()
@@ -21,8 +21,8 @@ class SegimientoOp(LoginRequiredMixin,TemplateView):
         lastEm = CambioEmpres.objects.filter(usuario_id=s['last_login']).last()
         Tallas = Talla.objects.filter(usuario=s['last_login'], empresa_id=int(lastEm.lastEm)).values('id', 'nom_talla', 'num_talla')
         EmpresaActual = Empresa.objects.filter(usuario=s['last_login'], id=int(lastEm.lastEm))
-        Operaciones = Operacion.objects.filter(usuario=s['last_login'], empresa_id=int(lastEm.lastEm), estatus='A').values('nom_operacion', 'id')
-        context = super(SegimientoOp, self).get_context_data(**kwargs)
+        Operaciones = Operacion.objects.filter(usuario=s['last_login'], empresa_id=int(lastEm.lastEm)).values('nom_operacion', 'id')
+        context = super(SeguimientoOp, self).get_context_data(**kwargs)
         # aqui se obtiene el user id
         context['login_user_id'] = s['last_login']
         context['lastIdEmpresa'] = int(lastEm.lastEm)  # ids empresas

@@ -82,7 +82,8 @@ class CreatePatinador(View):
                 estatus        = estatus,
                 ctrlDespacho   = ctrlDespachoCheck,
                 ctrlProduccion = ctrlProduccionCheck,
-                ctrlCasino     = ctrlCasinoCheck
+                ctrlCasino     = ctrlCasinoCheck,
+                password       = passwordP
             ) 
            
             data = {

@@ -32,8 +32,8 @@ data-auto-refresh-status="true"
             <div class="col-sm-12">
 
                 <button onclick="location.href='#openModalHijoAddPatinador'" class="btn" type="button">
-                <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar patinador </i>
-           </button>
+                    <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar patinador </i>
+                </button>
 
                 <table id="patinadorTable" data-id-field="id" class="table" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-show-columns="true" data-search="True" data-show-fullscreen="true" data-locale="es-SP" data-pagination="true"
                     data-detail-view-icon="false" data-url="patinador/patinador-list/">
@@ -70,6 +70,31 @@ data-auto-refresh-status="true"
 
 
 
+                    '<div class="mx-sm-3">' +
+                    '<div class="form-group"><label>Nombres</label>' +
+                    '<input class="form-control"   value="' + row.nombres + '" name="nombresUP"></div>' +
+
+
+                    '<div class="form-group"><label>Apellidos</label>' +
+                    '<input class="form-control" value="' + row.apellidos + '" name="apellidosUP"></div>' +
+                    '<div class="form-group"><label>Cedula.</label>' +
+                    '<input class="form-control"   value="' + row.cedula + '" name="cedulaUP"></div>' +
+                    '</div>' +
+
+
+
+
+                    '<div class="col-sm-3">' +
+
+                    '<div class="form-group"><label>clave</label>' +
+                    '<input type="text" name="passwordPUP" value="' + row.password +
+
+                    '">' +
+
+                    '</div>' +
+
+
+                    '</div>' +
                     '<div class="col-sm-3">' +
 
                     '<div class="form-group"><label>Estatus</label>' +
