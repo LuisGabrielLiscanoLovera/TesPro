@@ -157,7 +157,7 @@ data-auto-refresh-status="true"
 
                             <div class="col-md-6 md-4  form-group">
                                 <label for="Tlf" class="">Buscar Integrante</label>
-                                <input type="text" list="BuscarIntegrantes" name="idIntegrantePatinador" required placeholder="Integrante..." class="form-control" style="width:250px;">
+                                <input type="text" list="BuscarIntegrantes" name="idIntegrantePatinador" required placeholder="Integrante..." class="form-control" style="width:270px;">
                                 <datalist class="form-" id="BuscarIntegrantes">
                                 {% for resultsInt in allIntegrante %}
                                 <option value="{{resultsInt.cedula}} {{resultsInt.nombres}} {{resultsInt.apellidos}}">
@@ -169,7 +169,7 @@ data-auto-refresh-status="true"
                             </div>
                             <div class="col-md-4 md-4  form-group">
                                 <label for="Tlf" class="">Clave patinador</label>
-                                <input type="text" name="passwordP" placeholder="clave patinador" class="password form-control" style="width:250px;" required>
+                                <input type="text" name="passwordP" class="text-security-disc" autocomplete="off" style="width:270px;" required>
 
                             </div>
 
@@ -226,13 +226,13 @@ data-auto-refresh-status="true"
 
 
 
-                    <!-- 
-                        <fieldset class="section">
-                            <br>
-                            <h3>¡Operación creada con exito!</h3>
-                            <p></p> 
+
+                    <!--     <fieldset class="section">
+                        <br>
+                        <h3>Patinador creada con exito!</h3>
+                        <p></p>
                         <div class="button">Reset Form</div>
-                       </fieldset> -->
+                    </fieldset> -->
                 </form>
             </div>
 
@@ -248,68 +248,6 @@ data-auto-refresh-status="true"
 
 
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -390,7 +328,7 @@ data-auto-refresh-status="true"
                     window.location.reload();
                 }
             });
-
+            window.location.reload();
 
         } else {
             alert("All fields must have a valid value.");
