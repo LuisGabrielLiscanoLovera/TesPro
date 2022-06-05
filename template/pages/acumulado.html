@@ -83,7 +83,7 @@
                                 <div class="row">
                                     <div class="col-md-12 md-6  form-group">
                                         <label for="nom_acumulado" class="">No  mbre de registro</label>
-                                        <input class="form-control" id="nom_acumulado" name="nom_acumulado" placeholder="Nombre">
+                                        <input class="form-control" id="nom_acumulado" name="nom_acumulado" placeholder="Nombre" required>
                                     </div>
                                     <!--                               <div class="col-md-6 md-6  form-group">
                                     <label for="can_total_acu" class="">Cantida Total </label>
@@ -95,7 +95,7 @@
                                     </div>
 
                                     <div class="">
-                                        <input class="submit button" type="submit" onclick="location.href='/acumulado/'" value="Guardar">
+                                        <input class="submit button" type="submit" value="Guardar">
                                     </div>
 
                                 </div>
@@ -162,7 +162,7 @@
                     empresaAcumulado: idEmpresa,
 
                 }).then(response => {
-                    console.log("passss");
+                    window.location.reload();
                 });
 
                 $('form#addAcumulado').trigger("reset");
