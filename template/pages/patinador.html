@@ -30,6 +30,11 @@ data-auto-refresh-silent="true"
 data-auto-refresh-status="true"
 -->
             <div class="col-sm-12">
+
+                <button onclick="location.href='#openModalHijoAddPatinador'" class="btn" type="button">
+                <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar patinador </i>
+           </button>
+
                 <table id="patinadorTable" data-id-field="id" class="table" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-show-columns="true" data-search="True" data-show-fullscreen="true" data-locale="es-SP" data-pagination="true"
                     data-detail-view-icon="false" data-url="patinador/patinador-list/">
 
@@ -96,6 +101,216 @@ data-auto-refresh-status="true"
 
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="openModalHijoAddPatinador" class="modalDialogHijo">
+    <div> <button onclick="location.href='#close'" class="close" type="button">
+             <i class="btn-outline-danger icofont-ui-close"></i>
+        </button>
+        <div class="container">
+
+
+            <div class="wrapper">
+                <ul class="steps">
+                    <li class="is-active">Patinador</li>
+
+                </ul>
+                <form id="addPatinador" autocomplete="off" class="form-wrapper formf">
+
+                    <input type="number" hidden="True" name="empresaIntegrante" value="{{ lastIdEmpresa }}">
+                    <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">
+
+                    <fieldset class="section is-active">
+
+                        <h3 name="heading">Agregar nuevo patinador
+                            <br>{% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h3>
+                        <div class="row">
+
+                            <div class="col-md-6 md-4  form-group">
+                                <label for="Tlf" class="">Buscar Integrante</label>
+                                <input type="text" list="BuscarIntegrantes" name="idIntegrantePatinador" required placeholder="Integrante..." class="form-control" style="width:250px;">
+                                <datalist class="form-" id="BuscarIntegrantes">
+                                {% for resultsInt in allIntegrante %}
+                                <option value="{{resultsInt.cedula}} {{resultsInt.nombres}} {{resultsInt.apellidos}}">
+                                </option>
+<!--                                 <input type="number" hidden="True" name="idIntegrantePatinador" value="{{ resultsInt.id }}"> 
+ -->                                {% endfor %}
+                            </datalist>
+
+                            </div>
+                            <div class="col-md-4 md-4  form-group">
+                                <label for="Tlf" class="">Clave patinador</label>
+                                <input type="text" name="passwordP" placeholder="clave patinador" class="password form-control" style="width:250px;" required>
+
+                            </div>
+
+                            <div class="col-md-3  offset-1  form-group">
+                                <label for="nombres" class="">Despacho</label>
+                                <div class="">
+                                    <input class="form-control" type="checkbox" id="check">
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3 md-1  form-group">
+                                <label for="apellidos" class="">Producción</label>
+                                <div class="">
+                                    <input class="form-control" type="checkbox" id="checkProd">
+                                </div>
+
+                            </div>
+                            <!--    <div class="col-md-3 md-1  form-group">
+                                <label for="cedula" class="">Acumulado</label>
+                                <div class="">
+                                    <input class="form-control" type="checkbox" id="checkCasino">
+                                </div>
+
+
+                            </div> -->
+
+
+                            <div class="col-md-3 md-1  form-group">
+                                <label for="cedula" class="">Casino</label>
+                                <div class="">
+                                    <input class="form-control" type="checkbox" id="checkCasino">
+                                </div>
+
+
+                            </div>
+
+
+
+
+
+
+                            <div class="">
+                                <input class="submit button" type="submit" value="Guardar">
+                            </div>
+
+                        </div>
+
+
+                    </fieldset>
+
+
+
+
+
+
+                    <!-- 
+                        <fieldset class="section">
+                            <br>
+                            <h3>¡Operación creada con exito!</h3>
+                            <p></p> 
+                        <div class="button">Reset Form</div>
+                       </fieldset> -->
+                </form>
+            </div>
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <script>
@@ -172,14 +387,11 @@ data-auto-refresh-status="true"
                 },
                 dataType: 'json',
                 success: function(data) {
-                    if (data.user) {
-                        appendToUsrTable(data.user);
-
-                    }
+                    window.location.reload();
                 }
             });
 
-            window.location.reload();
+
         } else {
             alert("All fields must have a valid value.");
         }
