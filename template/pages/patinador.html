@@ -17,37 +17,6 @@
 
 
         <div class="row">
-            <div class="col-sm-6">
-                <form id="qq!" autocomplete="off">
-                    <div class="form-inline">
-                        <div class="container">
-                            <h3 class="form">Agregar patinador</h3>
-                            <br>
-                            <input type="text" list="BuscarIntegrantes" name="idIntegrantePatinador" required placeholder="Integrante..." class="form-control" style="width:600px;">
-                            <datalist class="form-" id="BuscarIntegrantes">
-                                {% for resultsInt in allIntegrante %}
-                                <option value="{{resultsInt.cedula}} {{resultsInt.nombres}} {{resultsInt.apellidos}}">
-                                </option>
-<!--                                 <input type="number" hidden="True" name="idIntegrantePatinador" value="{{ resultsInt.id }}"> 
- -->                                {% endfor %}
-                            </datalist>
-                            <input type="text" name="passwordP" placeholder="clave patinador" class="form-control" style="width:150px;" required>
-                            <div class="fullday">
-                                <input class="form-control" type="checkbox" id="check"> Control Despacho
-                            </div>
-                            <div class="fullday">
-                                <input class="form-control" type="checkbox" id="checkProd"> Control Producción
-                            </div>
-                            <div class="fullday">
-                                <input class="form-control" type="checkbox" id="checkCasino"> Control Casino
-                            </div>
-                            <input type="number" hidden="True" name="idEmpresa" value="{{ lastIdEmpresa }}">
-                            <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">
-                            <button class="btn button btn-outline-primary form-control" type="submit">Agregar patinador</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
 
 
 
@@ -166,7 +135,7 @@ data-auto-refresh-status="true"
 
 
 
-    $("form#qq!").submit(function() {
+    $("form#addPatinador").submit(function() {
 
         var idIntegrante = $('input[name="idIntegrantePatinador"]').val().trim();
         var idEmpresa = $('input[name="idEmpresa"]').val().trim();
