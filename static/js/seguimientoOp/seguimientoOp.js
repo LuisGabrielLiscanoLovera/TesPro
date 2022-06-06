@@ -8,12 +8,12 @@ function DetailFormatterButInfoseguimientoOp(index, row) {
         '<script type="application/javascript">' + 'SeguimientoOp(' + row.id + ',' + row.usuario + ');' +
         '</' + 'script>' +
         '<div id="SeguimientoOp-' + row.id + '">' +
-        '<template><div class="container">  <div class="row">' +
+        '<template><div class=" ">  <div class="row">' +
 
 
-        '<div class="col-sm" style="overflow-x:auto;">' +
+        '<div class="col-sm-4 md-1" style="overflow-x:auto;">' +
         '<label>Despaacho</label>' +
-        '<table class="thead-dark table-fill">' +
+        '<table id="tableSdespacho-' + row.id + '" class="thead-dark table fixed_header">' +
         '<thead class="">' +
         '<tr>' + '<th scope="col" class="text-center">Talla</th>' +
         '<th scope="col" class="text-center">Can Total</th>' +
@@ -34,11 +34,13 @@ function DetailFormatterButInfoseguimientoOp(index, row) {
 
 
 
-        '<div class="col-sm " style="overflow-x:auto;position:relative">' +
+        '<div class="col-sm-4 md-1 " style="overflow-x:auto;position:relative">' +
         '<label>Integrantes en produccion</label>' +
-        '<table class="thead-dark table-fill">' +
+
+
+        '<table id="tableSintegrante-' + row.id + '" class=" thead-dark table fixed_header  ">' +
         '<thead class="">' +
-        '<tr>' + '<th scope="col" class="text-center">Nombreeee</th>' +
+        '<tr>' + '<th scope="col" class="text-center">Nombre</th>' +
         '<th scope="col" class="text-center">Apellido</th>' +
         '<th scope="col" class="text-center">Cedula</th>' +
         '</tr>' +
@@ -59,6 +61,35 @@ function DetailFormatterButInfoseguimientoOp(index, row) {
 
 
 
+
+
+
+        '<div class="col-sm-4 md-1 " style="overflow-x:auto;position:relative">' +
+        '<label>Patinador en produccion</label>' +
+        '<div class="tableContainer">' +
+
+        '<table id="tableSpatinador-' + row.id + '" class="thead-dark table fixed_header ">' +
+        '<thead class="">' +
+        '<tr>' + '<th scope="col" class="text-center">Nombreeee</th>' +
+        '<th scope="col" class="text-center">Apellido</th>' +
+        '<th scope="col" class="text-center">Cedula</th>' +
+        '</tr>' +
+        '</thead>' +
+        '<tbody>' +
+        '<tr v-for="inteP in patinadorOPListSeguimiento">' +
+        '<td class="text-center">[[inteP.nomPatinador]]</td>' +
+        '<td class="text-center">[[inteP.apellPatinador]]</td>' +
+        '<td class="text-center">[[inteP.cedulaPatinador]]</td>' +
+        '</tr>' +
+        '</tbody>' +
+        '</table>' +
+        '</div>' +
+        '</div>' +
+
+
+        '<script type="application/javascript">' +
+        '</' + 'script>' +
+
         '</div>' +
         '</div>' +
         '</div>' +
@@ -74,6 +105,7 @@ function SeguimientoOp(idOperacion, idUsuario) {
             return {
                 tallaOPListSeguimiento: [],
                 integranteOPListSeguimiento: [],
+                patinadorOPListSeguimiento: [],
                 usuario: idUsuario,
                 idOperacion: idOperacion,
 
@@ -81,7 +113,8 @@ function SeguimientoOp(idOperacion, idUsuario) {
         },
         methods: {
 
-            //integranteOp-listSeguimiento
+
+
 
             getProduccionData: function() {
                 axios.get('tallaOP-listSeguimiento/', {
@@ -91,6 +124,7 @@ function SeguimientoOp(idOperacion, idUsuario) {
                     }).then((resp) => {
                         this.tallaOPListSeguimiento = resp.data;
                         console.log(this.tallaOPListSeguimiento);
+
                     })
                     .catch(error => console.log(error));
 
@@ -104,6 +138,19 @@ function SeguimientoOp(idOperacion, idUsuario) {
                         console.log(this.integranteOPListSeguimiento);
                     })
                     .catch(error => console.log(error));
+
+
+                axios.get('patinadoresOp-listSeguimiento/', {
+                        params: {
+                            idOperacionSeguimientoP: idOperacion,
+                        }
+                    }).then((resp) => {
+                        this.patinadorOPListSeguimiento = resp.data;
+                        console.log(this.patinadorOPListSeguimiento);
+                    })
+                    .catch(error => console.log(error));
+
+
 
 
             },

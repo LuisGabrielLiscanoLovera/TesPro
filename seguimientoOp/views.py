@@ -1,6 +1,7 @@
 # Create your views here
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from yaml import serialize
 from patinador.models import Patinador
 from integrante.models import Integrante
 from empresa.models import Empresa, RelacionEmpresa, CambioEmpres
@@ -13,7 +14,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from produccion.models import Produccion
 from talla.serializers import  CanTallaSerializer
-from .serializers import ProduccionSerializer
+from .serializers import ProdIntegranSeguimiento, PatinadorSerializer
+
 class SeguimientoOp(LoginRequiredMixin,TemplateView):
     
     
@@ -87,10 +89,24 @@ def IntegranteOPListSeguimiento(request):
     
     idOperacionSeguimiento = request.GET.get('idOperacionSeguimiento', None)
     #objects.distinct()
-    pIntegrante = Produccion.objects.filter(empresa_id=lastEm.lastEm, operacion_id=idOperacionSeguimiento,usuario_id=idUser.id).distinct('integrante_id')
-    
-    
-    
+    pIntegrante = Produccion.objects.filter(empresa_id=lastEm.lastEm,
+    operacion_id=idOperacionSeguimiento,usuario_id=idUser.id).distinct('integrante_id')
+    serializer = ProdIntegranSeguimiento(pIntegrante, many=True)
+    return Response(serializer.data)
 
-    serializer = ProduccionSerializer(pIntegrante, many=True)
+
+@api_view(['GET'])
+def PatinadoresOPListSeguimiento(request):
+    if request.session.has_key('username'):
+        if 'username' in request.session:
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
+    lastEm = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
+
+    idOperacionSeguimiento = request.GET.get('idOperacionSeguimientoP', None)
+    #objects.distinct()
+    
+    pPatinador = Produccion.objects.filter(empresa_id=lastEm.lastEm,
+                                            operacion_id=idOperacionSeguimiento, usuario_id=idUser.id).distinct('patinador_id')
+    serializer = PatinadorSerializer(pPatinador, many=True)
     return Response(serializer.data)

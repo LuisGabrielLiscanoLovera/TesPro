@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework import routers
 
-from seguimientoOp.views import SeguimientoOp, operacionesListSeguimiento, TallaOPListSeguimiento, IntegranteOPListSeguimiento
+from seguimientoOp.views import SeguimientoOp, PatinadoresOPListSeguimiento, operacionesListSeguimiento, TallaOPListSeguimiento, IntegranteOPListSeguimiento
 router = routers.DefaultRouter()
 urlpatterns = [
 
@@ -14,5 +14,6 @@ urlpatterns = [
     path('tallaOP-listSeguimiento/', TallaOPListSeguimiento, name="tallaOP-listSeguimiento"),
     #list of members who participated in the operation
     path('integranteOp-listSeguimiento/', IntegranteOPListSeguimiento,name="integranteOp-listSeguimiento"),
-    
+    path('patinadoresOp-listSeguimiento/', PatinadoresOPListSeguimiento,
+         name="patinadoresOp-listSeguimiento"),
 ]
