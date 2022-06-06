@@ -35,19 +35,19 @@ function DetailFormatterButInfoseguimientoOp(index, row) {
 
 
         '<div class="col-sm " style="overflow-x:auto;position:relative">' +
-        '<label>Integrantes</label>' +
+        '<label>Integrantes en produccion</label>' +
         '<table class="thead-dark table-fill">' +
         '<thead class="">' +
-        '<tr>' + '<th scope="col" class="text-center">Talla</th>' +
-        '<th scope="col" class="text-center">Can Total</th>' +
-        '<th scope="col" class="text-center">Can Restante</th>' +
+        '<tr>' + '<th scope="col" class="text-center">Nombreeee</th>' +
+        '<th scope="col" class="text-center">Apellido</th>' +
+        '<th scope="col" class="text-center">Cedula</th>' +
         '</tr>' +
         '</thead>' +
         '<tbody>' +
-        '<tr v-for="i in tallaOPListSeguimiento">' +
-        '<td class="text-center">[[i.nom_talla]]</td>' +
-        '<td class="text-center">[[i.can_talla]]</td>' +
-        '<td class="text-center">[[i.res_talla]]</td>' +
+        '<tr v-for="inte in integranteOPListSeguimiento">' +
+        '<td class="text-center">[[inte.nomIntegrante]]</td>' +
+        '<td class="text-center">[[inte.apeIntegrante]]</td>' +
+        '<td class="text-center">[[inte.cedulaIntegrante]]</td>' +
         '</tr>' +
         '</tbody>' +
         '</table>' +
