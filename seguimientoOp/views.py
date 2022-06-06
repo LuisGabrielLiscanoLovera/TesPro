@@ -5,13 +5,17 @@ from patinador.models import Patinador
 from integrante.models import Integrante
 from empresa.models import Empresa, RelacionEmpresa, CambioEmpres
 from django.contrib.sessions.backends.db import SessionStore
-from talla.models import Talla
+from talla.models import Talla, CanTalla
 from operacion.models import Operacion
 from authapp.models import MyUser
 from operacion.serializers import OperacionSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from produccion.models import Produccion
+from talla.serializers import  CanTallaSerializer
+from .serializers import ProduccionSerializer
 class SeguimientoOp(LoginRequiredMixin,TemplateView):
+    
     
     template_name = "pages/seguimientoOp.html"
     def get_context_data(self, **kwargs):        
@@ -56,4 +60,37 @@ def operacionesListSeguimiento(request):
         empresa_id=lastEm.lastEm, usuario_id=idUser).order_by('-id')
     serializer = OperacionSerializer(despacho, many=True)
 
+    return Response(serializer.data)
+
+
+
+@api_view(['GET'])  
+def TallaOPListSeguimiento(request):
+    if request.session.has_key('username'):        
+            if 'username' in request.session:
+                username = request.session['username']     
+                idUser   = MyUser.objects.get(username=username)             
+    lastEm   = CambioEmpres.objects.filter(usuario_id=idUser.id).last() 
+    ptalla   = CanTalla.objects.filter(empresa_id=lastEm.lastEm,operacion_id=int(request.GET.get('idOp', None))).order_by('-id')
+    serializer = CanTallaSerializer(ptalla, many=True)
+    return Response(serializer.data)
+ 
+
+
+@api_view(['GET'])
+def IntegranteOPListSeguimiento(request):
+    if request.session.has_key('username'):
+        if 'username' in request.session:
+            username = request.session['username']
+            idUser = MyUser.objects.get(username=username)
+    lastEm = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
+    
+    idOperacionSeguimiento = request.GET.get('idOperacionSeguimiento', None)
+    #objects.distinct()
+    pIntegrante = Produccion.objects.filter(empresa_id=lastEm.lastEm, operacion_id=idOperacionSeguimiento,usuario_id=idUser.id).distinct()
+    
+    
+    
+    
+    serializer = ProduccionSerializer(pIntegrante, many=True)
     return Response(serializer.data)

@@ -8,11 +8,11 @@ function DetailFormatterButInfoseguimientoOp(index, row) {
         '<script type="application/javascript">' + 'SeguimientoOp(' + row.id + ',' + row.usuario + ');' +
         '</' + 'script>' +
         '<div id="SeguimientoOp-' + row.id + '">' +
-        '<template>' +
+        '<template><div class="container">  <div class="row">' +
 
 
-        '<div class="col-md-4" style="overflow-x:auto;">' +
-
+        '<div class="col-sm" style="overflow-x:auto;">' +
+        '<label>Despaacho</label>' +
         '<table class="thead-dark table-fill">' +
         '<thead class="">' +
         '<tr>' + '<th scope="col" class="text-center">Talla</th>' +
@@ -29,6 +29,38 @@ function DetailFormatterButInfoseguimientoOp(index, row) {
         '</tbody>' +
         '</table>' +
         '</div>' +
+
+
+
+
+
+        '<div class="col-sm " style="overflow-x:auto;position:relative">' +
+        '<label>Integrantes</label>' +
+        '<table class="thead-dark table-fill">' +
+        '<thead class="">' +
+        '<tr>' + '<th scope="col" class="text-center">Talla</th>' +
+        '<th scope="col" class="text-center">Can Total</th>' +
+        '<th scope="col" class="text-center">Can Restante</th>' +
+        '</tr>' +
+        '</thead>' +
+        '<tbody>' +
+        '<tr v-for="i in tallaOPListSeguimiento">' +
+        '<td class="text-center">[[i.nom_talla]]</td>' +
+        '<td class="text-center">[[i.can_talla]]</td>' +
+        '<td class="text-center">[[i.res_talla]]</td>' +
+        '</tr>' +
+        '</tbody>' +
+        '</table>' +
+        '</div>' +
+
+
+
+
+
+
+
+        '</div>' +
+        '</div>' +
         '</div>' +
         '</div>';
 }
@@ -41,6 +73,7 @@ function SeguimientoOp(idOperacion, idUsuario) {
         data: function() {
             return {
                 tallaOPListSeguimiento: [],
+                integranteOPListSeguimiento: [],
                 usuario: idUsuario,
                 idOperacion: idOperacion,
 
@@ -48,16 +81,27 @@ function SeguimientoOp(idOperacion, idUsuario) {
         },
         methods: {
 
-
+            //integranteOp-listSeguimiento
 
             getProduccionData: function() {
-                axios.get('/talla/tallaOP-list/', {
+                axios.get('tallaOP-listSeguimiento/', {
                         params: {
                             idOp: idOperacion,
                         }
                     }).then((resp) => {
                         this.tallaOPListSeguimiento = resp.data;
                         console.log(this.tallaOPListSeguimiento);
+                    })
+                    .catch(error => console.log(error));
+
+
+                axios.get('integranteOp-listSeguimiento/', {
+                        params: {
+                            idOperacionSeguimiento: idOperacion,
+                        }
+                    }).then((resp) => {
+                        this.integranteOPListSeguimiento = resp.data;
+                        console.log(this.integranteOPListSeguimiento);
                     })
                     .catch(error => console.log(error));
 

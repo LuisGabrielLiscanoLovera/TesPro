@@ -12,3 +12,4 @@
 # calculador de tarea 
 # prueba full pxc
 # formulario colores Occion de varios colores  #crear un calculador de prenda 
+#al eliminar patinador borrarrlo de user 

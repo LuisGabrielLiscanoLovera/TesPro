@@ -8,8 +8,10 @@ urlpatterns = [
     path('operacion/crud/Update/', UpdateOperacion.as_view(), name='Operacion_ajax_update'),
     
     
-    path('cerrarOP/', cerrarOP, name='cerrarOP'),
-    
+    path('cerrarOP/', cerrarOP, name='cerrarOP'),    
     path('abrirOP/', abrirOP, name='abrirOP'),
 
+
+    
+    
 ]

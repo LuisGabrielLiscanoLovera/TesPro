@@ -13,7 +13,7 @@ class Produccion(models.Model):
     tarea         = models.ForeignKey(Tarea,on_delete=models.DO_NOTHING,blank=True, null=True)
     talla         = models.ForeignKey(Talla,related_name='ProduccionTallaFK',on_delete=models.DO_NOTHING, blank=True, null=True)
     can_terminada = models.IntegerField()
-    integrante    = models.ForeignKey(Integrante,related_name='ProduccionI',on_delete=models.CASCADE)
+    integrante    = models.ForeignKey(Integrante,on_delete=models.CASCADE)
     patinador     = models.ForeignKey(Patinador,  blank=True, null=True, on_delete=models.CASCADE)
     delProduccion = models.CharField(max_length=200, default='' , null=True)
     ESTATUS       = (('A','Activo'),('I','Inactivo'))
@@ -22,5 +22,5 @@ class Produccion(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):
-        return 'id:{}, usuario:{}, empresa:{}, operacion:{},tarea:{}, talla:{}, can_terminada:{}, integrante:{}, patinador:{}, costeProd:{} fecha:{}'.format(self.id, self.usuario, self.empresa, self.operacion, self.tarea, self.talla, self.can_terminada, self.integrante, self.patinador,self.costeProd, self.created_at)
+        return 'id:{}, usuario:{}, empresa:{}, operacion:{},tarea:{}, talla:{}, can_terminada:{}, integrante:{}, patinador:{},  fecha:{}'.format(self.id, self.usuario, self.empresa, self.operacion, self.tarea, self.talla, self.can_terminada, self.integrante, self.patinador, self.created_at)
 
