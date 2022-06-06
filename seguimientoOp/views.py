@@ -87,10 +87,10 @@ def IntegranteOPListSeguimiento(request):
     
     idOperacionSeguimiento = request.GET.get('idOperacionSeguimiento', None)
     #objects.distinct()
-    pIntegrante = Produccion.objects.filter(empresa_id=lastEm.lastEm, operacion_id=idOperacionSeguimiento,usuario_id=idUser.id).distinct()
+    pIntegrante = Produccion.objects.filter(empresa_id=lastEm.lastEm, operacion_id=idOperacionSeguimiento,usuario_id=idUser.id).distinct('integrante_id')
     
     
     
-    
+
     serializer = ProduccionSerializer(pIntegrante, many=True)
     return Response(serializer.data)
