@@ -18,7 +18,9 @@ function DetailFormatterButInfoProduccionPatinador(index, row) {
         '<div id="sectIntegreOC-' + row.id + '" class="table animated fadeIn resutatatIntegrante-' + row.id +
         '">' +
 
-        '<div style="overflow-x:auto;"><table class="thead-dark animated fadeIn">' +
+        '<div style="overflow-x:auto;">' +
+
+        '<table class="thead-dark animated fadeIn">' +
         '<thead class="">' +
         '<tr><th scope="col" class="text-center">Tareas</th><th scope="col" class="text-center">Cantidad</th></tr>' +
         '</thead>' +
@@ -27,12 +29,10 @@ function DetailFormatterButInfoProduccionPatinador(index, row) {
 
         '<td class="text-center">[[i.tarea]]</td>' +
         '<td class="text-center">[[i.cat_total_tarea]]</td>' +
-
         '</tr>' +
-
-
         '</tbody>' +
-        '</table></div>' +
+        '</table>' +
+        '</div>' +
 
         '</div>' +
         '</div>' +

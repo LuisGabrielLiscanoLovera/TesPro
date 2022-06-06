@@ -11,4 +11,4 @@
 # enviar mensaje al correo
 # calculador de tarea 
 # prueba full pxc
-# formulario colores Occion de varios colores
+# formulario colores Occion de varios colores  #crear un calculador de prenda 
