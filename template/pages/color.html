@@ -8,54 +8,34 @@
         </center>
 
 
+
         <div class="row">
-            <div class="col-sm-2">
-                <button onclick="location.href='#openModalHijoColor'" class="btn" type="button">
-                    <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar </i>
-                </button>
 
+            <div class="col-md-2">
+                <button onclick="location.href='#openModalHijoColor'" class="btn btn-outline-success icofont-ui-add"> Agregar </button>
+            </div>
+            <div class="col-md-2">
                 <button id="buttonEliminarColor" class="btn btn-outline-danger icofont-ui-remove"> Eliminar</button>
-
-
             </div>
 
-            <div class="col-sm-8">
-                <table id="tableC" data-toggle="table" data-click-to-select="true" data-pagination="true" data-locale="es-SP" data-search="true" data-search-text="" data-page-size="5" data-show-fullscreen="true" data-show-refresh="false" data-row-style="rowStyle" data-checkbox-header="false"
-                    data-click-to-select="true">
-                    <div class="row">
 
 
-
-                        <!--  <div class="col-sm-2">
-          <div id="">
-            <button id="butEColor" class="btn btn-outline-warning icofont-ui-edit"><a href="#openModalHijoColorDos">Editar</a> </button>
-          </div>
-        </div> -->
-
-
-
-
-                    </div>
-
-
-
-                    <thead class="thead-dark">
-                        <tr>
-                            <th data-field="state" data-checkbox="true" class="bs-checkbox"></th>
-                            <!--             <th data-field="id">N°-ID</th>
- -->
-                            <th data-field="nom_color">Nombre color</th>
-                            <th data-field="codigo_color">Codigo de color</th>
-                            <th data-field="created_at">Fecha Creada</th>
-                        </tr>
-                    </thead>
-
-
-                </table>
+            <div class="col-md-10 offset-1">
+                <div class="col-sm-">
+                    <table id="tableC" data-toggle="table" data-click-to-select="true" data-pagination="true" data-locale="es-SP" data-search="true" data-search-text="" data-page-size="5" data-show-fullscreen="true" data-show-refresh="false" data-row-style="rowStyle" data-checkbox-header="false"
+                        data-click-to-select="true">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th data-field="state" data-checkbox="true" class="bs-checkbox"></th>
+                                <th data-field="nom_color">Nombre color</th>
+                                <th data-field="codigo_color">Codigo de color</th>
+                                <th data-field="created_at">Fecha Creada</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
-
-
 
 
     </div>
@@ -81,7 +61,6 @@
                         <h3>Agregar color
                             <br>{% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h3>
                         <div class="row">
-
                             <div class="col-md-6 md-6  form-group-sm">
                                 <label>Nombre de color</label>
                                 <input class="form-control" name="nom_color" placeholder="Nombre color" required>
@@ -98,7 +77,7 @@
 
 
                             <div class="">
-                                <input class="submit button" type="submit" onclick="location.href='/'" value="Guardar">
+                                <input class="submit button" type="submit" value="Guardar">
                             </div>
 
 
@@ -113,118 +92,10 @@
 
 
 
-
-            <!-- <form id="addColor">
-                <div class="content p-3 mb-2 bg-dar text-white ">
-                    <div class="border">
-                        <center>
-                            <h1>Crear color {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
-                            <hr>
-                        </center>
-
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="modal_codigo_color">Nombre Color</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                                    <input class="form-control" type="text" name="nom_color" placeholder="Nombre color" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="codigo_color">Codigo color</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                    <i class="fa fa-user"></i>
-                  </span>
-                                    <input class="form-control" type="number" name="codigo_color" required>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="modal-footer">
-                            <input type="number" hidden="True" name="empresaColor" value="{{ lastIdEmpresa }}">
-                            <input type="number" hidden="True" name="idUserColor" value="{{ login_user_id}}">
-                            <button class="btn btn-outline-primary form-" type="submit" onclick="location.href='/'">Guardar</button>
-                        </div>
-                    </div>
-                </div>
-
-            </form> -->
         </div>
 
     </div>
 </div>
-<!-- 
-<div id="openModalHijoColorDos" class="modalDialogHijoDos">
-  <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>            
-    <center>
-      <h1>Editar color {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1><hr>
-    </center>
-    
-      <div class="modal-dialo" role="document">
-        <form id="editColor">
-          <div class="content text-light bg-dark">
-            <div class="border">
-              
-                <div class="col-sm-12">
-                 
-                 
-                  <div class="form-group">
-                    <label for="modal_codigo_color">Nombre color</label>
-                    <div class="input-group">
-                      <span class="input-group-addon">
-                        <i class="fa fa-user"></i>
-                      </span>
-                      <input class="form-control" type="text" name="nomColorUp" placeholder="Nombre color" required>
-                    </div>
-                  </div>
-                
-                </div>                    
-                <div class="col-sm-12">
-                  <div class="form-group">
-                    <label for="codigo_color">Codigo de color</label>
-                    <div class="input-group">
-                      <span class="input-group-addon">
-                        <i class="fa fa-user"></i>
-                      </span>
-                      <input class="form-control" type="number" name="codigocolorUP" min="10" max="100" placeholder="Codigo de color" required>
-                    </div>
-                  </div>
-                </div>
-          
-                  
-
-                
-                <div class="modal-footer">              
-                  <input type="number" hidden="True" name="empresaColorUP" value="{{ lastIdEmpresa }}">
-                  <input type="number" hidden="True" name="idUserColorUP" value="{{ login_user_id}}">
-                  <button class="btn btn-outline-primary form-" type="submit" onclick="location.href='/'">Guardar</button>
-                </div>
-              
-              
-            
-              
-            </div>
-            
-          </div>
-        </form>
-      </div>
-   
-      </div>
-</div>
-
- -->
-
-
-
-
-
-
 
 
 
