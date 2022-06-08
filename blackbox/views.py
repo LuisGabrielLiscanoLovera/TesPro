@@ -76,6 +76,10 @@ class DespachoPatinador(LoginRequiredMixin, TemplateView):
         # Tallas          = Talla.objects.filter(usuario=s['last_login'],empresa_id=lastEm).values('id','nom_talla','num_talla')
         EmpresaActual = Empresa.objects.filter(
             usuario=int(integranteConten[0]['usuario_id']), id=int(lastEm))
+        
+        print(EmpresaActual, "s=====EmpresaActual")
+
+        
         Operaciones = Operacion.objects.filter(usuario=int(integranteConten[0]['usuario_id']), id=int(
             lastEm), empresa_id=lastEm, estatus='A').values('nom_operacion', 'id')
         context = super(DespachoPatinador, self).get_context_data(**kwargs)
@@ -386,28 +390,16 @@ def createProduccionPatinador(request,):
 
     integranteConten = Integrante.objects.filter(
         id=idUser.id).values('empresa_id', 'usuario_id')
-    lastEm = int(integranteConten[0]['empresa_id'])
- 
-    
+    lastEm = int(integranteConten[0]['empresa_id'])    
     idIntegranteMyuser = MyUser.objects.get(id=idUser.id)
-
-    idPatinador = Patinador.objects.filter(
-        integrante_id=idIntegranteMyuser.integrante_id).values('id')
-    
-    
+    idPatinador = Patinador.objects.filter(integrante_id=idIntegranteMyuser.integrante_id).values('id')  
     idPatinador = idPatinador[0]['id']
     canTerminada = int(request.data['cantidadProdPatinador'])
-
     valor = Tarea.objects.get(id=int(request.data['OccionId_tareaPatinador']))
 
-
-
     try:
-        obj = Prod.objects.create(
-            usuario_id=int(integranteConten[0]['usuario_id']),
-            patinador_id=idPatinador,
-            integrante_id=int(
-                request.data['OccionId_integrante_prodPatinador']),
+        obj = Prod.objects.create(usuario_id=int(integranteConten[0]['usuario_id']),
+        patinador_id=idPatinador,integrante_id=int(request.data['OccionId_integrante_prodPatinador']),
             empresa_id=int(lastEm),
             operacion_id=int(request.data['idOperacionPatinador']),
             talla_id=int(request.data['OccionId_tallaPatinador']),
@@ -445,24 +437,21 @@ class AcumuladoPatinador(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(AcumuladoPatinador, self).get_context_data(**kwargs)
         s = SessionStore()
-        s['last_login'] = self.request.user.pk
+        s['last_login']  = self.request.user.pk
         s.create()
+        myuser           = MyUser.objects.get(id=s['last_login'])
+        integranteConten = Integrante.objects.filter(id=myuser.integrante_id).values('empresa_id', 'usuario_id')
+        lastEm           = int(integranteConten[0]['empresa_id'])
+        AllEmpresa       = RelacionEmpresa.objects.filter(usuario_id=int(integranteConten[0]['usuario_id']))
+        EmpresaActual    = Empresa.objects.filter(usuario=int(integranteConten[0]['usuario_id']), id=int(lastEm))
 
-        integranteConten = Integrante.objects.filter(
-            id=s['last_login']).values('empresa_id', 'usuario_id')
-        lastEm = int(integranteConten[0]['empresa_id'])
-
-        AllEmpresa = RelacionEmpresa.objects.filter(
-            usuario_id=int(integranteConten[0]['usuario_id']))
-
-        EmpresaActual = Empresa.objects.filter(usuario=int(
-            integranteConten[0]['empresa_id']), id=int(lastEm))
         context = super(AcumuladoPatinador, self).get_context_data(**kwargs)
         context['lastIdEmpresa'] = int(lastEm)  # ids empresas
         context['nomEmpresa'] = AllEmpresa  # nombre de todas las empresa
          # nombre de la empresa actual
         context['nomEmpresaU'] = EmpresaActual
         context['last_login'] = s['last_login']    # ultimo inicio de seccion
+        
         try:
             patinadores = Patinador.objects.all().filter(usuario=int(
                 integranteConten[0]['empresa_id']), empresa_id=int(lastEm)).values('integrante_id')
@@ -522,25 +511,19 @@ def AcumuladoDataIntegrantePatinador(request):
         patinador = "{} {}".format(
             patinador[0]['nombres'], patinador[0]['apellidos'])
 
-        if patinador in patinadores:
-            pass
-        else:
-            patinadores.append(patinador)
-        if tareaIntegrante['nom_tarea'] in dontrepeYorself:
-            pass
+        if patinador in patinadores:pass
+        else:patinadores.append(patinador)
+        if tareaIntegrante['nom_tarea'] in dontrepeYorself:pass
         else:
             dontrepeYorself.append(tareaIntegrante['nom_tarea'])
             tareas.append({
                 'tarea': tareaIntegrante['nom_tarea'],
                 'cat_total_tarea': totalIntegrante['can_prod_acum'],
             })
-    if tareas == []:
-        pass
+    if tareas == []:pass
     else:
-        if patinadores == []:
-            pass
-        else:
-            tareas.append({'patinadores': patinadores})
+        if patinadores == []:pass
+        else:tareas.append({'patinadores': patinadores})
     return Response(tareas)
 
 
@@ -576,8 +559,11 @@ def createProAcumuladoPatinador(request,):
     valor = Tarea.objects.get(id=int(request.data['OccionId_tarea_AcuPatinador']))
   
     
-    idPatinador = Patinador.objects.filter(integrante_id=idUser.id).values('id')
+    #idPatinador = Patinador.objects.filter(integrante_id=idUser.id).values('id')
+    idIntegranteMyuser = MyUser.objects.get(id=idUser.id)
+    idPatinador = Patinador.objects.filter(integrante_id=idIntegranteMyuser.integrante_id).values('id')  
     idPatinador = idPatinador[0]['id']
+    
     try:
         obj = ProAcu.objects.create(
             usuario_id=int(integranteConten[0]['usuario_id']),
