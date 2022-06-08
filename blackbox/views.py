@@ -119,7 +119,6 @@ def createDespachoPatinador(request,):
     
     
     canTerminada = int(request.data['cantPatinador'])
-    #nombreTalla   = Talla.objects.filter(empresa_id=int(lastEm),usuario_id=int(idUser.id)     ,id=int(request.data['selectIdTalla'])).values('nom_talla')
     nombreTalla = Talla.objects.filter(empresa_id=int(lastEm), usuario_id=int(
         integranteConten[0]['usuario_id']), id=int(request.data['selectIdTallaPatinador'])).values('nom_talla', 'id')
     
@@ -199,7 +198,8 @@ def TallaOpCanIncosistentePatinadores(request):
             username = request.session['username']
             idUser = MyUser.objects.get(username=username)
 
-    lastEm = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
+    lastEm = CambioEmpres.objects.filter(
+        usuario_id=idUser.integrante_id).last()
     idOP = request.GET.get('idOperacion', None)
     CanOperacion = Operacion.objects.filter(id=int(idOP)).values('can_total')
     CanOperacion = CanOperacion[0]['can_total']
@@ -273,7 +273,8 @@ def produccionesListPatinadores(request):
             username = request.session['username']
             idUser = MyUser.objects.get(username=username)
 
-    lastEm = Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm = Integrante.objects.filter(
+        id=idUser.integrante_id).values('empresa_id')
     lastEm = int(lastEm[0]['empresa_id'])
     #vamos bien
     despacho = Operacion.objects.filter(
@@ -291,7 +292,8 @@ def ProduccionDataIntegrantePatinador(request):
             username = request.session['username']
             idUser = MyUser.objects.get(username=username)
 
-    lastEm = Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm = Integrante.objects.filter(
+        id=idUser.integrante_id).values('empresa_id')
     lastEm = int(lastEm[0]['empresa_id'])
 
     idOperacion = request.GET.get('idOpPatinador', None)
@@ -339,7 +341,8 @@ def TareaListPatinador(request):
             username = request.session['username']
             idUser = MyUser.objects.get(username=username)
 
-    lastEm = Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm = Integrante.objects.filter(
+        id=idUser.integrante_id).values('empresa_id')
     lastEm = int(lastEm[0]['empresa_id'])
 
     tarea = Tarea.objects.all().filter(empresa_id=lastEm, estatus='A').order_by('-id')
@@ -354,7 +357,8 @@ def integranteListPatinador(request):
             username = request.session['username']
             idUser = MyUser.objects.get(username=username)
 
-    lastEm = Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm = Integrante.objects.filter(
+        id=idUser.integrante_id).values('empresa_id')
     lastEm = int(lastEm[0]['empresa_id'])
 
     integrante = Integrante.objects.all().filter(
@@ -373,7 +377,8 @@ def patinadoresActProdPatinador(request):
         if 'username' in request.session:
             username = request.session['username']
             idUser = MyUser.objects.get(username=username)
-    lastEm = Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm = Integrante.objects.filter(
+        id=idUser.integrante_id).values('empresa_id')
     lastEm = int(lastEm[0]['empresa_id'])
     try:
         patinadores = Patinador.objects.all().filter(usuario=idUser, estatus='A',
@@ -394,10 +399,11 @@ def createProduccionPatinador(request,):
             idUser = MyUser.objects.get(username=username)
 
     integranteConten = Integrante.objects.filter(
-        id=idUser.id).values('empresa_id', 'usuario_id')
+        id=idUser.integrante_id).values('empresa_id', 'usuario_id')
     lastEm = int(integranteConten[0]['empresa_id'])    
-    idIntegranteMyuser = MyUser.objects.get(id=idUser.id)
-    idPatinador = Patinador.objects.filter(integrante_id=idIntegranteMyuser.integrante_id).values('id')  
+    
+    idPatinador = Patinador.objects.filter(
+        integrante_id=idUser.integrante_id).values('id')
     idPatinador = idPatinador[0]['id']
     canTerminada = int(request.data['cantidadProdPatinador'])
     valor = Tarea.objects.get(id=int(request.data['OccionId_tareaPatinador']))
@@ -468,15 +474,17 @@ class AcumuladoPatinador(LoginRequiredMixin, TemplateView):
         finally:
             return context
 
-
+#tabla principal Acumulado Patinador
 @api_view(['GET'])
 def AcumuladoListPatinadores(request):
     if request.session.has_key('username'):
         if 'username' in request.session:
             username = request.session['username']
-            idUse = MyUser.objects.get(username=username)
+            idUser = MyUser.objects.get(username=username)
 
-    lastEm = Integrante.objects.filter(id=idUse.id).values('empresa_id')
+    lastEm = Integrante.objects.filter(id=idUser.integrante_id).values('empresa_id')
+    
+    
     lastEm = int(lastEm[0]['empresa_id'])
     acumuladoQsect = ACUMULADO.objects.filter(
         empresa_id=lastEm, estatus='A').order_by('-id')
@@ -494,7 +502,7 @@ def AcumuladoDataIntegrantePatinador(request):
             idUser = MyUser.objects.get(username=username)
 
     integranteConten = Integrante.objects.filter(
-        id=idUser.id).values('empresa_id', 'usuario_id')
+        id=idUser.integrante_id).values('empresa_id', 'usuario_id')
     lastEm = int(integranteConten[0]['empresa_id'])
     idAcumulado = request.GET.get('idAcumuladoPatinador', None)
 
@@ -540,7 +548,7 @@ def AcumuladoListProcPatinador(request):
             idUser = MyUser.objects.get(username=username)
 
     integranteConten = Integrante.objects.filter(
-        id=idUser.id).values('empresa_id', 'usuario_id')
+        id=idUser.integrante_id).values('empresa_id', 'usuario_id')
     lastEm = int(integranteConten[0]['empresa_id'])
     idAcumulado = request.GET.get('idAcumuladoPatinador', None)
     acumuladoProc = ProAcu.objects.filter(usuario_id=int(
@@ -556,17 +564,15 @@ def createProAcumuladoPatinador(request,):
         if 'username' in request.session:
             username = request.session['username']
             idUser = MyUser.objects.get(username=username)
-    integranteConten = Integrante.objects.filter(id=idUser.id).values('empresa_id', 'usuario_id', 'id')
+    integranteConten = Integrante.objects.filter(id=idUser.integrante_id).values('empresa_id', 'usuario_id', 'id')
     lastEm = int(integranteConten[0]['empresa_id'])
     canTerminada = int(request.data['Cantidad_AcuPatinador'])
         
     acumulado_id = int(request.data['acumulado_idPatinador'])
     valor = Tarea.objects.get(id=int(request.data['OccionId_tarea_AcuPatinador']))
-  
-    
-    #idPatinador = Patinador.objects.filter(integrante_id=idUser.id).values('id')
-    idIntegranteMyuser = MyUser.objects.get(id=idUser.id)
-    idPatinador = Patinador.objects.filter(integrante_id=idIntegranteMyuser.integrante_id).values('id')  
+
+    idPatinador = Patinador.objects.filter(
+        integrante_id=idUser.integrante_id).values('id')
     idPatinador = idPatinador[0]['id']
     
     try:
@@ -610,7 +616,7 @@ def TallaEmpresaListPatinador(request):
             username = request.session['username']
             idUser = MyUser.objects.get(username=username)
 
-    lastEm = Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm = Integrante.objects.filter(id=idUser.integrante_id).values('empresa_id')
     lastEm = int(lastEm[0]['empresa_id'])
     ptalla = Talla.objects.filter(empresa_id=lastEm).order_by('-id')
 
@@ -673,7 +679,8 @@ def casinoListPatinador(request):
             username = request.session['username']
             idUser = MyUser.objects.get(username=username)
 
-    lastEm = Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm = Integrante.objects.filter(
+        id=idUser.integrante_id).values('empresa_id')
     lastEm = int(lastEm[0]['empresa_id'])
     casinos = Casino.objects.filter(
         empresa_id=lastEm, estatus='A').order_by('-id')
@@ -688,7 +695,8 @@ def ProduccionOPListPatinador(request):
             username = request.session['username']
             idUser = MyUser.objects.get(username=username)
 
-    lastEm = Integrante.objects.filter(id=idUser.id).values('empresa_id')
+    lastEm = Integrante.objects.filter(
+        id=idUser.integrante_id).values('empresa_id')
     lastEm = int(lastEm[0]['empresa_id'])
 
     produccion = Prod.objects.filter(empresa_id=lastEm, operacion_id=int(
@@ -706,7 +714,7 @@ def totalImporteIntePatinador(request):
             username = request.session['username']
             idUser = MyUser.objects.get(username=username)
     integranteConten = Integrante.objects.filter(
-        id=idUser.id).values('empresa_id', 'usuario_id')
+        id=idUser.integrante_id).values('empresa_id', 'usuario_id')
     lastEm = int(integranteConten[0]['empresa_id'])
 
     idCasino = request.GET.get('idCasinoPatinador', None)
@@ -729,7 +737,7 @@ def CasinoDataIntegranteImportePatinador(request):
             username = request.session['username']
             idUser = MyUser.objects.get(username=username)
     integranteConten = Integrante.objects.filter(
-        id=idUser.id).values('empresa_id', 'usuario_id')
+        id=idUser.integrante_id).values('empresa_id', 'usuario_id')
     lastEm = int(integranteConten[0]['empresa_id'])
     idCasino = request.GET.get('idCasinoPatinador', None)
     idIntegrante = request.GET.get('idIntegranteSelectPatinador')
@@ -747,7 +755,7 @@ def CasinoDataImportePatinador(request):
             idUser = MyUser.objects.get(username=username)
 
     integranteConten = Integrante.objects.filter(
-        id=idUser.id).values('empresa_id', 'usuario_id')
+        id=idUser.integrante_id).values('empresa_id', 'usuario_id')
     lastEm = int(integranteConten[0]['empresa_id'])
     idCasino = request.GET.get('idCasinoPatinador', None)
     importeGeneral = Importe.objects.filter(usuario_id=int(
