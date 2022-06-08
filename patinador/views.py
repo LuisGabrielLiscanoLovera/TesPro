@@ -111,11 +111,18 @@ class DeletePatinador(View):
     def  get(self, request):
         idPatinador = request.GET.get('idPatinador', None)
         
-        idIntegrante = Patinador.objects.filter(
-            id=idPatinador).values('integrante_id')
-        print(idIntegrante, "=idIntegrante")
+        idIntegrante = Patinador.objects.filter(id=idPatinador).values('integrante_id')
+        
+       
+       
+       
+       
         MyUser.objects.get(integrante_id=int(idIntegrante[0]['integrante_id'])).delete()
         Patinador.objects.get(id=idPatinador).delete()
+        
+        
+               
+        
         data = {
             'deleted': True
         }
