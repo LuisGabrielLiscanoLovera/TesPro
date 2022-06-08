@@ -1,6 +1,7 @@
 from pprint import pprint
 from traceback import print_tb
 from django.http import HttpResponseRedirect
+from authapp.models import MyUser
 from operacion.models import Operacion
 from talla.models import Talla
 from referencia.models import Referencia
@@ -35,8 +36,18 @@ class Home(LoginRequiredMixin,TVB):
         s['last_login'] = self.request.user.pk
         s.create()
         lastEm          = CambioEmpres.objects.filter(usuario_id=s['last_login']).last()
+        
+        if lastEm==None:
+            empresaId=Empresa.objects.get(usuario_id=s['last_login'])
+            physics = CambioEmpres(
+                usuario_id=s['last_login'], lastEm=empresaId.id)
+            physics.save()
+            lastEm = CambioEmpres.objects.filter(
+                usuario_id=s['last_login']).last()
+        
         nomTodasEmpresa = RelacionEmpresa.objects.filter(usuario_id=s['last_login'])   
         idlastEmpresa   = lastEm.lastEm
+        
         
         #Carga de data por defecto Sin(Referenciam,color,talla)
         if Referencia.objects.filter(usuario_id=s['last_login'],empresa_id=idlastEmpresa,nom_referencia="SIN REFERENCIA"):pass

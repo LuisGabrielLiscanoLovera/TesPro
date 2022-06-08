@@ -34,9 +34,9 @@ class RelacionEmpresa(models.Model):
  
 
 class CambioEmpres(models.Model):
-    usuario = models.ForeignKey(User, related_name='CambioEmpres',on_delete=models.CASCADE)
-    lastEm=models.IntegerField(default=+1)
-    created_at = models.DateTimeField(auto_now_add=True)
+    usuario      = models.ForeignKey(User, related_name='CambioEmpres',on_delete=models.CASCADE)
+    lastEm       = models.IntegerField(default=+1)
+    created_at   = models.DateTimeField(auto_now_add=True)
     class Meta:
             ordering = ["id"]
     def __str__(self):
