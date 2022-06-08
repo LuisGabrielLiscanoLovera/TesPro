@@ -113,8 +113,12 @@ def createDespachoPatinador(request,):
     #nombreTalla   = Talla.objects.filter(empresa_id=int(lastEm),usuario_id=int(idUser.id)     ,id=int(request.data['selectIdTalla'])).values('nom_talla')
     nombreTalla = Talla.objects.filter(empresa_id=int(lastEm), usuario_id=int(
         integranteConten[0]['usuario_id']), id=int(request.data['selectIdTallaPatinador'])).values('nom_talla', 'id')
+    
+    idIntegranteMyuser = MyUser.objects.get(id=idUser.id)
+    
     idPatinador = Patinador.objects.filter(
-        integrante_id=idUser.id).values('id')
+        integrante_id=idIntegranteMyuser.integrante_id).values('id')
+    
     idPatinador = idPatinador[0]['id']
     nomPatinador = Integrante.objects.filter(empresa_id=int(lastEm), usuario_id=int(
         integranteConten[0]['usuario_id']), id=int(idUser.id)).values('nombres', 'apellidos')
@@ -151,11 +155,17 @@ class ItemListViewPatinador(ServerSideDatatableView):
                'can_terminada', 'created_at', 'btnDelDespacho', 'id']
 
     def get_queryset(self):
+        if self.request.session.has_key('username'):
+            if 'username' in self.request.session:
+                username = self.request.session['username']
+                idUser = MyUser.objects.get(username=username)
+        lastEm = Integrante.objects.filter(id=idUser.id).values('empresa_id')
+        lastEm = int(lastEm[0]['empresa_id'])
+        
         if self.request.method == 'GET':
             idOp = self.request.GET.get('idOpPatinador', None)
-            IdEmpresa = self.request.GET.get('usuarioPatinador', None)
-            queryset = Despacho.objects.filter(empresa_id=int(
-                IdEmpresa), operacion_id=idOp).order_by('-id')
+            usuarioPatinador = self.request.GET.get('usuarioPatinador', None)
+            queryset = Despacho.objects.filter(empresa_id=lastEm, operacion_id=idOp).order_by('-id')
             return queryset
 
 
@@ -377,8 +387,14 @@ def createProduccionPatinador(request,):
     integranteConten = Integrante.objects.filter(
         id=idUser.id).values('empresa_id', 'usuario_id')
     lastEm = int(integranteConten[0]['empresa_id'])
+ 
+    
+    idIntegranteMyuser = MyUser.objects.get(id=idUser.id)
+
     idPatinador = Patinador.objects.filter(
-        integrante_id=idUser.id).values('id')
+        integrante_id=idIntegranteMyuser.integrante_id).values('id')
+    
+    
     idPatinador = idPatinador[0]['id']
     canTerminada = int(request.data['cantidadProdPatinador'])
 
