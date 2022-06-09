@@ -377,7 +377,6 @@
         
         th {
             color: #D5DDE5;
-            ;
             background: #1b1e24;
             border-bottom: 4px solid #9ea7af;
             border-right: 1px solid #343a45;
@@ -1041,6 +1040,9 @@ V- Acumulado
 	                            <!--     ---------------------------------------------------------------   face              -->
 						
 					  <img src="{% static 'images/faces/face9.jpg' %} " alt="user " class="user ">
+					  
+					
+					  
 					  </span>
 					  <span class="user-name ">{{ request.user.first_name|title }} {{ request.user.last_name|title }}</span>
 				   </button>
@@ -1051,10 +1053,11 @@ V- Acumulado
                                         <div class=" ">
                                         </div>
                                         <div>
-                                            <a href="{% url 'signout' %} ">
-                                                <class class="text-danger "><u>Cerrar seccion</u>
-                                                    <i class="btn-outline-danger material-icons ">exit_to_app</i>
-                                            </a>
+                                            <button onclick="location.href='/auth/logout/'">
+                                            <div class="text-danger "><u>Cerrar seccion</u></div>
+                                           &nbsp;&nbsp;&nbsp; <i class="btn-outline-danger material-icons ">exit_to_app</i>
+                                            
+                                        </button>
 
 
                                         </div>
