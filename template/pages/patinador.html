@@ -51,6 +51,9 @@ data-auto-refresh-status="true"
                 </table>
             </div>
 
+
+
+
         </div>
         <style>
 
@@ -67,8 +70,12 @@ data-auto-refresh-status="true"
 
 
 
-
             function DetailFormatterButAccionPatinador(index, row) {
+
+
+
+
+
                 return '<div class="row">' +
                     '<form @submit.prevent="remove" id="editarIpatinador" class="form form-">{% csrf_token %}' +
 
@@ -89,15 +96,22 @@ data-auto-refresh-status="true"
                     '<option value="I">Inactivo</option>' +
                     '</select></div>' +
                     '</div>' +
-                    '<div class="form-group col">' +
-                    '' +
+                    '<div class="form-group col ">' +
 
+                    '<script>$("input:checkbox[name=checkUPctrlDespacho-' + row.id + ']").attr("checked",' + row.ctrlDespacho + ');</' + 'script>' +
                     '<label for="nombres" class="form-group">Despacho</label>=' + row.ctrlDespacho +
-                    '<input class="form-group" type="checkbox" id="checkUP"><br>' +
+                    '<input class="form-group" type="checkbox" name="checkUPctrlDespacho-' + row.id + '" value="true" id="checkUP"><br>' +
+
+
+                    '<script>$("input:checkbox[name=checkUPctrlProduccion-' + row.id + ']").attr("checked",' + row.ctrlProduccion + ');</' + 'script>' +
                     '<label for="apellidos" class="form-group">Producción</label>=' + row.ctrlProduccion +
-                    '<input class="form-group" type="checkbox" id="checkProdUP"><br>' +
+                    '<input class="form-group" type="checkbox" name="checkUPctrlProduccion-' + row.id + '" id="checkProdUP"><br>' +
+
+                    '<script>$("input:checkbox[name=checkUPctrlCasino-' + row.id + ']").attr("checked",' + row.ctrlCasino + ');</' + 'script>' +
                     '<label for="cedula" class="form-group">Casino</label>=' + row.ctrlCasino +
-                    '<input class="form-group" type="checkbox" id="checkCasinoUP">' +
+                    '<input class="form-group" type="checkbox" name="checkUPctrlCasino-' + row.id + '" id="checkCasinoUP">' +
+
+
 
                     '</div>' +
                     '<div class="form-group col">' +
@@ -321,6 +335,10 @@ data-auto-refresh-status="true"
 
 
     }
+
+
+
+
 
 
 
