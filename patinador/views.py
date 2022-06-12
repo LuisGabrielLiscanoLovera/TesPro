@@ -132,37 +132,26 @@ class DeletePatinador(View):
 
 
 class UpdatePatinador(LoginRequiredMixin,TemplateView):
-    def  get(self, request):
-        idIpatinador     = request.GET.get('idIpatinadorUP', None)
-        idEmpresa        = request.GET.get('idEmpresaUP', None)
-        idUser           = request.GET.get('idUserUP', None)
-        nombres          = request.GET.get('nombresInputUP', None)
-        apellido         = request.GET.get('apellidosUP', None)
-        sexo             = request.GET.get('sexoUP', None)
-        estatus          = request.GET.get('estatusUP', None)
-        correo           = request.GET.get('correoUP', None)
-        cedula           = request.GET.get('cedulaUP', None)
-        num_telf         = request.GET.get('num_telefonoUP', None)
-        direccion        = request.GET.get('direccionUP', None)
-        abilidad         = request.GET.get('abilidadUP', None)
-        
-      
-        obj = Patinador.objects.get(id=idIpatinador)
-        obj.empresa_id = idEmpresa
-        obj.usuario_id = idUser
-        obj.nombres    = nombres  
-        obj.apellido   = apellido 
-        obj.sexo       = sexo     
-        obj.estatus    = estatus  
-        obj.correo     = correo   
-        obj.cedula     = cedula   
-        obj.num_telf   = num_telf 
-        obj.direccion  = direccion
-        obj.abilidad   = abilidad 
-        
-        
+    def get(self, request):
+        idIpatinador      = request.GET.get('idIpatinadorUP', None)
+       # idEmpresa         = request.GET.get('idEmpresaUP', None)
+        #idUser            = request.GET.get('idUserUP', None)       
+        #ctrlDespachoUP    = request.GET.get('ctrlDespachoUP', None)
+        #ctrlProduccionUP  = request.GET.get('ctrlProduccionUP', None)
+        #ctrlCasinoUP      = request.GET.get('ctrlCasinoUP', None)
 
-        
+
+
+        obj = Patinador.objects.get(id=idIpatinador)
+        #obj.empresa_id     = idEmpresa
+        #obj.usuario_id     = idUser
+        #obj.patinador_id   = idIpatinador
+        #obj.ctrlDespacho   = ctrlDespachoUP
+        #obj.ctrlProduccion = ctrlProduccionUP
+        #obj.ctrlCasino     = ctrlCasinoUP
+        print("hhhhhhhhhhhhhhhhhhhhhh",obj)
+
+
         try:
             obj.save()
             return redirect('home')

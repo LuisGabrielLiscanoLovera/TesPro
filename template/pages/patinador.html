@@ -82,38 +82,61 @@ data-auto-refresh-status="true"
 
 
                     '<div class="form-group"><label>Clave patinador </label>' +
-                    '<input type="password" id="typepass"  Class="form-control" disabled value="' + row.password + '">' +
-                    '<input type="checkbox" onclick="Toggle()"> ver clave' +
+                    '<input type="password" id="typepass-' + row.id + '"  Class="form-control" disabled value="' + row.password + '">' +
+                    '<input type="checkbox" onclick="Toggle(' + row.id + ')"> ver clave' +
                     '</div>' +
 
 
 
                     '<div class="form-group">' +
                     '<div class="form-group"><label>Estatus</label>' +
-                    '<select class="form-control" id="estatusUP">' +
+                    '<select class="form-control" id="estatusUP-' + row.id + '">' +
                     '<option value="' + row.estatus + '">' + row.estatus + '</option>' +
                     '<option value="A">Activo</option>' +
                     '<option value="I">Inactivo</option>' +
                     '</select></div>' +
                     '</div>' +
-                    '<div class="form-group col ">' +
-
-                    '<script>$("input:checkbox[name=checkUPctrlDespacho-' + row.id + ']").attr("checked",' + row.ctrlDespacho + ');</' + 'script>' +
-                    '<label for="nombres" class="form-group">Despacho</label>=' + row.ctrlDespacho +
-                    '<input class="form-group" type="checkbox" name="checkUPctrlDespacho-' + row.id + '" value="true" id="checkUP"><br>' +
-
-
-                    '<script>$("input:checkbox[name=checkUPctrlProduccion-' + row.id + ']").attr("checked",' + row.ctrlProduccion + ');</' + 'script>' +
-                    '<label for="apellidos" class="form-group">Producción</label>=' + row.ctrlProduccion +
-                    '<input class="form-group" type="checkbox" name="checkUPctrlProduccion-' + row.id + '" id="checkProdUP"><br>' +
-
-                    '<script>$("input:checkbox[name=checkUPctrlCasino-' + row.id + ']").attr("checked",' + row.ctrlCasino + ');</' + 'script>' +
-                    '<label for="cedula" class="form-group">Casino</label>=' + row.ctrlCasino +
-                    '<input class="form-group" type="checkbox" name="checkUPctrlCasino-' + row.id + '" id="checkCasinoUP">' +
 
 
 
+
+                    '<div class="form-group">' +
+                    '<div class="form-group"><label>Despacho</label>' +
+                    '<select class="form-control" id="ctrlDespachoUP-' + row.id + '">' +
+                    '<option value="' + row.ctrlDespacho + '">Seleccione</option>' +
+                    '<option value="true">Activo</option>' +
+                    '<option value="false">Inactivo</option>' +
+                    '</select></div>' +
                     '</div>' +
+
+
+
+
+
+                    '<div class="form-group">' +
+                    '<div class="form-group"><label>Producción</label>' +
+                    '<select class="form-control" id="ctrlProduccionUP-' + row.id + '">' +
+                    '<option value="' + row.ctrlProduccion + '">Seleccione</option>' +
+                    '<option value="true">Activo</option>' +
+                    '<option value="false">Inactivo</option>' +
+                    '</select></div>' +
+                    '</div>' +
+
+
+
+
+
+                    '<div class="form-group">' +
+                    '<div class="form-group"><label>Casino</label>' +
+                    '<select class="form-control" id="ctrlCasinoUP-' + row.id + '">' +
+                    '<option value="' + row.ctrlCasino + '">Seleccione</option>' +
+                    '<option value="true">Activo</option>' +
+                    '<option value="false">Inactivo</option>' +
+                    '</select></div>' +
+                    '</div>' +
+
+
+
                     '<div class="form-group col">' +
                     '<input id="EditPatinadorBtn-' + row.id + '" value="Actualizar registro" class="form-control btn-warning" type="submit" onclick="editPatinador(' + row.id + ')" class="btn-md  btn btn-outline-warning btn-rounded  " >' +
                     '</div>' +
@@ -291,41 +314,31 @@ data-auto-refresh-status="true"
 
 <!--create ipatinador-->
 <script>
+    //Check box para create
     //#check box al agregar patinador para el control del Casino
     checkCasino = document.getElementById("checkCasino");
     globalThis.ctrlCasinoCheck = checkCasino.checked;
     checkCasino.addEventListener("click", function() {
-        console.log("estado al hacer check o uncheck", this.checked);
         globalThis.ctrlCasinoCheck = checkCasino.checked;
-
     });
-
-
-
-
     //#check box al agregar patinador para el control del despacho
     check = document.getElementById("check");
     globalThis.ctrlDespachoCheck = check.checked;
     check.addEventListener("click", function() {
-        console.log("estado al hacer check o uncheck", this.checked);
         globalThis.ctrlDespachoCheck = check.checked;
-
     });
-
     //#check box al agregar patinador para el control del Produccion
     checkProd = document.getElementById("checkProd");
     globalThis.ctrlProduccionoCheck = checkProd.checked;
     checkProd.addEventListener("click", function() {
-        console.log("estado al hacer check o uncheck", this.checked);
         globalThis.ctrlProduccionoCheck = checkProd.checked;
-
     });
 
 
 
     //Muestra la clave oculta
-    function Toggle() {
-        var temp = document.getElementById("typepass");
+    function Toggle(id) {
+        var temp = document.getElementById("typepass-" + id);
         if (temp.type === "password") {
             temp.type = "text";
         } else {
@@ -397,39 +410,43 @@ data-auto-refresh-status="true"
 <script>
     function editPatinador(id) {
 
-
-
-        var estatusUP = document.getElementById("estatusUP").value;
+        var estatusUP = document.getElementById("estatusUP-" + id).value;
         var idEmpresaUP = $('input[name="idEmpresaUP"]').val().trim();
         var idUserUP = $('input[name="idUserUP"]').val().trim();
 
-
-
-        if (estatusUP && idEmpresaUP && idUserUP) {
-
-            // Create Ajax Call
-            $.ajax({
-                url: '{% url "Patinador_ajax_update" %}',
-                data: {
-                    'estatusUP': estatusUP,
-                    'idEmpresaUP': idEmpresaUP,
-                    'idUserUP': idUserUP,
-                    'idIpatinadorUP': id
+        var ctrlCasino = document.getElementById("ctrlCasinoUP-" + id).value;
+        var ctrlDespach = document.getElementById("ctrlDespachoUP-" + id).value;
+        var ctrlProduccion = document.getElementById("ctrlProduccionUP-" + id).value;
 
 
 
-                },
-                dataType: 'json',
-                success: function(data) {
-                    if (data.user) {
-                        appendToUsrTable(data.user);
-                    }
-                }
-            });
 
-        } else {
-            alert("All fields must have a valid value.");
-        }
+
+
+        axios.post('/patinador/crud/Update/', {
+            params: {
+                'estatusUP': estatusUP,
+                'idEmpresaUP': idEmpresaUP,
+                'idUserUP': idUserUP,
+                'idIpatinadorUP': id,
+                'ctrlDespachoUP': ctrlDespach,
+                'ctrlCasinoUP': ctrlCasino,
+                'ctrlProduccionUP': ctrlProduccion,
+
+            }
+        }).then((resp) => {
+            this.allTareaAcumuladosPatinador = resp.data;
+        }).catch(error => console.log(error));
+
+
+
+
+
+
+
+
+
+
     }
 </script>
 <!--Delete patinador-->
