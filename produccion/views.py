@@ -1,7 +1,5 @@
 from django.views.generic import View
 import json
-from textwrap import indent
-from traceback import print_tb
 from django.http import JsonResponse
 from django.views.generic.base import TemplateView
 from django.contrib.sessions.backends.db import SessionStore
@@ -13,15 +11,15 @@ from operacion.models import Operacion
 from patinador.models import Patinador
 from integrante.models import Integrante
 from produccion.models import Produccion as Prod
-from django.db.models import Sum, F
+from django.db.models import Sum
 from authapp.models import MyUser
 from .serializers import ProduccionSerializer
 from patinador.serializers import PatinadorSerializer
 from rest_framework.decorators import api_view
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from operacion.serializers import OperacionSerializer
 from django.http import HttpResponse
-
+from django.contrib.auth.decorators import login_required
 
 class Produccion(LoginRequiredMixin, TemplateView):
     template_name = "pages/produccion.html"
@@ -157,6 +155,7 @@ class deleteAllProduccion(View):
         return JsonResponse(data)
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def ProduccionOPList(request):
     if request.session.has_key('username'):
@@ -173,6 +172,7 @@ def ProduccionOPList(request):
     return HttpResponse(dump, content_type='application/json')
 
 
+@login_required(login_url='signin')
 # dataProduccionInte-list/
 @api_view(['GET'])
 def ProduccionDataIntegrante(request):
@@ -219,6 +219,7 @@ def ProduccionDataIntegrante(request):
     return Response(tareas)
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def ProduccionDataIntegranteValor(request):
     if request.session.has_key('username'):
@@ -272,6 +273,7 @@ def ProduccionDataIntegranteValor(request):
     return Response(tareas)
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])  
 def operacionesListValor(request):     
     if request.session.has_key('username'):        
@@ -287,8 +289,7 @@ def operacionesListValor(request):
     return Response(serializer.data)
 
 
-
-
+@login_required(login_url='signin')
 @api_view(['POST'])
 def createProduccion(request,):
     # Prod = Models Produccion
@@ -334,6 +335,7 @@ def createProduccion(request,):
         return Response("PRODUCCION no cargadA " + str(e))
 
 
+@login_required(login_url='signin')
 @api_view(['DELETE'])
 def deleteProduccion(request, id):
     try:
@@ -359,6 +361,7 @@ def deleteProduccion(request, id):
     return JsonResponse(data)
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def patinadoresActProd(request):
     if request.session.has_key('username'):

@@ -1,7 +1,6 @@
 # Create your views here
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from yaml import serialize
 from patinador.models import Patinador
 from integrante.models import Integrante
 from empresa.models import Empresa, RelacionEmpresa, CambioEmpres
@@ -15,6 +14,8 @@ from rest_framework.response import Response
 from produccion.models import Produccion
 from talla.serializers import  CanTallaSerializer
 from .serializers import ProdIntegranSeguimiento, PatinadorSerializer
+from django.contrib.auth.decorators import login_required
+
 
 class SeguimientoOp(LoginRequiredMixin,TemplateView):
     
@@ -50,6 +51,7 @@ class SeguimientoOp(LoginRequiredMixin,TemplateView):
           return context
           
           
+@login_required(login_url='signin')
 @api_view(['GET'])
 def operacionesListSeguimiento(request):
     if request.session.has_key('username'):
@@ -66,6 +68,7 @@ def operacionesListSeguimiento(request):
 
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])  
 def TallaOPListSeguimiento(request):
     if request.session.has_key('username'):        
@@ -79,6 +82,7 @@ def TallaOPListSeguimiento(request):
  
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def IntegranteOPListSeguimiento(request):
     if request.session.has_key('username'):
@@ -95,6 +99,7 @@ def IntegranteOPListSeguimiento(request):
     return Response(serializer.data)
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def PatinadoresOPListSeguimiento(request):
     if request.session.has_key('username'):

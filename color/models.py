@@ -1,11 +1,11 @@
 from django.db import models
-from authapp.models import MyUser as User
+from authapp.models import MyUser
 from empresa.models import Empresa
 # Create your models here.
 
 class Color(models.Model):
-    usuario        = models.ForeignKey(User, related_name='Color', on_delete=models.CASCADE)
-    empresa        = models.ForeignKey(Empresa, related_name='Color',on_delete=models.CASCADE)
+    usuario        = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    empresa        = models.ForeignKey(Empresa,on_delete=models.CASCADE)
     nom_color      = models.CharField(max_length=20)
     codigo_color   = models.CharField(blank=True, null=True,max_length=25)    
     

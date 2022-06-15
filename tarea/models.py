@@ -1,12 +1,12 @@
 from django.db import models
-from authapp.models import MyUser as User
+from authapp.models import MyUser 
 from empresa.models import Empresa
-# Create your models here.
+
 
 class Tarea(models.Model):
     
-    usuario       = models.ForeignKey(User, related_name='Tarea', on_delete=models.CASCADE)
-    empresa       = models.ForeignKey(Empresa, related_name='Tarea',on_delete=models.CASCADE)
+    usuario       = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    empresa       = models.ForeignKey(Empresa,on_delete=models.CASCADE)
     #codigo_tarea  = models.CharField(blank=True, null=True,max_length=25)  
     nom_tarea     = models.CharField(max_length=50)
     min_minuto    = models.IntegerField(blank=True, null=True )

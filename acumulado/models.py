@@ -1,5 +1,5 @@
 from django.db import models
-from authapp.models import MyUser as User
+from authapp.models import MyUser
 from empresa.models import Empresa
 from integrante.models import Integrante
 from talla.models import Talla
@@ -8,7 +8,7 @@ from tarea.models import Tarea
 class Acumulado(models.Model):
     btnInfo       = '<button type="button" class="btn btn-outline-info text-center btn-sm btn-block ">Info</button>'
     btnAccion     = '<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>'
-    usuario       = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario       = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     costeAcu      = models.IntegerField(blank=True,null=True,default=0) 
     empresa       = models.ForeignKey(Empresa,  on_delete=models.CASCADE)
     nom_acumulado = models.CharField(max_length=35, unique=True)
@@ -37,7 +37,7 @@ class Acumulado(models.Model):
 
 
 class ProAcumulado(models.Model):
-    usuario       = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario       = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     empresa       = models.ForeignKey(Empresa, on_delete=models.CASCADE)
     acumulado     = models.ForeignKey(Acumulado, on_delete=models.CASCADE)
     integrante    = models.ForeignKey(Integrante, on_delete=models.CASCADE)

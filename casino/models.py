@@ -1,5 +1,5 @@
 from django.db import models
-from authapp.models import MyUser as User
+from authapp.models import MyUser
 from empresa.models import Empresa
 from integrante.models import Integrante
 from patinador.models import Patinador
@@ -7,7 +7,7 @@ from patinador.models import Patinador
 class Casino (models.Model):
     btnInfo       = '<button type="button" class="btn btn-outline-info text-center btn-sm btn-block ">Info</button>'
     btnccion      = '<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>'
-    usuario       = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario       = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     empresa       = models.ForeignKey(Empresa,  on_delete=models.CASCADE)
     nom_casino    = models.CharField(max_length=35, unique=True)
     can_total     = models.IntegerField(blank=True, null=True,default=0)
@@ -31,7 +31,7 @@ class Casino (models.Model):
         self.nom_casino,self.can_total, self.estatus,self.created_at)
 
 class Importe(models.Model):
-    usuario         = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario         = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     empresa         = models.ForeignKey(Empresa,on_delete=models.CASCADE)
     casino          = models.ForeignKey(Casino, on_delete=models.CASCADE)
     cantidad        = models.IntegerField(blank=True, null=True)

@@ -1,9 +1,6 @@
-
-from traceback import print_tb
 from authapp.models import MyUser
 from operacion.models import Operacion
-from django.shortcuts import render, redirect
-from integrante.models import Integrante
+from django.shortcuts import redirect
 from talla.models import CanTalla, Talla
 from django.views.generic import TemplateView, View
 from django.http import JsonResponse
@@ -12,18 +9,15 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import TallaSerializer,CanTallaSerializer
 from empresa.models import CambioEmpres
-from django.shortcuts import render
-from django.template.loader import render_to_string
 from despacho.models import Despacho
 from django.db.models import Sum, F 
-from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
 
 
-    
 
 
 
@@ -31,6 +25,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def apiOverview(request):
 	api_urls = {
@@ -48,6 +43,7 @@ def apiOverview(request):
 
 
 #talla
+@login_required(login_url='signin')
 @api_view(['GET'])  
 def TallaList(request):
     if request.session.has_key('username'):        
@@ -61,6 +57,7 @@ def TallaList(request):
 
 
 #can tallas de la op
+@login_required(login_url='signin')
 @api_view(['GET'])  
 def TallaOPList(request):
     if request.session.has_key('username'):        
@@ -74,6 +71,7 @@ def TallaOPList(request):
  
  
 #tallas generales TallaEmpresaList
+@login_required(login_url='signin')
 @api_view(['GET'])  
 def TallaEmpresaList(request):
     if request.session.has_key('username'):        
@@ -90,6 +88,7 @@ def TallaEmpresaList(request):
  
 
  
+@login_required(login_url='signin')
 @api_view(['GET'])  
 def TallaOpCanIncosistente(request):
     if request.session.has_key('username'):        

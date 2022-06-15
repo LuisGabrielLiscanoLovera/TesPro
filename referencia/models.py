@@ -1,12 +1,12 @@
 from django.db import models
-from authapp.models import MyUser as User
+from authapp.models import MyUser
 from empresa.models import Empresa
 # Create your models here.
 
 class Referencia(models.Model):
    
-    usuario        = models.ForeignKey(User, related_name='Referencia',on_delete=models.CASCADE)
-    empresa        = models.ForeignKey(Empresa, related_name='Referencia',on_delete=models.CASCADE)
+    usuario        = models.ForeignKey(MyUser,on_delete=models.CASCADE)
+    empresa        = models.ForeignKey(Empresa,on_delete=models.CASCADE)
     nom_referencia = models.CharField(max_length=30)
     descripcion    = models.CharField(max_length=150)
     

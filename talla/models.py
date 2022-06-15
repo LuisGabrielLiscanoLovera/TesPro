@@ -1,12 +1,11 @@
 from django.db import models
-from authapp.models import MyUser as User
+from authapp.models import MyUser
 from empresa.models import Empresa
 from operacion.models import Operacion
-# Create your models here.
-# revisar la cuestion de modelo de tabla unica para nomretalla
+
 class Talla(models.Model):
-    usuario       = models.ForeignKey(User, related_name='Talla', on_delete=models.CASCADE)
-    empresa       = models.ForeignKey(Empresa, related_name='Talla',on_delete=models.CASCADE)
+    usuario       = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    empresa       = models.ForeignKey(Empresa,on_delete=models.CASCADE)
     nom_talla     = models.CharField(max_length=10)
     num_talla     = models.IntegerField(blank=True, null=True) 
     
@@ -28,12 +27,12 @@ class Talla(models.Model):
         return '%s %s %s %s %s %s ' % (self.id, self.usuario, self.empresa,self.nom_talla,self.num_talla,self.created_at)
     
 class CanTalla(models.Model):
-    usuario       = models.ForeignKey(User, related_name='CanTalla',on_delete=models.CASCADE)
-    empresa       = models.ForeignKey(Empresa, related_name='CanTalla', on_delete=models.CASCADE)
+    usuario       = models.ForeignKey(MyUser,on_delete=models.CASCADE)
+    empresa       = models.ForeignKey(Empresa, on_delete=models.CASCADE)
     can_talla     = models.IntegerField(blank=True, null=True)
     res_talla     = models.IntegerField(blank=True, null=True)
-    talla         = models.ForeignKey(Talla, related_name='CanTalla',on_delete  =models.CASCADE)
-    operacion     = models.ForeignKey(Operacion, related_name='CanTalla',on_delete=models.CASCADE)
+    talla         = models.ForeignKey(Talla,on_delete  =models.CASCADE)
+    operacion     = models.ForeignKey(Operacion,on_delete=models.CASCADE)
     created_at    = models.DateTimeField(auto_now_add=True)
     updated_at    = models.DateTimeField(auto_now=True)
     class Meta:

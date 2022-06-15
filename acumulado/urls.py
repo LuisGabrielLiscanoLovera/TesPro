@@ -1,7 +1,5 @@
-import imp
 from django.urls import path
 from rest_framework import routers
-
 from acumulado.views import Acumulado, cerrarAcumulado, abrirAcumulado, AcumuladoHistorial, AcumuladoListHistorial, AcumuladoListValor, AcumuladoList, AcumuladoDataIntegranteValor, ValorAcumulado, deleteAllAcumulado, createAcumulado, createProAcumulado, AcumuladoDataIntegrante, AcumuladoListProc, deleteAcumulado
 
 router = routers.DefaultRouter()

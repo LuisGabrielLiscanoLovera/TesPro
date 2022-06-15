@@ -1,14 +1,13 @@
 from django.db import models
 from empresa.models import Empresa
 from integrante.models import Integrante
-from authapp.models import MyUser as User
-
+from authapp.models import MyUser 
 # Create your models here.
 
 class Patinador(models.Model):
-    usuario        = models.ForeignKey(User, related_name='Patinador',on_delete=models.CASCADE)
-    empresa        = models.ForeignKey(Empresa, related_name='Patinador', on_delete=models.CASCADE)
-    integrante     = models.OneToOneField(Integrante, related_name='Patinador',on_delete=models.CASCADE)
+    usuario        = models.ForeignKey(MyUser, related_name='user',on_delete=models.CASCADE)
+    empresa        = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    integrante     = models.OneToOneField(Integrante,on_delete=models.CASCADE)
     password       = models.CharField(max_length=100)
     created_at     = models.DateTimeField(auto_now_add=True)
     created_atv    = models.DateTimeField(auto_now_add=True)

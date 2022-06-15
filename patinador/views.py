@@ -1,5 +1,4 @@
-from django.shortcuts import render, redirect
-from patinador.forms import PatinadorCreationForm
+from django.shortcuts import redirect
 from integrante.models import Integrante
 from patinador.models import Patinador
 from django.views.generic import TemplateView, View
@@ -8,21 +7,21 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import PatinadorSerializer
 from empresa.models import CambioEmpres
-from django.shortcuts import render
-from django.template.loader import render_to_string
 from django.http import JsonResponse
 from authapp.models import MyUser
-#from django.contrib.auth.models import User
-from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 @api_view(['GET'])
+@login_required(login_url='signin')
 def apiOverview(request):
 	api_urls = {
 		'List':'/patinador-list/'
 		}
 	return Response(api_urls)
-#@login_required(login_url='signin')
-from django.http import JsonResponse
 
+
+@login_required(login_url='signin')
 
 @api_view(['GET'])  
 def patinadorList(request):
@@ -51,14 +50,15 @@ class CreatePatinador(View):
         lastEm              = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
         #idEmpresa          = request.GET.get('idEmpresa', None)
         idIntegrante   = request.GET.get('idIntegrante', None)     
+        #key skater
         passwordP      = request.GET.get('passwordP', None)
         #extraemos el numero de cedula
         newstr         = ''.join((ch if ch in '0123456789.-e' else ' ') for ch in idIntegrante)
         listOfNumbers  = [float(i) for i in newstr.split()]        
         num_cedula     = (int(listOfNumbers[0]))       
         idIntegrante        = Integrante.objects.filter(cedula=num_cedula,empresa=lastEm.lastEm).values('id')
-        idIntegrante        = idIntegrante[0]['id']        
-        estatus             = 'A'
+        idIntegrante        = idIntegrante[0]['id']
+        #integrative control
         ctrlCasinoCheck     = request.GET.get('ctrlCasino', None)
         ctrlDespachoCheck   = request.GET.get('ctrlDespacho', None)
         ctrlProduccionCheck = request.GET.get('ctrlProduccion', None)
@@ -75,11 +75,10 @@ class CreatePatinador(View):
        
         if existeIntPat.count()==0:
           
-            obj = Patinador.objects.create(
+            Patinador.objects.create(
                 empresa_id     = lastEm.lastEm,
                 usuario_id     = idUser.id,
-                integrante_id  = idIntegrante, 
-                estatus        = estatus,
+                integrante_id  = idIntegrante,
                 ctrlDespacho   = ctrlDespachoCheck,
                 ctrlProduccion = ctrlProduccionCheck,
                 ctrlCasino     = ctrlCasinoCheck,
@@ -91,7 +90,7 @@ class CreatePatinador(View):
             'estatus':True
         }
             
-    
+            #Here we return it user box (create delete skater)
             #Aqui lo volvemos usuario box (crear delete patinador)          
             idIntegrante        = Integrante.objects.filter(cedula=num_cedula,empresa=lastEm.lastEm).values('id','correo','nombres','apellidos')
             MyUser.objects.create_user(username=num_cedula, password=passwordP,

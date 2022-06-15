@@ -1,9 +1,9 @@
 from django.db import models
 from empresa.models import Empresa
-from authapp.models import MyUser as User
+from authapp.models import MyUser 
 # Create your models here.
 class Integrante(models.Model):
-    usuario    = models.ForeignKey(User, related_name='Integrante', on_delete  = models.CASCADE)
+    usuario = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     empresa    = models.ForeignKey(Empresa,  on_delete  = models.CASCADE)
     SEXO       = (('H','Hombre'),('M','Mujer'),('O','Otro'))   
     nombres    = models.CharField(max_length=30)

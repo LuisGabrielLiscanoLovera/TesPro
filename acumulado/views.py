@@ -1,24 +1,23 @@
-from django import views
+
 import json
 from django.contrib.sessions.backends.db import SessionStore
-from django.shortcuts import redirect
 from django.views.generic.base import TemplateView
 from empresa.models import Empresa, RelacionEmpresa, CambioEmpres
 from integrante.models import Integrante
 from patinador.models import Patinador
-from talla.models import Talla, CanTalla
+from talla.models import Talla
 from operacion.models import Operacion
-from django.db.models import Sum, F
+from django.db.models import Sum
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from authapp.models import MyUser
 from acumulado.models import Acumulado as ACUMULADO
 from acumulado.models import ProAcumulado as ProAcu
 from tarea.models import Tarea
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
-from django.http import JsonResponse, HttpResponse, Http404
-
+from django.http import JsonResponse, HttpResponse
+from django.contrib.auth.decorators import login_required
 from acumulado.serializers import AcumuladoSerializer, AcuSerializerProc
 
 
@@ -100,6 +99,7 @@ class AcumuladoHistorial(LoginRequiredMixin, TemplateView):
             return context
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def AcumuladoListHistorial(request):
     if request.session.has_key('username'):
@@ -116,6 +116,7 @@ def AcumuladoListHistorial(request):
     return HttpResponse(dump, content_type='application/json')
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def AcumuladoListProc(request):
     if request.session.has_key('username'):
@@ -132,6 +133,7 @@ def AcumuladoListProc(request):
     return Response(serializer.data)
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def AcumuladoList(request):
     if request.session.has_key('username'):
@@ -147,6 +149,7 @@ def AcumuladoList(request):
     return HttpResponse(dump, content_type='application/json')
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def AcumuladoListValor(request):
     if request.session.has_key('username'):
@@ -163,6 +166,7 @@ def AcumuladoListValor(request):
     return HttpResponse(dump, content_type='application/json')
 
 
+@login_required(login_url='signin')
 @api_view(['POST'])
 def createAcumulado(request,):
     # Prod = Models AcumulcreateAcumulado
@@ -187,6 +191,7 @@ def createAcumulado(request,):
     return Response(data)
 
 
+@login_required(login_url='signin')
 @api_view(['POST'])
 def createProAcumulado(request,):
 
@@ -233,6 +238,7 @@ def createProAcumulado(request,):
     return Response(data)
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def AcumuladoDataIntegrante(request):
     if request.session.has_key('username'):
@@ -280,6 +286,7 @@ def AcumuladoDataIntegrante(request):
     return Response(tareas)
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def AcumuladoDataIntegranteValor(request):
     if request.session.has_key('username'):
@@ -339,6 +346,7 @@ def AcumuladoDataIntegranteValor(request):
     return Response(tareas)
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def cerrarAcumulado(request):
     if request.session.has_key('username'):
@@ -361,6 +369,7 @@ def cerrarAcumulado(request):
         return Response(data)
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def abrirAcumulado(request):
     if request.session.has_key('username'):
@@ -383,6 +392,7 @@ def abrirAcumulado(request):
         return Response(data)
 
 
+@login_required(login_url='signin')
 @api_view(['DELETE'])
 def deleteAcumulado(request, id):
     ProA = ProAcu.objects.all().filter(id=id).values('can_prod_acum', 'acumulado_id','tarea_id')

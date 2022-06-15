@@ -1,5 +1,6 @@
 from django.db import models
 from authapp.models import MyUser 
+#company
 class Empresa(models.Model):    
     usuario = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     nom_empresa   = models.CharField(max_length=150,unique=True)
@@ -18,6 +19,7 @@ class Empresa(models.Model):
     def __str__(self):
         return '{}'.format(self.nom_empresa)
 
+#business relationship
 class RelacionEmpresa(models.Model):    
     usuario = models.ForeignKey(
         MyUser, null=True, blank=True, on_delete=models.CASCADE)
@@ -28,9 +30,9 @@ class RelacionEmpresa(models.Model):
     class Meta:
         ordering = ["id"]
     def __str__(self):
-        return '%s %s %s ' % (self.id, self.Empresa, self.usuario)
+        return 'id:{} empresa:{} usuario:{} '.format (self.id, self.Empresa, self.usuario)
  
-
+#company change 
 class CambioEmpres(models.Model):
     usuario = models.ForeignKey(
         MyUser, null=True, blank=True, on_delete=models.CASCADE)

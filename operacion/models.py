@@ -1,5 +1,5 @@
 from django.db import models
-from authapp.models import MyUser as User
+from authapp.models import MyUser
 from empresa.models import Empresa
 from referencia.models import Referencia
 from color.models import Color
@@ -8,13 +8,11 @@ class Operacion(models.Model):
     btnInfo       = '<button type="button" class="btn btn-outline-info text-center btn-sm btn-block ">Info</button>'
     btnAccion     = '<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>'
     
-    
-    
     costeProd     = models.IntegerField(blank=True, null=True, default=0)
-    usuario       = models.ForeignKey(User, related_name='Operacion',on_delete=models.CASCADE)
-    empresa       = models.ForeignKey(Empresa, related_name='Operacion', on_delete=models.CASCADE)
-    referencia    = models.ForeignKey(Referencia, related_name='Operacion', on_delete=models.CASCADE,blank=True, null=True)
-    color         = models.ForeignKey(Color, related_name='Operacion', on_delete=models.CASCADE,blank=True, null=True)
+    usuario       = models.ForeignKey(MyUser,on_delete=models.CASCADE)
+    empresa       = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    referencia    = models.ForeignKey(Referencia, on_delete=models.CASCADE,blank=True, null=True)
+    color         = models.ForeignKey(Color, on_delete=models.CASCADE,blank=True, null=True)
     nom_operacion = models.CharField(max_length=35)
     nota          = models.CharField(max_length=150,blank=True, null=True)
     can_total     = models.IntegerField(blank=True, null=True)

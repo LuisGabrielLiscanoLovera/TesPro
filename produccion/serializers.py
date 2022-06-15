@@ -1,8 +1,6 @@
-from django.forms import CharField
+
 from rest_framework import serializers
 from produccion.models import Produccion
-from talla.models import Talla
-from tarea.models import Tarea
 from integrante.models import Integrante
 
 

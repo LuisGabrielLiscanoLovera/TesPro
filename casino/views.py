@@ -1,10 +1,9 @@
-from ast import Import
 import json
 from casino.models import Casino, Importe
 from integrante.models import Integrante
 from patinador.models import Patinador
 from django.contrib.sessions.backends.db import SessionStore
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from authapp.models import MyUser
@@ -16,7 +15,8 @@ from talla.models import Talla
 from produccion.models import Operacion
 from django.views.generic.base import TemplateView
 from django.views.generic import  View
-from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 class CasinoHome(LoginRequiredMixin,TemplateView):
     
      template_name = "pages/casinoActivo.html"
@@ -87,7 +87,7 @@ class CasinoHistorial(LoginRequiredMixin,TemplateView):
 
 
 
-
+@login_required(login_url='signin')
 @api_view(['POST'])
 def createProCasino(request,):
     if request.session.has_key('username'):        
@@ -122,7 +122,7 @@ def createProCasino(request,):
     
     return Response(data)   
     
-
+@login_required(login_url='signin')
 @api_view(['DELETE'])
 def deleteImporteUnico(request,id):
     try:
@@ -138,6 +138,9 @@ def deleteImporteUnico(request,id):
         }        
         Response(data)
     return JsonResponse(data)
+
+
+@login_required(login_url='signin')
 @api_view(['GET'])
 def CasinoDataImporte(request):
     if request.session.has_key('username'):        
@@ -149,7 +152,7 @@ def CasinoDataImporte(request):
     importeGeneral=Importe.objects.filter(usuario_id=int(idUser.id),casino_id=idCasino,empresa_id=lastEm.lastEm).order_by("-id")
     serializer = ImporteSerializer(importeGeneral, many=True)
     return Response(serializer.data)
-
+@login_required(login_url='signin')
 @api_view(['GET'])
 def TotalImporteInte(request):
     if request.session.has_key('username'):        
@@ -166,7 +169,7 @@ def TotalImporteInte(request):
     TotalCasinoImporte = casinoImporte['cantidad']
     data = {'TotalCasinoImporte':TotalCasinoImporte,'cedulaIntegrante':cedula}  
     return JsonResponse(data)
-
+@login_required(login_url='signin')
 @api_view(['GET'])
 def apiOverview(request):
 	api_urls = {
@@ -175,6 +178,7 @@ def apiOverview(request):
 		}
 	return Response(api_urls)
 	
+@login_required(login_url='signin')	
 @api_view(['GET'])
 def casinoList(request):
     if request.session.has_key('username'):        
@@ -188,7 +192,7 @@ def casinoList(request):
     serializer = CasinoSerializer(casinos, many=True)
     return Response(serializer.data)
     
-    
+@login_required(login_url='signin')    
 @api_view(['GET'])
 def casinoListHistorial(request):
     if request.session.has_key('username'):        
@@ -200,7 +204,7 @@ def casinoListHistorial(request):
     casinos    = Casino.objects.filter(empresa_id=lastEm,usuario_id=idUser,estatus='I').order_by('-id')
     serializer = CasinoSerializer(casinos, many=True)
     return Response(serializer.data)    
-
+@login_required(login_url='signin')
 @api_view(['POST'])
 def createCasino(request,):
     #Prod = Models AcumulcreateCasino
@@ -226,7 +230,7 @@ def createCasino(request,):
     
     
     
-    
+@login_required(login_url='signin')    
 @api_view(['GET'])
 def CasinoDataIntegranteImporte(request):
     if request.session.has_key('username'):        
@@ -245,7 +249,7 @@ def CasinoDataIntegranteImporte(request):
     
     
 
-    
+@login_required(login_url='signin')    
 @api_view(['GET'])  
 def patinadoresActCasino(request):
     if request.session.has_key('username'):
@@ -262,7 +266,7 @@ def patinadoresActCasino(request):
         data={'error':str(e),'msj':"no tienes patinadores activos"}
         return Response(data)
         
-
+@login_required(login_url='signin')
 @api_view(['GET'])
 def cerrarCasino(request):
     if request.session.has_key('username'):        

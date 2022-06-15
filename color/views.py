@@ -8,15 +8,15 @@ from rest_framework.response import Response
 from .serializers import ColorSerializer
 from empresa.models import CambioEmpres
 from authapp.models import MyUser
-from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
-# Create your views here.
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 @api_view(['GET'])
 def apiOverview(request):
 	api_urls = {
 		'List':'/color-list/'
 		}
 	return Response(api_urls)
-#@login_required(login_url='signin')
+@login_required(login_url='signin')
 @api_view(['GET'])
 def colorList(request):
     if request.session.has_key('username'):        

@@ -1,13 +1,13 @@
 from django.db import models
 from empresa.models import Empresa
-from authapp.models import MyUser as User
+from authapp.models import MyUser 
 from operacion.models import Operacion
 from talla.models import Talla
 from tarea.models import Tarea
 from integrante.models import Integrante
 from patinador.models import Patinador
 class Produccion(models.Model):
-    usuario       = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario       = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     empresa       = models.ForeignKey(Empresa,   on_delete=models.CASCADE)
     operacion     = models.ForeignKey(Operacion,on_delete=models.CASCADE)
     tarea         = models.ForeignKey(Tarea,on_delete=models.DO_NOTHING,blank=True, null=True)

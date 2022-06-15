@@ -1,26 +1,23 @@
 # Create your views here
-from django import views
 from django.contrib.sessions.backends.db import SessionStore
-from django.shortcuts import redirect, render
 from django.views.generic.base import TemplateView
 from empresa.models import Empresa,RelacionEmpresa,CambioEmpres
 from despacho.models import Despacho
 from integrante.models import Integrante
 from patinador.models import Patinador
 from talla.models import Talla,CanTalla
-from django.db.models import Sum, F 
+from django.db.models import F 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from authapp.models import MyUser
-from .serializers import DespachoSerializer,OperacionSerializer
+from despacho.serializers import DespachoSerializer,OperacionSerializer
 from patinador.serializers import PatinadorSerializer
 from operacion.models import Operacion
 from django.views.generic import View
-from django.http import JsonResponse, Http404, HttpResponse
-from django.db.models import F
+from django.http import JsonResponse
 from django_serverside_datatable.views import ServerSideDatatableView
-from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 class ItemListView(ServerSideDatatableView):  
     columns = ['nomPatinadorDespacho','nomTallaDespacho','can_terminada','created_at','btnDelDespacho','id']
@@ -36,6 +33,7 @@ class ItemListView(ServerSideDatatableView):
     
     
 #original
+@login_required(login_url='signin')
 @api_view(['GET'])
 def despacho_list(request):
     if request.session.has_key('username'):        
@@ -53,6 +51,7 @@ def despacho_list(request):
  
     return JsonResponse(data, safe=False)
 
+@login_required(login_url='signin')
 @api_view(['DELETE'])
 def deleteDespacho(request,id):   
     try:
@@ -74,6 +73,7 @@ def deleteDespacho(request,id):
         return JsonResponse(data)
         
 
+@login_required(login_url='signin')
 @api_view(['GET'])  
 def operacionesList(request):     
     if request.session.has_key('username'):        
@@ -87,6 +87,7 @@ def operacionesList(request):
     
     return Response(serializer.data)
 
+@login_required(login_url='signin')
 @api_view(['GET'])  
 def operacionesListHistorial(request):     
     if request.session.has_key('username'):        
@@ -119,6 +120,7 @@ class deleteAllDespacho(View):
 
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])  
 def patinadoresAct(request):
     if request.session.has_key('username'):
@@ -198,6 +200,7 @@ class DespachosHistorial(LoginRequiredMixin,TemplateView):
             return context  
              
 
+@login_required(login_url='signin')
 @api_view(['POST'])
 def createDespacho(request,):
     if request.session.has_key('username'):        

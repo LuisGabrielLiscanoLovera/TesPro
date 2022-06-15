@@ -1,25 +1,15 @@
-from pprint import pprint
-from traceback import print_tb
-from django.http import HttpResponseRedirect
-from authapp.models import MyUser
+
 from operacion.models import Operacion
 from talla.models import Talla
 from referencia.models import Referencia
 from color.models import Color
 from integrante.models import Integrante
 from patinador.models import Patinador
-#from casino.models import Casino
 from tarea.models import Tarea
-from django.shortcuts import redirect, render
-from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+from django.shortcuts import redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.base import TemplateView as TVB
-from django.views.generic import TemplateView, View, DeleteView
 from empresa.models import Empresa,RelacionEmpresa,CambioEmpres
-from django.contrib.auth.decorators import login_required
-from django.db.models.functions import Lower
-from django.db.models import Sum
-import re
-from django.http import HttpResponse
 from django.contrib.sessions.backends.db import SessionStore
 
 

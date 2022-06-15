@@ -9,20 +9,20 @@ from rest_framework.response import Response
 from .serializers import IntegranteSerializer
 from empresa.models import CambioEmpres
 from authapp.models import MyUser
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
-# Create your views here.
-
+@login_required(login_url='signin')
 @api_view(['GET'])
 def apiOverview(request):
 	api_urls = {
 		'List':'/integrante-list/'
 		}
 	return Response(api_urls)
-#@login_required(login_url='signin')
-from django.http import JsonResponse
 
 
+
+@login_required(login_url='signin')
 @api_view(['GET'])
 def integranteList(request):
     if request.session.has_key('username'):        
@@ -159,7 +159,8 @@ class UpdateIntegrante(LoginRequiredMixin,TemplateView):
 
 
 """ 
-@api_view(['GET'])
+@login_required(login_url='signin')@api
+_view(['GET'])
 def apiOverview(request):
 	api_urls = {
 		'List':'/Integrate-list/',
@@ -170,21 +171,24 @@ def apiOverview(request):
 		}
 	return Response(api_urls)
 #@login_required(login_url='signin')
-@api_view(['GET'])
+@login_required(login_url='signin')@api_view(['GET'])
+
 def integranteList(request):
 	integrantes = Integrante.objects.all().order_by('-id')
 	serializer = IntegranteSerializer(integrantes, many=True)
 	return Response(serializer.data)
 
 #@login_required(login_url='signin')
-@api_view(['GET'])
+@login_required(login_url='signin')@api_view(['GET'])
+
 def integranteDetail(request, pk):
 	integrantes = Integrante.objects.get(id=pk)
 	serializer = IntegranteSerializer(integrantes, many=False)
 	return Response(serializer.data)
 
 #@login_required(login_url='signin')
-@api_view(['POST'])
+@login_required(login_url='signin')@api_view(['POST'])
+
 def integranteCreate(request):
 	serializer = IntegranteSerializer(data=request.data)
 	if serializer.is_valid():
@@ -192,7 +196,8 @@ def integranteCreate(request):
 	return Response(serializer.data)
 
 #@login_required(login_url='signin')
-@api_view(['POST'])
+@login_required(login_url='signin')@api_view(['POST'])
+
 def integranteUpdate(request, pk):
 	integrante = Integrante.objects.get(id=pk)
 	serializer = IntegranteSerializer(instance=integrante, data=request.data)
@@ -201,7 +206,8 @@ def integranteUpdate(request, pk):
 	return Response(serializer.data)
 
 #@login_required(login_url='signin')
-@api_view(['DELETE'])
+@login_required(login_url='signin')@api_view(['DELETE'])
+
 def integranteDelete(request, pk):
 	integrante = Integrante.objects.get(id=pk)
 	integrante.delete()

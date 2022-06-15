@@ -2,14 +2,12 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import TaskSerializer
 from despacho.models import Task
-from django.http import JsonResponse, Http404, HttpResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.http import Http404, HttpResponse
 
 @api_view(['GET'])
 def task_list(request):
     tasks = Task.objects.all();
     tSerializer = TaskSerializer(tasks, many = True)
-    #return JsonResponse(tSerializer.data, safe=False)
     return Response(tSerializer.data)
 
 @api_view(['GET'])
@@ -34,7 +32,6 @@ def createTask(request):
 
 def updateTask(request, id):
     task = Task.objects.get(id = id)
-    # print(task)
     serializer = TaskSerializer(instance = task, data = request.data)
     if serializer.is_valid():
         serializer.save()

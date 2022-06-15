@@ -8,9 +8,10 @@ from rest_framework.response import Response
 from .serializers import ReferenciaSerializer
 from empresa.models import CambioEmpres
 from authapp.models import MyUser
-# Create your views here.
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def apiOverview(request):
 	api_urls = {
@@ -18,6 +19,7 @@ def apiOverview(request):
 		}
 	return Response(api_urls)
 #@login_required(login_url='signin')
+@login_required(login_url='signin')
 @api_view(['GET'])
 def referenciaList(request):
     if request.session.has_key('username'):        

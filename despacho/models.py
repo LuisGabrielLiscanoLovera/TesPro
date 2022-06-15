@@ -1,5 +1,5 @@
 from django.db import models
-from authapp.models import MyUser as User
+from authapp.models import MyUser
 from empresa.models import Empresa
 from operacion.models import Operacion
 from talla.models import Talla
@@ -11,11 +11,11 @@ from patinador.models import Patinador
 class Despacho(models.Model):
    
 
-    usuario              = models.ForeignKey(User,related_name='Despacho', on_delete=models.CASCADE)
-    patinador            = models.ForeignKey(Patinador, related_name='Despacho',  on_delete=models.CASCADE)
-    empresa              = models.ForeignKey(Empresa, related_name='Despacho',  on_delete=models.CASCADE)
-    operacion            = models.ForeignKey(Operacion,related_name='Despacho',on_delete=models.CASCADE)
-    talla                = models.ForeignKey(Talla,related_name='Despacho',on_delete=models.DO_NOTHING)
+    usuario              = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    patinador            = models.ForeignKey(Patinador,on_delete=models.CASCADE)
+    empresa              = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    operacion            = models.ForeignKey(Operacion, on_delete=models.CASCADE)
+    talla                = models.ForeignKey(Talla, on_delete=models.DO_NOTHING)
     can_terminada        = models.IntegerField()
     nomTallaDespacho     = models.CharField(max_length=140)
     nomPatinadorDespacho = models.CharField(max_length=140)

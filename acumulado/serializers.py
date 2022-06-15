@@ -1,4 +1,3 @@
-
 from rest_framework import serializers
 from acumulado.models import Acumulado
 from acumulado.models import ProAcumulado

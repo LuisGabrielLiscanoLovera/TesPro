@@ -1,9 +1,7 @@
-from turtle import update
-from django.shortcuts import render
+
 import datetime
-# Create your views here.
 import json
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from operacion.models import Operacion
 from authapp.models import MyUser
 from django.views.generic import TemplateView, View
@@ -13,15 +11,12 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import OperacionSerializer,TallaSerializerOperacion
 from empresa.models import CambioEmpres
-from django.shortcuts import render
 from talla.models import Talla
 from produccion.models import Produccion as Prod
-from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
-from django.template.loader import render_to_string
-from django.contrib.sessions.backends.db import SessionStore
-# Create your views here.
-
+@login_required(login_url='signin')
 @api_view(['GET'])
 def apiOverview(request):
 	api_urls = {
@@ -29,9 +24,10 @@ def apiOverview(request):
 		
 		}
 	return Response(api_urls)
-#@login_required(login_url='signin')
+
 
 #muestra lista de
+@login_required(login_url='signin')
 @api_view(['GET'])  
 def operacionList(request):
     #capturamos el inicio de session   
@@ -149,6 +145,7 @@ class UpdateOperacion(LoginRequiredMixin,TemplateView):
             return redirect('home')
         except Exception as e:  print("reparar peo de cors header crsf token")
 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def cerrarOP(request):
     if request.session.has_key('username'):        
@@ -171,6 +168,7 @@ def cerrarOP(request):
 
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def abrirOP(request):
     if request.session.has_key('username'):        

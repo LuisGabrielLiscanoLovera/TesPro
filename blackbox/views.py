@@ -1,11 +1,8 @@
 import json
-from turtle import speed
-from django.shortcuts import render
+#from turtle import speed
 from django.views.generic.base import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django import views
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sessions.backends.db import SessionStore
-from django.shortcuts import redirect, render
 from empresa.models import Empresa, RelacionEmpresa, CambioEmpres
 from despacho.models import Despacho
 from casino.models import Casino, Importe
@@ -20,7 +17,7 @@ from django.db.models import Sum, F
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from authapp.models import MyUser
-from despacho.serializers import DespachoSerializer, OperacionSerializer
+from despacho.serializers import OperacionSerializer
 from acumulado.serializers import AcumuladoSerializer, AcuSerializerProc
 from acumulado.serializers import AcumuladoSerializer
 from integrante.serializers import IntegranteSerializer
@@ -29,16 +26,15 @@ from tarea.serializers import TareaSerializer
 from produccion.serializers import ProduccionSerializer
 from talla.serializers import TallaSerializer, CanTallaSerializer
 from operacion.models import Operacion
-from django.views.generic import View
-from django.http import JsonResponse, Http404, HttpResponse
-from django.db.models import F
+from django.http import JsonResponse, HttpResponse
 from django_serverside_datatable.views import ServerSideDatatableView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-# Create your views here.
+from django.contrib.auth.mixins import LoginRequiredMixin
 from acumulado.models import Acumulado as ACUMULADO
 from acumulado.models import ProAcumulado as ProAcu
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def operacionesListPatinadores(request):
     if request.session.has_key('username'):
@@ -106,7 +102,7 @@ class DespachoPatinador(LoginRequiredMixin, TemplateView):
         finally:
             return context
 
-
+@login_required(login_url='signin')
 @api_view(['POST'])
 def createDespachoPatinador(request,):
     if request.session.has_key('username'):
@@ -176,7 +172,7 @@ class ItemListViewPatinador(ServerSideDatatableView):
             queryset = Despacho.objects.filter(empresa_id=lastEm, operacion_id=idOp).order_by('-id')
             return queryset
 
-
+@login_required(login_url='signin')
 @api_view(['GET'])
 def TallaOPListPatinador(request):
     if request.session.has_key('username'):
@@ -190,7 +186,7 @@ def TallaOPListPatinador(request):
     serializer = CanTallaSerializer(ptalla, many=True)
     return Response(serializer.data)
 
-
+@login_required(login_url='signin')
 @api_view(['GET'])
 def TallaOpCanIncosistentePatinadores(request):
     if request.session.has_key('username'):
@@ -265,7 +261,7 @@ class ProduccionPatinador(LoginRequiredMixin, TemplateView):
         finally:
             return context
 
-
+@login_required(login_url='signin')
 @api_view(['GET'])
 def produccionesListPatinadores(request):
     if request.session.has_key('username'):
@@ -284,7 +280,7 @@ def produccionesListPatinadores(request):
     return Response(serializer.data)
 
 
-#dataProduccionInte-list/
+@login_required(login_url='signin')#dataProduccionInte-list/
 @api_view(['GET'])
 def ProduccionDataIntegrantePatinador(request):
     if request.session.has_key('username'):
@@ -333,7 +329,7 @@ def ProduccionDataIntegrantePatinador(request):
             tareas.append({'patinadores': patinadores})
     return Response(tareas)
 
-
+@login_required(login_url='signin')
 @api_view(['GET'])
 def TareaListPatinador(request):
     if request.session.has_key('username'):
@@ -349,7 +345,7 @@ def TareaListPatinador(request):
     serializer = TareaSerializer(tarea, many=True)
     return Response(serializer.data)
 
-
+@login_required(login_url='signin')
 @api_view(['GET'])
 def integranteListPatinador(request):
     if request.session.has_key('username'):
@@ -370,7 +366,7 @@ def integranteListPatinador(request):
         print(str(e), "no tienes patinadores activos")
         return Response("no tienes patinadores activos")
 
-
+@login_required(login_url='signin')
 @api_view(['GET'])
 def patinadoresActProdPatinador(request):
     if request.session.has_key('username'):
@@ -389,7 +385,7 @@ def patinadoresActProdPatinador(request):
         print(str(e), "no tienes patinadores activos")
         return Response("no tienes patinadores activos")
 
-
+@login_required(login_url='signin')
 @api_view(['POST'])
 def createProduccionPatinador(request,):
     #Prod = Models Produccion
@@ -474,7 +470,7 @@ class AcumuladoPatinador(LoginRequiredMixin, TemplateView):
         finally:
             return context
 
-#tabla principal Acumulado Patinador
+@login_required(login_url='signin')#tabla principal Acumulado Patinador
 @api_view(['GET'])
 def AcumuladoListPatinadores(request):
     if request.session.has_key('username'):
@@ -493,7 +489,7 @@ def AcumuladoListPatinadores(request):
 
     return HttpResponse(dump, content_type='application/json')
 
-
+@login_required(login_url='signin')
 @api_view(['GET'])
 def AcumuladoDataIntegrantePatinador(request):
     if request.session.has_key('username'):
@@ -539,7 +535,7 @@ def AcumuladoDataIntegrantePatinador(request):
         else:tareas.append({'patinadores': patinadores})
     return Response(tareas)
 
-
+@login_required(login_url='signin')
 @api_view(['GET'])
 def AcumuladoListProcPatinador(request):
     if request.session.has_key('username'):
@@ -556,7 +552,7 @@ def AcumuladoListProcPatinador(request):
     serializer = AcuSerializerProc(acumuladoProc, many=True)
     return Response(serializer.data)
 
-
+@login_required(login_url='signin')
 @api_view(['POST'])
 def createProAcumuladoPatinador(request,):
 
@@ -608,7 +604,7 @@ def createProAcumuladoPatinador(request,):
 
     return Response(data)
 
-
+@login_required(login_url='signin')
 @api_view(['GET'])
 def TallaEmpresaListPatinador(request):
     if request.session.has_key('username'):
@@ -671,7 +667,7 @@ class CasinoHomePatinador(LoginRequiredMixin, TemplateView):
         finally:
             return context
 
-
+@login_required(login_url='signin')
 @api_view(['GET'])
 def casinoListPatinador(request):
     if request.session.has_key('username'):
@@ -687,7 +683,7 @@ def casinoListPatinador(request):
     serializer = CasinoSerializer(casinos, many=True)
     return Response(serializer.data)
 
-
+@login_required(login_url='signin')
 @api_view(['GET'])
 def ProduccionOPListPatinador(request):
     if request.session.has_key('username'):
@@ -706,7 +702,7 @@ def ProduccionOPListPatinador(request):
 
     return HttpResponse(dump, content_type='application/json')
 
-
+@login_required(login_url='signin')
 @api_view(['GET'])
 def totalImporteIntePatinador(request):
     if request.session.has_key('username'):
@@ -729,7 +725,7 @@ def totalImporteIntePatinador(request):
             'cedulaIntegrante': cedula}
     return JsonResponse(data)
 
-
+@login_required(login_url='signin')
 @api_view(['GET'])
 def CasinoDataIntegranteImportePatinador(request):
     if request.session.has_key('username'):
@@ -746,7 +742,7 @@ def CasinoDataIntegranteImportePatinador(request):
     serializer = ImporteSerializer(importeCasino, many=True)
     return Response(serializer.data)
 
-
+@login_required(login_url='signin')
 @api_view(['GET'])
 def CasinoDataImportePatinador(request):
     if request.session.has_key('username'):
@@ -764,7 +760,7 @@ def CasinoDataImportePatinador(request):
 
     return Response(serializer.data)
 
-
+@login_required(login_url='signin')
 @api_view(['POST'])
 def createProCasinoPatinador(request,):
     if request.session.has_key('username'):

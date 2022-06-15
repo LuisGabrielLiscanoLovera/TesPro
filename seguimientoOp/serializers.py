@@ -1,7 +1,5 @@
-from django.forms import CharField
 from rest_framework import serializers
 from produccion.models import Produccion
-from patinador.models import Patinador
 
 
 class PatinadorSerializer(serializers.ModelSerializer):

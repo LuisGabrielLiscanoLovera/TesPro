@@ -1,4 +1,3 @@
-import json
 from django.shortcuts import redirect
 from tarea.models import Tarea
 from django.views.generic import TemplateView, View
@@ -9,23 +8,22 @@ from rest_framework.response import Response
 from .serializers import TareaSerializer
 from empresa.models import CambioEmpres
 from authapp.models import MyUser
-
-# Create your views here.
-from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def apiOverview(request):
 	api_urls = {
 		'List':'/tarea-list/'
 		}
 	return Response(api_urls)
-#@login_required(login_url='signin')
-from django.http import JsonResponse
 
 
+
+@login_required(login_url='signin')
 @api_view(['GET'])
 def TareaList(request):
     if request.session.has_key('username'):        
@@ -136,6 +134,7 @@ class UpdateTarea(LoginRequiredMixin,TemplateView):
 
 
 """ 
+@login_required(login_url='signin')
 @api_view(['GET'])
 def apiOverview(request):
 	api_urls = {
@@ -147,6 +146,7 @@ def apiOverview(request):
 		}
 	return Response(api_urls)
 #@login_required(login_url='signin')
+@login_required(login_url='signin')
 @api_view(['GET'])
 def TareaList(request):
 	Tareas = Tarea.objects.all().order_by('-id')
@@ -154,6 +154,7 @@ def TareaList(request):
 	return Response(serializer.data)
 
 #@login_required(login_url='signin')
+@login_required(login_url='signin')
 @api_view(['GET'])
 def TareaDetail(request, pk):
 	Tareas = Tarea.objects.get(id=pk)
@@ -161,6 +162,7 @@ def TareaDetail(request, pk):
 	return Response(serializer.data)
 
 #@login_required(login_url='signin')
+@login_required(login_url='signin')
 @api_view(['POST'])
 def TareaCreate(request):
 	serializer = TareaSerializer(data=request.data)
@@ -169,6 +171,7 @@ def TareaCreate(request):
 	return Response(serializer.data)
 
 #@login_required(login_url='signin')
+@login_required(login_url='signin')
 @api_view(['POST'])
 def TareaUpdate(request, pk):
 	Tarea = Tarea.objects.get(id=pk)
@@ -178,6 +181,7 @@ def TareaUpdate(request, pk):
 	return Response(serializer.data)
 
 #@login_required(login_url='signin')
+@login_required(login_url='signin')
 @api_view(['DELETE'])
 def TareaDelete(request, pk):
 	Tarea = Tarea.objects.get(id=pk)
