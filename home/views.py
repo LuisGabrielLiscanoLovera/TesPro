@@ -31,16 +31,24 @@ class Home(LoginRequiredMixin,TVB):
     template_name = "home.html"
     login_url = 'auth/signin/'
     success_url = '/'  
-    def get_context_data(self, **kwargs):        
+    def get_context_data(self, **kwargs):
         s = SessionStore()
-        s['last_login'] = self.request.user.pk
+        s['last_login'] = self.request.user.id
         s.create()
+        print(s['last_login'])
         lastEm          = CambioEmpres.objects.filter(usuario_id=s['last_login']).last()
+       
+      
+        
+        
+        
+       
+        
         
         if lastEm==None:
-            empresaId=Empresa.objects.get(usuario_id=s['last_login'])
-            physics = CambioEmpres(
-                usuario_id=s['last_login'], lastEm=empresaId.id)
+            empresaId = Empresa.objects.filter(
+                usuario_id=s['last_login']).values('id')
+            physics = CambioEmpres(usuario_id=s['last_login'], lastEm=empresaId[0]['id'])
             physics.save()
             lastEm = CambioEmpres.objects.filter(
                 usuario_id=s['last_login']).last()
