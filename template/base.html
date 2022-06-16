@@ -486,14 +486,15 @@
 
 
     <style>
-            pre {
-            /* make the box translucent (80% opaque) */
-            border: solid red;
-            opacity: 0.8;
-            filter: alpha(opacity=80);
-            /* IE8 and lower */
-            zoom: 1;
-            /* set "zoom", "width" or "height" to trigger "hasLayout" in IE 7 and lower */
+            table {
+            margin: 0 0 1.5em;
+            width: 100%;
+        }
+        
+        td,
+        th {
+            padding: 5px;
+            border: 1px solid #eaeaea;
         }
         
         th {
@@ -514,6 +515,14 @@
         .attachment-full {
             width: 100%;
             height: 100%;
+        }
+        
+        select {
+            width: 100%;
+        }
+        
+        .main-nav select {
+            display: none;
         }
         /* mobile styles
 -----------------------------------------------*/
@@ -625,6 +634,17 @@
             /* Navigation */
             .main-nav ul {
                 display: none;
+            }
+            .main-nav select {
+                display: inline;
+                -moz-appearance: none;
+                -webkit-appearance: none;
+                appearance: none;
+                padding: 8px 10px;
+                margin: 8px 15px;
+                border: 1px solid #eaeaea;
+                border-radius: 5px;
+                width: 40%;
             }
             #main-nav-wrapper {
                 height: 42px;
@@ -913,6 +933,18 @@ st
         }
     </style>
     <style>
+    .select {
+            width: 100%;
+            min-width: 15ch;
+            max-width: 30ch;
+            border: 1px solid var(--select-border);
+            border-radius: 0.25em;
+            padding: 0.25em 0.5em;
+            font-size: 1.25rem;
+            cursor: pointer;
+            line-height: 1.1;
+        }
+        
         body {
             font-family: 'Open Sans';
         }
@@ -921,6 +953,15 @@ st
             color: #000;
             text-decoration: none;
         }
+        
+        .select {
+            /* background-image: url('{% static 'images/BACKGROUND_14.JPG' %}'); */
+            opacity: 0.8;
+            text-align: center;
+            color: rgb(24, 22, 22);
+            line-height: 50px;
+        }
+    }
     </style>
     {% block stylesheet %}{% endblock stylesheet %}
 </head>
@@ -1329,6 +1370,7 @@ V- Acumulado
         <script src="{% static 'js/despacho/despacho.js' %} "></script>
         <script src="{% static 'js/acumulado/acumulado.js' %} "></script>
         <script src="{% static 'js/casino/casino.js' %} "></script>
+
         <script src="{% static 'js/produccion/produccion.js' %} "></script>
         <script src="{% static 'js/dataTables.jqueryui.min-dataTables.jqueryui.min.js' %} "></script>
         <script src="{% static 'js/jquery.dataTables.min-jquery.dataTables.min.js' %} "></script>

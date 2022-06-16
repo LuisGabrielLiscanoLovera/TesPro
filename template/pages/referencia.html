@@ -6,10 +6,9 @@
             <h1>Referencias {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
             <hr>
         </center>
-        <div class="row">
+        <div class="">
             <div class="col-sm-2">
-                <button onclick="location.href='#openModalHijo'" type="button" class="btn text-center btn-outline-success icofont-ui-add"> Agregar 
-                    </button>
+                <button onclick="location.href='#openModalHijo'" type="button" class="btn text-center btn-outline-success icofont-ui-add"> Agregar</button>
             </div>
 
 
@@ -17,53 +16,32 @@
 
 
 
-            <table id="table" data-id-field="id" class="table" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-show-columns="true" data-search="true" data-show-fullscreen="true" data-show-refresh="true"
-                data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-pagination="true" data-url="tarea/tarea-list/">
-                <div class="row">
-                    <div class="col-sm-2">
-                        <button onclick="location.href='#openModalHijoAddTarea'" class="btn" type="button">
-                 
-                        <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar </i>
-                 
-                    </button>
+            <table id="table" data-id-field="id" class="table table-fill  col-12" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-show-columns="true" data-search="true" data-show-fullscreen="true" data-show-refresh="true"
+                data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-pagination="true" data-url="referencia/referencia-list/">
 
-                    </div>
-                    <thead class="thead-dark">
-                        <tr>
-                            <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoTarea" class="text-center">Mas info</th>
-                            <th data-field="nom_tarea" class="text-center">Nombre Tarea</th>
-                            <th data-field="estatus" class="text-center">Estatus</th>
-                            <!-- <th data-field="min_minuto" class="text-center">Min x minuto</th>
-                            <th data-field="min_hora" class="text-center">Min x hora</th> -->
-                            <th data-field="valor" class="text-center">Valor por unidad</th>
-                            <th data-field="created_at" class="text-center">Fec Ingreso</th>
+                <thead class="thead-dark">
+                    <tr>
+                        <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoReferencia" class="text-center">Mas info</th>
+                        <th data-field="nom_referencia" class="text-center">Nombre Referencia</th>
+                        <th data-field="estatus" class="text-center">Estatus</th>
+                        <th data-field="created_at" class="text-center">Fec Registro</th>
+                        <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionReferencia" class="text-center">Accion</th>
 
-                            <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionTarea" class="text-center">Accion</th>
-
-                        </tr>
-                    </thead>
-                </div>
-            </table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    </tr>
+                </thead>
         </div>
+        </table>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -73,6 +51,15 @@
 
 
     </div>
+
+
+
+
+
+
+
+
+</div>
 
 </div>
 
@@ -117,70 +104,6 @@
             </div>
 
 
-            <!--  <form id="addReferencia" autocomplete="off">
-                <div class="content p-3 mb-2 bg-dar text-white ">
-                    <div class="border">
-                        <center>
-                            <h1>Crear referencia {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
-                            <hr>
-                        </center>
-
-
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="modal_codigo_color">Nombre Referencia</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                  <i class="fa fa-user"></i>
-                </span>
-                                    <input class="form-control" type="text" name="nom_referencia" placeholder="Nombre referencia" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="modal_codigo_color">Descripcion de Referencia</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                    <i class="fa fa-user"></i>
-                  </span>
-                                    <input class="form-control" type="text" name="descripcion" min="10" max="100" placeholder="Descripcion" required>
-                                </div>
-                            </div>
-                        </div>
-                       ------        <div class="col-sm-12">
-              <div class="form-group">
-                <label for="modal_codigo_color">Img1</label>
-                <div class="input-group">
-                  <span class="input-group-addon">
-                    <i class="fa fa-user"></i>
-                  </span>
-                  <input class="form-control file " type="file" name="img1" >
-                </div>
-              </div>
-            </div>
-          <div class="col-sm-12">
-              <div class="form-group">
-                <label for="modal_codigo_color">Img2</label>
-                <div class="input-group">
-                  <span class="input-group-addon">
-                    <i class="fa fa-user"></i>
-                  </span>
-                  <input class="form-control file" type="file" name="img2" >
-                </div>
-              </div>
-            </div>
-           
-            <div class="modal-footer">
-                <input type="number" hidden="True" name="empresa" value="{{ lastIdEmpresa }}">
-                <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">
-                <button class="btn btn-outline-primary form-" type="submit" onclick="location.href='/'">Guardar</button>
-            </div>
-        </div>
-    </div>
-
-    </form> -->
         </div>
 
     </div>
@@ -197,175 +120,87 @@
 
 
 
-<div id="openModalHijoDos" class="modalDialogHijoDos">
-    <div> <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
-
-
-        <div class="modal-dialo" role="document">
-            <form id="editReferencia" autocomplete="off">
-                <div class="content text-light bg-dar">
-                    <div class="border">
-                        <center>
-                            <u><h1>Editar referencia {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1></u>
-                            <hr>
-                        </center>
-
-                        <div class="col-sm-12">
-
-
-                            <div class="form-group">
-                                <label for="modal_codigo_color">Nombre Referencia</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                        <i class="fa fa-user"></i>
-                      </span>
-                                    <input class="form-control" type="text" name="nom_referenciaUP" placeholder="Nombre referencia" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="modal_codigo_color">Descripcion de Referencia</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                        <i class="fa fa-user"></i>
-                      </span>
-                                    <input class="form-control" type="text" name="descripcionUP" min="10" max="100" placeholder="Descripcion" required>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-                        <div class="modal-footer">
-                            <input type="number" hidden="True" name="empresaUP" value="{{ lastIdEmpresa }}">
-                            <input type="number" hidden="True" name="idUserUP" value="{{ login_user_id}}">
-                            <button class="btn btn-outline-primary form-" type="submit" onclick="location.href='/'">Guardar</button>
-                        </div>
-
-
-
-
-                    </div>
-
-                </div>
-            </form>
-        </div>
-
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-{% block javascript %}
-
-<!-- editar -->
-<script>
-    var $table = $('#tableReferencia')
-    var $buttonEd = $('#buttonEditar')
-
-
-    $(function() {
-        $buttonEd.click(function() {
-
-            var ids = $.map($table.bootstrapTable('getSelections'), function(row) {
-
-                var idss = row.id;
-
-                $("form#editReferencia").submit(function() {
-                    var nom_referenciaInputUP = $('input[name="nom_referenciaUP"]').val().trim();
-                    var descripcionInputUP = $('input[name="descripcionUP"]').val().trim();
-
-
-                    var idEmpresaInputUP = $('input[name="empresaUP"]').val().trim();
-                    var idUserUP = $('input[name="idUserUP"]').val().trim();
-
-                    if (nom_referenciaInputUP && descripcionInputUP && idEmpresaInputUP && idUserUP && idss) {
-                        // Create Ajax Call
-                        $.ajax({
-                            url: '{% url "Referencia_ajax_update" %}',
-                            data: {
-                                'idReferencia': idss,
-                                'nom_referenciaUP': nom_referenciaInputUP,
-                                'descripcionUP': descripcionInputUP,
-                                /*   'img1UP': img1InputUP,
-                                  'img2UP': img2InputUP, */
-                                'empresaUP': idEmpresaInputUP,
-                                'idUserUP': idUserUP
-
-
-                            },
-                            dataType: 'json',
-                            success: function(data) {
-                                window.location.reload();
-                            }
-                        });
-
-                    } else {
-                        console.log("All fields must have a valid value.");
-                    }
-                    $('form#editReferencia').trigger("reset");
-                    return false;
-                });
-
-
-
-            })
-
-        })
-
-    })
-
-
-
-    var $button = $('#button')
-
-
-    $(function() {
-        $button.click(function() {
-
-            var ids = $.map($table.bootstrapTable('getSelections'), function(row) {
-                $.ajax({
-                    url: '{% url "Referencia_ajax_delete" %}',
-                    data: {
-                        'id': row.id,
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        console.log("borrado")
-                    }
-                });
-                return row.id
-            })
-            $table.bootstrapTable('remove', {
-                field: 'id',
-                values: ids
-            })
-        })
-
-
-    })
-</script>
 
 
 
 <script>
-    function ajaxRequest(params) {
-        var url = 'referencia/referencia-list/'
-        $.get(url + '?' + $.param(params.data)).then(function(res) {
-            params.success(res)
-        })
+    function DetailFormatterButInfoReferencia(index, row) {
+        //crea y renderiza la tabla
+        return '<br>referencia    :' + row.descripcion
+
     }
 
+
+
+    function DetailFormatterButAccionReferencia(index, row) {
+        return '<form id="editarTarea" style="display: inline"  >{% csrf_token %}<hr>' +
+            '<div class="row">' +
+            '<div class="col-sm-3">' +
+            '<div class="form-group"><label>Nombre Tarea</label>' +
+            '<input class="form-control"   value="' + row.id + '" name="nombreTareaUP"></div>' +
+            '<div class="form-group"><label>Cantidad x minuto</label>' +
+            '<input class="form-control" value="' + row.id + '" name="minutoXTareaUP"></div>' +
+            '<div class="form-group"><label>Cantidad x hora</label>' +
+            '<input class="form-control"   value="' + row.id + '" name="horaXTareaUP"></div>' +
+            '</div>' +
+
+
+            '<div class="col-sm-3">' +
+            '<div class="form-group"><label>Precio x unidad</label>' +
+            '<input class="form-control" value="' + row.id + '" name="valorTareaUP"></div>' +
+            '<div class="form-group"><label>Descripcion</label>' +
+            '<input class="form-control" value="' + row.id + '" name="detalleTareaUP"></div>' +
+
+            '<div class="form-group"><label>Estatus</label>' +
+            '<input class="form-control" value="' + row.id + '" name="estatusUP"></div>' +
+
+
+            '<input type="number" hidden="True" name="empresaTareaUP" value="{{ lastIdEmpresa }}">' +
+            '<input type="number" hidden="True" name="idUserTareaUP" value="{{ login_user_id}}">' +
+            '<input type="number" hidden="True" name="idTareaUP" value="' + row.id + '"' +
+
+            '</div>' +
+            '<div class="col-sm-6">' +
+            '<input id="EditTareaBtn-' + row.id + '" value="Actualizar registro" type="submit" onclick="editTarea(' + row.id + ')" class="btn-lg  btn btn-outline-warning btn-rounded  " >' +
+
+
+
+
+            '</div>' +
+
+            '</div>' +
+            '<div class="col-sm-1">' + '<button value="" onclick="remove(' + row.id + ')"  id="buttonEliminarTarea" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>' +
+            '</div>' +
+            '</form>';
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //add referencia
     $("form#addReferencia").submit(function() {
 
 
@@ -404,6 +239,3 @@
         return false;
     });
 </script>
-
-
-{% endblock javascript %}
