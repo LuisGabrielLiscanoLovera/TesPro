@@ -224,11 +224,12 @@ class ProduccionPatinador(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ProduccionPatinador, self).get_context_data(**kwargs)
         s = SessionStore()
-        s['last_login'] = self.request.user.pk
+        s['last_login'] = self.request.user.id
         s.create()
+        myuser = MyUser.objects.get(id=s['last_login'])
         integranteConten = Integrante.objects.filter(
-            id=s['last_login']).values('empresa_id', 'usuario_id')
-
+            id=myuser.integrante_id).values('empresa_id', 'usuario_id')
+        
         lastEm = int(integranteConten[0]['empresa_id'])
 
         AllEmpresa = RelacionEmpresa.objects.filter(

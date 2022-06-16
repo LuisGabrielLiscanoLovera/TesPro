@@ -6,44 +6,71 @@
             <h1>Referencias {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
             <hr>
         </center>
-
-
-
-        <table id="tableReferencia" data-locale="es-SP" class="table " data-toggle="table" data-click-to-select="true" data-pagination="true" data-ajax="ajaxRequest" data-search="true" data-show-fullscreen="true" data-show-refresh="true" data-show-export="true"
-            data-url="">
-            <div class="row">
-                <div class="col-sm-2">
-                    <button onclick="location.href='#openModalHijo'" type="button" class="btn text-center btn-outline-success icofont-ui-add"> Agregar 
+        <div class="row">
+            <div class="col-sm-2">
+                <button onclick="location.href='#openModalHijo'" type="button" class="btn text-center btn-outline-success icofont-ui-add"> Agregar 
                     </button>
-                </div>
-
-
-                <div class="col-sm-2">
-                    <div id="toolbar">
-                        <button id="button" class="btn btn-outline-danger icofont-ui-remove"> Eliminar</button>
-                    </div>
-                </div>
-
             </div>
 
-            <thead class="thead-dark">
-                <tr>
-                    <th class="text-center" data-field="state" data-checkbox="true"></th>
-                    <!-- <th data-field="id">N°-ID</th> -->
-                    <th class="text-center" data-field="nom_referencia">Nombre Referencia <i class="icofont-atom"></i></th>
-                    <th class="text-center" data-field="descripcion">Descripcion de Referencia <i class="icofont-brand-appstore"></i></th>
-                    <!--   <th data-field="fotoPrendaUno" >Imagen 1
+
+
+
+
+
+            <table id="table" data-id-field="id" class="table" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-show-columns="true" data-search="true" data-show-fullscreen="true" data-show-refresh="true"
+                data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-pagination="true" data-url="tarea/tarea-list/">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <button onclick="location.href='#openModalHijoAddTarea'" class="btn" type="button">
                  
-                </th>
-               
+                        <i class="btn text-center btn-outline-success icofont-ui-add"> Agregar </i>
+                 
+                    </button>
 
-                <th class="text-center" data-field="fotoPrendaDos">Imagen 1  <i class="icofont-image"></i></th> -->
-                    <th class="text-center" data-field="created_at">Fecha Creada <i class=""></i></th>
+                    </div>
+                    <thead class="thead-dark">
+                        <tr>
+                            <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoTarea" class="text-center">Mas info</th>
+                            <th data-field="nom_tarea" class="text-center">Nombre Tarea</th>
+                            <th data-field="estatus" class="text-center">Estatus</th>
+                            <!-- <th data-field="min_minuto" class="text-center">Min x minuto</th>
+                            <th data-field="min_hora" class="text-center">Min x hora</th> -->
+                            <th data-field="valor" class="text-center">Valor por unidad</th>
+                            <th data-field="created_at" class="text-center">Fec Ingreso</th>
 
-                </tr>
-            </thead>
+                            <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionTarea" class="text-center">Accion</th>
 
-        </table>
+                        </tr>
+                    </thead>
+                </div>
+            </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
 
     </div>
 
@@ -195,7 +222,6 @@
                                     <input class="form-control" type="text" name="nom_referenciaUP" placeholder="Nombre referencia" required>
                                 </div>
                             </div>
-
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
@@ -331,7 +357,7 @@
 </script>
 
 
-<!-- Crear -->
+
 <script>
     function ajaxRequest(params) {
         var url = 'referencia/referencia-list/'
@@ -378,4 +404,6 @@
         return false;
     });
 </script>
+
+
 {% endblock javascript %}

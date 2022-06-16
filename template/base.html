@@ -383,7 +383,7 @@
             font-size: 23px;
             font-weight: 100;
             padding: 24px;
-            text-align: left;
+            text-align: center;
             text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
             vertical-align: middle;
         }
@@ -428,41 +428,12 @@
         
         td {
             background: #FFFFFF;
-            padding: 20px;
-            text-align: left;
+            text-align: center;
             vertical-align: middle;
             font-weight: 300;
             font-size: 18px;
             text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
             border-right: 1px solid #C1C3D1;
-        }
-        
-        td:last-child {
-            border-right: 0px;
-        }
-        
-        th.text-left {
-            text-align: left;
-        }
-        
-        th.text-center {
-            text-align: center;
-        }
-        
-        th.text-right {
-            text-align: right;
-        }
-        
-        td.text-left {
-            text-align: left;
-        }
-        
-        td.text-center {
-            text-align: center;
-        }
-        
-        td.text-right {
-            text-align: right;
         }
     </style>
 
@@ -489,7 +460,6 @@
             color: white;
             border: 1px solid #38678f;
             box-shadow: inset 0px 1px 2px #568ebd;
-            transition: all 0.2s;
         }
         
         tr {
@@ -502,8 +472,6 @@
         
         td {
             border-right: 1px solid #cccccc;
-            padding: 10px;
-            transition: all 0.2s;
         }
         
         td:last-child {
@@ -517,7 +485,153 @@
 
 
 
-
+    <style>
+            pre {
+            /* make the box translucent (80% opaque) */
+            border: solid red;
+            opacity: 0.8;
+            filter: alpha(opacity=80);
+            /* IE8 and lower */
+            zoom: 1;
+            /* set "zoom", "width" or "height" to trigger "hasLayout" in IE 7 and lower */
+        }
+        
+        th {
+            font-weight: bold;
+            background: #999;
+            color: #fff;
+            text-align: center;
+        }
+        
+        dt {
+            font-weight: bold;
+        }
+        
+        dd {
+            margin: 0 1.5em 1.5em;
+        }
+        
+        .attachment-full {
+            width: 100%;
+            height: 100%;
+        }
+        /* mobile styles
+-----------------------------------------------*/
+        /* For devices with screen size lower than 480px */
+        
+        @media only screen and (max-width: 480px) {
+            #wrap {
+                width: 320px;
+                margin: 0 auto;
+                overflow: hidden;
+            }
+            h1 {
+                font-size: 24px;
+                line-height: 31px;
+            }
+            iframe {
+                width: 100%;
+                height: auto;
+            }
+            .post-prev a {
+                background: #444;
+                padding: 10px 13px;
+                font-size: 12px;
+                margin-left: -10px;
+                margin-top: -20px;
+            }
+            .post-next a {
+                margin-left: 252px;
+                margin-top: -20px;
+            }
+            .post-next a:hover,
+            .post-prev a:hover {
+                background: #777;
+            }
+            .posttags {
+                float: left;
+            }
+            .type-post .post-next a {
+                margin-left: 264px;
+            }
+            .single-post .type-post {
+                width: 310px;
+                margin: 0 auto;
+            }
+            .type-page img {
+                width: 100%;
+                height: inherit;
+            }
+            .type-post .pinbin-copy {
+                width: 280px;
+                padding: 15px;
+            }
+            .type-page {
+                width: 290px;
+                padding: 10px 3% 20px;
+            }
+            .type-post {
+                width: 310px;
+            }
+            #comment {
+                width: 97%;
+            }
+            #comment-form {
+                width: 285px;
+            }
+            h2 {
+                font-size: 18px;
+                line-height: 25px;
+            }
+            .size-full {
+                width: 290px !important;
+            }
+            .comments-area li {
+                width: 290px;
+                clear: both;
+                padding: 0px;
+            }
+            .post-nav {
+                margin-top: 14px;
+            }
+            .pinbin-image img {
+                width: 100%;
+                height: auto;
+            }
+            #post-area {
+                max-width: 310px;
+                margin: 0 auto;
+            }
+            .type-post h1:first-child {
+                padding-top: 25px;
+            }
+            #post-area .post .pinbin-link a {
+                margin-left: 263px;
+            }
+            #post-area .post .pinbin-copy {
+                width: 280px;
+            }
+            .page .pinbin-copy {
+                padding: 0;
+            }
+            #post-area .post {
+                width: 310px;
+                display: block;
+            }
+        }
+        /* For devices with screen size lower than 767px */
+        
+        @media only screen and (max-width: 767px) {
+            /* Navigation */
+            .main-nav ul {
+                display: none;
+            }
+            #main-nav-wrapper {
+                height: 42px;
+                display: inline;
+                float: none;
+            }
+    </style>
 
 
     <!----------------------------------------------------------------------
@@ -799,18 +913,6 @@ st
         }
     </style>
     <style>
-        .select {
-            width: 100%;
-            min-width: 15ch;
-            max-width: 30ch;
-            border: 1px solid var(--select-border);
-            border-radius: 0.25em;
-            padding: 0.25em 0.5em;
-            font-size: 1.25rem;
-            cursor: pointer;
-            line-height: 1.1;
-        }
-        
         body {
             font-family: 'Open Sans';
         }
@@ -818,14 +920,6 @@ st
         a {
             color: #000;
             text-decoration: none;
-        }
-        
-        .select {
-            /* background-image: url('{% static 'images/BACKGROUND_14.JPG' %}'); */
-            opacity: 0.8;
-            text-align: center;
-            color: rgb(24, 22, 22);
-            line-height: 50px;
         }
     </style>
     {% block stylesheet %}{% endblock stylesheet %}
