@@ -88,28 +88,48 @@ class DeleteReferencia(View):
         }
         return JsonResponse(data)
 
-
+''' 
 class UpdateReferencia(TemplateView):
-    def  get(self, request):        
-        idReferencia    = request.GET.get('idReferencia', None)
-        nom_referencia2 = request.GET.get('nom_referenciaUP', None)
-        descripcion2    = request.GET.get('descripcionUP', None)
-      
+    def  get(self, request):
+       
+        idReferencia    = request.GET.get('idReferenciaUp', None)
+        nom_referencia = request.GET.get('nom_referenciaUP', None)
+        descripcion    = request.GET.get('descripcionUP', None)      
         idEmpresa       = request.GET.get('empresaUP', None)
         idUser          = request.GET.get('idUserUP', None)
+        
+        
         obj = Referencia.objects.get(id=idReferencia)
-        obj.nom_referencia = nom_referencia2
-        obj.descripcion = descripcion2
+        obj.nom_referencia = nom_referencia
+        obj.descripcion = descripcion
        
         obj.empresa_id = idEmpresa
         obj.usuario_id = idUser
         try:
             obj.save()
             return redirect('home')
-        except Exception as e:  print("reparar peo de cors header crsf token")
+        except Exception as e:
+            print("reparar peo de cors header crsf token")
+ '''
 
+@api_view(['POST'])
+def UpdateReferencia(request):
+    idReferencia = request.data['idReferencia']    
+    nom_referencia = request.data['nom_referenciaUP']
+    descripcion = request.data['descripcionUP']   
+    idUser = request.data['idUserUP']
+    estatus = request.data['estatusUP']
 
-
-
-
-
+    obj = Referencia.objects.get(id=idReferencia)
+    obj.nom_referencia = nom_referencia
+    obj.estatus     = estatus
+    obj.descripcion = descripcion  
+    obj.usuario_id = idUser
+    
+    
+    try:
+        obj.save()
+        return redirect('home')
+    except Exception as e:
+        print("reparar peo de cors header crsf token")
+    return Response(idReferencia)

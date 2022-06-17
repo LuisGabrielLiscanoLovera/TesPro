@@ -88,7 +88,7 @@
                             <input type="number" hidden="True" name="empresa" value="{{ lastIdEmpresa }}">
                             <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">
                             <div class="">
-                                <input class="submit button" type="submit" onclick="location.href='/'" value="Guardar">
+                                <input class="submit button" type="submit" value="Guardar">
                             </div>
 
                         </div>
@@ -118,6 +118,9 @@
 
 
 <script>
+    axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+    axios.defaults.xsrfCookieName = "csrftoken";
+
     function DetailFormatterButInfoReferencia(index, row) {
         //crea y renderiza la tabla
         return '<br>referencia    :' + row.descripcion
@@ -127,35 +130,31 @@
 
 
     function DetailFormatterButAccionReferencia(index, row) {
-        return '<form id="editarTarea" style="display: inline"  >{% csrf_token %}<hr>' +
+        return '<form id="editReferencia">' +
             '<div class="row">' +
             '<div class="col-sm-3">' +
-            '<div class="form-group"><label>Nombre Tarea</label>' +
-            '<input class="form-control"   value="' + row.id + '" name="nombreTareaUP"></div>' +
-            '<div class="form-group"><label>Cantidad x minuto</label>' +
-            '<input class="form-control" value="' + row.id + '" name="minutoXTareaUP"></div>' +
-            '<div class="form-group"><label>Cantidad x hora</label>' +
-            '<input class="form-control"   value="' + row.id + '" name="horaXTareaUP"></div>' +
-            '</div>' +
+            '<div class="form-group"><label>Nombre Referencia</label>' +
+            '<input class="form-control"   value="' + row.nom_referencia + '" name="nom_referenciaUP"></div>' +
 
 
-            '<div class="col-sm-3">' +
-            '<div class="form-group"><label>Precio x unidad</label>' +
-            '<input class="form-control" value="' + row.id + '" name="valorTareaUP"></div>' +
             '<div class="form-group"><label>Descripcion</label>' +
-            '<input class="form-control" value="' + row.id + '" name="detalleTareaUP"></div>' +
+            '<input class="form-control" value="' + row.descripcion + '" name="descripcionUP"></div>' +
 
-            '<div class="form-group"><label>Estatus</label>' +
-            '<input class="form-control" value="' + row.id + '" name="estatusUP"></div>' +
+            '<div class="form-control"><label>Estatus</label>' +
+            '<select class="form-group" id="estatus" name="estatusUP">' +
+            '<option value="' + row.estatus + '">' + row.estatus + '</option>' +
+            '<option value="A">Activo</option>' +
+            '<option value="I">Inactivo</option>' +
+            '</select></div>' +
 
 
-            '<input type="number" hidden="True" name="empresaTareaUP" value="{{ lastIdEmpresa }}">' +
-            '<input type="number" hidden="True" name="idUserTareaUP" value="{{ login_user_id}}">' +
-            '<input type="number" hidden="True" name="idTareaUP" value="' + row.id + '"' +
+            '<input type="number" hidden="True" name="empresaUP" value="{{ lastIdEmpresa }}">' +
+            '<input type="number" hidden="True" name="idUserUP" value="{{ login_user_id}}">' +
+            '<input type="number" hidden="True" name="idReferenciaUP" value="' + row.id + '"' +
 
             '</div>' +
             '<div class="col-sm-6">' +
-            '<input id="EditTareaBtn-' + row.id + '" value="Actualizar registro" type="submit" onclick="editTarea(' + row.id + ')" class="btn-lg  btn btn-outline-warning btn-rounded  " >' +
+            '<input id="EditReferenciaBtn-' + row.id + '"    value="Actualizar registro" type="submit" onclick="editarTarea(' + row.id + ')" class="btn-lg  btn btn-outline-warning btn-rounded  " >' +
 
 
 
@@ -163,7 +162,7 @@
             '</div>' +
 
             '</div>' +
-            '<div class="col-sm-1">' + '<button value="" onclick="remove(' + row.id + ')"  id="buttonEliminarTarea" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>' +
+            '<div class="col-sm-1">' + '<button value="" onclick="remove(' + row.id + ')"  id="buttonEliminarReferencia" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>' +
             '</div>' +
             '</form>';
 
@@ -182,14 +181,41 @@
 
 
 
+    function editarTarea(id) {
+        var nom_referenciaInputUP = $('input[name="nom_referenciaUP"]').val().trim();
+        var descripcionInputUP = $('input[name="descripcionUP"]').val().trim();
+        var idReferenciaUP = $('input[name="idReferenciaUP"]').val().trim();
+        var idEmpresaInputUP = $('input[name="empresaUP"]').val().trim();
+        var idUserUP = $('input[name="idUserUP"]').val().trim();
+        var estatusUP = $('select[name="estatusUP"]').val().trim();
+        if (idEmpresaInputUP && idUserUP && idReferenciaUP) {
+
+
+
+            axios.post('/referencia/crud/Update/', {
+
+                'idReferencia': idReferenciaUP,
+                'nom_referenciaUP': nom_referenciaInputUP,
+                'descripcionUP': descripcionInputUP,
+                'estatusUP': estatusUP,
+                'empresaUP': idEmpresaInputUP,
+                'idUserUP': idUserUP
+
+
+            }).then(response => {
+                console.log(response);
+                console.log("PASSSSSSS");
+            });
+        } else {
+            console.log("All fields must have a valid value.");
+        }
+        $('form#editReferencia').trigger("reset");
+        return false;
 
 
 
 
-
-
-
-
+    }
 
 
 
@@ -232,4 +258,5 @@
         $('form#addReferencia').trigger("reset");
         return false;
     });
+</script>
 </script>

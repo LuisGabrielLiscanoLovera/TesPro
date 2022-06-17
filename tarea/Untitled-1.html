@@ -350,6 +350,34 @@
         var idUser = $('input[name="idUser"]').val().trim();
         if (nom_referenciaInput && descripcionInput && idEmpresaInput && idUser) {
             // Create Ajax Call
+
+  // Create Ajax Call
+            $.ajax({
+                url: '{% url "Referencia_ajax_update" %}',
+                data: {
+                    'idReferencia': idReferenciaUP,
+                    'nom_referenciaUP': nom_referenciaInputUP,
+                    'descripcionUP': descripcionInputUP,
+                    /*   'img1UP': img1InputUP,
+                      'img2UP': img2InputUP, */
+                    'empresaUP': idEmpresaInputUP,
+                    'idUserUP': idUserUP
+
+                },
+                dataType: 'json',
+                success: function(data) {
+                    console.log("sssssssss");
+                    //  window.location.reload();
+                }
+            });
+
+
+
+
+
+
+
+
             $.ajax({
                 url: '{% url "Referencia_ajax_create" %}',
                 data: {
