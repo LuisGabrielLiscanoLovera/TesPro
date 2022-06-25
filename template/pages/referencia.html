@@ -120,27 +120,6 @@
 <script src="{% static 'js/axios.min.js' %} "></script>
 
 <script>
-    new Vue({
-        el: '#apptt',
-        delimiters: ['[[', ']]'],
-        data() {
-            return {
-                refer: '',
-                referencias: []
-            }
-        },
-        created() {
-            axios.get('/operacion/referencia-Act/')
-                .then((resp) => {
-                    this.referencias = resp.data;
-                    console.log(this.referencias);
-                }).catch(error => console.log(error));
-
-
-        }
-    })
-
-
     function DetailFormatterButInfoReferencia(index, row) {
         //crea y renderiza la tabla
         return '<br>referencia    :' + row.descripcion

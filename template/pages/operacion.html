@@ -1,7 +1,10 @@
 {% load static %}
 <script src="{% static 'js/vue.js' %} "></script>
 <script src="{% static 'js/axios.min.js' %} "></script>
+<script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %} "></script>
 
+<script src="{% static 'js/jquery/jquery-3.2.1.min.js' %} "></script>
+<script src="{% static 'js/vue-select-vue-select.js' %} "></script>
 
 <div id="openModalOperacion" class="modalDialogPadre">
     <div>
@@ -74,58 +77,60 @@ data-auto-refresh-status="true"
 
 
         <div class="container">
+
+
+
+
             <div class="wrapper">
                 <ul class="steps">
                     <li class="is-active">Operación</li>
                     <li>Detalle</li>
                     <li>Talla</li>
                 </ul>
-                <form id="addOperacion" autocomplete="off" class="form-wrapper">
-                    <input type="number" hidden="True" name="idEmpresaOP" value="{{ lastIdEmpresa }}">
-                    <input type="number" hidden="True" name="idUserOP" value="{{ login_user_id}}">
+                <div id="pageContent">
+                    <form id="addOperacion" autocomplete="off" class="form-wrapper" @submit.prevent="submitFormOperacion">
+                        <div hidden=True>{% csrf_token %}</div>
+                        <input type="number" hidden="True" name="idEmpresaOP" value="{{ lastIdEmpresa }}">
+                        <input type="number" hidden="True" name="idUserOP" value="{{ login_user_id}}">
 
-                    <fieldset class="section is-active">
-                        <h3>
-                            Registro de Operación <br>{% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h3>
-                        <div class="row cf form-group form-inline">
-                            <div class="col-sm-12">
-                                <label class="">Nombre de Operación </label>
-                                <input class="form-control" type="text" name="nombreOP" id="name" placeholder="Nombre Operacion">
-                            </div>
-                            <div class="col-sm-12"><br>
-                            </div>
-                            <div class="col-sm-12">
-                                <label>Cantidad de Operación</label>
-                                <input class="big-button" type="number" name="can_totalOP" placeholder="Total">
-                            </div>
-                        </div>
-                        <br>
-                        <div class="button">Detalle</div>
-                    </fieldset>
-                    <fieldset class="section">
-                        <h3> Detalles de Operación
-
-                        </h3>
-                        <div class="row cf form-group-sm ">
-
-                            <div class="col-sm-6 col-sm-offset-6">
-                                <label for=""><h5>Referencia</h5></label>
-
-                                <div id="apptt">
-                                    <input type="text" v-model="refer" list="referencias">
-                                    <datalist id="referencias">
-                                    <option v-for="refer in referencias">[[refer.nom_referencia_act]]
-                                    <input type="number" hidden="True" name="idReferenciaOP" default="" value="{{ refer.id }}">
-                                    </option>                                  
-                                  </datalist>
+                        <fieldset class="section is-active">
+                            <h3>
+                                Registro de Operación <br>{% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h3>
+                            <div class="row cf form-group form-inline">
+                                <div class="col-sm-12">
+                                    <label class="">Nombre de Operación </label>
+                                    <input class="form-control" type="text" name="nombreOP" id="name" placeholder="Nombre Operacion">
                                 </div>
+                                <div class="col-sm-12"><br>
+                                </div>
+                                <div class="col-sm-12">
+                                    <label>Cantidad de Operación</label>
+                                    <input class="big-button" type="number" name="can_totalOP" placeholder="Total">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="button">Detalle</div>
+                        </fieldset>
+                        <fieldset class="section">
+                            <h3> Detalles de Operación
 
-                                <div class="col-sm-6 col-sm-offset-6 ">
-                                    <label for=""> <h5>Color</h5></label>
+                            </h3>
+                            <div class="row cf form-group-sm ">
 
-                                    <input value="" class="form-control" type="text" list="Color" required placeholder="Buscar Color...">
+                                <div class="col-sm-6 col-sm-offset-6">
 
-                                    <datalist id="Color" class="select ">
+                                    <div id="pageContent">
+                                        <div class="form-group">
+                                            <label for=""><h5>Referencia</h5></label>
+                                            <v-select name="idReferenciaOP" v-model="idReferenciaOP" :options="referenciasVue.map(academicClass => ({label: academicClass.nom_referencia_act, value: academicClass.id}))"></v-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-sm-offset-6 ">
+                                        <label for=""> <h5>Color</h5></label>
+
+                                        <input value="" class="form-control" type="text" list="Color" required placeholder="Buscar Color...">
+
+                                        <datalist id="Color" class="select ">
                                         {% for resultsColor in allColor %}                                        
                                         <option value="{{resultsColor.nom_color}}" >
                                             {{resultsColor.nom_color}}-{{resultsColor.codigo_color}}
@@ -133,18 +138,18 @@ data-auto-refresh-status="true"
                                         <input type="number" hidden="True" name="idColorOp" value="{{ resultsColor.id }}">
                                         {% endfor %}
                                     </datalist>
+                                    </div>
+
+                                    <div class="col-sm-12 col-sm-offset-6 ">
+                                        <label for=""><h5>Descripcion</h5></label>
+
+                                        <textarea type="text" class="form-control" name="notaDes" placeholder="Nota - Descripcion"></textarea>
+                                    </div>
                                 </div>
+                                <br>
 
-                                <div class="col-sm-12 col-sm-offset-6 ">
-                                    <label for=""><h5>Descripcion</h5></label>
-
-                                    <textarea type="text" class="form-control" name="notaDes" placeholder="Nota - Descripcion"></textarea>
-                                </div>
-                            </div>
-                            <br>
-
-                            <div class="button">Talla</div>
-                    </fieldset>
+                                <div class="button">Talla</div>
+                        </fieldset>
 
 
 
@@ -155,32 +160,155 @@ data-auto-refresh-status="true"
 
 
 
-                    <fieldset class="section">
-                        <h3>Registro de Talla</h3>
-                        <table id="TallaTable" data-id-field="id" class="table table-sm" data-toggle="table" data-detail-view="true" data-detail-view-by-click="false" data-show-columns="false" data-search="false" data-show-fullscreen="false" data-locale="es-SP" data-pagination="true"
-                            data-detail-view-icon="false" data-url="talla/talla-list/">
-                            <thead class="thead-dark ">
-                                <tr>
-                                    <th data-field="nom_talla" class="text-center">Nombre Talla </th>
-                                    <th data-field="btnAddTalla" class="text-center">Cantidad</th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <!-- <input class="submit button" type="submit" value="Sign Up"> -->
+                        <fieldset class="section">
+                            <h3>Registro de Talla</h3>
+                            <table id="TallaTable" data-id-field="id" class="table table-sm" data-toggle="table" data-detail-view="true" data-detail-view-by-click="false" data-show-columns="false" data-search="false" data-show-fullscreen="false" data-locale="es-SP" data-pagination="true"
+                                data-detail-view-icon="false" data-url="talla/talla-list/">
+                                <thead class="thead-dark ">
+                                    <tr>
+                                        <th data-field="nom_talla" class="text-center">Nombre Talla </th>
+                                        <th data-field="btnAddTalla" class="text-center">Cantidad</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <!-- <input class="submit button" type="submit" value="Sign Up"> -->
+                            <br><br> <br><br><br>
+                            <input class="button" type="submit" onclick="ModalOperacion()" value="Guardar">
+                        </fieldset>
 
-
-                        <br><br> <br><br><br><input class=" submit button" type="submit" onclick="ModalOperacion()" value="Guardar">
-                    </fieldset>
-
-
-                    <!-- 
+                        <!-- 
                         <fieldset class="section">
                             <br>
                             <h3>¡Operación creada con exito!</h3>
                             <p></p> 
                         <div class="button">Reset Form</div>
                        </fieldset> -->
-                </form>
+                    </form>
+                    </div>
+
+
+
+
+
+
+
+                    <script>
+                        Vue.component('v-select', VueSelect.VueSelect);
+
+                        var app = new Vue({
+                            el: '#pageContent',
+
+                            data() {
+                                return {
+                                    idReferenciaOP: '',
+                                    referenciasVue: [],
+                                    counter: 0
+
+
+                                }
+                            },
+
+                            methods: {
+                                submitFormOperacion() {
+
+
+                                    let idReferOP = this.idReferenciaOP;
+
+
+                                    $("form#addOperacion").submit(function() {
+                                        console.log("idReferOP", idReferOP.value);
+                                        var NotaDesOp = $('textarea[name="notaDes"]').val().trim();
+                                        var can_totalOP = $('input[name="can_totalOP"]').val().trim();
+                                        var nomOperacion = $('input[name="nombreOP"]').val().trim();
+                                        var idColorOP = $('input[name="idColorOp"]').val().trim();
+                                        var idEmpresaOP = $('input[name="idEmpresaOP"]').val().trim();
+                                        var idUserOP = $('input[name="idUserOP"]').val().trim();
+                                        var idReferenciaOP = idReferOP.value;
+
+                                        if (can_totalOP == '') {
+                                            can_totalOP = 0
+                                        }
+                                        if (can_totalOP && nomOperacion && idEmpresaOP && idUserOP && idReferenciaOP) {
+
+                                            // Create Ajax Call
+                                            $.ajax({
+                                                url: '{% url "Operacion_ajax_create" %}',
+                                                data: {
+
+                                                    'can_totalOP': can_totalOP,
+                                                    'idReferencia': idReferenciaOP,
+                                                    'idColorOP': idColorOP,
+                                                    'nomOperacion': nomOperacion,
+                                                    'idEmpresaOP': idEmpresaOP,
+                                                    'idUserOP': idUserOP,
+                                                    'NotaOp': NotaDesOp
+                                                },
+                                                dataType: 'json',
+                                                success: function(data) {
+                                                    var idOperacion = data.lastIdOperacion;
+                                                    var arrayTallas = data.tallasEmpresa;
+                                                    btnTallaAdd(idOperacion, arrayTallas, idUserOP);
+
+
+                                                }
+
+                                            });
+
+
+                                        } else {
+                                            console.log("All fields must have a valid value.");
+                                        }
+                                        $('form#addPoperacion').trigger("reset");
+                                        return false;
+                                    });
+
+                                },
+
+                            },
+
+                            computed: {
+                                opts() {
+                                    return this.referenciasVue.map(item => ({
+                                        label: item.nom_referencia_act,
+                                        value: item.id
+                                    }));
+                                }
+                            },
+                            created() {
+                                axios.get('/operacion/referencia-Act/')
+                                    .then((resp) => {
+                                        this.referenciasVue = resp.data;
+                                        console.log(this.referenciasVue);
+                                    }).catch(error => console.log(error));
+
+                                axios.get('/operacion/referencia-Act/')
+                                    .then((resp) => {
+                                        this.referenciasVue = resp.data;
+                                        console.log(this.referenciasVue);
+                                    }).catch(error => console.log(error));
+
+
+                            },
+                            watch: {
+                                idReferenciaOP(val) {
+
+                                    console.log(val.value);
+
+                                    //if (can_totalOP && nomOperacion && idColorOP) {}
+
+                                    return val.value;
+                                }
+                            }
+                        })
+
+
+
+
+                        Vue.config.devtools = false;
+                        Vue.config.productionTip = false;
+                    </script>
+
+
                 </div>
             </div>
 
@@ -297,7 +425,7 @@ data-auto-refresh-status="true"
                         var CanOperacion = response.CanOperacion;
                         var CanTallaTotal = response.CanTallaTotal;
                         var FechaCierre = response.FechaCierre;
-                        console.log(FechaCierre); /////////fecha de cierre
+                        // console.log(FechaCierre); /////////fecha de cierre
 
                         if (CanOperacion != CanTallaTotal) {
                             //conmprueba si sobra o falta operacion
@@ -450,85 +578,9 @@ data-auto-refresh-status="true"
 
 
 
-        <script>
-            new Vue({
-                el: '#apptt',
-                delimiters: ['[[', ']]'],
-                data() {
-                    return {
-                        refer: '',
-                        referencias: []
-                    }
-
-                },
-                created() {
-                    axios.get('/operacion/referencia-Act/')
-                        .then((resp) => {
-                            this.referencias = resp.data;
-                            console.log(this.referencias);
-                        }).catch(error => console.log(error));
-
-
-                }
-            });
-        </script>
-
-
-
-
-
 
         <!--create operacion-->
         <script>
-            $("form#addOperacion").submit(function() {
-
-
-                var NotaDesOp = $('textarea[name="notaDes"]').val().trim();
-                var can_totalOP = $('input[name="can_totalOP"]').val().trim();
-                var nomOperacion = $('input[name="nombreOP"]').val().trim();
-                var idReferenciaOP = $('input[name="idReferenciaOP"]').val().trim();
-                var idColorOP = $('input[name="idColorOp"]').val().trim();
-                var idEmpresaOP = $('input[name="idEmpresaOP"]').val().trim();
-                var idUserOP = $('input[name="idUserOP"]').val().trim();
-
-
-                if (can_totalOP == '') {
-                    can_totalOP = 0
-                }
-                if (can_totalOP && nomOperacion && idEmpresaOP && idUserOP) {
-
-                    // Create Ajax Call
-                    $.ajax({
-                        url: '{% url "Operacion_ajax_create" %}',
-                        data: {
-
-                            'can_totalOP': can_totalOP,
-                            'idReferenciaOP': idReferenciaOP,
-                            'idColorOP': idColorOP,
-                            'nomOperacion': nomOperacion,
-                            'idEmpresaOP': idEmpresaOP,
-                            'idUserOP': idUserOP,
-                            'NotaOp': NotaDesOp
-                        },
-                        dataType: 'json',
-                        success: function(data) {
-                            var idOperacion = data.lastIdOperacion;
-                            var arrayTallas = data.tallasEmpresa;
-                            btnTallaAdd(idOperacion, arrayTallas, idUserOP);
-
-
-                        }
-
-                    });
-
-
-                } else {
-                    console.log("All fields must have a valid value.");
-                }
-                $('form#addPoperacion').trigger("reset");
-                return false;
-            });
-
             function btnTallaAdd(idOperacion, arrayTallas, idUserOP) {
                 var arrayTallaOp = JSON.parse(arrayTallas);
                 console.log("I-id operacion ", idOperacion);
@@ -558,39 +610,23 @@ data-auto-refresh-status="true"
                             },
                             dataType: 'json',
                             success: function(data) {
-                                window.location.reload();
-                                console.log("passsssssss");
+                                //window.location.reload();
+                                console.log("linia 609 borrar ");
                             }
-
-
-
                         });
-
-
                     } else {
                         console.log('canTallaOP esta vacia ==', canTallaOP)
                     }
-
-
-
                 });
-
             }
         </script>
         <!--editar ipoperacion-->
         <script>
             function editPoperacion(id) {
-
-
-
                 var estatusUP = document.getElementById("estatusUP").value;
                 var idEmpresaUP = $('input[name="idEmpresaUPOP"]').val().trim();
                 var idUserUP = $('input[name="idUserUPOP"]').val().trim();
-
-
-
                 if (estatusUP && idEmpresaUP && idUserUP) {
-
                     // Create Ajax Call
                     $.ajax({
                         url: '{% url "Operacion_ajax_update" %}',

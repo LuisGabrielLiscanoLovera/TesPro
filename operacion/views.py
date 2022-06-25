@@ -55,14 +55,15 @@ class CreateOperacion(View):
 
         lastEm = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
         can_totalOP = request.GET.get('can_totalOP', None)
-        idReferenciaOP = request.GET.get('idReferenciaOP', None)
+        idReferenciaOP = request.GET.get('idReferencia', None)
         idColorOP = request.GET.get('idColorOP', None)
-        nomOperacion = request.GET.get('nomOperacion', None)
+        nomOperacion = request.GET.get('nomOperacion', None).upper()
 
        # print(lastEm,can_totalOP,idReferenciaOP,idColorOP,nomOperacion+'passsssssssssss')
 
         #puede existir pero no repetido en la misma empresa
         existOperacion = Operacion.objects.extra(
+            #where=["nom_operacion='%s' AND usuario_id = '%s' AND empresa_id = '%s'" % ("OP-"+nomOperacion, idUser.id, lastEm.lastEm)])
             where=["nom_operacion='%s' AND usuario_id = '%s' AND empresa_id = '%s'" % (nomOperacion, idUser.id, lastEm.lastEm)])
 
         if existOperacion.count() == 0:
@@ -70,7 +71,8 @@ class CreateOperacion(View):
             obj = Operacion.objects.create(
                 empresa_id=lastEm.lastEm,
                 usuario_id=idUser.id,
-                nom_operacion="OP-"+nomOperacion.upper(),
+                #nom_operacion="OP-"+nomOperacion,
+                nom_operacion=nomOperacion,
                 estatus='A',
                 color_id=int(idColorOP),
                 referencia_id=idReferenciaOP,
@@ -214,7 +216,7 @@ def referenciaList(request):
     for refer in Referencia.objects.filter(empresa_id=lastEm.lastEm, estatus='A').distinct().values('nom_referencia', 'id'):
         referencias.append({
             'nom_referencia_act': refer['nom_referencia'],
-            'idReferencia': refer['id']
+            'id': refer['id']
         })
 
     return Response(referencias) 
