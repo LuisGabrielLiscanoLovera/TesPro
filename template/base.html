@@ -13,6 +13,16 @@
     <!--     
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     -->
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vuetify/2.6.6/vuetify.min.js" integrity="sha512-Mrn6ZojrZUcldEkLnqBq9NQbwLs7TPIis+NZfqkdI0TOCCufu1ytL2811I0kAOyGWTZpA3sGIfd+bhovAV1prg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vuetify/2.6.6/vuetify.css" integrity="sha512-9a7XSAJvKENg8y3iqSevRLk23+9lim/C5VFgdC+tV+4S94PD4Zqi8+lxQtIN2fJ1DfuDnDdEnR8AP+JvFRV3Lg==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+
+
+
+
+
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrapbootstrap.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/jqui.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/jqdtm.css' %}">
@@ -507,14 +517,6 @@
             width: 100%;
             height: 100%;
         }
-        
-        select {
-            width: 100%;
-        }
-        
-        .main-nav select {
-            display: none;
-        }
         /* mobile styles
 -----------------------------------------------*/
         /* For devices with screen size lower than 480px */
@@ -618,17 +620,6 @@
             /* Navigation */
             .main-nav ul {
                 display: none;
-            }
-            .main-nav select {
-                display: inline;
-                -moz-appearance: none;
-                -webkit-appearance: none;
-                appearance: none;
-                padding: 8px 10px;
-                margin: 8px 15px;
-                border: 1px solid #eaeaea;
-                border-radius: 5px;
-                width: 40%;
             }
             #main-nav-wrapper {
                 height: 42px;
@@ -909,12 +900,15 @@ st
             width: 100%;
             min-width: 15ch;
             max-width: 30ch;
-            border: 1px solid var(--select-border);
-            border-radius: 0.25em;
-            padding: 0.25em 0.5em;
-            font-size: 1.25rem;
             cursor: pointer;
             line-height: 1.1;
+            padding: 8px 0;
+            transition: height .3s cubic-bezier(.4, 0, .2, 1);
+            z-index: 2000;
+            float: left;
+            display: block;
+            overflow-y: auto;
+            overflow-x: auto;
         }
         
         body {

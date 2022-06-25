@@ -2,7 +2,7 @@ from django.db import models
 from authapp.models import MyUser
 from empresa.models import Empresa
 from referencia.models import Referencia
-from color.models import Color
+#from color.models import Color
 # Create your models here.
 class Operacion(models.Model):
     btnInfo       = '<button type="button" class="btn btn-outline-info text-center btn-sm btn-block ">Info</button>'
@@ -12,7 +12,7 @@ class Operacion(models.Model):
     usuario       = models.ForeignKey(MyUser,on_delete=models.CASCADE)
     empresa       = models.ForeignKey(Empresa, on_delete=models.CASCADE)
     referencia    = models.ForeignKey(Referencia, on_delete=models.CASCADE,blank=True, null=True,default="sin-ref")
-    color         = models.ForeignKey(Color, on_delete=models.CASCADE,blank=True, null=True)
+   # color         = models.ForeignKey(Color, on_delete=models.CASCADE,blank=True, null=True)
     nom_operacion = models.CharField(max_length=35,)
     nota          = models.CharField(max_length=150,blank=True, null=True)
     can_total     = models.IntegerField(blank=True, null=True)
@@ -36,8 +36,7 @@ class Operacion(models.Model):
         ]
 
     def __str__(self):
-        return 'id:{} usuario:{} empresa:{} referencia:{} color:{} nom_operacion:{} created_at:{} estatus:{} '.format(self.id, self.usuario,
-        self.empresa,self.referencia,
-        self.color,
+        return 'id:{} usuario:{} empresa:{} referencia:{}  nom_operacion:{} created_at:{} estatus:{} '.format(self.id, self.usuario,
+        self.empresa,self.referencia,       
         self.nom_operacion,self.created_at,
         self.estatus)

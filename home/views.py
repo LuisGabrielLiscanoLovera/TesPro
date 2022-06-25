@@ -2,7 +2,7 @@
 from operacion.models import Operacion
 from talla.models import Talla
 from referencia.models import Referencia
-from color.models import Color
+#from color.models import Color
 from integrante.models import Integrante
 from patinador.models import Patinador
 from tarea.models import Tarea
@@ -50,8 +50,8 @@ class Home(LoginRequiredMixin,TVB):
         #Carga de data por defecto Sin(Referenciam,color,talla)
         if Referencia.objects.filter(usuario_id=s['last_login'],empresa_id=idlastEmpresa,nom_referencia="SIN REFERENCIA"):pass
         else: Referencia.objects.create(nom_referencia = "SIN REFERENCIA",descripcion = "SIN REFERENCIA", empresa_id = lastEm.lastEm, usuario_id = s['last_login'])
-        if Color.objects.filter(usuario_id=s['last_login'],empresa_id=idlastEmpresa,nom_color="SIN COLOR"):pass
-        else: Color.objects.create(nom_color = "SIN COLOR",codigo_color = "0",empresa_id = lastEm.lastEm,usuario_id = s['last_login'])
+        #if Color.objects.filter(usuario_id=s['last_login'],empresa_id=idlastEmpresa,nom_color="SIN COLOR"):pass
+        #else: Color.objects.create(nom_color = "SIN COLOR",codigo_color = "0",empresa_id = lastEm.lastEm,usuario_id = s['last_login'])
         if Talla.objects.filter(usuario_id=s['last_login'],empresa_id=idlastEmpresa,nom_talla="SIN TALLA"):pass
         else:
             Talla.objects.create(empresa_id=lastEm.lastEm,usuario_id=s['last_login'],nom_talla="SIN TALLA",num_talla= 0,)
@@ -61,7 +61,7 @@ class Home(LoginRequiredMixin,TVB):
              
         nombreEpreAct   = Empresa.objects.filter(usuario=s['last_login'],id=int(idlastEmpresa))        
         totalReferencia = Referencia.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
-        totalColor      = Color.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
+       # totalColor      = Color.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
         totalIntegrante = Integrante.objects.all().filter(usuario=s['last_login'],estatus='A',empresa_id=int(idlastEmpresa))
         allTalla        = Talla.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
         allTarea        = Tarea.objects.all().filter(usuario=s['last_login'],empresa_id=int(idlastEmpresa))
@@ -78,13 +78,13 @@ class Home(LoginRequiredMixin,TVB):
         context['nomEmpresaU']      = nombreEpreAct                 # nombre de la empresa actual
         context['lastIdEmpresa']    = int(idlastEmpresa)            # ids empresas
         context['totalReferencia']  = totalReferencia.count()-1     # total referencias (el -1 para no contar las sin referencia)
-        context['totalColor']       = totalColor.count()-1          # total color (el -1 para no contar las sin color)
+       # context['totalColor']       = totalColor.count()-1          # total color (el -1 para no contar las sin color)
         context['totalIntegrante']  = totalIntegrante.count()       # total integrante
         context['totalPatinadores'] = totalPatinador                # total patinador
         context['allIntegrante']    = totalIntegrante               # all integrante
         context['allTalla']         = allTalla                      # all talla
         context['allReferencia']    = totalReferencia               # all referencia
-        context['allColor']         = totalColor                    # all color
+       # context['allColor']         = totalColor                    # all color
     #    context['totalCasino']      = totalCasino                   # total fondo casino
         context['totalOperacion']   = totalOperacion                # total operacion
         context['totalTallas']      = allTalla.count()-1            # total talla (el -1 para no contar las sin talla)

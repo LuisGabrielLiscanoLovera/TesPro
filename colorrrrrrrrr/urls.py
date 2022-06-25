@@ -1,6 +1,6 @@
 from django.urls import path
 
-from color.views import CreateColor,DeleteColor,UpdateColor
+from colorrrrrrrrr.views import CreateColor,DeleteColor,UpdateColor
 from .views import colorList
 
 urlpatterns = [

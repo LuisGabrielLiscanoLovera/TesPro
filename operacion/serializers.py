@@ -6,8 +6,8 @@ class OperacionSerializer(serializers.ModelSerializer):
     updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     fecha_cierre = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     nom_referencia = serializers.CharField(source='referencia.nom_referencia')
-    nomColor=serializers.CharField(source = 'color.nom_color')
-    codColor=serializers.CharField(source = 'color.codigo_color')
+    #nomColor=serializers.CharField(source = 'color.nom_color')
+    #codColor=serializers.CharField(source = 'color.codigo_color')
     class Meta:
         model = Operacion
         fields = '__all__'

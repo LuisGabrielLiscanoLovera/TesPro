@@ -2,9 +2,11 @@
 <script src="{% static 'js/vue.js' %} "></script>
 <script src="{% static 'js/axios.min.js' %} "></script>
 <script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %} "></script>
-
+<link rel="stylesheet" href="https://unpkg.com/vue-select@3.0.0/dist/vue-select.css">
 <script src="{% static 'js/jquery/jquery-3.2.1.min.js' %} "></script>
 <script src="{% static 'js/vue-select-vue-select.js' %} "></script>
+
+<script src="{% static 'js/index-index.js' %} "></script>
 
 <div id="openModalOperacion" class="modalDialogPadre">
     <div>
@@ -23,6 +25,29 @@ data-auto-refresh-interval="30"
 data-auto-refresh-silent="true"
 data-auto-refresh-status="true"
 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <table id="operacionTable" data-id-field="id" class="table scrollme " data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-show-columns="true" data-search="True" data-show-fullscreen="true" data-locale="es-SP" data-pagination="true"
             data-detail-view-icon="false" data-show-export="false" data-url="operacion/operacion-list/">
 
@@ -45,7 +70,7 @@ data-auto-refresh-status="true"
                         <th data-field="nom_operacion" class="text-center">Operación</th>
                         <th data-field="nom_referencia" class="text-center">Referencia</th>
                         <th data-field="estatus" class="text-center">Estatus</th>
-                        <th data-field="nomColor" class="text-center">Color</th>
+                        <!--                         <th data-field="nomColor" class="text-center">Color</th> -->
                         <th data-field="can_restante" class="text-center">Cant. Faltante</th>
                         <th data-field="can_total" class="text-center">Cant. Total</th>
                         <th data-field="created_at" class="text-center">Fecha creada</th>
@@ -80,27 +105,25 @@ data-auto-refresh-status="true"
 
 
 
-
-            <div class="wrapper">
-                <ul class="steps">
-                    <li class="is-active">Operación</li>
-                    <li>Detalle</li>
-                    <li>Talla</li>
-                </ul>
+            <div class="wrappe">
+                <br>
                 <div id="pageContent">
-                    <form id="addOperacion" autocomplete="off" class="form-wrapper" @submit.prevent="submitFormOperacion">
-                        <div hidden=True>{% csrf_token %}</div>
+                    <template>
+                     <form id="addOperacion" autocomplete="off" class="form-wrapper" @submit.prevent="submitFormOperacion">
+                        <div hidden>{% csrf_token %}</div>
                         <input type="number" hidden="True" name="idEmpresaOP" value="{{ lastIdEmpresa }}">
                         <input type="number" hidden="True" name="idUserOP" value="{{ login_user_id}}">
-
                         <fieldset class="section is-active">
-                            <h3>
-                                Registro de Operación <br>{% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h3>
+                            <h3> Registro de Operación <br>{% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h3>
                             <div class="row cf form-group form-inline">
+
+
                                 <div class="col-sm-12">
                                     <label class="">Nombre de Operación </label>
                                     <input class="form-control" type="text" name="nombreOP" id="name" placeholder="Nombre Operacion">
                                 </div>
+
+
                                 <div class="col-sm-12"><br>
                                 </div>
                                 <div class="col-sm-12">
@@ -111,54 +134,29 @@ data-auto-refresh-status="true"
                             <br>
                             <div class="button">Detalle</div>
                         </fieldset>
-                        <fieldset class="section">
-                            <h3> Detalles de Operación
 
-                            </h3>
+
+                        <fieldset class="section">
+                            <h3> Detalles de Operación </h3>
                             <div class="row cf form-group-sm ">
+
 
                                 <div class="col-sm-6 col-sm-offset-6">
 
-                                    <div id="pageContent">
-                                        <div class="form-group">
-                                            <label for=""><h5>Referencia</h5></label>
-                                            <v-select name="idReferenciaOP" v-model="idReferenciaOP" :options="referenciasVue.map(academicClass => ({label: academicClass.nom_referencia_act, value: academicClass.id}))"></v-select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-sm-offset-6 ">
-                                        <label for=""> <h5>Color</h5></label>
+                                    <div class="form-group">
+                                        <label for=""><h5>Referencia</h5></label>
+                                        <v-select v-model="idReferenciaOP"  class="select" :options="referenciasVue.map(academicClass => ({label: academicClass.nom_referencia_act, value: academicClass.id}))"></v-select>
 
-                                        <input value="" class="form-control" type="text" list="Color" required placeholder="Buscar Color...">
-
-                                        <datalist id="Color" class="select ">
-                                        {% for resultsColor in allColor %}                                        
-                                        <option value="{{resultsColor.nom_color}}" >
-                                            {{resultsColor.nom_color}}-{{resultsColor.codigo_color}}
-                                        </option>
-                                        <input type="number" hidden="True" name="idColorOp" value="{{ resultsColor.id }}">
-                                        {% endfor %}
-                                    </datalist>
-                                    </div>
-
-                                    <div class="col-sm-12 col-sm-offset-6 ">
-                                        <label for=""><h5>Descripcion</h5></label>
-
-                                        <textarea type="text" class="form-control" name="notaDes" placeholder="Nota - Descripcion"></textarea>
                                     </div>
                                 </div>
-                                <br>
 
+                                <div class="col-sm-6 col-sm-offset-6 ">
+                                    <label for=""><h5>Descripcion</h5></label>
+                                    <textarea type="text" class="form-control" name="notaDes" placeholder="Nota - Descripcion"></textarea>
+                                    <br><br><br><br><br><br> <br><br><br><br><br><br> </div>
                                 <div class="button">Talla</div>
+                            </div>
                         </fieldset>
-
-
-
-
-
-
-
-
-
 
                         <fieldset class="section">
                             <h3>Registro de Talla</h3>
@@ -176,502 +174,495 @@ data-auto-refresh-status="true"
                             <input class="button" type="submit" onclick="ModalOperacion()" value="Guardar">
                         </fieldset>
 
-                        <!-- 
-                        <fieldset class="section">
-                            <br>
-                            <h3>¡Operación creada con exito!</h3>
-                            <p></p> 
-                        <div class="button">Reset Form</div>
-                       </fieldset> -->
+
                     </form>
-                    </div>
+                </template>
 
-
-
-
-
-
-
-                    <script>
-                        Vue.component('v-select', VueSelect.VueSelect);
-
-                        var app = new Vue({
-                            el: '#pageContent',
-
-                            data() {
-                                return {
-                                    idReferenciaOP: '',
-                                    referenciasVue: [],
-                                    counter: 0
-
-
-                                }
-                            },
-
-                            methods: {
-                                submitFormOperacion() {
-
-
-                                    let idReferOP = this.idReferenciaOP;
-
-
-                                    $("form#addOperacion").submit(function() {
-                                        console.log("idReferOP", idReferOP.value);
-                                        var NotaDesOp = $('textarea[name="notaDes"]').val().trim();
-                                        var can_totalOP = $('input[name="can_totalOP"]').val().trim();
-                                        var nomOperacion = $('input[name="nombreOP"]').val().trim();
-                                        var idColorOP = $('input[name="idColorOp"]').val().trim();
-                                        var idEmpresaOP = $('input[name="idEmpresaOP"]').val().trim();
-                                        var idUserOP = $('input[name="idUserOP"]').val().trim();
-                                        var idReferenciaOP = idReferOP.value;
-
-                                        if (can_totalOP == '') {
-                                            can_totalOP = 0
-                                        }
-                                        if (can_totalOP && nomOperacion && idEmpresaOP && idUserOP && idReferenciaOP) {
-
-                                            // Create Ajax Call
-                                            $.ajax({
-                                                url: '{% url "Operacion_ajax_create" %}',
-                                                data: {
-
-                                                    'can_totalOP': can_totalOP,
-                                                    'idReferencia': idReferenciaOP,
-                                                    'idColorOP': idColorOP,
-                                                    'nomOperacion': nomOperacion,
-                                                    'idEmpresaOP': idEmpresaOP,
-                                                    'idUserOP': idUserOP,
-                                                    'NotaOp': NotaDesOp
-                                                },
-                                                dataType: 'json',
-                                                success: function(data) {
-                                                    var idOperacion = data.lastIdOperacion;
-                                                    var arrayTallas = data.tallasEmpresa;
-                                                    btnTallaAdd(idOperacion, arrayTallas, idUserOP);
-
-
-                                                }
-
-                                            });
-
-
-                                        } else {
-                                            console.log("All fields must have a valid value.");
-                                        }
-                                        $('form#addPoperacion').trigger("reset");
-                                        return false;
-                                    });
-
-                                },
-
-                            },
-
-                            computed: {
-                                opts() {
-                                    return this.referenciasVue.map(item => ({
-                                        label: item.nom_referencia_act,
-                                        value: item.id
-                                    }));
-                                }
-                            },
-                            created() {
-                                axios.get('/operacion/referencia-Act/')
-                                    .then((resp) => {
-                                        this.referenciasVue = resp.data;
-                                        console.log(this.referenciasVue);
-                                    }).catch(error => console.log(error));
-
-                                axios.get('/operacion/referencia-Act/')
-                                    .then((resp) => {
-                                        this.referenciasVue = resp.data;
-                                        console.log(this.referenciasVue);
-                                    }).catch(error => console.log(error));
-
-
-                            },
-                            watch: {
-                                idReferenciaOP(val) {
-
-                                    console.log(val.value);
-
-                                    //if (can_totalOP && nomOperacion && idColorOP) {}
-
-                                    return val.value;
-                                }
-                            }
-                        })
-
-
-
-
-                        Vue.config.devtools = false;
-                        Vue.config.productionTip = false;
-                    </script>
 
 
                 </div>
+
+
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
     </div>
 
 
-    <div id="Scripts">
-
-        <!--table operacion-->
-        <script>
-            $('#operacionTable').SetEditable();
-
-            function DetailFormatterButInfoOperacion(index, row) {
-                //crea y renderiza la tabla
-                return '<div class="row">' +
-
-                    '<div class="col-sm-3">' +
-                    '<h3 id="opTallaInconsistente' + row.id + '" ></h3>' +
-                    '</div>' +
-
-                    '<div class="col-sm-6">' +
-                    '<table " class="table border border-info ">' +
-                    '<thead class="thead-dark">' +
-                    '<tr>' +
-                    '<th class="text-center">Talla</th>' +
-                    '<th class="text-center">Talla restante</th>' +
-                    '<th class="text-center">Total</th>' +
-                    '<th class="text-center">Eliminar</th>' +
-
-                    '</tr>' +
-                    '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '"> </tbody>' +
-                    '</table>' + '<script>' + 'tallas(' + row.id + ');</' + 'script>' +
 
 
+</div>
 
-                    '</div>';
 
-            }
+<div id="Scripts">
 
-            function tallas(idOp) {
+    <!--table operacion-->
+    <script>
+        $('#operacionTable').SetEditable();
 
-                $.ajax({
-                    url: '{% url "tallaOP-list" %}',
-                    data: {
+        function DetailFormatterButInfoOperacion(index, row) {
+            //crea y renderiza la tabla
+            return '<div class="row">' +
 
-                        'idOp': idOp,
-                    },
-                    dataType: 'json',
-                    success: function(response) {
+                '<div class="col-sm-3">' +
+                '<h3 id="opTallaInconsistente' + row.id + '" ></h3>' +
+                '</div>' +
+
+                '<div class="col-sm-6">' +
+                '<table " class="table border border-info ">' +
+                '<thead class="thead-dark">' +
+                '<tr>' +
+                '<th class="text-center">Talla</th>' +
+                '<th class="text-center">Talla restante</th>' +
+                '<th class="text-center">Total</th>' +
+                '<th class="text-center">Eliminar</th>' +
+
+                '</tr>' +
+                '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + row.id + '"> </tbody>' +
+                '</table>' + '<script>' + 'tallas(' + row.id + ');</' + 'script>' +
 
 
 
-                        TallaOpCanIncosistente(idOp);
+                '</div>';
 
-                        var len = response.length;
-                        for (var i = 0; i < len; i++) {
-                            var id = response[i].id;
-                            var canTalla = response[i].can_talla;
-                            var nombreTalla = response[i].nom_talla;
-                            var res_talla = response[i].res_talla;
+        }
 
-                            if (res_talla == null) {
-                                res_talla = canTalla;
-                            }
+        function tallas(idOp) {
 
-                            var tr_str = "<tr>" +
-                                "<td style='text-align:center'>" + nombreTalla + "</td>" +
-                                "<td style='text-align:center'>" + res_talla + "</td>" +
-                                "<td style='text-align:center'>" + canTalla + "</td>" +
+            $.ajax({
+                url: '{% url "tallaOP-list" %}',
+                data: {
 
-                                "<td style='text-align:center'>" + "<button class='btn btn-sm btn-block btn-outline-danger  icofont-ui-remove' onclick='reoveCanTalla(" + id + ")'> " + "</td>" +
-                                "</tr>";
-                            $('#listKill' + idOp).append(tr_str);
+                    'idOp': idOp,
+                },
+                dataType: 'json',
+                success: function(response) {
+
+
+
+                    TallaOpCanIncosistente(idOp);
+
+                    var len = response.length;
+                    for (var i = 0; i < len; i++) {
+                        var id = response[i].id;
+                        var canTalla = response[i].can_talla;
+                        var nombreTalla = response[i].nom_talla;
+                        var res_talla = response[i].res_talla;
+
+                        if (res_talla == null) {
+                            res_talla = canTalla;
                         }
 
+                        var tr_str = "<tr>" +
+                            "<td style='text-align:center'>" + nombreTalla + "</td>" +
+                            "<td style='text-align:center'>" + res_talla + "</td>" +
+                            "<td style='text-align:center'>" + canTalla + "</td>" +
+
+                            "<td style='text-align:center'>" + "<button class='btn btn-sm btn-block btn-outline-danger  icofont-ui-remove' onclick='reoveCanTalla(" + id + ")'> " + "</td>" +
+                            "</tr>";
+                        $('#listKill' + idOp).append(tr_str);
                     }
-                });
+
+                }
+            });
 
 
 
-            }
+        }
 
 
 
-            function TallaOpCanIncosistente(idOp) {
-                $.ajax({
-                    url: '{% url "tallaOP-Incosistente" %}',
-                    data: {
+        function TallaOpCanIncosistente(idOp) {
+            $.ajax({
+                url: '{% url "tallaOP-Incosistente" %}',
+                data: {
 
-                        'idOperacion': idOp,
-                    },
-                    dataType: 'json',
-                    success: function(response) {
+                    'idOperacion': idOp,
+                },
+                dataType: 'json',
+                success: function(response) {
 
-                        var CanOperacion = response.CanOperacion;
-                        var CanTallaTotal = response.CanTallaTotal;
-                        var FechaCierre = response.FechaCierre;
-                        // console.log(FechaCierre); /////////fecha de cierre
+                    var CanOperacion = response.CanOperacion;
+                    var CanTallaTotal = response.CanTallaTotal;
+                    var FechaCierre = response.FechaCierre;
+                    // console.log(FechaCierre); /////////fecha de cierre
 
-                        if (CanOperacion != CanTallaTotal) {
-                            //conmprueba si sobra o falta operacion
-                            var isCompleta = (CanTallaTotal - CanOperacion)
+                    if (CanOperacion != CanTallaTotal) {
+                        //conmprueba si sobra o falta operacion
+                        var isCompleta = (CanTallaTotal - CanOperacion)
 
-                            if (isCompleta < 0) {
-
-
-                                var tr_str = '<p class="alert alert-warning">!Inconsistencia!<br>Operación ' + CanOperacion +
-                                    '<br>Talla ' + CanTallaTotal +
-                                    '<br>Cantidad faltante  <t  class="text-danger border"> ' + isCompleta +
-                                    '</t>' +
-                                    '</p>';
-
-                            } else {
-                                var tr_str = '<p class="alert alert-warning">!Inconsistencia!<br>Operación ' + CanOperacion +
-                                    '<br>Talla ' + CanTallaTotal +
-                                    '<br>Cantidad pasada por  <t  class="text-danger border"> ' + isCompleta +
-                                    '</t>' +
-                                    '</p>';
+                        if (isCompleta < 0) {
 
 
-                            }
+                            var tr_str = '<p class="alert alert-warning">!Inconsistencia!<br>Operación ' + CanOperacion +
+                                '<br>Talla ' + CanTallaTotal +
+                                '<br>Cantidad faltante  <t  class="text-danger border"> ' + isCompleta +
+                                '</t>' +
+                                '</p>';
 
+                        } else {
+                            var tr_str = '<p class="alert alert-warning">!Inconsistencia!<br>Operación ' + CanOperacion +
+                                '<br>Talla ' + CanTallaTotal +
+                                '<br>Cantidad pasada por  <t  class="text-danger border"> ' + isCompleta +
+                                '</t>' +
+                                '</p>';
 
-                            $('#opTallaInconsistente' + idOp).append(tr_str);
-                            //console.log("CanOperacion = ", CanOperacion);
-                            //console.log("CanTallaTotal = ", CanTallaTotal);
-                            //console.log("TotalOpRestante = ", response.TotalOpRestante);
 
                         }
-                    }
-                })
-
-            }
 
 
-
-
-            function reoveCanTalla(idCantalla) {
-                $.ajax({
-                    url: '{% url "TallaOP_ajax_delete" %}',
-                    data: {
-                        'id': idCantalla,
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        window.location.reload();
+                        $('#opTallaInconsistente' + idOp).append(tr_str);
+                        //console.log("CanOperacion = ", CanOperacion);
+                        //console.log("CanTallaTotal = ", CanTallaTotal);
+                        //console.log("TotalOpRestante = ", response.TotalOpRestante);
 
                     }
-                });
+                }
+            })
+
+        }
+
+
+
+
+        function reoveCanTalla(idCantalla) {
+            $.ajax({
+                url: '{% url "TallaOP_ajax_delete" %}',
+                data: {
+                    'id': idCantalla,
+                },
+                dataType: 'json',
+                success: function(data) {
+                    window.location.reload();
+
+                }
+            });
+        }
+
+
+        function DetailFormatterButAccionPoperacion(index, row) {
+            return '<div class="row">' +
+                '<div class="col-sm-3 ">' +
+                '<form id="addTallaOP-' + row.id + '" autocomplete="off" class="border">{% csrf_token %}' +
+                '<center><div class="">Agregar Talla: ' + row.nom_operacion + '</div></center>' +
+                '<input type="text" list="BuscarTalla" name="idTallaOPP" required Placeholder="Buscar talla..." class="form-control" >' +
+                '<datalist id="BuscarTalla">' +
+                '{% for restOPtalla in allTalla %}' +
+                '<option data-value="{{restOPtalla.id}}">{{restOPtalla.nom_talla}}' +
+                '</option>' +
+                '{% endfor %}' +
+                '</datalist>' +
+                '<input type="number"  name="cantTalla"  class="form-control" Placeholder="Cantidad Talla..." >' +
+                '<input type="number" hidden="True" name="idOperacionTalla" value="' + row.id + '">' +
+                '<input type="number" hidden="True" name="idEmpresaOPTalla" value="{{ lastIdEmpresa }}">' +
+                '<input type="number" hidden="True" name="idUserOPTalla" value="{{ login_user_id}}">' +
+                '<button class="btn btn-outline-primary form-control btn_block" type="submit" >Guardar</button>' +
+
+
+                '</form>' +
+                '</div>' +
+
+
+                '<div class="col-sm-3">' +
+                '<form id="editarIpoperacion" style="display: inline"  >{% csrf_token %}' +
+                '<div class="form-group"><label>Estatus</label>' +
+                '<select class="form-group" id="estatusUP">' +
+                '<option value="' + row.estatus + '">' + row.estatus + '</option>' +
+                '<option value="A">Activo</option>' +
+                '<option value="I">Inactivo</option>' +
+                '</select></div>' +
+                '<input type="number" hidden="True" name="idEmpresaUPOP" value="{{ lastIdEmpresa }}">' +
+                '<input type="number" hidden="True" name="idUserUPOP" value="{{ login_user_id}}">' +
+                '<input type="number" hidden="True" name="idIpoperacionUPOP" value="' + row.id + '"' +
+
+                '</div>' +
+                '<input id="EditPoperacionBtn-' + row.id + '" value="Actualizar registro" type="submit" onclick="editPoperacion(' + row.id + ')" class="btn-md  btn btn-outline-warning btn-rounded  " >' +
+
+
+
+
+
+                '</div>' +
+                '<div class="col-sm-1">' + '<button value="" onclick="removeOP(' + row.id + ')"  id="buttonEliminarPoperacion" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>' +
+                '</div>' +
+                '</form>' +
+
+
+
+                '<script>' +
+
+
+
+
+
+
+                ' $("form#addTallaOP-' + row.id + '").submit(function() { ' +
+                'var idTallaOPP       = $("input[name=\'idTallaOPP\']").val().trim();' +
+                'var cantTalla        = $("input[name=\'cantTalla\']").val().trim();' +
+                'var idOperacionTalla = $("input[name=\'idOperacionTalla\']").val().trim();' +
+                'var idEmpresaOPTalla = $("input[name=\'idEmpresaOPTalla\']").val().trim();' +
+                'var idUserOPTalla    = $("input[name=\'idUserOPTalla\']").val().trim();' +
+
+                'if (idTallaOPP && cantTalla && idOperacionTalla && idEmpresaOPTalla && idUserOPTalla' +
+                ') {' +
+
+                '$.ajax({' +
+                'url: "{% url "TallaOP_ajax_create" %}",' +
+                'data: {' +
+
+                '\'idTallaOPP\'       : idTallaOPP,' +
+                '\'cantTalla\'        : cantTalla,' +
+                '\'idOperacionTalla\' : idOperacionTalla,' +
+                '\'idEmpresaOPTalla\' :idEmpresaOPTalla,' +
+                '\'idUserOPTalla\'    :idUserOPTalla,' +
+                '\'f2\'    :2' +
+                '},' +
+
+                'dataType: \'json\',' +
+                'success: function (data) {window.location.reload();' +
+                'if (data.user) {' +
+                'appendToUsrTable(data.user);' +
+                '}' +
+                '}' +
+                '});' +
+                '} else {' +
+                '   alert("All fields must have a valid value.");' +
+                '}' +
+                '$("form#addPoperacion").trigger("reset");' +
+                'return false;' +
+                '});' +
+                '</' + 'script>';
+
+        }
+    </script>
+
+
+    <script>
+        // Vue.component('OpenIndicator', VueSelect.VueSelect);
+        Vue.component('v-select', VueSelect.VueSelect, {
+            extends: VueSelect,
+
+        });
+        var app = new Vue({
+            el: '#pageContent',
+            name: 'InfiniteScroll',
+            data() {
+                return {
+                    idReferenciaOP: '',
+                    referenciasVue: [],
+
+
+                }
+            },
+
+            methods: {
+                submitFormOperacion() {
+
+
+                    let idReferOP = this.idReferenciaOP;
+
+
+                    $("form#addOperacion").submit(function() {
+                        console.log("idReferOP", idReferOP.value);
+                        var NotaDesOp = $('textarea[name="notaDes"]').val().trim();
+                        var can_totalOP = $('input[name="can_totalOP"]').val().trim();
+                        var nomOperacion = $('input[name="nombreOP"]').val().trim();
+                        // var idColorOP = $('input[name="idColorOp"]').val().trim();
+                        var idEmpresaOP = $('input[name="idEmpresaOP"]').val().trim();
+                        var idUserOP = $('input[name="idUserOP"]').val().trim();
+                        var idReferenciaOP = idReferOP.value;
+
+                        if (can_totalOP == '') {
+                            can_totalOP = 0
+                        }
+                        if (can_totalOP && nomOperacion && idEmpresaOP && idUserOP && idReferenciaOP) {
+
+                            // Create Ajax Call
+                            $.ajax({
+                                url: '{% url "Operacion_ajax_create" %}',
+                                data: {
+
+                                    'can_totalOP': can_totalOP,
+                                    'idReferencia': idReferenciaOP,
+                                    //'idColorOP': idColorOP,
+                                    'nomOperacion': nomOperacion,
+                                    'idEmpresaOP': idEmpresaOP,
+                                    'idUserOP': idUserOP,
+                                    'NotaOp': NotaDesOp
+                                },
+                                dataType: 'json',
+                                success: function(data) {
+                                    var idOperacion = data.lastIdOperacion;
+                                    var arrayTallas = data.tallasEmpresa;
+                                    btnTallaAdd(idOperacion, arrayTallas, idUserOP);
+
+
+                                }
+
+                            });
+
+
+                        } else {
+                            console.log("All fields must have a valid value.");
+                        }
+                        $('form#addPoperacion').trigger("reset");
+                        return false;
+                    });
+
+                },
+
+            },
+
+            computed: {
+                opts() {
+                    return this.referenciasVue.map(item => ({
+                        label: item.nom_referencia_act,
+                        value: item.id
+                    }));
+                }
+            },
+            created() {
+                axios.get('/operacion/referencia-Act/')
+                    .then((resp) => {
+                        this.referenciasVue = resp.data;
+                        console.log(this.referenciasVue);
+                    }).catch(error => console.log(error));
+
+                axios.get('/operacion/referencia-Act/')
+                    .then((resp) => {
+                        this.referenciasVue = resp.data;
+                        console.log(this.referenciasVue);
+                    }).catch(error => console.log(error));
+
+
+            },
+            watch: {
+                idReferenciaOP(val) {
+
+                    console.log(val.value);
+
+                    //if (can_totalOP && nomOperacion && idColorOP) {}
+
+                    return val.value;
+                }
             }
-
-
-            function DetailFormatterButAccionPoperacion(index, row) {
-                return '<div class="row">' +
-                    '<div class="col-sm-3 ">' +
-                    '<form id="addTallaOP-' + row.id + '" autocomplete="off" class="border">{% csrf_token %}' +
-                    '<center><div class="">Agregar Talla: ' + row.nom_operacion + '</div></center>' +
-                    '<input type="text" list="BuscarTalla" name="idTallaOPP" required Placeholder="Buscar talla..." class="form-control" >' +
-                    '<datalist id="BuscarTalla">' +
-                    '{% for restOPtalla in allTalla %}' +
-                    '<option data-value="{{restOPtalla.id}}">{{restOPtalla.nom_talla}}' +
-                    '</option>' +
-                    '{% endfor %}' +
-                    '</datalist>' +
-                    '<input type="number"  name="cantTalla"  class="form-control" Placeholder="Cantidad Talla..." >' +
-                    '<input type="number" hidden="True" name="idOperacionTalla" value="' + row.id + '">' +
-                    '<input type="number" hidden="True" name="idEmpresaOPTalla" value="{{ lastIdEmpresa }}">' +
-                    '<input type="number" hidden="True" name="idUserOPTalla" value="{{ login_user_id}}">' +
-                    '<button class="btn btn-outline-primary form-control btn_block" type="submit" >Guardar</button>' +
-
-
-                    '</form>' +
-                    '</div>' +
-
-
-                    '<div class="col-sm-3">' +
-                    '<form id="editarIpoperacion" style="display: inline"  >{% csrf_token %}' +
-                    '<div class="form-group"><label>Estatus</label>' +
-                    '<select class="form-group" id="estatusUP">' +
-                    '<option value="' + row.estatus + '">' + row.estatus + '</option>' +
-                    '<option value="A">Activo</option>' +
-                    '<option value="I">Inactivo</option>' +
-                    '</select></div>' +
-                    '<input type="number" hidden="True" name="idEmpresaUPOP" value="{{ lastIdEmpresa }}">' +
-                    '<input type="number" hidden="True" name="idUserUPOP" value="{{ login_user_id}}">' +
-                    '<input type="number" hidden="True" name="idIpoperacionUPOP" value="' + row.id + '"' +
-
-                    '</div>' +
-                    '<input id="EditPoperacionBtn-' + row.id + '" value="Actualizar registro" type="submit" onclick="editPoperacion(' + row.id + ')" class="btn-md  btn btn-outline-warning btn-rounded  " >' +
+        })
 
 
 
 
-
-                    '</div>' +
-                    '<div class="col-sm-1">' + '<button value="" onclick="removeOP(' + row.id + ')"  id="buttonEliminarPoperacion" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>' +
-                    '</div>' +
-                    '</form>' +
+        Vue.config.devtools = false;
+        Vue.config.productionTip = false;
+    </script>
 
 
+    <!--create operacion-->
+    <script>
+        function btnTallaAdd(idOperacion, arrayTallas, idUserOP) {
+            var arrayTallaOp = JSON.parse(arrayTallas);
+            console.log("I-id operacion ", idOperacion);
+            let idOpeT = idOperacion;
+            arrayTallaOp.forEach(function(obj) {
+                console.log(obj);
+                console.log("id talla ", obj.id);
+                console.log("id empresa ", obj.empresa_id);
+                console.log("II- id operacion ", idOpeT);
 
-                    '<script>' +
-
-
-
-
-
-
-                    ' $("form#addTallaOP-' + row.id + '").submit(function() { ' +
-                    'var idTallaOPP       = $("input[name=\'idTallaOPP\']").val().trim();' +
-                    'var cantTalla        = $("input[name=\'cantTalla\']").val().trim();' +
-                    'var idOperacionTalla = $("input[name=\'idOperacionTalla\']").val().trim();' +
-                    'var idEmpresaOPTalla = $("input[name=\'idEmpresaOPTalla\']").val().trim();' +
-                    'var idUserOPTalla    = $("input[name=\'idUserOPTalla\']").val().trim();' +
-
-                    'if (idTallaOPP && cantTalla && idOperacionTalla && idEmpresaOPTalla && idUserOPTalla' +
-                    ') {' +
-
-                    '$.ajax({' +
-                    'url: "{% url "TallaOP_ajax_create" %}",' +
-                    'data: {' +
-
-                    '\'idTallaOPP\'       : idTallaOPP,' +
-                    '\'cantTalla\'        : cantTalla,' +
-                    '\'idOperacionTalla\' : idOperacionTalla,' +
-                    '\'idEmpresaOPTalla\' :idEmpresaOPTalla,' +
-                    '\'idUserOPTalla\'    :idUserOPTalla,' +
-                    '\'f2\'    :2' +
-                    '},' +
-
-                    'dataType: \'json\',' +
-                    'success: function (data) {window.location.reload();' +
-                    'if (data.user) {' +
-                    'appendToUsrTable(data.user);' +
-                    '}' +
-                    '}' +
-                    '});' +
-                    '} else {' +
-                    '   alert("All fields must have a valid value.");' +
-                    '}' +
-                    '$("form#addPoperacion").trigger("reset");' +
-                    'return false;' +
-                    '});' +
-                    '</' + 'script>';
-
-            }
-        </script>
-
-
-
-
-        <!--create operacion-->
-        <script>
-            function btnTallaAdd(idOperacion, arrayTallas, idUserOP) {
-                var arrayTallaOp = JSON.parse(arrayTallas);
-                console.log("I-id operacion ", idOperacion);
-                let idOpeT = idOperacion;
-                arrayTallaOp.forEach(function(obj) {
-                    console.log(obj);
-                    console.log("id talla ", obj.id);
-                    console.log("id empresa ", obj.empresa_id);
-                    console.log("II- id operacion ", idOpeT);
-
-                    var idTallaOP = obj.id;
-                    var idEmpresa = obj.empresa_id;
-                    var canTallaOP = $('input[name="inputTalla-' + idTallaOP + '"]').val().trim();
-                    if (canTallaOP != '') {
-                        console.log("vavio", canTallaOP)
-                        console.log("talls canTalla OPeracion ", canTallaOP);
-                        $.ajax({
-                            url: '{% url "TallaOP_ajax_create" %}',
-                            data: {
-                                'idTalla': idTallaOP,
-                                'cantTalla': canTallaOP,
-                                'idOperacionTalla': idOpeT,
-                                'idEmpresaOPTalla': idEmpresa,
-                                'idUserOPTalla': idUserOP,
-                                'f2': 1
-
-                            },
-                            dataType: 'json',
-                            success: function(data) {
-                                //window.location.reload();
-                                console.log("linia 609 borrar ");
-                            }
-                        });
-                    } else {
-                        console.log('canTallaOP esta vacia ==', canTallaOP)
-                    }
-                });
-            }
-        </script>
-        <!--editar ipoperacion-->
-        <script>
-            function editPoperacion(id) {
-                var estatusUP = document.getElementById("estatusUP").value;
-                var idEmpresaUP = $('input[name="idEmpresaUPOP"]').val().trim();
-                var idUserUP = $('input[name="idUserUPOP"]').val().trim();
-                if (estatusUP && idEmpresaUP && idUserUP) {
-                    // Create Ajax Call
+                var idTallaOP = obj.id;
+                var idEmpresa = obj.empresa_id;
+                var canTallaOP = $('input[name="inputTalla-' + idTallaOP + '"]').val().trim();
+                if (canTallaOP != '') {
+                    console.log("vavio", canTallaOP)
+                    console.log("talls canTalla OPeracion ", canTallaOP);
                     $.ajax({
-                        url: '{% url "Operacion_ajax_update" %}',
+                        url: '{% url "TallaOP_ajax_create" %}',
                         data: {
-                            'estatusUP': estatusUP,
-                            'idEmpresaUP': idEmpresaUP,
-                            'idUserUP': idUserUP,
-                            'idIpoperacionUP': id
-
-
+                            'idTalla': idTallaOP,
+                            'cantTalla': canTallaOP,
+                            'idOperacionTalla': idOpeT,
+                            'idEmpresaOPTalla': idEmpresa,
+                            'idUserOPTalla': idUserOP,
+                            'f2': 1
 
                         },
                         dataType: 'json',
                         success: function(data) {
-                            if (data.user) {
-                                appendToUsrTable(data.user);
-                            }
+                            window.location.reload("/");
+
                         }
                     });
-
                 } else {
-                    console.log("All fields must have a valid value.");
+                    console.log('canTallaOP esta vacia ==', canTallaOP)
                 }
-            }
-        </script>
-        <!--Delete poperacion-->
-        <script>
-            function removeOP(idOperacion) {
-
-
+            });
+        }
+    </script>
+    <!--editar ipoperacion-->
+    <script>
+        function editPoperacion(id) {
+            var estatusUP = document.getElementById("estatusUP").value;
+            var idEmpresaUP = $('input[name="idEmpresaUPOP"]').val().trim();
+            var idUserUP = $('input[name="idUserUPOP"]').val().trim();
+            if (estatusUP && idEmpresaUP && idUserUP) {
+                // Create Ajax Call
                 $.ajax({
-                    url: '{% url "Operacion_ajax_delete" %}',
+                    url: '{% url "Operacion_ajax_update" %}',
                     data: {
-                        'id': idOperacion,
+                        'estatusUP': estatusUP,
+                        'idEmpresaUP': idEmpresaUP,
+                        'idUserUP': idUserUP,
+                        'idIpoperacionUP': id
+
+
+
                     },
                     dataType: 'json',
                     success: function(data) {
-
-                        window.location.reload();
-
-
-
+                        if (data.user) {
+                            appendToUsrTable(data.user);
+                        }
                     }
                 });
-            }
-        </script>
 
-    </div>
+            } else {
+                console.log("All fields must have a valid value.");
+            }
+        }
+    </script>
+    <!--Delete poperacion-->
+    <script>
+        function removeOP(idOperacion) {
+
+
+            $.ajax({
+                url: '{% url "Operacion_ajax_delete" %}',
+                data: {
+                    'id': idOperacion,
+                },
+                dataType: 'json',
+                success: function(data) {
+
+                    window.location.reload();
+
+
+
+                }
+            });
+        }
+    </script>
+
+</div>
