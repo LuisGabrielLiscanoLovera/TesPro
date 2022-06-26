@@ -37,6 +37,10 @@ function DetailFormatterButInfoAcumulado(index, row) {
 
         '<div class="col-sm-6   offset-6" >' +
         '<div class="form-group"> ' + //<label>Integrante</label>
+
+        '<v-select  ' +
+        '  v-model="idReferenciaOP"  :options="allIntegrantesAcumuladoss.map(academicClass => ({label: academicClass.nombres, value: academicClass.id}))"></v-select>' +
+
         '<select  id="OccionId_integrante_Acu-' + row.id +
         '" class="sectIntegrenteOnChanAcu-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteAcumulado"><option value="" disabled>Selecciones Integrante</option>' +
         '<option id="id_integrante"  v-for="(optionIntegranteACU) in allIntegrantesAcumuladoss" v-bind:value="optionIntegranteACU.id">[[optionIntegranteACU.nombres]]  [[optionIntegranteACU.apellidos]]</option></select></div>' +
@@ -82,6 +86,10 @@ function DetailFormatterButInfoAcumulado(index, row) {
 }
 
 function formAcumulado(idAcumulado, idUsuario) {
+    Vue.component('v-select', VueSelect.VueSelect, {
+        extends: VueSelect,
+
+    });
 
     new Vue({
         el: '#FormuAcumulado-' + idAcumulado,
@@ -138,29 +146,6 @@ function formAcumulado(idAcumulado, idUsuario) {
                 AcumuladoProd(idAcumulado);
 
 
-                axios
-                    .get('/integrante/integrante-list/')
-                    .then((resp) => {
-                        this.allIntegrantesAcumuladoss = resp.data
-                    }).catch(error => console.log(error));
-                axios
-                    .get('/produccion/lista_patinadoresAct-prod/')
-                    .then((resp) => {
-                        this.allPatinadoresAcumulados = resp.data
-                    }).catch(error => console.log(error));
-                axios
-                    .get('/tarea/tarea-list/')
-                    .then((resp) => {
-                        this.allTareasAcumulados = resp.data;
-                    })
-                    .catch(error => console.log(error));
-                axios
-                    .get('/talla/tallaEmpresa-list/?idOp=' + idAcumulado)
-                    .then((resp) => {
-                        this.allTallasAcumulados = resp.data;
-                        console.log(this.allTallasAcumulados);
-                    }).catch(error => console.log(error));
-
             },
 
             submitFormAcumulado: function() {
@@ -197,6 +182,42 @@ function formAcumulado(idAcumulado, idUsuario) {
 
                 }
 
+            }
+        },
+        created() {
+
+
+            axios
+                .get('/integrante/integrante-list/')
+                .then((resp) => {
+                    this.allIntegrantesAcumuladoss = resp.data
+                }).catch(error => console.log(error));
+            axios
+                .get('/produccion/lista_patinadoresAct-prod/')
+                .then((resp) => {
+                    this.allPatinadoresAcumulados = resp.data
+                }).catch(error => console.log(error));
+            axios
+                .get('/tarea/tarea-list/')
+                .then((resp) => {
+                    this.allTareasAcumulados = resp.data;
+                })
+                .catch(error => console.log(error));
+            axios
+                .get('/talla/tallaEmpresa-list/?idOp=' + idAcumulado)
+                .then((resp) => {
+                    this.allTallasAcumulados = resp.data;
+                    console.log(this.allTallasAcumulados);
+                }).catch(error => console.log(error));
+        },
+        watch: {
+            integranteList(val) {
+
+                console.log(val.value);
+
+
+
+                return val.value;
             }
         },
         mounted: function() {

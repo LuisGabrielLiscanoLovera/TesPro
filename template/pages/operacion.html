@@ -145,7 +145,7 @@ data-auto-refresh-status="true"
 
                                     <div class="form-group">
                                         <label for=""><h5>Referencia</h5></label>
-                                        <v-select v-model="idReferenciaOP"  class="" :options="referenciasVue.map(academicClass => ({label: academicClass.nom_referencia_act, value: academicClass.id}))"></v-select>
+                                        <v-select v-model="idReferenciaOP"  :options="referenciasVue.map(academicClass => ({label: academicClass.nom_referencia_act, value: academicClass.id}))"></v-select>
 
                                     </div>
                                 </div>
@@ -153,7 +153,7 @@ data-auto-refresh-status="true"
                                 <div class="col-sm-6 col-sm-offset-6 ">
                                     <label for=""><h5>Descripcion</h5></label>
                                     <textarea type="text" class="form-control" name="notaDes" placeholder="Nota - Descripcion"></textarea>
-                                    <br><br><br><br><br><br> <br><br><br><br><br><br> </div>
+                                    <br><br><br><br><br><br> <br><br><br></div>
                                 <div class="button">Talla</div>
                             </div>
                         </fieldset>
@@ -459,12 +459,10 @@ data-auto-refresh-status="true"
         });
         var app = new Vue({
             el: '#pageContent',
-            name: 'InfiniteScroll',
             data() {
                 return {
                     idReferenciaOP: '',
                     referenciasVue: [],
-
 
                 }
             },
@@ -527,14 +525,7 @@ data-auto-refresh-status="true"
 
             },
 
-            computed: {
-                opts() {
-                    return this.referenciasVue.map(item => ({
-                        label: item.nom_referencia_act,
-                        value: item.id
-                    }));
-                }
-            },
+
             created() {
                 axios.get('/operacion/referencia-Act/')
                     .then((resp) => {
@@ -542,24 +533,10 @@ data-auto-refresh-status="true"
                         console.log(this.referenciasVue);
                     }).catch(error => console.log(error));
 
-                axios.get('/operacion/referencia-Act/')
-                    .then((resp) => {
-                        this.referenciasVue = resp.data;
-                        console.log(this.referenciasVue);
-                    }).catch(error => console.log(error));
 
 
             },
-            watch: {
-                idReferenciaOP(val) {
 
-                    console.log(val.value);
-
-                    //if (can_totalOP && nomOperacion && idColorOP) {}
-
-                    return val.value;
-                }
-            }
         })
 
 
