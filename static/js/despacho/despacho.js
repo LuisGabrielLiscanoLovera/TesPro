@@ -44,16 +44,16 @@ function DetailFormatterButInfoDespacho(index, row) {
         '"  required/>' +
 
 
+        '<v-select ' +
+        'v-model="selectIDPatinador"  placeholder="Seleccione Patinador"  :options="allPatinadoresOPs.map(DespachoClassPatinador => ({label: DespachoClassPatinador.nomPatinador+\' \'+DespachoClassPatinador.apellPatinador, value: DespachoClassPatinador.id}))"></v-select>' +
+        '</div>' +
+        '</div>' +
 
-        '<select  class="form-control mb-2" v-model="selectIDPatinador" id="OccionId_pantinador-' + row.id +
-        '"><option disabled value="" disabled>Selecciones Patinador</option>' +
-        '<option  v-for="option in allPatinadoresOPs" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]] </option></select>' +
+
+        '<v-select ' +
+        'v-model="selectIdTalla"  placeholder="Seleccione Talla"  :options="allTallasOPs.map(DespachoClassTalla => ({label: DespachoClassTalla.num_talla+\' / \'+DespachoClassTalla.nom_talla, value: DespachoClassTalla.talla}))"></v-select>' +
 
 
-        '<select  id="OccionId_talla-' + row.id +
-        '" class="form-control mb-2" v-model="selectIdTalla"><option  value="" disabled>Selecciones Talla</option>' +
-
-        '<option id="id_talla"  v-for="(optionTalla) in allTallasOPs"  v-bind:value="optionTalla.talla"  >[[optionTalla.num_talla]] / [[optionTalla.nom_talla]]</option></select>' +
         '<input class="form-control big-button" autocomplete="off" placeholder="Cantidad terminada" id="cant" name="cantOpDespacho-' + row.id +
         '"  type="number" v-model="cant" required/>' +
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number"/>' +
@@ -175,6 +175,10 @@ function deleteDespachoUnico(id_despacho) {
 }
 
 function formOP(idOp, usuario) {
+    Vue.component('v-select', VueSelect.VueSelect, {
+        extends: VueSelect,
+
+    });
     new Vue({
         el: '#FormuTallaOP-' + idOp,
         delimiters: ['[[', ']]'],
@@ -201,40 +205,11 @@ function formOP(idOp, usuario) {
 
             getDespachoData: function() {
                 tallasOP(idOp);
-
-                axios
-                    .get('/despacho/lista_patinadoresAct/')
-                    .then((resp) => {
-                        this.allPatinadoresOPs = resp.data
-                    })
-                    .catch(error => console.log(error));
-                axios
-                    .get('/talla/tallaOP-list/?idOp=' + idOp)
-                    .then((resp) => {
-                        this.allTallasOPs = resp.data;
-
-                    })
-                    .catch(error => console.log(error));
-
-                axios
-                    .get('/talla/tallaOP-Incosistente/?idOperacion=' + idOp)
-                    .then((resp) => {
-                        this.cantRestante = resp.data.TotalOpRestante;
-
-                        this.total = resp.data.CanOperacion;
-                        //this.progressRest = ((resp.data.TotalOpRestante * 100) / resp.data.CanTallaTotal)
-                        //document.getElementById('canRestante-' + idOp).innerHTML = "Restante";
-
-                    })
-                    .catch(error => console.log(error));
-
-
-
             },
 
             submitFormDespacho() {
-                var OccionId_pantinador = $('select[id="OccionId_pantinador-' + this.id_OP + '"]').val().trim();
-                var OccionId_talla = $('select[id="OccionId_talla-' + this.id_OP + '"]').val().trim();
+                var OccionId_pantinador = this.selectIDPatinador.value;
+                var OccionId_talla = this.selectIdTalla.value;
                 var cantOpDespacho = $('input[name="cantOpDespacho-' + this.id_OP + '"]').val().trim();
                 var operacion = $('input[name="operacion-' + this.id_OP + '"]').val().trim();
 
@@ -284,6 +259,37 @@ function formOP(idOp, usuario) {
                 }
 
             }
+        },
+        created() {
+
+
+            axios
+                .get('/despacho/lista_patinadoresAct/')
+                .then((resp) => {
+                    this.allPatinadoresOPs = resp.data
+                })
+                .catch(error => console.log(error));
+            axios
+                .get('/talla/tallaOP-list/?idOp=' + idOp)
+                .then((resp) => {
+                    this.allTallasOPs = resp.data;
+
+                })
+                .catch(error => console.log(error));
+
+            axios
+                .get('/talla/tallaOP-Incosistente/?idOperacion=' + idOp)
+                .then((resp) => {
+                    this.cantRestante = resp.data.TotalOpRestante;
+
+                    this.total = resp.data.CanOperacion;
+                    //this.progressRest = ((resp.data.TotalOpRestante * 100) / resp.data.CanTallaTotal)
+                    //document.getElementById('canRestante-' + idOp).innerHTML = "Restante";
+
+                })
+                .catch(error => console.log(error));
+
+
         },
         mounted: function() {
             this.getDespachoData();
