@@ -55,29 +55,22 @@ function DetailFormatterButInfoAcumulado(index, row) {
 
         '<v-select ' +
         'v-model="selectID_Tarea_Acu"  placeholder="Seleccione Tarea"  :options="allTareasAcumulados.map(academicClassTarea => ({label: academicClassTarea.nom_tarea+\' \'+academicClassTarea.detalle, value: academicClassTarea.id}))"></v-select>' +
-
-
-
         '</div>' +
 
-
         '</div>' +
-
 
         '<div class="col-sm-6 mb-2 offset-6">' +
         '<div class="form-group">' +
-        '<select  id="OccionId_talla_Acu-' + row.id +
-        '" class="form-select form-control form-select-sm" v-model="selectIdTallaAcumulado"><option value="" disabled>Selecciones Talla</option>' +
-        '<option id="id_talla"  v-for="(opcTareaAcu) in allTallasAcumulados"  v-bind:value="opcTareaAcu.id">[[opcTareaAcu.num_talla]] / [[opcTareaAcu.nom_talla]]</option></select></div>' +
-        '</div>' +
 
+        '<v-select ' +
+        'v-model="selectID_Talla_Acu"  placeholder="Seleccione Talla"  :options="allTallasAcumulados.map(academicClassTalla => ({label: academicClassTalla.num_talla+\' / \'+academicClassTalla.nom_talla, value: academicClassTalla.id}))"></v-select>' +
+        '</div>' +
+        '</div>' +
         '<div class="col-sm-6 mb-2 offset-6">' +
         '<div class="form-group">' +
         '<input class="form-control big-button" autocomplete="off" placeholder="Cantidad terminada" id="cant_prod_Acum" name="cant_prod_Acum-' + row.id +
         '" type="number" v-model="cant_prod_Acum" required/> </div>' +
         '</div>' +
-
-
 
         '<div class="col-sm-6 mb-3 offset-6">' +
         '<div class="form-group  "><input class="form-control btn btn-block" type="submit"  value="Guardar"></div>' +
@@ -102,12 +95,12 @@ function formAcumulado(idAcumulado, idUsuario) {
                 OccionId_integrante_Acu: '',
                 selectID_Patinador_Acu: '',
                 selectID_Tarea_Acu: '',
+                selectID_Talla_Acu: '',
                 allTareaAcumulados: [],
                 allTareasAcumulados: [],
                 allTallasAcumulados: [],
                 allPatinadoresAcumulados: [],
                 allIntegrantesAcumuladoss: [],
-
                 selectIdIntegranteAcumulado: '',
                 selectIDPatinadorAcumulado: '',
                 selectIdTareaAcumulado: '',
@@ -134,8 +127,7 @@ function formAcumulado(idAcumulado, idUsuario) {
                 var OccionId_integrante_Acu = this.OccionId_integrante_Acu.value;
                 var OccionId_pantinador_Acu = this.selectID_Patinador_Acu.value;
                 var OccionId_tarea_Acu = this.selectID_Tarea_Acu.value;
-
-                var OccionId_talla_Acu = $('select[id="OccionId_talla_Acu-' + this.idAcumulado + '"]').val().trim();
+                var OccionId_talla_Acu = this.selectID_Talla_Acu.value;;
                 var Cantidad_Acu = $('input[name="cant_prod_Acum-' + this.idAcumulado + '"]').val().trim();
                 //crear la evaluacion de solo puede guardar los datos si cantidad esta llenna con if
 

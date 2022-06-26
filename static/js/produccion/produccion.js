@@ -41,32 +41,36 @@ function DetailFormatterButInfoProduccion(index, row) {
 
         '<div class="col-sm-6   offset-6" >' +
         '<div class="form-group"> ' + //<label>Integrante</label>
-        '<select  id="OccionId_integrante_prod-' + row.id +
-        '" class="sectIntegrenteOnChan-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteProduccion"><option value="">Selecciones Integrante</option>' +
-        '<option id="id_integrante"  v-for="(optionIntegrante) in allIntegrantesProduccions" v-bind:value="optionIntegrante.id">[[optionIntegrante.nombres]]  [[optionIntegrante.apellidos]]</option></select></div>' +
+        '<v-select ' +
+        'v-model="selectIdIntegranteProduccion" placeholder="Seleccione Integrante" :options="allIntegrantesProduccions.map(academicClass => ({label: academicClass.nombres, value: academicClass.id}))"></v-select>' +
+        '</div>' +
         '</div>' +
 
 
         '<div class="col-sm-6 mb-2 offset-6  ">' +
         '<div class="form-group">' +
-        '<select  class="form-select form-select-sm form-control" v-model="selectIDPatinadorProduccion" id="OccionId_pantinador_prod-' + row.id +
-        '"><option  value="">Selecciones Patinador</option>' +
-        '<option  v-for="option in allPatinadoresProduccions" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]]</option></select></div>' +
+
+        '<v-select ' +
+        'v-model="selectIDPatinadorProduccion"  placeholder="Seleccione Patinador"  :options="allPatinadoresProduccions.map(academicClassPatinador => ({label: academicClassPatinador.nomPatinador+\' \'+academicClassPatinador.apellPatinador, value: academicClassPatinador.id}))"></v-select>' +
         '</div>' +
+        '</div>' +
+
 
 
         '<div class="col-sm-6 mb-2 offset-6">' +
         '<div class="form-group">' +
-        '<select  id="OccionId_tarea-' + row.id +
-        '" class="form-select form-select-sm form-control " v-model="selectIdTareaProduccion"><option value="">Selecciones Tarea</option>' +
-        '<option id="id_tarea"  v-for="(optionTarea) in allTareasProduccions" v-bind:value="optionTarea.id">[[optionTarea.nom_tarea]] / [[optionTarea.detalle]]</option></select></div>' +
+        '<v-select ' +
+        'v-model="selectIdTareaProduccion"  placeholder="Seleccione Tarea"  :options="allTareasProduccions.map(academicClassTarea => ({label: academicClassTarea.nom_tarea+\' \'+academicClassTarea.detalle, value: academicClassTarea.id}))"></v-select>' +
+
+        '</div>' +
         '</div>' +
 
         '<div class="col-sm-6 mb-2 offset-6">' +
         '<div class="form-group">' +
-        '<select  id="OccionId_talla-' + row.id +
-        '" class="form-select form-control form-select-sm" v-model="selectIdTallaProduccion"><option value="">Selecciones Talla</option>' +
-        '<option id="id_talla"  v-for="(opcTarea) in allTallasProduccions"  v-bind:value="opcTarea.talla">[[opcTarea.num_talla]] / [[opcTarea.nom_talla]]</option></select></div>' +
+        '<v-select ' +
+        'v-model="selectIdTallaProduccion"  placeholder="Seleccione Talla"  :options="allTallasProduccions.map(academicClassTalla => ({label: academicClassTalla.num_talla+\' / \'+academicClassTalla.nom_talla, value: academicClassTalla.talla}))"></v-select>' +
+
+        '</div>' +
 
         '</div>' +
 
@@ -122,11 +126,18 @@ function deleteProduccionUnico(id_produccion) {
 }
 
 function formProduccionOP(idOperacion, idUsuario) {
+    Vue.component('v-select', VueSelect.VueSelect, {
+        extends: VueSelect,
+
+    });
     new Vue({
         el: '#FormuProduccionOP-' + idOperacion,
         delimiters: ['[[', ']]'],
+
         data: function() {
             return {
+
+
                 allPatinadoresProduccions: [],
                 allTallasProduccions: [],
                 allTareasProduccions: [],
@@ -145,62 +156,17 @@ function formProduccionOP(idOperacion, idUsuario) {
         },
         methods: {
 
-            getProduccionDataIntegrante: function() {
 
-                //evento de escucha de integrante
-                const selectElement = document.querySelector(".sectIntegrenteOnChan-" + idOperacion);
-                selectElement.addEventListener("change", (event) => {
-                    const resutatatIntegrante = document.
-                    querySelector(".resutatatIntegrante-" + idOperacion);
-                    const idIntegranteSelect = event.target.value;
-                    //variable global prototype idIntegranteSelect
-                    Vue.prototype.$varGlobalSelectIntegrProd = idIntegranteSelect;
-                    axios.get('dataProduccionInte-list/', {
-                        params: {
-                            idIntegranteSelect: idIntegranteSelect,
-                            idOp: idOperacion,
-                        }
-                    }).then((resp) => {
-                        this.allTareaProduccions = resp.data;
-                    }).catch(error => console.log(error));
-                    /* 
-                    document.getElementById('sectIntegreOC-' + idOperacion).innerHTML =         
-                     */
-                });
-            },
 
 
             getProduccionData: function() {
                 ProduccionOP(idOperacion);
-
-                axios
-                    .get('/tarea/tarea-list/')
-                    .then((resp) => {
-                        this.allTareasProduccions = resp.data;
-                    })
-                    .catch(error => console.log(error));
-                axios
-                    .get('/integrante/integrante-list/')
-                    .then((resp) => {
-                        this.allIntegrantesProduccions = resp.data
-                    }).catch(error => console.log(error));
-                axios
-                    .get('/produccion/lista_patinadoresAct-prod/')
-                    .then((resp) => {
-                        this.allPatinadoresProduccions = resp.data
-                    }).catch(error => console.log(error));
-                axios
-                    .get('/talla/tallaOP-list/?idOp=' + idOperacion)
-                    .then((resp) => {
-                        this.allTallasProduccions = resp.data;
-                        console.log(this.allTallasProduccions);
-                    }).catch(error => console.log(error));
             },
             submitFormProduccion: function() {
-                var OccionId_integrante_prod = $('select[id="OccionId_integrante_prod-' + this.idOperacion + '"]').val().trim();
-                var OccionId_pantinador_prod = $('select[id="OccionId_pantinador_prod-' + this.idOperacion + '"]').val().trim();
-                var OccionId_tarea = $('select[id="OccionId_tarea-' + this.idOperacion + '"]').val().trim();
-                var OccionId_talla = $('select[id="OccionId_talla-' + this.idOperacion + '"]').val().trim();
+                var OccionId_integrante_prod = this.selectIdIntegranteProduccion.value;
+                var OccionId_pantinador_prod = this.selectIDPatinadorProduccion.value;
+                var OccionId_tarea = this.selectIdTareaProduccion.value;
+                var OccionId_talla = this.selectIdTallaProduccion.value;
                 var cantidad = $('input[name="cant_produccion-' + this.idOperacion + '"]').val().trim();
                 //crear la evaluacion de solo puede guardar los datos si cantidad esta llenna con if
                 if (cantidad && OccionId_integrante_prod && OccionId_tarea && OccionId_talla) {
@@ -217,7 +183,7 @@ function formProduccionOP(idOperacion, idUsuario) {
                         //console.log(this.$varGlobalSelectIntegrProd);
                         axios.get('dataProduccionInte-list/', {
                             params: {
-                                idIntegranteSelect: this.$varGlobalSelectIntegrProd,
+                                idIntegranteSelect: this.selectIdIntegranteProduccion.value,
                                 idOp: idOperacion,
                             }
                         }).then((resp) => {
@@ -227,8 +193,46 @@ function formProduccionOP(idOperacion, idUsuario) {
                 }
             }
         },
+        created() {
+            axios
+                .get('/tarea/tarea-list/')
+                .then((resp) => {
+                    this.allTareasProduccions = resp.data;
+                })
+                .catch(error => console.log(error));
+            axios
+                .get('/integrante/integrante-list/')
+                .then((resp) => {
+                    this.allIntegrantesProduccions = resp.data
+                }).catch(error => console.log(error));
+            axios
+                .get('/produccion/lista_patinadoresAct-prod/')
+                .then((resp) => {
+                    this.allPatinadoresProduccions = resp.data
+                }).catch(error => console.log(error));
+            axios
+                .get('/talla/tallaOP-list/?idOp=' + idOperacion)
+                .then((resp) => {
+                    this.allTallasProduccions = resp.data;
+                    console.log(this.allTallasProduccions);
+                }).catch(error => console.log(error));
+        },
+        watch: {
+            selectIdIntegranteProduccion(val) {
+
+                axios.get('dataProduccionInte-list/', {
+                    params: {
+                        idIntegranteSelect: val.value,
+                        idOp: idOperacion,
+                    }
+                }).then((resp) => {
+                    this.allTareaProduccions = resp.data;
+                }).catch(error => console.log(error));
+
+            }
+        },
         mounted: function() {
-            this.getProduccionDataIntegrante();
+
             this.getProduccionData();
         }
     })
