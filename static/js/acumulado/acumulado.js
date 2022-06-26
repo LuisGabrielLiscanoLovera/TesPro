@@ -39,23 +39,20 @@ function DetailFormatterButInfoAcumulado(index, row) {
         '<div class="form-group"> ' + //<label>Integrante</label>
 
         '<v-select ' +
-        // '"  v-model="OccionId_integrante_Acu-' + row.id + '"  :options="allIntegrantesAcumuladoss.map(academicClass => ({label: academicClass.nombres, value: academicClass.id}))"></v-select>' +
-        'v-model="OccionId_integrante_Acu"  :options="allIntegrantesAcumuladoss.map(academicClass => ({label: academicClass.nombres, value: academicClass.id}))"></v-select>' +
-
-        //'<select  id="OccionId_integrante_Acu-' + row.id +
-        //'" class="sectIntegrenteOnChanAcu-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteAcumulado"><option value="" disabled>Selecciones Integrante</option>' +
-        //'<option id="id_integrante"  v-for="(optionIntegranteACU) in allIntegrantesAcumuladoss" v-bind:value="optionIntegranteACU.id">[[optionIntegranteACU.nombres]]  [[optionIntegranteACU.apellidos]]</option></select>' +
+        'v-model="OccionId_integrante_Acu" placeholder="Seleccione Integrante" :options="allIntegrantesAcumuladoss.map(academicClass => ({label: academicClass.nombres, value: academicClass.id}))"></v-select>' +
         '</div>' +
         '</div>' +
-
-
-
-
-        '<div class="col-sm-6 mb-2 offset-6  ">' +
+        '<div class="col-sm-6 mb-2 offset-6">' +
         '<div class="form-group">' +
-        '<select  class="form-select form-select-sm form-control" v-model="selectIDPatinadorAcumulado" id="OccionId_pantinador_Acu-' + row.id +
-        '"><option  value="" disabled>Selecciones Patinador</option>' +
-        '<option  v-for="option in allPatinadoresAcumulados" :value="option.id">[[option.nomPatinador]] [[option.apellPatinador]]</option></select></div>' +
+
+        '<v-select ' +
+        'v-model="selectID_Patinador_Acu"  placeholder="Seleccione Patinador"  :options="allPatinadoresAcumulados.map(academicClassPatinador => ({label: academicClassPatinador.nomPatinador+\' \'+academicClassPatinador.apellPatinador, value: academicClassPatinador.id}))"></v-select>' +
+
+
+
+
+        '</div>' +
+
         '</div>' +
 
         '<div class="col-sm-6 mb-2 offset-6">' +
@@ -102,11 +99,13 @@ function formAcumulado(idAcumulado, idUsuario) {
         data: function() {
             return {
                 OccionId_integrante_Acu: '',
+                selectID_Patinador_Acu: '',
                 allTareaAcumulados: [],
                 allTareasAcumulados: [],
                 allTallasAcumulados: [],
                 allPatinadoresAcumulados: [],
                 allIntegrantesAcumuladoss: [],
+
                 selectIdIntegranteAcumulado: '',
                 selectIDPatinadorAcumulado: '',
                 selectIdTareaAcumulado: '',
@@ -128,10 +127,11 @@ function formAcumulado(idAcumulado, idUsuario) {
             submitFormAcumulado: function() {
 
 
-                let OccionIdintegranteAcu = this.OccionId_integrante_Acu;
 
-                var OccionId_integrante_Acu = OccionIdintegranteAcu.value;
-                var OccionId_pantinador_Acu = $('select[id="OccionId_pantinador_Acu-' + this.idAcumulado + '"]').val().trim();
+
+                var OccionId_integrante_Acu = this.OccionId_integrante_Acu.value;
+                var OccionId_pantinador_Acu = this.selectID_Patinador_Acu.value;
+
                 var OccionId_tarea_Acu = $('select[id="OccionId_tarea_Acu-' + this.idAcumulado + '"]').val().trim();
                 var OccionId_talla_Acu = $('select[id="OccionId_talla_Acu-' + this.idAcumulado + '"]').val().trim();
                 var Cantidad_Acu = $('input[name="cant_prod_Acum-' + this.idAcumulado + '"]').val().trim();
