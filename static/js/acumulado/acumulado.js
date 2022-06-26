@@ -47,19 +47,20 @@ function DetailFormatterButInfoAcumulado(index, row) {
 
         '<v-select ' +
         'v-model="selectID_Patinador_Acu"  placeholder="Seleccione Patinador"  :options="allPatinadoresAcumulados.map(academicClassPatinador => ({label: academicClassPatinador.nomPatinador+\' \'+academicClassPatinador.apellPatinador, value: academicClassPatinador.id}))"></v-select>' +
-
-
-
-
         '</div>' +
-
         '</div>' +
 
         '<div class="col-sm-6 mb-2 offset-6">' +
         '<div class="form-group">' +
-        '<select  id="OccionId_tarea_Acu-' + row.id +
-        '" class="form-select form-select-sm form-control " v-model="selectIdTareaAcumulado"><option value="" disable>Selecciones Tarea</option>' +
-        '<option id="id_tarea"  v-for="(optionTareaAcu) in allTareasAcumulados" v-bind:value="optionTareaAcu.id">[[optionTareaAcu.nom_tarea]] / [[optionTareaAcu.detalle]]</option></select></div>' +
+
+        '<v-select ' +
+        'v-model="selectID_Tarea_Acu"  placeholder="Seleccione Tarea"  :options="allTareasAcumulados.map(academicClassTarea => ({label: academicClassTarea.nom_tarea+\' \'+academicClassTarea.detalle, value: academicClassTarea.id}))"></v-select>' +
+
+
+
+        '</div>' +
+
+
         '</div>' +
 
 
@@ -100,6 +101,7 @@ function formAcumulado(idAcumulado, idUsuario) {
             return {
                 OccionId_integrante_Acu: '',
                 selectID_Patinador_Acu: '',
+                selectID_Tarea_Acu: '',
                 allTareaAcumulados: [],
                 allTareasAcumulados: [],
                 allTallasAcumulados: [],
@@ -131,8 +133,8 @@ function formAcumulado(idAcumulado, idUsuario) {
 
                 var OccionId_integrante_Acu = this.OccionId_integrante_Acu.value;
                 var OccionId_pantinador_Acu = this.selectID_Patinador_Acu.value;
+                var OccionId_tarea_Acu = this.selectID_Tarea_Acu.value;
 
-                var OccionId_tarea_Acu = $('select[id="OccionId_tarea_Acu-' + this.idAcumulado + '"]').val().trim();
                 var OccionId_talla_Acu = $('select[id="OccionId_talla_Acu-' + this.idAcumulado + '"]').val().trim();
                 var Cantidad_Acu = $('input[name="cant_prod_Acum-' + this.idAcumulado + '"]').val().trim();
                 //crear la evaluacion de solo puede guardar los datos si cantidad esta llenna con if
