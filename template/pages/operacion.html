@@ -459,10 +459,12 @@ data-auto-refresh-status="true"
         });
         var app = new Vue({
             el: '#pageContent',
+            //   name: 'InfiniteScroll',
             data() {
                 return {
                     idReferenciaOP: '',
                     referenciasVue: [],
+
 
                 }
             },
@@ -536,7 +538,15 @@ data-auto-refresh-status="true"
 
 
             },
+            watch: {
+                idReferenciaOP(val) {
 
+                    console.log(val.value);
+
+
+                    return val.value;
+                }
+            }
         })
 
 

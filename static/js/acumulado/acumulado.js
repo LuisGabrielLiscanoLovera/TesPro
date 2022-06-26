@@ -38,13 +38,18 @@ function DetailFormatterButInfoAcumulado(index, row) {
         '<div class="col-sm-6   offset-6" >' +
         '<div class="form-group"> ' + //<label>Integrante</label>
 
-        '<v-select  ' +
-        '  v-model="idReferenciaOP"  :options="allIntegrantesAcumuladoss.map(academicClass => ({label: academicClass.nombres, value: academicClass.id}))"></v-select>' +
+        '<v-select ' +
+        // '"  v-model="OccionId_integrante_Acu-' + row.id + '"  :options="allIntegrantesAcumuladoss.map(academicClass => ({label: academicClass.nombres, value: academicClass.id}))"></v-select>' +
+        'v-model="OccionId_integrante_Acu"  :options="allIntegrantesAcumuladoss.map(academicClass => ({label: academicClass.nombres, value: academicClass.id}))"></v-select>' +
 
-        '<select  id="OccionId_integrante_Acu-' + row.id +
-        '" class="sectIntegrenteOnChanAcu-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteAcumulado"><option value="" disabled>Selecciones Integrante</option>' +
-        '<option id="id_integrante"  v-for="(optionIntegranteACU) in allIntegrantesAcumuladoss" v-bind:value="optionIntegranteACU.id">[[optionIntegranteACU.nombres]]  [[optionIntegranteACU.apellidos]]</option></select></div>' +
+        //'<select  id="OccionId_integrante_Acu-' + row.id +
+        //'" class="sectIntegrenteOnChanAcu-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteAcumulado"><option value="" disabled>Selecciones Integrante</option>' +
+        //'<option id="id_integrante"  v-for="(optionIntegranteACU) in allIntegrantesAcumuladoss" v-bind:value="optionIntegranteACU.id">[[optionIntegranteACU.nombres]]  [[optionIntegranteACU.apellidos]]</option></select>' +
         '</div>' +
+        '</div>' +
+
+
+
 
         '<div class="col-sm-6 mb-2 offset-6  ">' +
         '<div class="form-group">' +
@@ -96,6 +101,7 @@ function formAcumulado(idAcumulado, idUsuario) {
         delimiters: ['[[', ']]'],
         data: function() {
             return {
+                OccionId_integrante_Acu: '',
                 allTareaAcumulados: [],
                 allTareasAcumulados: [],
                 allTallasAcumulados: [],
@@ -111,45 +117,20 @@ function formAcumulado(idAcumulado, idUsuario) {
 
             }
         },
+
         methods: {
-
-            getAcumuladoDataIntegrante: function() {
-
-                //evento de escucha de integrante
-                const selectElement = document.querySelector(".sectIntegrenteOnChanAcu-" + idAcumulado);
-                selectElement.addEventListener("change", (event) => {
-                    const resutatatIntegranteAcu = document.
-                    querySelector(".resutatatIntegranteAcu-" + idAcumulado);
-                    const idIntegranteSelect = event.target.value;
-                    //variable global prototype idIntegranteSelect
-                    Vue.prototype.$varGlobalSelectIntegrAcu = idIntegranteSelect;
-                    axios.get('dataAcumuladoInte-list/', {
-                        params: {
-                            idIntegranteSelect: this.$varGlobalSelectIntegrAcu,
-                            idAcumulado: idAcumulado,
-                        }
-                    }).then((resp) => {
-                        this.allTareaAcumulados = resp.data;
-                    }).catch(error => console.log(error));
-
-
-
-
-
-
-
-                });
-            },
-
 
             getAcumuladoData: function() {
                 AcumuladoProd(idAcumulado);
 
-
             },
 
             submitFormAcumulado: function() {
-                var OccionId_integrante_Acu = $('select[id="OccionId_integrante_Acu-' + this.idAcumulado + '"]').val().trim();
+
+
+                let OccionIdintegranteAcu = this.OccionId_integrante_Acu;
+
+                var OccionId_integrante_Acu = OccionIdintegranteAcu.value;
                 var OccionId_pantinador_Acu = $('select[id="OccionId_pantinador_Acu-' + this.idAcumulado + '"]').val().trim();
                 var OccionId_tarea_Acu = $('select[id="OccionId_tarea_Acu-' + this.idAcumulado + '"]').val().trim();
                 var OccionId_talla_Acu = $('select[id="OccionId_talla_Acu-' + this.idAcumulado + '"]').val().trim();
@@ -172,7 +153,7 @@ function formAcumulado(idAcumulado, idUsuario) {
 
                         axios.get('dataAcumuladoInte-list/', {
                             params: {
-                                idIntegranteSelect: this.$varGlobalSelectIntegrAcu,
+                                idIntegranteSelect: OccionId_integrante_Acu,
                                 idAcumulado: idAcumulado,
                             }
                         }).then((resp) => {
@@ -184,6 +165,7 @@ function formAcumulado(idAcumulado, idUsuario) {
 
             }
         },
+
         created() {
 
 
@@ -211,17 +193,21 @@ function formAcumulado(idAcumulado, idUsuario) {
                 }).catch(error => console.log(error));
         },
         watch: {
-            integranteList(val) {
+            OccionId_integrante_Acu(val) {
 
-                console.log(val.value);
+                axios.get('dataAcumuladoInte-list/', {
+                    params: {
+                        idIntegranteSelect: val.value,
+                        idAcumulado: idAcumulado,
+                    }
+                }).then((resp) => {
+                    this.allTareaAcumulados = resp.data;
+                }).catch(error => console.log(error));
 
-
-
-                return val.value;
             }
         },
         mounted: function() {
-            this.getAcumuladoDataIntegrante();
+
             this.getAcumuladoData();
         }
     })
