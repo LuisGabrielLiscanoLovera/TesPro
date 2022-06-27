@@ -126,7 +126,7 @@ function formAcumulado(idAcumulado, idUsuario) {
                 var OccionId_integrante_Acu = this.OccionId_integrante_Acu.value;
                 var OccionId_pantinador_Acu = this.selectID_Patinador_Acu.value;
                 var OccionId_tarea_Acu = this.selectID_Tarea_Acu.value;
-                var OccionId_talla_Acu = this.selectID_Talla_Acu.value;;
+                var OccionId_talla_Acu = this.selectID_Talla_Acu.value;
                 var Cantidad_Acu = $('input[name="cant_prod_Acum-' + this.idAcumulado + '"]').val().trim();
                 //crear la evaluacion de solo puede guardar los datos si cantidad esta llenna con if
 

@@ -20,25 +20,31 @@ function DetailFormatterButInfoAcumuladoPatinador(index, row) {
 
         '<div class="col-sm-3 offset-" >' +
         '<div class="form-group"> ' + //<label>Integrante</label>
-        '<select  id="OccionId_integrante_AcuPatinador-' + row.id +
-        '" class="sectIntegrenteOnChanAcuPatinador-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteAcumulado"><option value="" disabled>Selecciones Integrante</option>' +
-        '<option id="id_integranteP"  v-for="(optionIntegranteACU) in allIntegrantesAcumuladosPatinador" v-bind:value="optionIntegranteACU.id">[[optionIntegranteACU.nombres]]  [[optionIntegranteACU.apellidos]]</option></select></div>' +
+
+        '<v-select ' +
+        'v-model="OccionId_integrante_AcuPatinador" placeholder="Seleccione Integrante" :options="allIntegrantesAcumuladosPatinador.map(academicClass => ({label: academicClass.nombres, value: academicClass.id}))"></v-select>' +
+
+        '</div>' +
         '</div>' +
 
 
         '<div class="col-sm-3 offset-">' +
         '<div class="form-group">' +
-        '<select  id="OccionId_tarea_AcuPatinador-' + row.id +
-        '" class="form-select form-select-sm form-control " v-model="selectIdTareaAcumulado"><option value="" disable>Selecciones Tarea</option>' +
-        '<option id="id_tarea"  v-for="(optionTareaAcu) in allTareasAcumuladosPatinador" v-bind:value="optionTareaAcu.id">[[optionTareaAcu.nom_tarea]] / [[optionTareaAcu.detalle]]</option></select></div>' +
+        '<v-select ' +
+        'v-model="selectIdTareaAcumulado"  placeholder="Seleccione Tarea"  :options="allTareasAcumuladosPatinador.map(academicClassTarea => ({label: academicClassTarea.nom_tarea+\' \'+academicClassTarea.detalle, value: academicClassTarea.id}))"></v-select>' +
+
+
+        '</div>' +
+
         '</div>' +
 
 
         '<div class="col-sm-3 offset-">' +
         '<div class="form-group">' +
-        '<select  id="OccionId_talla_AcuPatinador-' + row.id +
-        '" class="form-select form-control form-select-sm" v-model="selectIdTallaAcumulado"><option value="" disabled>Selecciones Talla</option>' +
-        '<option id="id_talla"  v-for="(opcTareaAcu) in allTallasAcumulados"  v-bind:value="opcTareaAcu.id">[[opcTareaAcu.num_talla]] / [[opcTareaAcu.nom_talla]]</option></select></div>' +
+        '<v-select ' +
+        'v-model="selectIdTallaAcumulado"  placeholder="Seleccione Talla"  :options="allTallasAcumulados.map(academicClassTalla => ({label: academicClassTalla.num_talla+\' / \'+academicClassTalla.nom_talla, value: academicClassTalla.id}))"></v-select>' +
+        '</div>' +
+
         '</div>' +
 
         '<div class="col-sm-3 offset-">' +
@@ -87,8 +93,12 @@ function DetailFormatterButInfoAcumuladoPatinador(index, row) {
 }
 
 function formAcumuladoPatinador(idAcumuladoPatinador, idUsuarioPatinador) {
+    Vue.component('v-select', VueSelect.VueSelect, {
+        extends: VueSelect,
 
+    });
     new Vue({
+
         el: '#FormuAcumuladoPatinador-' + idAcumuladoPatinador,
         delimiters: ['[[', ']]'],
         data: function() {
@@ -98,8 +108,7 @@ function formAcumuladoPatinador(idAcumuladoPatinador, idUsuarioPatinador) {
                 allTallasAcumulados: [],
 
                 allIntegrantesAcumuladosPatinador: [],
-                selectIdIntegranteAcumulado: '',
-                selectIDPatinadorAcumulado: '',
+                OccionId_integrante_AcuPatinador: '',
                 selectIdTareaAcumulado: '',
                 selectIdTallaAcumulado: '',
                 cant_prod_AcumPatinador: '',
@@ -109,68 +118,14 @@ function formAcumuladoPatinador(idAcumuladoPatinador, idUsuarioPatinador) {
             }
         },
         methods: {
-
-            getAcumuladoDataPatinadorIntegrantePatinador: function() {
-
-                //evento de escucha de integrante
-                const selectElement = document.querySelector(".sectIntegrenteOnChanAcuPatinador-" + idAcumuladoPatinador);
-                selectElement.addEventListener("change", (event) => {
-                    const resutatatIntegranteAcuPatinador = document.
-                    querySelector(".resutatatIntegranteAcuPatinador-" + idAcumuladoPatinador);
-                    const idIntegranteSelect = event.target.value;
-                    //variable global prototype idIntegranteSelect
-                    Vue.prototype.$varGlobalSelectIntegrAcu = idIntegranteSelect;
-                    axios.get('/blackbox/dataAcumuladoInte-listPatinador/', {
-                        params: {
-                            idIntegranteSelectPatinador: this.$varGlobalSelectIntegrAcu,
-                            idAcumuladoPatinador: idAcumuladoPatinador,
-                        }
-                    }).then((resp) => {
-                        this.allTareaAcumuladosPatinador = resp.data;
-                    }).catch(error => console.log(error));
-
-
-
-
-
-
-
-                });
-            },
-
-
             getAcumuladoDataPatinador: function() {
                 AcumuladoProdPatinador(idAcumuladoPatinador);
-
-
-                axios
-                    .get('/blackbox/integrante-listPatinador/')
-                    .then((resp) => {
-                        this.allIntegrantesAcumuladosPatinador = resp.data
-                    }).catch(error => console.log(error));
-
-                axios
-                    .get('/blackbox/tarea-listPatinador/')
-                    .then((resp) => {
-                        this.allTareasAcumuladosPatinador = resp.data;
-                    })
-                    .catch(error => console.log(error));
-                axios
-                    .get('/blackbox/tallaEmpresa-listPatinador/?idOp=' + idAcumuladoPatinador)
-                    .then((resp) => {
-                        this.allTallasAcumulados = resp.data;
-                        console.log(this.allTallasAcumulados);
-                    }).catch(error => console.log(error));
-
             },
 
-
-
-
             submitFormAcumuladoPatinador: function() {
-                var OccionId_integrante_AcuPatinador = $('select[id="OccionId_integrante_AcuPatinador-' + this.idAcumuladoPatinador + '"]').val().trim();
-                var OccionId_tarea_AcuPatinador = $('select[id="OccionId_tarea_AcuPatinador-' + this.idAcumuladoPatinador + '"]').val().trim();
-                var OccionId_talla_AcuPatinador = $('select[id="OccionId_talla_AcuPatinador-' + this.idAcumuladoPatinador + '"]').val().trim();
+                var OccionId_integrante_AcuPatinador = this.OccionId_integrante_AcuPatinador.value;
+                var OccionId_tarea_AcuPatinador = this.selectIdTareaAcumulado.value;
+                var OccionId_talla_AcuPatinador = this.selectIdTallaAcumulado.value;
                 var Cantidad_AcuPatinador = $('input[name="cant_prod_AcumPatinador-' + this.idAcumuladoPatinador + '"]').val().trim();
                 //crear la evaluacion de solo puede guardar los datos si cantidad esta llenna con if
 
@@ -189,7 +144,7 @@ function formAcumuladoPatinador(idAcumuladoPatinador, idUsuarioPatinador) {
 
                         axios.get('/blackbox/dataAcumuladoInte-listPatinador/', {
                             params: {
-                                idIntegranteSelectPatinador: this.$varGlobalSelectIntegrAcu,
+                                idIntegranteSelectPatinador: OccionId_integrante_AcuPatinador,
                                 idAcumuladoPatinador: idAcumuladoPatinador,
                             }
                         }).then((resp) => {
@@ -201,8 +156,40 @@ function formAcumuladoPatinador(idAcumuladoPatinador, idUsuarioPatinador) {
 
             }
         },
+        created() {
+            axios
+                .get('/blackbox/integrante-listPatinador/')
+                .then((resp) => {
+                    this.allIntegrantesAcumuladosPatinador = resp.data
+                }).catch(error => console.log(error));
+
+            axios
+                .get('/blackbox/tarea-listPatinador/')
+                .then((resp) => {
+                    this.allTareasAcumuladosPatinador = resp.data;
+                })
+                .catch(error => console.log(error));
+            axios
+                .get('/blackbox/tallaEmpresa-listPatinador/?idOp=' + idAcumuladoPatinador)
+                .then((resp) => {
+                    this.allTallasAcumulados = resp.data;
+                    console.log(this.allTallasAcumulados);
+                }).catch(error => console.log(error));
+        },
+        watch: {
+            OccionId_integrante_AcuPatinador(val) {
+                axios.get('/blackbox/dataAcumuladoInte-listPatinador/', {
+                    params: {
+                        idIntegranteSelectPatinador: val.value,
+                        idAcumuladoPatinador: idAcumuladoPatinador,
+                    }
+                }).then((resp) => {
+                    this.allTareaAcumuladosPatinador = resp.data;
+                }).catch(error => console.log(error));
+
+            }
+        },
         mounted: function() {
-            this.getAcumuladoDataPatinadorIntegrantePatinador();
             this.getAcumuladoDataPatinador();
         }
     })
