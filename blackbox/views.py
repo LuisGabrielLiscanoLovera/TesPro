@@ -192,16 +192,24 @@ def TallaOpCanIncosistentePatinadores(request):
     if request.session.has_key('username'):
         if 'username' in request.session:
             username = request.session['username']
-            idUser = MyUser.objects.get(username=username)
-
-    lastEm = CambioEmpres.objects.filter(
-        usuario_id=idUser.integrante_id).last()
+    
+    
+    myuser = MyUser.objects.get(username=username)
+    
+    integranteConten = Integrante.objects.filter(
+            id=myuser.integrante_id).values('empresa_id', 'usuario_id')
+        
+    lastEm = int(integranteConten[0]['empresa_id'])
+   
     idOP = request.GET.get('idOperacion', None)
     CanOperacion = Operacion.objects.filter(id=int(idOP)).values('can_total')
     CanOperacion = CanOperacion[0]['can_total']
-    CanTallaTotal = CanTalla.objects.filter(
+    
+    
+    TallaTotal = CanTalla.objects.filter(
         empresa_id=lastEm, operacion_id=idOP).aggregate(can_talla=Sum('can_talla'))
-    CanTallaTotal = CanTallaTotal['can_talla']
+    
+    CanTallaTotal = TallaTotal['can_talla']
     TotalOpRestante = Operacion.objects.filter(
         id=idOP).values('can_restante', 'fecha_cierre')
     FechaCierre = TotalOpRestante[0]['fecha_cierre']

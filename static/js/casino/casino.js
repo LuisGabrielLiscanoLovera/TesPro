@@ -21,8 +21,7 @@ function DetailFormatterButInfoCasino(index, row) {
         '<div class="col-sm-6   offset-6" >' +
         '<div class="form-group"> ' + //<label>Integrante</label>
 
-        '<v-select ' +
-        'v-model="selectIdIntegranteAcumulado" placeholder="Seleccione Integrante" :options="allIntegrantesAcumuladoss.map(academicClass => ({label: academicClass.nombres, value: academicClass.id}))"></v-select>' +
+        '<v-select v-model="selectIdIntegranteAcumulado" placeholder="Seleccione Integrante" :options="allIntegrantesAcumuladoss.map(academicClass => ({label: academicClass.nombres, value: academicClass.id}))"></v-select>' +
         '</div>' +
         '</div>' +
 

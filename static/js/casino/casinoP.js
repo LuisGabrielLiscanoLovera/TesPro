@@ -16,8 +16,7 @@ function DetailFormatterButInfoCasinoPatinador(index, row) {
         '<div class="col-sm-4 " >' +
         '<div class="form-group"> ' + //<label>Integrante</label>
 
-        '<v-select ' +
-        'v-model="selectIdIntegranteAcumuladoPatinador" placeholder="Seleccione Integrante" :options="allIntegrantesAcumuladosPatinador.map(academicClass => ({label: academicClass.nombres, value: academicClass.id}))"></v-select>' +
+        '<v-select v-model="selectIdIntegranteAcumuladoPatinador" placeholder="Seleccione Integrante" :options="allIntegrantesAcumuladosPatinador.map(academicClass => ({label: academicClass.nombres, value: academicClass.id}))"></v-select>' +
 
 
         '</div>' +
@@ -164,6 +163,9 @@ function formCasinoPatinador(idCasino, idUsuario) {
                 .then((resp) => {
                     this.allIntegrantesAcumuladosPatinador = resp.data
                 }).catch(error => console.log(error));
+
+
+
         },
 
         watch: {
