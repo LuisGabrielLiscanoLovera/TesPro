@@ -44,14 +44,14 @@ function DetailFormatterButInfoDespacho(index, row) {
         '"  required/>' +
 
 
-        '<v-select ' +
-        'v-model="selectIDPatinador"  placeholder="Seleccione Patinador"  :options="allPatinadoresOPs.map(DespachoClassPatinador => ({label: DespachoClassPatinador.nomPatinador+\' \'+DespachoClassPatinador.apellPatinador, value: DespachoClassPatinador.id}))"></v-select>' +
+        '<selectVue ' +
+        'v-model="selectIDPatinador"  placeholder="Seleccione Patinador"  :options="allPatinadoresOPs.map(DespachoClassPatinador => ({label: DespachoClassPatinador.nomPatinador+\' \'+DespachoClassPatinador.apellPatinador, value: DespachoClassPatinador.id}))"></selectVue>' +
         '</div>' +
         '</div>' +
 
 
-        '<v-select ' +
-        'v-model="selectIdTalla"  placeholder="Seleccione Talla"  :options="allTallasOPs.map(DespachoClassTalla => ({label: DespachoClassTalla.num_talla+\' / \'+DespachoClassTalla.nom_talla, value: DespachoClassTalla.talla}))"></v-select>' +
+        '<selectVue ' +
+        'v-model="selectIdTalla"  placeholder="Seleccione Talla"  :options="allTallasOPs.map(DespachoClassTalla => ({label: DespachoClassTalla.num_talla+\' / \'+DespachoClassTalla.nom_talla, value: DespachoClassTalla.talla}))"></selectVue>' +
 
 
         '<input class="form-control big-button" autocomplete="off" placeholder="Cantidad terminada" id="cant" name="cantOpDespacho-' + row.id +
@@ -175,7 +175,7 @@ function deleteDespachoUnico(id_despacho) {
 }
 
 function formOP(idOp, usuario) {
-    Vue.component('v-select', VueSelect.VueSelect, {
+    Vue.component('selectVue', VueSelect.VueSelect, {
         extends: VueSelect,
 
     });
