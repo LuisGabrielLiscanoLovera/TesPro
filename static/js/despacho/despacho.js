@@ -31,7 +31,7 @@ function DetailFormatterButInfoDespacho(index, row) {
         '</div>' +
         '<div class="col-sm-4"><div id="FormuTallaOP-' + row.id +
         '"><template>' +
-        '<div class="border border-info alert"><b><h6>Restante &nbsp;&nbsp;<b class="big-button">[[cantRestante]] <hr></b> de [[total]]</b></h6></div>' +
+        '<div class="border border-info alert"><b><h6>Restante &nbsp;&nbsp;<b class="big-button">[[cantRestante]] </b> de [[total]]</b></h6></div>' +
         '<form @submit.prevent="submitFormDespacho" class="form dark"><div hidden=True>{% csrf_token %}</div>' +
         '<div>' +
 

@@ -108,23 +108,30 @@ def createDespachoPatinador(request,):
     if request.session.has_key('username'):
         if 'username' in request.session:
             username = request.session['username']
-            idUser = MyUser.objects.get(username=username)
-    integranteConten = Integrante.objects.filter(
-        id=idUser.integrante_id).values('empresa_id', 'usuario_id')
+    
+   
+    
+      
+    myuser = MyUser.objects.get(username=username)    
+    integranteConten = Integrante.objects.filter(id=myuser.integrante_id).values('empresa_id', 'usuario_id')
     lastEm = int(integranteConten[0]['empresa_id'])
+   
+    
+    
+    
     
     
     canTerminada = int(request.data['cantPatinador'])
     nombreTalla = Talla.objects.filter(empresa_id=int(lastEm), usuario_id=int(
         integranteConten[0]['usuario_id']), id=int(request.data['selectIdTallaPatinador'])).values('nom_talla', 'id')
     
-    idIntegranteMyuser = MyUser.objects.get(username=idUser.username)
+    idIntegranteMyuser = MyUser.objects.get(username=myuser.username)
     
     idPatinador = Patinador.objects.filter(
         integrante_id=idIntegranteMyuser.integrante_id).values('id')
     idPatinador = idPatinador[0]['id']    
     nomPatinador = Integrante.objects.filter(empresa_id=int(lastEm), usuario_id=int(
-        integranteConten[0]['usuario_id']), id=int(idUser.integrante_id)).values('nombres', 'apellidos')
+        integranteConten[0]['usuario_id']), id=int(myuser.integrante_id)).values('nombres', 'apellidos')
     nom_patinador = nomPatinador[0]['nombres']+" "+nomPatinador[0]['apellidos']
     
     try:
