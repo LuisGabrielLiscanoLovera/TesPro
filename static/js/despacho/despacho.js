@@ -13,8 +13,8 @@ function DetailFormatterButInfoDespacho(index, row) {
         '<div class="col-sm-1">' +
         '</div>' +
         '<div class="col-sm-6">' +
-        '<div id="despachoVue-' + row.id + '"><template>' +
-        '<table class="table  animated fadeIn  border-info ">' +
+        '<div id="despachoVue-' + row.id + '">' +
+        '<template><table class="table  animated fadeIn  border-info ">' +
         '<thead class="thead-dark">' +
         '<tr class="" >' +
         '<th class="text-center">Nombre Talla</th>' +
@@ -31,7 +31,7 @@ function DetailFormatterButInfoDespacho(index, row) {
         '</div>' +
         '<div class="col-sm-4"><div id="FormuTallaOP-' + row.id +
         '"><template>' +
-        '<div class="border border-info alert"><b><h6>Restante &nbsp;&nbsp;<b class="big-button">[[cantRestante]] <hrr></b> de [[total]]</b></h6></div>' +
+        '<div class="border border-info alert"><b><h6>Restante &nbsp;&nbsp;<b class="big-button">[[cantRestante]] <hr></b> de [[total]]</b></h6></div>' +
         '<form @submit.prevent="submitFormDespacho" class="form dark"><div hidden=True>{% csrf_token %}</div>' +
         '<div>' +
 
@@ -44,14 +44,12 @@ function DetailFormatterButInfoDespacho(index, row) {
         '"  required/>' +
 
 
-        '<selectVue ' +
-        'v-model="selectIDPatinador"  placeholder="Seleccione Patinador"  :options="allPatinadoresOPs.map(DespachoClassPatinador => ({label: DespachoClassPatinador.nomPatinador+\' \'+DespachoClassPatinador.apellPatinador, value: DespachoClassPatinador.id}))"></selectVue>' +
+        '<v-select v-model="selectIDPatinador"  placeholder="Seleccione Patinador"  :options="allPatinadoresOPs.map(DespachoClassPatinador => ({label: DespachoClassPatinador.nomPatinador+\' \'+DespachoClassPatinador.apellPatinador, value: DespachoClassPatinador.id}))"></v-select>' +
         '</div>' +
         '</div>' +
 
 
-        '<selectVue ' +
-        'v-model="selectIdTalla"  placeholder="Seleccione Talla"  :options="allTallasOPs.map(DespachoClassTalla => ({label: DespachoClassTalla.num_talla+\' / \'+DespachoClassTalla.nom_talla, value: DespachoClassTalla.talla}))"></selectVue>' +
+        '<v-select v-model="selectIdTalla"  placeholder="Seleccione Talla"  :options="allTallasOPs.map(DespachoClassTalla => ({label: DespachoClassTalla.num_talla+\' / \'+DespachoClassTalla.nom_talla, value: DespachoClassTalla.talla}))"></v-select>' +
 
 
         '<input class="form-control big-button" autocomplete="off" placeholder="Cantidad terminada" id="cant" name="cantOpDespacho-' + row.id +
@@ -175,10 +173,11 @@ function deleteDespachoUnico(id_despacho) {
 }
 
 function formOP(idOp, usuario) {
-    Vue.component('selectVue', VueSelect.VueSelect, {
+    Vue.component('v-select', VueSelect.VueSelect, {
         extends: VueSelect,
 
     });
+
     new Vue({
         el: '#FormuTallaOP-' + idOp,
         delimiters: ['[[', ']]'],
@@ -313,6 +312,10 @@ function deleteDespacho(id_despacho) {
 }
 
 function tallasOP(idOp) {
+    Vue.component('v-select', VueSelect.VueSelect, {
+        extends: VueSelect,
+
+    });
     new Vue({
         el: '#despachoVue-' + idOp,
         delimiters: ['[[', ']]'],
@@ -321,26 +324,24 @@ function tallasOP(idOp) {
                 allTallaOPs: [],
             }
         },
-        methods: {
-            getDespachosTallas: function() {
-                axios
-                    .get('/talla/tallaOP-list/?idOp=' + idOp)
-                    .then((resp) => {
-                        this.allTallaOPs = resp.data;
-                        if (resp.data == '') {
-                            //alert("no hay un coño");
-                            document.getElementById('despachoVue-' + idOp).innerHTML = '<h3>No hay tallas cargada</h3>';
 
-                        }
-                        //console.log(resp.data);
+        created() {
+            axios
+                .get('/talla/tallaOP-list/?idOp=' + idOp)
+                .then((resp) => {
+                    this.allTallaOPs = resp.data;
+                    if (resp.data == '') {
+                        //alert("no hay un coño");
+                        document.getElementById('despachoVue-' + idOp).innerHTML = '<h3>No hay tallas cargada</h3>';
 
-                    })
-                    .catch(error => console.log(error))
-            }
+                    }
+                    //console.log(resp.data);
+
+                })
+                .catch(error => console.log(error))
         },
-        mounted: function() {
-            this.getDespachosTallas()
-        }
+
+
 
     });
 

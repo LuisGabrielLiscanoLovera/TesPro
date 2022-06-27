@@ -17,7 +17,7 @@ function DetailFormatterButInfoDespachoPerfilPatinadores(index, row) {
         '">' +
 
         '<template>' +
-        '<div class="border-info alert"><b><h6>Restante &nbsp;&nbsp;<b class="big-button">[[cantRestantePatinador]] <hrr></b> de [[total]]</b></h6></div>' +
+        '<div class="border-info alert"><b><h6>Restante &nbsp;&nbsp;<b class="big-button">[[cantRestantePatinador]] <hr></b> de [[total]]</b></h6></div>' +
         '<form @submit.prevent="submitFormDespachoPatinador" class="form dark"><div hidden=True>{% csrf_token %}</div>' +
         '<div>' +
         //'<div class="progress progress-striped"><div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1" style="width:' +
