@@ -37,9 +37,12 @@ function DetailFormatterButInfoAcumuladoHistorial(index, row) {
 
         '<div class="col-sm-6   offset-6" >' +
         '<div class="form-group"> ' + //<label>Integrante</label>
-        '<select  id="OccionId_integrante_Acu-' + row.id +
-        '" class="sectIntegrenteOnChanAcu-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteAcumulado"><option value="" disabled>Selecciones Integrante</option>' +
-        '<option id="id_integrante"  v-for="(optionIntegranteACU) in allIntegrantesAcumuladoss" v-bind:value="optionIntegranteACU.id">[[optionIntegranteACU.nombres]]  [[optionIntegranteACU.apellidos]]</option></select></div>' +
+        '<v-select ' +
+        'v-model="OccionId_integrante_Acu" placeholder="Seleccione Integrante" :options="allIntegrantesAcumuladoss.map(academicClass => ({label: academicClass.nombres, value: academicClass.id}))"></v-select>' +
+
+
+
+        '</div>' +
         '</div>' +
 
 
@@ -66,7 +69,7 @@ function formAcumulado(idAcumulado, idUsuario) {
                 allTallasAcumulados: [],
                 allPatinadoresAcumulados: [],
                 allIntegrantesAcumuladoss: [],
-                selectIdIntegranteAcumulado: '',
+                OccionId_integrante_Acu: '',
                 selectIDPatinadorAcumulado: '',
                 selectIdTareaAcumulado: '',
                 selectIdTallaAcumulado: '',
@@ -78,104 +81,56 @@ function formAcumulado(idAcumulado, idUsuario) {
         },
         methods: {
 
-            getAcumuladoDataIntegrante: function() {
-
-                //evento de escucha de integrante
-                const selectElement = document.querySelector(".sectIntegrenteOnChanAcu-" + idAcumulado);
-                selectElement.addEventListener("change", (event) => {
-                    const resutatatIntegranteAcu = document.
-                    querySelector(".resutatatIntegranteAcu-" + idAcumulado);
-                    const idIntegranteSelect = event.target.value;
-                    //variable global prototype idIntegranteSelect
-                    Vue.prototype.$varGlobalSelectIntegrAcu = idIntegranteSelect;
-                    axios.get('dataAcumuladoInte-list/', {
-                        params: {
-                            idIntegranteSelect: this.$varGlobalSelectIntegrAcu,
-                            idAcumulado: idAcumulado,
-                        }
-                    }).then((resp) => {
-                        this.allTareaAcumulados = resp.data;
-                    }).catch(error => console.log(error));
-
-
-
-
-
-
-
-                });
-            },
-
-
             getAcumuladoData: function() {
                 AcumuladoProdHistorial(idAcumulado);
-
-
-                axios
-                    .get('/integrante/integrante-list/')
-                    .then((resp) => {
-                        this.allIntegrantesAcumuladoss = resp.data
-                    }).catch(error => console.log(error));
-                axios
-                    .get('/produccion/lista_patinadoresAct-prod/')
-                    .then((resp) => {
-                        this.allPatinadoresAcumulados = resp.data
-                    }).catch(error => console.log(error));
-                axios
-                    .get('/tarea/tarea-list/')
-                    .then((resp) => {
-                        this.allTareasAcumulados = resp.data;
-                    })
-                    .catch(error => console.log(error));
-                axios
-                    .get('/talla/tallaEmpresa-list/?idOp=' + idAcumulado)
-                    .then((resp) => {
-                        this.allTallasAcumulados = resp.data;
-                        console.log(this.allTallasAcumulados);
-                    }).catch(error => console.log(error));
-
             },
 
-            submitFormAcumulado: function() {
-                var OccionId_integrante_Acu = $('select[id="OccionId_integrante_Acu-' + this.idAcumulado + '"]').val().trim();
-                var OccionId_pantinador_Acu = $('select[id="OccionId_pantinador_Acu-' + this.idAcumulado + '"]').val().trim();
-                var OccionId_tarea_Acu = $('select[id="OccionId_tarea_Acu-' + this.idAcumulado + '"]').val().trim();
-                var OccionId_talla_Acu = $('select[id="OccionId_talla_Acu-' + this.idAcumulado + '"]').val().trim();
-                var Cantidad_Acu = $('input[name="cant_prod_Acum-' + this.idAcumulado + '"]').val().trim();
-                //crear la evaluacion de solo puede guardar los datos si cantidad esta llenna con if
 
-                if (Cantidad_Acu && OccionId_integrante_Acu && OccionId_pantinador_Acu &&
-                    OccionId_tarea_Acu && OccionId_talla_Acu) {
-                    axios.post('/acumulado/cproAcumulado/', {
+        },
+        mounted: function() {
+
+            this.getAcumuladoData();
+        },
+
+        created() {
+            axios
+                .get('/integrante/integrante-list/')
+                .then((resp) => {
+                    this.allIntegrantesAcumuladoss = resp.data
+                }).catch(error => console.log(error));
+            axios
+                .get('/produccion/lista_patinadoresAct-prod/')
+                .then((resp) => {
+                    this.allPatinadoresAcumulados = resp.data
+                }).catch(error => console.log(error));
+            axios
+                .get('/tarea/tarea-list/')
+                .then((resp) => {
+                    this.allTareasAcumulados = resp.data;
+                })
+                .catch(error => console.log(error));
+            axios
+                .get('/talla/tallaEmpresa-list/?idOp=' + idAcumulado)
+                .then((resp) => {
+                    this.allTallasAcumulados = resp.data;
+                    console.log(this.allTallasAcumulados);
+                }).catch(error => console.log(error));
+        },
+        watch: {
+            OccionId_integrante_Acu(val) {
+
+                axios.get('dataAcumuladoInte-list/', {
+                    params: {
+                        idIntegranteSelect: val.value,
                         idAcumulado: idAcumulado,
-                        usuario: idUsuario,
-                        acumulado_id: idAcumulado,
-                        OccionId_integrante_Acu: OccionId_integrante_Acu,
-                        OccionId_pantinador_Acu: OccionId_pantinador_Acu, //l
-                        OccionId_tarea_Acu: OccionId_tarea_Acu,
-                        OccionId_talla_Acu: OccionId_talla_Acu,
-                        Cantidad_Acu: Cantidad_Acu,
-                    }).then(response => {
-
-
-                        axios.get('dataAcumuladoInte-list/', {
-                            params: {
-                                idIntegranteSelect: this.$varGlobalSelectIntegrAcu,
-                                idAcumulado: idAcumulado,
-                            }
-                        }).then((resp) => {
-                            this.allTareaAcumulados = resp.data;
-                        }).catch(error => console.log(error));
-                    })
-
-                }
+                    }
+                }).then((resp) => {
+                    this.allTareaAcumulados = resp.data;
+                }).catch(error => console.log(error));
 
             }
         },
-        mounted: function() {
-            this.getAcumuladoDataIntegrante();
-            this.getAcumuladoData();
-        }
+
     })
 
 
