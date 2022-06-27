@@ -15,9 +15,12 @@ function DetailFormatterButInfoCasinoPatinador(index, row) {
 
         '<div class="col-sm-4 " >' +
         '<div class="form-group"> ' + //<label>Integrante</label>
-        '<select  id="OccionId_integrante_CasinoPatinador-' + row.id +
-        '" class="sectIntegrenteOnChanAcuPatinador-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteAcumuladoPatinador"><option value="" disabled>Selecciones Integrante</option>' +
-        '<option id="id_integrante"  v-for="(optionIntegranteACU) in allIntegrantesAcumuladosPatinador" v-bind:value="optionIntegranteACU.id">[[optionIntegranteACU.nombres]]  [[optionIntegranteACU.apellidos]]</option></select></div>' +
+
+        '<v-select ' +
+        'v-model="selectIdIntegranteAcumuladoPatinador" placeholder="Seleccione Integrante" :options="allIntegrantesAcumuladosPatinador.map(academicClass => ({label: academicClass.nombres, value: academicClass.id}))"></v-select>' +
+
+
+        '</div>' +
         '</div>' +
 
 
@@ -92,7 +95,10 @@ function DetailFormatterButAccionCasinoPatinador(index, row) {
 
 
 function formCasinoPatinador(idCasino, idUsuario) {
+    Vue.component('v-select', VueSelect.VueSelect, {
+        extends: VueSelect,
 
+    });
 
     new Vue({
         el: '#FormuCasinoPatinador-' + idCasino,
@@ -111,72 +117,12 @@ function formCasinoPatinador(idCasino, idUsuario) {
             }
         },
         methods: {
-            getAcumuladoDataIntegrantePatinador: function() {
-
-                const selectElement = document.querySelector(".sectIntegrenteOnChanAcuPatinador-" + idCasino);
-                if (selectElement) {
-                    selectElement.addEventListener("change", (event) => {
-                        const resutatatIntegranteCasino = document.querySelector(".resutatatIntegranteCasino-" + idCasino);
-                        const idIntegranteSelectPatinador = event.target.value;
-
-                        if (idIntegranteSelectPatinador != '') {
-                            Vue.prototype.$varGlobalSelectIntegrAcu = idIntegranteSelectPatinador;
-                            axios
-                                .get('/blackbox/dataCasino-listPatinador/', {
-                                    params: {
-                                        idCasinoPatinador: idCasino,
-                                        idIntegranteSelectPatinador: idIntegranteSelectPatinador
-                                    }
-                                })
-                                .then((resp) => { this.total = resp.data.TotalCasinoImporte; })
-                                .catch(error => console.log(error));
-
-                            document.getElementById('sectIntegreOCasinoPatinador-' + idCasino).innerHTML =
-                                '<div style="overflow-x:auto;" class="text-center"">' +
-                                '<table  class="table text-center animated fadeIn"  id="items-table-Casino-' + idCasino +
-                                '">' +
-                                '<thead class="thead-dark">' +
-                                '<tr>' +
-                                '<th>id</th>' +
-
-                                '<th class="text-center">Fecha</th>' +
-                                '<th class="text-center">Cantidad</th>' +
-                                '</tr>' +
-                                '</thead>' +
-                                '<tbody calss="" id="casinoKillPatinador-' + idCasino + '">' +
-                                '<td class="text-center">ID</td>' +
-
-                                '<td class="text-center">Cantidad</td>' +
-                                '<td class="text-center">Fecha</td></tr>' +
-                                '</tbody>' +
-                                '</table>' +
-                                '</div>';
-                            CasinoImportePatinador(idCasino, idIntegranteSelectPatinador);
 
 
-                        } else {
-                            document.getElementById('sectIntegreOCasinoPatinador-' + idCasino).innerHTML = '';
-                            document.getElementById('TotalImportePatinador-' + idCasino).innerHTML = '';
-                        }
-                    });
-
-                }
-
-            },
-            getAcumuladoDataPatinador: function() {
-                axios
-                    .get('/blackbox/integrante-listPatinador/')
-                    .then((resp) => {
-                        this.allIntegrantesAcumuladosPatinador = resp.data
-                    }).catch(error => console.log(error));
-
-
-            },
             submitFormCasinoPatinador: function() {
-                var OccionId_integrante_CasinoPatinador = $('select[id="OccionId_integrante_CasinoPatinador-' + this.idCasino + '"]').val().trim();
+                var OccionId_integrante_CasinoPatinador = this.selectIdIntegranteAcumuladoPatinador.value;
                 var Cantidad_CasinoPatinador = $('input[name="cant_casinoPatinador-' + this.idCasino + '"]').val().trim();
                 //crear la evaluacion de solo puede guardar los datos si cantidad esta llenna con if
-                console.log("id casino =", idCasino, 'Cantidad_CasinoPatinador=', Cantidad_CasinoPatinador, 'OccionId_integrante_CasinoPatinador=', OccionId_integrante_CasinoPatinador);
 
                 if (OccionId_integrante_CasinoPatinador) {
                     axios.post('/blackbox/cproCasinoPatinador/', {
@@ -211,10 +157,61 @@ function formCasinoPatinador(idCasino, idUsuario) {
                 }
             }
         },
-        mounted: function() {
-            this.getAcumuladoDataIntegrantePatinador();
-            this.getAcumuladoDataPatinador();
-        }
+
+        created() {
+            axios
+                .get('/blackbox/integrante-listPatinador/')
+                .then((resp) => {
+                    this.allIntegrantesAcumuladosPatinador = resp.data
+                }).catch(error => console.log(error));
+        },
+
+        watch: {
+            selectIdIntegranteAcumuladoPatinador(val) {
+                if (val.value != '') {
+
+                    axios
+                        .get('/blackbox/dataCasino-listPatinador/', {
+                            params: {
+                                idCasinoPatinador: idCasino,
+                                idIntegranteSelectPatinador: val.value
+                            }
+                        })
+                        .then((resp) => { this.total = resp.data.TotalCasinoImporte; })
+                        .catch(error => console.log(error));
+
+                    document.getElementById('sectIntegreOCasinoPatinador-' + idCasino).innerHTML =
+                        '<div style="overflow-x:auto;" class="text-center"">' +
+                        '<table  class="table text-center animated fadeIn"  id="items-table-Casino-' + idCasino +
+                        '">' +
+                        '<thead class="thead-dark">' +
+                        '<tr>' +
+                        '<th>id</th>' +
+
+                        '<th class="text-center">Fecha</th>' +
+                        '<th class="text-center">Cantidad</th>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '<tbody calss="" id="casinoKillPatinador-' + idCasino + '">' +
+                        '<td class="text-center">ID</td>' +
+
+                        '<td class="text-center">Cantidad</td>' +
+                        '<td class="text-center">Fecha</td></tr>' +
+                        '</tbody>' +
+                        '</table>' +
+                        '</div>';
+                    CasinoImportePatinador(idCasino, val.value);
+
+
+                } else {
+                    document.getElementById('sectIntegreOCasinoPatinador-' + idCasino).innerHTML = '';
+                    document.getElementById('TotalImportePatinador-' + idCasino).innerHTML = '';
+                }
+
+            }
+        },
+
+
     })
 
 

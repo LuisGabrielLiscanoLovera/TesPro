@@ -629,15 +629,16 @@ class CasinoHomePatinador(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(CasinoHomePatinador, self).get_context_data(**kwargs)
         s = SessionStore()
-        s['last_login'] = self.request.user.pk
+        s['last_login'] = self.request.user.id
         s.create()
 
+        myuser = MyUser.objects.get(id=s['last_login'])
         integranteConten = Integrante.objects.filter(
-            id=s['last_login']).values('empresa_id', 'usuario_id')
+            id=myuser.integrante_id).values('empresa_id', 'usuario_id')    
+ 
         AllEmpresa = RelacionEmpresa.objects.filter(
             usuario_id=(integranteConten[0]['usuario_id']))
 
-        #lastEm=Integrante.objects.filter(id=s['last_login']).values('empresa_id')
         lastEm = int(integranteConten[0]['empresa_id'])
 
         Tallas = Talla.objects.filter(usuario=int(integranteConten[0]['usuario_id']), empresa_id=int(
