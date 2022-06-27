@@ -5,6 +5,9 @@
 <script src="{% static 'js/bootstrap-table.js' %}"></script>
 
 
+<script src="{% static 'js/vue-select-vue-select.js' %} "></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/vue-select-vue-select.css' %}">
+<script src="{% static 'js/index-index.js' %} "></script>
 
 
 
@@ -105,9 +108,13 @@
 
             '<div class="col-sm-6   offset-6" >' +
             '<div class="form-group"> ' + //<label>Integrante</label>
-            '<select  id="OccionId_integrante_Acu-' + row.id +
-            '" class="sectIntegrenteOnChanAcu-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteAcumulado"><option value="" disabled>Selecciones Integrante</option>' +
-            '<option id="id_integrante"  v-for="(optionIntegranteACU) in allIntegrantesAcumuladossValor" v-bind:value="optionIntegranteACU.id">[[optionIntegranteACU.nombres]]  [[optionIntegranteACU.apellidos]]</option></select></div>' +
+
+            '<v-select ' +
+            'v-model="OccionId_integrante_Acu" placeholder="Seleccione Integrante" :options="allIntegrantesAcumuladossValor.map(academicClass => ({label: academicClass.nombres, value: academicClass.id}))"></v-select>' +
+
+
+            '</div>' +
+
             '</div>' +
 
 
@@ -123,6 +130,10 @@
     }
 
     function formAcumuladoValor(idAcumulado, idUsuario) {
+        Vue.component('v-select', VueSelect.VueSelect, {
+            extends: VueSelect,
+
+        });
 
         new Vue({
             el: '#FormuAcumulado-' + idAcumulado,
@@ -131,15 +142,20 @@
 
             data: function() {
                 return {
+                    OccionId_integrante_Acu: '',
+                    selectID_Patinador_Acu: '',
+                    selectID_Tarea_Acu: '',
+                    selectID_Talla_Acu: '',
+
                     allTareaAcumulados: [],
                     allTareasAcumuladosValor: [],
                     allTallasAcumulados: [],
                     allPatinadoresAcumuladosValor: [],
                     allIntegrantesAcumuladossValor: [],
-                    selectIdIntegranteAcumulado: '',
-                    selectIDPatinadorAcumulado: '',
-                    selectIdTareaAcumulado: '',
-                    selectIdTallaAcumulado: '',
+
+
+
+
                     totalGenerado: '',
                     cant_prod_Acum: '',
                     usuario: idUsuario,
@@ -151,90 +167,67 @@
 
             methods: {
 
-                getAcumuladoDataValorIntegranteValor: function() {
-
-                    //evento de escucha de integrante
-                    const selectElementValor = document.querySelector(".sectIntegrenteOnChanAcu-" + idAcumulado);
-                    selectElementValor.addEventListener("change", (event) => {
-                        const resutatatIntegranteAcuValor = document.
-                        querySelector(".resutatatIntegranteAcuValor-" + idAcumulado);
-                        const idIntegranteSelect = event.target.value;
-                        //variable global prototype idIntegranteSelect
-
-                        if (idIntegranteSelect != '') {
-                            Vue.prototype.$varGlobalSelectIntegrAcuValor = idIntegranteSelect;
-
-
-                            axios.get('{% url "dataAcumuladoInte-listValor" %}', {
-                                params: {
-                                    idIntegranteSelect: this.$varGlobalSelectIntegrAcuValor,
-                                    idAcumulado: idAcumulado,
-                                }
-                            }).then((resp) => {
-                                this.allTareaAcumulados = resp.data;
-
-                                if (this.allTareaAcumulados.length == 0) {
-                                    document.getElementById('totalGenerado-' + idAcumulado).innerHTML =
-                                        '<div class="col-md-5 offset-7 alert border btn-cyan bt ">Total Generado  : <b>' + 0 + '</b>';
-                                } else {
-                                    this.totalGenerado = resp.data[resp.data.length - 1]['totalGenerado'];
-                                    document.getElementById('totalGenerado-' + idAcumulado).innerHTML =
-                                        '<div class="col-md-5 offset-7 alert border btn-cyan bt ">Total Generado  : <b>' + this.totalGenerado + '</b>';
-                                }
-                            }).catch(error => {
-                                console.log(error);
-                            });
-
-
-
-
-
-                        } //else {
-
-
-                        //  document.getElementById('totalGenerado-' + idAcumulado).innerHTML = '';
-                        //document.getElementById('sectIntegreOC-' + idAcumulado).innerHTML = '';
-
-                        //}
-
-                    });
-                },
 
 
                 getAcumuladoDataValor: function() {
                     AcumuladoProdValor(idAcumulado);
 
 
-                    axios
-                        .get('/integrante/integrante-list/')
-                        .then((resp) => {
-                            this.allIntegrantesAcumuladossValor = resp.data
-                        }).catch(error => console.log(error));
-                    axios
-                        .get('/produccion/lista_patinadoresAct-prod/')
-                        .then((resp) => {
-                            this.allPatinadoresAcumuladosValor = resp.data
-                        }).catch(error => console.log(error));
-                    axios
-                        .get('/tarea/tarea-list/')
-                        .then((resp) => {
-                            this.allTareasAcumuladosValor = resp.data;
-                        })
-                        .catch(error => console.log(error));
-                    axios
-                        .get('/talla/tallaEmpresa-list/?idOp=' + idAcumulado)
-                        .then((resp) => {
-                            this.allTallasAcumulados = resp.data;
-                            console.log(this.allTallasAcumulados);
-                        }).catch(error => console.log(error));
 
                 },
 
 
             },
             mounted: function() {
-                this.getAcumuladoDataValorIntegranteValor();
                 this.getAcumuladoDataValor();
+            },
+            watch: {
+                OccionId_integrante_Acu(val) {
+                    axios.get('{% url "dataAcumuladoInte-listValor" %}', {
+                        params: {
+                            idIntegranteSelect: val.value,
+                            idAcumulado: idAcumulado,
+                        }
+                    }).then((resp) => {
+                        this.allTareaAcumulados = resp.data;
+
+                        if (this.allTareaAcumulados.length == 0) {
+                            document.getElementById('totalGenerado-' + idAcumulado).innerHTML =
+                                '<div class="col-md-5 offset-7 alert border btn-cyan bt ">Total Generado  : <b>' + 0 + '</b>';
+                        } else {
+                            this.totalGenerado = resp.data[resp.data.length - 1]['totalGenerado'];
+                            document.getElementById('totalGenerado-' + idAcumulado).innerHTML =
+                                '<div class="col-md-5 offset-7 alert border btn-cyan bt ">Total Generado  : <b>' + this.totalGenerado + '</b>';
+                        }
+                    }).catch(error => {
+                        console.log(error);
+                    });
+
+                }
+            },
+            created() {
+                axios
+                    .get('/integrante/integrante-list/')
+                    .then((resp) => {
+                        this.allIntegrantesAcumuladossValor = resp.data
+                    }).catch(error => console.log(error));
+                axios
+                    .get('/produccion/lista_patinadoresAct-prod/')
+                    .then((resp) => {
+                        this.allPatinadoresAcumuladosValor = resp.data
+                    }).catch(error => console.log(error));
+                axios
+                    .get('/tarea/tarea-list/')
+                    .then((resp) => {
+                        this.allTareasAcumuladosValor = resp.data;
+                    })
+                    .catch(error => console.log(error));
+                axios
+                    .get('/talla/tallaEmpresa-list/?idOp=' + idAcumulado)
+                    .then((resp) => {
+                        this.allTallasAcumulados = resp.data;
+                        console.log(this.allTallasAcumulados);
+                    }).catch(error => console.log(error));
             }
         })
 

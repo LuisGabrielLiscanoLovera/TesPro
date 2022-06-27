@@ -4,6 +4,12 @@
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/bootstrap-table.js' %}"></script>
 
+
+<script src="{% static 'js/vue-select-vue-select.js' %} "></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/vue-select-vue-select.css' %}">
+<script src="{% static 'js/index-index.js' %} "></script>
+
+
 <!-- <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
 <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css">
 
@@ -115,9 +121,12 @@
 
                 '<div class="col-sm-6   offset-6" >' +
                 '<div class="form-group"> ' + //<label>Integrante</label>
-                '<select  id="OccionId_integrante_prod-' + row.id +
-                '" class="sectIntegrenteOnChan-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteProduccion"><option value="" disabled >Selecciones Integrante</option>' +
-                '<option id="id_integrante"  v-for="(optionIntegrante) in allIntegrantesProduccions" v-bind:value="optionIntegrante.id">[[optionIntegrante.nombres]]  [[optionIntegrante.apellidos]]</option></select></div>' +
+                '<v-select ' +
+                'v-model="selectIdIntegranteProduccion" placeholder="Seleccione Integrante" :options="allIntegrantesProduccions.map(academicClass => ({label: academicClass.nombres, value: academicClass.id}))"></v-select>' +
+
+                '</div>' +
+
+
                 '</div>' +
 
                 '</form>' +
@@ -169,11 +178,16 @@
         }
 
         function formProduccionOPValor(idOperacion, idUsuario) {
+            Vue.component('v-select', VueSelect.VueSelect, {
+                extends: VueSelect,
+
+            });
             new Vue({
                 el: '#FormuProduccionOPValor-' + idOperacion,
                 delimiters: ['[[', ']]'],
                 data: function() {
                     return {
+
                         allPatinadoresProduccions: [],
                         allTallasProduccions: [],
                         allTareasProduccions: [],
@@ -192,65 +206,17 @@
                     }
                 },
                 methods: {
-
-                    getProduccionDataIntegrante: function() {
-
-                        //evento de escucha de integrante
-                        const selectElement = document.querySelector(".sectIntegrenteOnChan-" + idOperacion);
-                        selectElement.addEventListener("change", (event) => {
-                            const resutatatIntegrante = document.
-                            querySelector(".resutatatIntegrante-" + idOperacion);
-                            const idIntegranteSelect = event.target.value;
-                            //variable global prototype idIntegranteSelect
-                            Vue.prototype.$varGlobalSelectIntegrProd = idIntegranteSelect;
-                            axios.get('dataProduccionInte-listValor/', {
-                                params: {
-                                    idIntegranteSelect: idIntegranteSelect,
-                                    idOp: idOperacion
-                                }
-                            }).then((resp) => {
-                                this.allTareaProduccions = resp.data;
-                                if (this.allTareaProduccions.length == 0) {
-                                    document.getElementById('totalGeneradoProd-' + idOperacion).innerHTML = '<div class="col-md-5 offset-7 alert border btn-cyan bt ">Total Generado  : <b>' + 0 + '</b>';
-                                } else {
-                                    this.totalGeneradoProd = resp.data[resp.data.length - 1]['totalGenerado'];
-                                    document.getElementById('totalGeneradoProd-' + idOperacion).innerHTML = '<div class="col-md-5 offset-7 alert border btn-cyan bt ">Total Generado  : <b>' + this.totalGeneradoProd + '</b>';
-                                }
-                            }).catch(error => console.log(error));
-                        });
-                    },
-
-
                     getProduccionData: function() {
                         ProduccionOPValor(idOperacion);
-
-                        axios
-                            .get('/tarea/tarea-list/')
-                            .then((resp) => {
-                                this.allTareasProduccions = resp.data;
-                            })
-                            .catch(error => console.log(error));
-                        axios
-                            .get('/integrante/integrante-list/').then((resp) => {
-                                this.allIntegrantesProduccions = resp.data
-                            }).catch(error => console.log(error));
-                        axios
-                            .get('/produccion/lista_patinadoresAct-prod/')
-                            .then((resp) => {
-                                this.allPatinadoresProduccions = resp.data
-                            }).catch(error => console.log(error));
-                        axios
-                            .get('/talla/tallaOP-list/?idOp=' + idOperacion)
-                            .then((resp) => {
-                                this.allTallasProduccions = resp.data;
-                                console.log(this.allTallasProduccions);
-                            }).catch(error => console.log(error));
                     },
                     submitFormProduccion: function() {
-                        var OccionId_integrante_prod = $('select[id="OccionId_integrante_prod-' + this.idOperacion + '"]').val().trim();
-                        var OccionId_pantinador_prod = $('select[id="OccionId_pantinador_prod-' + this.idOperacion + '"]').val().trim();
-                        var OccionId_tarea = $('select[id="OccionId_tarea-' + this.idOperacion + '"]').val().trim();
-                        var OccionId_talla = $('select[id="OccionId_talla-' + this.idOperacion + '"]').val().trim();
+
+                        var OccionId_integrante_prod = this.selectIdIntegranteProduccion.value;
+                        var OccionId_pantinador_prod = this.selectIDPatinadorProduccion.value;
+                        var OccionId_tarea = this.selectIdTareaProduccion.value;
+                        var OccionId_talla = this.selectIdTallaProduccion.value;
+
+
                         var cantidad = $('input[name="cant_produccion-' + this.idOperacion + '"]').val().trim();
                         //crear la evaluacion de solo puede guardar los datos si cantidad esta llenna con if
                         if (cantidad && OccionId_integrante_prod && OccionId_tarea && OccionId_talla) {
@@ -277,10 +243,53 @@
                         }
                     }
                 },
+                created() {
+                    axios
+                        .get('/tarea/tarea-list/')
+                        .then((resp) => {
+                            this.allTareasProduccions = resp.data;
+                        })
+                        .catch(error => console.log(error));
+                    axios
+                        .get('/integrante/integrante-list/').then((resp) => {
+                            this.allIntegrantesProduccions = resp.data
+                        }).catch(error => console.log(error));
+                    axios
+                        .get('/produccion/lista_patinadoresAct-prod/')
+                        .then((resp) => {
+                            this.allPatinadoresProduccions = resp.data
+                        }).catch(error => console.log(error));
+                    axios
+                        .get('/talla/tallaOP-list/?idOp=' + idOperacion)
+                        .then((resp) => {
+                            this.allTallasProduccions = resp.data;
+                            console.log(this.allTallasProduccions);
+                        }).catch(error => console.log(error));
+                },
                 mounted: function() {
                     this.getProduccionDataIntegrante();
-                    this.getProduccionData();
-                }
+                },
+
+                watch: {
+                    selectIdIntegranteProduccion(val) {
+
+                        axios.get('dataProduccionInte-listValor/', {
+                            params: {
+                                idIntegranteSelect: val.value,
+                                idOp: idOperacion
+                            }
+                        }).then((resp) => {
+                            this.allTareaProduccions = resp.data;
+                            if (this.allTareaProduccions.length == 0) {
+                                document.getElementById('totalGeneradoProd-' + idOperacion).innerHTML = '<div class="col-md-5 offset-7 alert border btn-cyan bt ">Total Generado  : <b>' + 0 + '</b>';
+                            } else {
+                                this.totalGeneradoProd = resp.data[resp.data.length - 1]['totalGenerado'];
+                                document.getElementById('totalGeneradoProd-' + idOperacion).innerHTML = '<div class="col-md-5 offset-7 alert border btn-cyan bt ">Total Generado  : <b>' + this.totalGeneradoProd + '</b>';
+                            }
+                        }).catch(error => console.log(error));
+
+                    }
+                },
             })
         }
 

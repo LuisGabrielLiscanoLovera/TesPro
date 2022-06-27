@@ -4,7 +4,7 @@
     <div>
         <a href="#close" title="Close" class="close"><i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i></a>
         <center>
-            <h1>Casino {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
+            <h1>Record Integrante {% for i in nomEmpresaU %}{{ i|title }}{% endfor %}</h1>
         </center>
         <div class="row">
             <!-- <div class="col-md-12 col-md-offset-10">
@@ -12,55 +12,10 @@
             </div> -->
             <div class="col-md-12">
                 <div class="col-md-9">
-                    <form id="addCasino" autocomplete="off" class="form-wrapper ">{% csrf_token %}
-                        <input type="number" hidden="True" name="empresaIntegrante" value="{{ lastIdEmpresa }}">
-                        <input type="number" hidden="True" name="idUser" value="{{ login_user_id}}">
-
-                        <h4 class="text-cent" name="heading">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Registo de Casino</h4>
-
-                        <div class="row">
-                            <div class="col-md-4 mb-1 form-group">
-                                <input class="form-control" id="nom_casino" name="nom_casino" required placeholder="Nom Casino" required>
-                            </div>
 
 
 
-                            <div class="col-md-4 form-group">
-                                <input class="submit bt mb-xl-1 of" type="submit" value="Guardar">
 
-                            </div>
-
-                        </div>
-                    </form>
-
-                    <script>
-                        $("form#addCasino").submit(function() {
-
-                            var nom_casino = $('input[name="nom_casino"]').val().trim();
-                            var idUser = $('input[name="idUser"]').val().trim();
-                            var empresaIntegrante = $('input[name="empresaIntegrante"]').val().trim();
-
-
-                            if (idUser && empresaIntegrante && nom_casino) {
-                                axios.post('/casino/create/', {
-                                    nom_casino: nom_casino,
-                                    usuario: idUser,
-                                    empresa_id: empresaIntegrante,
-
-
-                                }).then(response => {
-
-                                    window.location.reload('/casino/');
-                                    console.log("guardado con exito")
-                                })
-
-                            } else {
-                                alert("All fields must have a valid value.");
-                            }
-                            $('form#addIntegrante').trigger("reset");
-                            return false;
-                        });
-                    </script>
 
 
 
@@ -68,20 +23,7 @@
 
 
                 </div>
-                <table id="table" data-id-field="id" class="table" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-search="true" data-show-fullscreen="true" data-show-export="true" data-locale="es-SP" data-pagination="true"
-                    data-url="casino/casino-list/">
-                    <thead class="thead-dark">
-                        <tr> {% comment %}
-                            <th data-field="id" class="text-center ">id</th> {% endcomment %}
-                            <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoCasino" class="text-center">Info</th>
-                            <th data-field="nom_casino" class="text-center">Reg Casino</th>
-                            <th data-field="can_total" class="text-center">Total</th>
-                            <th data-field="estatus" class="text-center">Estatus</th>
-                            <th data-field="created_at" class="text-center">Fecha</th>
-                            <th data-field="btnccion" data-detail-formatter="DetailFormatterButAccionCasino" class="text-center"> Accion</th>
-                        </tr>
-                    </thead>
-                </table>
+
             </div>
         </div>
 

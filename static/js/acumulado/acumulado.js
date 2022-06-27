@@ -101,10 +101,9 @@ function formAcumulado(idAcumulado, idUsuario) {
                 allTallasAcumulados: [],
                 allPatinadoresAcumulados: [],
                 allIntegrantesAcumuladoss: [],
-                selectIdIntegranteAcumulado: '',
-                selectIDPatinadorAcumulado: '',
-                selectIdTareaAcumulado: '',
-                selectIdTallaAcumulado: '',
+
+
+
                 cant_prod_Acum: '',
                 usuario: idUsuario,
                 idAcumulado: idAcumulado,
