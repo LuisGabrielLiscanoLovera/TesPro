@@ -31,7 +31,8 @@ def integranteList(request):
             idUser   = MyUser.objects.get(username=username)
 
     lastEm     = CambioEmpres.objects.filter(usuario_id=idUser).last()    
-    integrante = Integrante.objects.all().filter(empresa_id=lastEm.lastEm,estatus='A').order_by('-id')
+    #integrante = Integrante.objects.all().filter(empresa_id=lastEm.lastEm,estatus='A').order_by('-id')
+    integrante = Integrante.objects.all().filter(empresa_id=lastEm.lastEm).order_by('-id')
    
     try:
         serializer = IntegranteSerializer(integrante, many=True)
