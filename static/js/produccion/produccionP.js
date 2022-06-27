@@ -41,9 +41,12 @@ function DetailFormatterButInfoProduccionPatinador(index, row) {
 
         '<div class="col-sm-6   offset-6" >' +
         '<div class="form-group"> ' + //<label>Integrante</label>
-        '<select  id="OccionId_integrante_prodPatinador-' + row.id +
-        '" class="sectIntegrenteOnChanPatinador-' + row.id + ' form-select form-select-sm form-control" v-model="selectIdIntegranteProduccion"><option value="">Selecciones Integrante</option>' +
-        '<option id="id_integrante"  v-for="(optionIntegrante) in allIntegrantesProduccions" v-bind:value="optionIntegrante.id">[[optionIntegrante.nombres]]  [[optionIntegrante.apellidos]]</option></select></div>' +
+        '<v-select ' +
+        'v-model="selectIdIntegranteProduccion" placeholder="Seleccione Integrante" :options="allIntegrantesProduccions.map(academicClass => ({label: academicClass.nombres, value: academicClass.id}))"></v-select>' +
+
+
+
+        '</div>' +
         '</div>' +
 
 
@@ -56,17 +59,17 @@ function DetailFormatterButInfoProduccionPatinador(index, row) {
 
         '<div class="col-sm-6 mb-2 offset-6">' +
         '<div class="form-group">' +
-        '<select  id="OccionId_tareaPatinador-' + row.id +
-        '" class="form-select form-select-sm form-control " v-model="selectIdTareaProduccionPatinador"><option value="">Selecciones Tarea</option>' +
-        '<option id="id_tarea"  v-for="(optionTarea) in allTareasProduccions" v-bind:value="optionTarea.id">[[optionTarea.nom_tarea]] / [[optionTarea.detalle]]</option></select></div>' +
+        '<v-select ' +
+        'v-model="selectIdTareaProduccionPatinador"  placeholder="Seleccione Tarea"  :options="allTareasProduccions.map(academicClassTarea => ({label: academicClassTarea.nom_tarea+\' \'+academicClassTarea.detalle, value: academicClassTarea.id}))"></v-select>' +
+        '</div>' +
         '</div>' +
 
         '<div class="col-sm-6 mb-2 offset-6">' +
         '<div class="form-group">' +
-        '<select  id="OccionId_tallaPatinador-' + row.id +
-        '" class="form-select form-control form-select-sm" v-model="selectIdTallaProduccion"><option value="">Selecciones Talla</option>' +
-        '<option id="id_talla"  v-for="(opcTarea) in allTallasProduccions"  v-bind:value="opcTarea.talla">[[opcTarea.num_talla]] / [[opcTarea.nom_talla]]</option></select></div>' +
+        '<v-select ' +
+        'v-model="selectIdTallaProduccion"  placeholder="Seleccione Talla"  :options="allTallasProduccions.map(academicClassTalla => ({label: academicClassTalla.num_talla+\' / \'+academicClassTalla.nom_talla, value: academicClassTalla.talla}))"></v-select>' +
 
+        '</div>' +
         '</div>' +
 
         '<div class="col-sm-6 mb-2 offset-6">' +
@@ -121,6 +124,10 @@ function DetailFormatterButAccionProduccionPatinador(index, row) {
 } */
 
 function formProduccionOPPatinador(idOperacionPatinador, idUsuario) {
+    Vue.component('v-select', VueSelect.VueSelect, {
+        extends: VueSelect,
+
+    });
     new Vue({
         el: '#FormuProduccionOPPatinador-' + idOperacionPatinador,
         delimiters: ['[[', ']]'],
@@ -142,59 +149,18 @@ function formProduccionOPPatinador(idOperacionPatinador, idUsuario) {
             }
         },
         methods: {
-
-            getProduccionDataIntegrante: function() {
-
-                //evento de escucha de integrante
-                const selectElement = document.querySelector(".sectIntegrenteOnChanPatinador-" + idOperacionPatinador);
-                selectElement.addEventListener("change", (event) => {
-                    const resutatatIntegrante = document.
-                    querySelector(".resutatatIntegrante-" + idOperacionPatinador);
-                    const idIntegranteSelectPatinador = event.target.value;
-                    //variable global prototype idIntegranteSelectPatinador
-                    Vue.prototype.$varGlobalSelectIntegrProd = idIntegranteSelectPatinador;
-                    axios.get('/blackbox/dataProduccionInte-listPatinador/', {
-                        params: {
-                            idIntegranteSelectPatinador: idIntegranteSelectPatinador,
-                            idOpPatinador: idOperacionPatinador,
-                        }
-                    }).then((resp) => {
-                        this.allTareaProduccionsPatinador = resp.data;
-                    }).catch(error => console.log(error));
-                    /* 
-                    document.getElementById('sectIntegreOC-' + idOperacionPatinador).innerHTML =         
-                     */
-                });
-            },
-
-
             getProduccionData: function() {
                 ProduccionOPPatinador(idOperacionPatinador);
 
-                axios
-                    .get('/blackbox/tarea-listPatinador/')
-                    .then((resp) => {
-                        this.allTareasProduccions = resp.data;
-                    })
-                    .catch(error => console.log(error));
-                axios
-                    .get('/blackbox/integrante-listPatinador/')
-                    .then((resp) => {
-                        this.allIntegrantesProduccions = resp.data
-                    }).catch(error => console.log(error));
 
-                axios
-                    .get('/blackbox/tallaOP-list-patinador/?idOp=' + idOperacionPatinador)
-                    .then((resp) => {
-                        this.allTallasProduccions = resp.data;
-                        console.log(this.allTallasProduccions);
-                    }).catch(error => console.log(error));
             },
             submitFormProduccionPatinador: function() {
-                var OccionId_integrante_prodPatinador = $('select[id="OccionId_integrante_prodPatinador-' + this.idOperacionPatinador + '"]').val().trim();
-                var OccionId_tareaPatinador = $('select[id="OccionId_tareaPatinador-' + this.idOperacionPatinador + '"]').val().trim();
-                var OccionId_tallaPatinador = $('select[id="OccionId_tallaPatinador-' + this.idOperacionPatinador + '"]').val().trim();
+                var OccionId_integrante_prodPatinador = this.selectIdIntegranteProduccion.value;
+                var OccionId_tareaPatinador = this.selectIdTareaProduccionPatinador.value;
+                var OccionId_tallaPatinador = this.selectIdTallaProduccion.value;
                 var cantidad = $('input[name="cant_produccionPatinador-' + this.idOperacionPatinador + '"]').val().trim();
+
+
                 //crear la evaluacion de solo puede guardar los datos si cantidad esta llenna con if
                 if (cantidad && OccionId_integrante_prodPatinador && OccionId_tareaPatinador && OccionId_tallaPatinador) {
                     axios.post('/blackbox/createPatinadorProduccion/', {
@@ -210,7 +176,7 @@ function formProduccionOPPatinador(idOperacionPatinador, idUsuario) {
                         //console.log(this.$varGlobalSelectIntegrProd);
                         axios.get('/blackbox/dataProduccionInte-listPatinador/', {
                             params: {
-                                idIntegranteSelectPatinador: this.$varGlobalSelectIntegrProd,
+                                idIntegranteSelectPatinador: OccionId_integrante_prodPatinador,
                                 idOpPatinador: idOperacionPatinador,
                             }
                         }).then((resp) => {
@@ -220,8 +186,46 @@ function formProduccionOPPatinador(idOperacionPatinador, idUsuario) {
                 }
             }
         },
+        created() {
+            axios
+                .get('/blackbox/tarea-listPatinador/')
+                .then((resp) => {
+                    this.allTareasProduccions = resp.data;
+                })
+                .catch(error => console.log(error));
+            axios
+                .get('/blackbox/integrante-listPatinador/')
+                .then((resp) => {
+                    this.allIntegrantesProduccions = resp.data
+                }).catch(error => console.log(error));
+
+            axios
+                .get('/blackbox/tallaOP-list-patinador/?idOp=' + idOperacionPatinador)
+                .then((resp) => {
+                    this.allTallasProduccions = resp.data;
+                    console.log(this.allTallasProduccions);
+                }).catch(error => console.log(error));
+        },
+
+        watch: {
+            selectIdIntegranteProduccion(val) {
+
+                axios.get('/blackbox/dataProduccionInte-listPatinador/', {
+                    params: {
+                        idIntegranteSelectPatinador: val.value,
+                        idOpPatinador: idOperacionPatinador,
+                    }
+                }).then((resp) => {
+                    this.allTareaProduccionsPatinador = resp.data;
+                }).catch(error => console.log(error));
+
+            }
+        },
+
+
+
         mounted: function() {
-            this.getProduccionDataIntegrante();
+
             this.getProduccionData();
         }
     })
