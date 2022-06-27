@@ -27,9 +27,11 @@ function DetailFormatterButInfoDespachoPerfilPatinadores(index, row) {
         '" name="operacionPatinador-' + row.id +
         '"  type="number" hidden=True value="' + row.id +
         '"  required/>' +
-        '<select  id="OccionId_tallaPatinador-' + row.id +
-        '" class="form-control mb-1" v-model="selectIdTallaPatinador"><option  value="" disabled>Selecciones Talla</option>' +
-        '<option id="id_talla"  v-for="(optionTalla) in allTallasOPsPatinador"  v-bind:value="optionTalla.talla"  >[[optionTalla.num_talla]] / [[optionTalla.nom_talla]]</option></select>' +
+
+
+        '<v-select ' +
+        'v-model="selectIdTallaPatinador"  placeholder="Seleccione Talla"  :options="allTallasOPsPatinador.map(DespachoClassTalla => ({label: DespachoClassTalla.num_talla+\' / \'+DespachoClassTalla.nom_talla, value: DespachoClassTalla.talla}))"></v-select>' +
+
         '<input class="form-control big-button" autocomplete="off" placeholder="Cantidad terminada" id="cant" name="cantOpDespachoPatinador-' + row.id +
         '"  type="number" v-model="cant" required/>' +
         '<input hidden=True id="usuario"   value="' + row.usuario + '" type="number"/>' +
@@ -187,7 +189,12 @@ function DetailFormatterButAccionDespachoPatinador(index, row) {
 
 
 function formOPPatinador(idOp, usuario) {
+    Vue.component('v-select', VueSelect.VueSelect, {
+        extends: VueSelect,
+
+    });
     new Vue({
+
         el: '#FormuTallaOPPatinador-' + idOp,
         delimiters: ['[[', ']]'],
 
@@ -200,7 +207,6 @@ function formOPPatinador(idOp, usuario) {
                 usuario: usuario,
                 cant: '',
                 cantRestantePatinador: '',
-
                 total: '',
                 fechaCierre: ''
 
@@ -209,36 +215,12 @@ function formOPPatinador(idOp, usuario) {
         },
         methods: {
 
-
             getDespachoDataPatinador: function() {
                 tallasOPPatinador(idOp);
-
-                axios
-                    .get('/blackbox/tallaOP-list-patinador/?idOp=' + idOp)
-                    .then((resp) => {
-                        this.allTallasOPsPatinador = resp.data;
-
-                    })
-                    .catch(error => console.log(error));
-
-                axios
-                    .get('/blackbox/tallaOP-IncosistentePatinadores/?idOperacion=' + idOp)
-                    .then((resp) => {
-                        this.cantRestantePatinador = resp.data.TotalOpRestante;
-
-                        this.total = resp.data.CanOperacion;
-                        //this.progressRest = ((resp.data.TotalOpRestante * 100) / resp.data.CanTallaTotal)
-                        //document.getElementById('canRestante-' + idOp).innerHTML = "Restante";
-
-                    })
-                    .catch(error => console.log(error));
-
-
-
             },
 
             submitFormDespachoPatinador() {
-                var OccionId_tallaPatinador = $('select[id="OccionId_tallaPatinador-' + this.id_OP + '"]').val().trim();
+                var OccionId_tallaPatinador = this.selectIdTallaPatinador.value;
                 var cantOpDespachoPatinador = $('input[name="cantOpDespachoPatinador-' + this.id_OP + '"]').val().trim();
                 var operacionPatinador = $('input[name="operacionPatinador-' + this.id_OP + '"]').val().trim();
 
@@ -287,6 +269,29 @@ function formOPPatinador(idOp, usuario) {
                 }
 
             }
+        },
+
+
+        created() {
+            axios
+                .get('/blackbox/tallaOP-list-patinador/?idOp=' + idOp)
+                .then((resp) => {
+                    this.allTallasOPsPatinador = resp.data;
+
+                })
+                .catch(error => console.log(error));
+
+            axios
+                .get('/blackbox/tallaOP-IncosistentePatinadores/?idOperacion=' + idOp)
+                .then((resp) => {
+                    this.cantRestantePatinador = resp.data.TotalOpRestante;
+
+                    this.total = resp.data.CanOperacion;
+                    //this.progressRest = ((resp.data.TotalOpRestante * 100) / resp.data.CanTallaTotal)
+                    //document.getElementById('canRestante-' + idOp).innerHTML = "Restante";
+
+                })
+                .catch(error => console.log(error));
         },
         mounted: function() {
             this.getDespachoDataPatinador();
