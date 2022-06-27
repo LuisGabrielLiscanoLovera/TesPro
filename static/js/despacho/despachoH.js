@@ -138,6 +138,11 @@ function deleteDespachoUnico(id_despacho) {
 }
 
 function formOPHistorial(idOp, usuario) {
+
+    Vue.component('v-select', VueSelect.VueSelect, {
+        extends: VueSelect,
+
+    });
     new Vue({
         el: '#FormuTallaOP-' + idOp,
         delimiters: ['[[', ']]'],
@@ -164,90 +169,37 @@ function formOPHistorial(idOp, usuario) {
 
             getDespachoData: function() {
                 tallasOP(idOp);
-
-                axios
-                    .get('/despacho/lista_patinadoresAct/')
-                    .then((resp) => {
-                        this.allPatinadoresOPs = resp.data
-                    })
-                    .catch(error => console.log(error));
-                axios
-                    .get('/talla/tallaOP-list/?idOp=' + idOp)
-                    .then((resp) => {
-                        this.allTallasOPs = resp.data;
-
-                    })
-                    .catch(error => console.log(error));
-
-                axios
-                    .get('/talla/tallaOP-Incosistente/?idOperacion=' + idOp)
-                    .then((resp) => {
-                        this.cantRestante = resp.data.TotalOpRestante;
-
-                        this.total = resp.data.CanOperacion;
-                        //this.progressRest = ((resp.data.TotalOpRestante * 100) / resp.data.CanTallaTotal)
-                        //document.getElementById('canRestante-' + idOp).innerHTML = "Restante";
-
-                    })
-                    .catch(error => console.log(error));
-
-
-
             },
-
-            submitFormDespacho() {
-                var OccionId_pantinador = $('select[id="OccionId_pantinador-' + this.id_OP + '"]').val().trim();
-                var OccionId_talla = $('select[id="OccionId_talla-' + this.id_OP + '"]').val().trim();
-                var cantOpDespacho = $('input[name="cantOpDespacho-' + this.id_OP + '"]').val().trim();
-                var operacion = $('input[name="operacion-' + this.id_OP + '"]').val().trim();
-
-
-                if (cantOpDespacho && OccionId_pantinador && operacion) {
-                    axios.post('/despacho/create/', {
-                        id_OP: operacion,
-                        selectIdTalla: OccionId_talla, //
-                        selectIDPatinador: OccionId_pantinador, //l
-                        usuario: this.usuario,
-                        cant: cantOpDespacho //
-
-                    }).then(response => {
-                        // console.log(response);
-                        // this.response = response.data
-                        this.success = 'Data saved successfully';
-                        this.response = JSON.stringify(response, null, 2);
-                        document.getElementById('despachoVueHistorial-' + idOp).innerHTML =
-                            '<table class="table animated fadeIn">' +
-                            '<thead class="thead-dark">' +
-                            '<tr>' +
-                            '<th class="text-center">Nombre Talla</th>' +
-                            '<th class="text-center">Talla Total</th>' +
-                            '<th class="text-center">Talla Restante</th>' +
-                            '</tr>' +
-                            '</thead><tbody calss="table-striped table  table-sm  table-bordered table-hover" id="listKill' + idOp + '">' +
-                            '<tr v-for="allTallaOP in allTallaOPs" :key="allTallaOP.id">' +
-
-                            '<td class="text-center">[[allTallaOP.nom_talla]]</td>' +
-                            '<td class="text-center">[[allTallaOP.can_talla]]' +
-                            '</td><td class="text-center">[[allTallaOP.res_talla]]</td></tr>' +
-                            '</tbody></table>';
-                        tallasOP(idOp);
-                        axios
-                            .get('/talla/tallaOP-Incosistente/?idOperacion=' + idOp)
-                            .then((resp) => {
-                                this.cantRestante = resp.data.TotalOpRestante;
-                                //document.getElementById('canRestante-' + idOp).innerHTML = "Restante";
-                                //console.log(this.cantRestante)
-                            })
-                            .catch(error => console.log(error));
-
-                    }).catch(error => {
-                        this.response = 'Error: ' + error.response.status
-                    })
-
-                }
-
-            }
         },
+
+        created() {
+            axios
+                .get('/despacho/lista_patinadoresAct/')
+                .then((resp) => {
+                    this.allPatinadoresOPs = resp.data
+                })
+                .catch(error => console.log(error));
+            axios
+                .get('/talla/tallaOP-list/?idOp=' + idOp)
+                .then((resp) => {
+                    this.allTallasOPs = resp.data;
+
+                })
+                .catch(error => console.log(error));
+
+            axios
+                .get('/talla/tallaOP-Incosistente/?idOperacion=' + idOp)
+                .then((resp) => {
+                    this.cantRestante = resp.data.TotalOpRestante;
+
+                    this.total = resp.data.CanOperacion;
+                    //this.progressRest = ((resp.data.TotalOpRestante * 100) / resp.data.CanTallaTotal)
+                    //document.getElementById('canRestante-' + idOp).innerHTML = "Restante";
+
+                })
+                .catch(error => console.log(error));
+        },
+
         mounted: function() {
             this.getDespachoData();
         }
