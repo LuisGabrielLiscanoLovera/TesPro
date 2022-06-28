@@ -25,16 +25,8 @@ class Home(LoginRequiredMixin,TVB):
         s = SessionStore()
         s['last_login'] = self.request.user.id
         s.create()
-        print(s['last_login'])
         lastEm          = CambioEmpres.objects.filter(usuario_id=s['last_login']).last()
-       
-      
-        
-        
-        
-       
-        
-        
+        #se agrega cambio de empresa automatico      
         if lastEm==None:
             empresaId = Empresa.objects.filter(
                 usuario_id=s['last_login']).values('id')

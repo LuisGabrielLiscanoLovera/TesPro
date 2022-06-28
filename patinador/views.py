@@ -132,30 +132,30 @@ class DeletePatinador(View):
 
 class UpdatePatinador(LoginRequiredMixin,TemplateView):
     def get(self, request):
-        idIpatinador      = request.GET.get('idIpatinadorUP', None)
-       # idEmpresa         = request.GET.get('idEmpresaUP', None)
-        #idUser            = request.GET.get('idUserUP', None)       
-        #ctrlDespachoUP    = request.GET.get('ctrlDespachoUP', None)
-        #ctrlProduccionUP  = request.GET.get('ctrlProduccionUP', None)
-        #ctrlCasinoUP      = request.GET.get('ctrlCasinoUP', None)
-
-
-
+        idIpatinador     = request.GET.get('idIpatinadorUP', None)
+        estatusUP          = request.GET.get('estatusUP', None)
+        idEmpresa        = request.GET.get('idEmpresaUP', None)
+        idUser           = request.GET.get('idUserUP', None)
+        ctrlDespachoUP   = request.GET.get('ctrlDespachoUP', None)
+        ctrlProduccionUP = request.GET.get('ctrlProduccionUP', None)
+        ctrlCasinoUP     = request.GET.get('ctrlCasinoUP', None)
+        print(ctrlDespachoUP, "=ctrlDespachoUP")
         obj = Patinador.objects.get(id=idIpatinador)
-        #obj.empresa_id     = idEmpresa
-        #obj.usuario_id     = idUser
-        #obj.patinador_id   = idIpatinador
-        #obj.ctrlDespacho   = ctrlDespachoUP
-        #obj.ctrlProduccion = ctrlProduccionUP
-        #obj.ctrlCasino     = ctrlCasinoUP
-        print("hhhhhhhhhhhhhhhhhhhhhh",obj)
-
+        obj.empresa_id     = idEmpresa
+        obj.usuario_id     = idUser
+        obj.patinador_id   = idIpatinador
+        obj.estatus        = estatusUP
+        obj.ctrlDespacho   = 1
+        obj.ctrlProduccion = 1
+        obj.ctrlCasino     = 1
+        
 
         try:
             obj.save()
             return redirect('home')
-        except Exception as e:  print("reparar peo de cors header crsf token")
-
+        except Exception as e:  
+            print("reparar peo de cors header crsf token ste error :"+str(e))
+            return redirect('home')
 
 
 

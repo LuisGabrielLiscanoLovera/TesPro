@@ -88,8 +88,8 @@ data-auto-refresh-status="true"
                     '<div class="form-group"><label>Despacho</label>' +
                     '<select class="form-control" id="ctrlDespachoUP-' + row.id + '">' +
                     '<option value="' + row.ctrlDespacho + '">Seleccione</option>' +
-                    '<option value="true">Activo</option>' +
-                    '<option value="false">Inactivo</option>' +
+                    '<option value="True">Activo</option>' +
+                    '<option value="False">Inactivo</option>' +
                     '</select></div>' +
                     '</div>' +
 
@@ -97,8 +97,8 @@ data-auto-refresh-status="true"
                     '<div class="form-group"><label>Producción</label>' +
                     '<select class="form-control" id="ctrlProduccionUP-' + row.id + '">' +
                     '<option value="' + row.ctrlProduccion + '">Seleccione</option>' +
-                    '<option value="true">Activo</option>' +
-                    '<option value="false">Inactivo</option>' +
+                    '<option value="True">Activo</option>' +
+                    '<option value="False">Inactivo</option>' +
                     '</select></div>' +
                     '</div>' +
 
@@ -106,8 +106,8 @@ data-auto-refresh-status="true"
                     '<div class="form-group"><label>Casino</label>' +
                     '<select class="form-control" id="ctrlCasinoUP-' + row.id + '">' +
                     '<option value="' + row.ctrlCasino + '">Seleccione</option>' +
-                    '<option value="true">Activo</option>' +
-                    '<option value="false">Inactivo</option>' +
+                    '<option value="True">Activo</option>' +
+                    '<option value="False">Inactivo</option>' +
                     '</select></div>' +
                     '</div>' +
 
@@ -362,7 +362,7 @@ data-auto-refresh-status="true"
         if (idUserUP && idEmpresaUP) {
 
             $.ajax({
-                url: 'patinador/crud/Update/',
+                url: '{% url "Patinador_ajax_update" %}',
                 data: {
                     'estatusUP': estatusUP,
                     'idEmpresaUP': idEmpresaUP,
