@@ -139,15 +139,15 @@ class UpdatePatinador(LoginRequiredMixin,TemplateView):
         ctrlDespachoUP   = request.GET.get('ctrlDespachoUP', None)
         ctrlProduccionUP = request.GET.get('ctrlProduccionUP', None)
         ctrlCasinoUP     = request.GET.get('ctrlCasinoUP', None)
-        print(ctrlDespachoUP, "=ctrlDespachoUP")
+        #print(ctrlDespachoUP, "=ctrlDespachoUP")
         obj = Patinador.objects.get(id=idIpatinador)
         obj.empresa_id     = idEmpresa
         obj.usuario_id     = idUser
         obj.patinador_id   = idIpatinador
         obj.estatus        = estatusUP
-        obj.ctrlDespacho   = 1
-        obj.ctrlProduccion = 1
-        obj.ctrlCasino     = 1
+        obj.ctrlDespacho   = bool(ctrlDespachoUP)
+        obj.ctrlProduccion = bool(ctrlProduccionUP)
+        obj.ctrlCasino     = bool(ctrlCasinoUP)
         
 
         try:
