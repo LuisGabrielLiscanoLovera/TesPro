@@ -136,18 +136,27 @@ class UpdatePatinador(LoginRequiredMixin,TemplateView):
         estatusUP          = request.GET.get('estatusUP', None)
         idEmpresa        = request.GET.get('idEmpresaUP', None)
         idUser           = request.GET.get('idUserUP', None)
+        
         ctrlDespachoUP   = request.GET.get('ctrlDespachoUP', None)
         ctrlProduccionUP = request.GET.get('ctrlProduccionUP', None)
         ctrlCasinoUP     = request.GET.get('ctrlCasinoUP', None)
-        #print(ctrlDespachoUP, "=ctrlDespachoUP")
+        if ctrlDespachoUP == "True":ctrlDespachoUP=1
+        else:ctrlDespachoUP=0
+        if ctrlProduccionUP == "True":ctrlProduccionUP = 1
+        else:ctrlProduccionUP = 0
+        if ctrlCasinoUP == "True":ctrlCasinoUP = 1
+        else:ctrlCasinoUP = 0
+        
+       
+        
         obj = Patinador.objects.get(id=idIpatinador)
         obj.empresa_id     = idEmpresa
         obj.usuario_id     = idUser
         obj.patinador_id   = idIpatinador
         obj.estatus        = estatusUP
-        obj.ctrlDespacho   = bool(ctrlDespachoUP)
-        obj.ctrlProduccion = bool(ctrlProduccionUP)
-        obj.ctrlCasino     = bool(ctrlCasinoUP)
+        obj.ctrlDespacho   = ctrlDespachoUP
+        obj.ctrlProduccion = ctrlProduccionUP
+        obj.ctrlCasino     = ctrlCasinoUP
         
 
         try:
