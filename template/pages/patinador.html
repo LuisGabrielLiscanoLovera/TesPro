@@ -1,4 +1,9 @@
 {% load static %}
+<script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/js/popper.js' %}"></script>
+
+
+
 
 <div id="openModalPatinador" class="modalDialogPadre">
     <div>
@@ -55,38 +60,20 @@ data-auto-refresh-status="true"
 
 
         </div>
-        <style>
-
-        </style>
 
         <!--table patinador-->
         <script>
             $('#patinadorTable').SetEditable();
 
-
-
-
-
-
-
-
             function DetailFormatterButAccionPatinador(index, row) {
 
-
-
-
-
                 return '<div class="row">' +
-                    '<form @submit.prevent="remove" id="editarIpatinador" class="form form-">{% csrf_token %}' +
-
-
+                    '<form  style="display: inline">{% csrf_token %}<hr>' +
 
                     '<div class="form-group"><label>Clave patinador </label>' +
                     '<input type="password" id="typepass-' + row.id + '"  Class="form-control" disabled value="' + row.password + '">' +
                     '<input type="checkbox" onclick="Toggle(' + row.id + ')"> ver clave' +
                     '</div>' +
-
-
 
                     '<div class="form-group">' +
                     '<div class="form-group"><label>Estatus</label>' +
@@ -97,9 +84,6 @@ data-auto-refresh-status="true"
                     '</select></div>' +
                     '</div>' +
 
-
-
-
                     '<div class="form-group">' +
                     '<div class="form-group"><label>Despacho</label>' +
                     '<select class="form-control" id="ctrlDespachoUP-' + row.id + '">' +
@@ -108,10 +92,6 @@ data-auto-refresh-status="true"
                     '<option value="false">Inactivo</option>' +
                     '</select></div>' +
                     '</div>' +
-
-
-
-
 
                     '<div class="form-group">' +
                     '<div class="form-group"><label>Producción</label>' +
@@ -122,10 +102,6 @@ data-auto-refresh-status="true"
                     '</select></div>' +
                     '</div>' +
 
-
-
-
-
                     '<div class="form-group">' +
                     '<div class="form-group"><label>Casino</label>' +
                     '<select class="form-control" id="ctrlCasinoUP-' + row.id + '">' +
@@ -135,8 +111,6 @@ data-auto-refresh-status="true"
                     '</select></div>' +
                     '</div>' +
 
-
-
                     '<div class="form-group col">' +
                     '<input id="EditPatinadorBtn-' + row.id + '" value="Actualizar registro" class="form-control btn-warning" type="submit" onclick="editPatinador(' + row.id + ')" class="btn-md  btn btn-outline-warning btn-rounded  " >' +
                     '</div>' +
@@ -144,45 +118,16 @@ data-auto-refresh-status="true"
                     '<button value="" class="form-control btn btn-block btn-sm btn-outline-danger  icofont-ui-remove" onclick="removePtinador(' + row.id + ')"  ></button>' +
                     '</div>' +
 
-                    '</div>' +
-
                     '<input type="number" hidden="True" name="idEmpresaUP" value="{{ lastIdEmpresa }}">' +
                     '<input type="number" hidden="True" name="idUserUP" value="{{ login_user_id}}">' +
                     '<input type="number" hidden="True" name="idIpatinadorUP" value="' + row.id + '"' +
 
-                    '</form>';
-
-
-
+                    '</form>' +
+                    '</div>';
             }
         </script>
-
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -349,14 +294,6 @@ data-auto-refresh-status="true"
 
     }
 
-
-
-
-
-
-
-
-
     $("form#addPatinador").submit(function() {
 
         var idIntegrante = $('input[name="idIntegrantePatinador"]').val().trim();
@@ -397,7 +334,7 @@ data-auto-refresh-status="true"
                     window.location.reload();
                 }
             });
-            window.location.reload();
+
 
         } else {
             alert("All fields must have a valid value.");
@@ -413,37 +350,46 @@ data-auto-refresh-status="true"
         var estatusUP = document.getElementById("estatusUP-" + id).value;
         var idEmpresaUP = $('input[name="idEmpresaUP"]').val().trim();
         var idUserUP = $('input[name="idUserUP"]').val().trim();
-
         var ctrlCasino = document.getElementById("ctrlCasinoUP-" + id).value;
         var ctrlDespach = document.getElementById("ctrlDespachoUP-" + id).value;
         var ctrlProduccion = document.getElementById("ctrlProduccionUP-" + id).value;
 
 
+        alert("envia el beta");
 
 
 
+        if (idUserUP && idEmpresaUP) {
 
-        axios.post('/patinador/crud/Update/', {
-            params: {
-                'estatusUP': estatusUP,
-                'idEmpresaUP': idEmpresaUP,
-                'idUserUP': idUserUP,
-                'idIpatinadorUP': id,
-                'ctrlDespachoUP': ctrlDespach,
-                'ctrlCasinoUP': ctrlCasino,
-                'ctrlProduccionUP': ctrlProduccion,
-
-            }
-        }).then((resp) => {
-            this.allTareaAcumuladosPatinador = resp.data;
-        }).catch(error => console.log(error));
+            $.ajax({
+                url: 'patinador/crud/Update/',
+                data: {
+                    'estatusUP': estatusUP,
+                    'idEmpresaUP': idEmpresaUP,
+                    'idUserUP': idUserUP,
+                    'idIpatinadorUP': id,
+                    'ctrlDespachoUP': ctrlDespach,
+                    'ctrlCasinoUP': ctrlCasino,
+                    'ctrlProduccionUP': ctrlProduccion,
 
 
 
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if (data.user) {
+                        appendToUsrTable(data.user);
+                    }
+
+                    alert(2222222);
+                    //window.location.reload();
+                }
 
 
-
-
+            });
+        } else {
+            alert("All fields must have a valid value.");
+        }
 
 
 
@@ -452,7 +398,7 @@ data-auto-refresh-status="true"
 <!--Delete patinador-->
 <script>
     function removePtinador(idPatinador) {
-
+        alert(idPatinador);
         $.ajax({
             url: '{% url "Patinador_ajax_delete" %}',
             data: {

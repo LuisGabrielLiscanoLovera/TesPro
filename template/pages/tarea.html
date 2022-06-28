@@ -3,6 +3,7 @@
 <!-- <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
  -->
+
 <div id="openModalTarea" class="modalDialogPadre">
     <div><button onclick="location.href='#close'" class="close" type="button">
         <i class="btn-outline-danger btn-outline-danger icofont-ui-close"></i>
@@ -63,7 +64,7 @@ data-auto-refresh-status="true"
             }
 
             function DetailFormatterButAccionTarea(index, row) {
-                return '<form  @submit.prevent="submitFormCasino" id="editarTarea-' + row.id + '" style="display: inline"  >{% csrf_token %}<hr>' +
+                return '<form  id="editarTarea-' + row.id + '" style="display: inline"  >{% csrf_token %}<hr>' +
                     '<div class="row">' +
                     '<div class="col-sm-3">' +
                     '<div class="form-group"><label>Nombre Tarea</label>' +
