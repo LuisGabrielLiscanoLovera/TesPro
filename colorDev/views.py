@@ -1,5 +1,5 @@
 from django.shortcuts import redirect
-from colorrrrrrrrr.models import Color
+from colorDev.models import Color
 from django.views.generic import TemplateView, View
 from django.http import JsonResponse
 from django.utils import (dateformat, formats)
