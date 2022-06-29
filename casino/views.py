@@ -152,6 +152,9 @@ def CasinoDataImporte(request):
     importeGeneral=Importe.objects.filter(usuario_id=int(idUser.id),casino_id=idCasino,empresa_id=lastEm.lastEm).order_by("-id")
     serializer = ImporteSerializer(importeGeneral, many=True)
     return Response(serializer.data)
+    
+    
+    
 @login_required(login_url='signin')
 @api_view(['GET'])
 def TotalImporteInte(request):
@@ -169,6 +172,8 @@ def TotalImporteInte(request):
     TotalCasinoImporte = casinoImporte['cantidad']
     data = {'TotalCasinoImporte':TotalCasinoImporte,'cedulaIntegrante':cedula}  
     return JsonResponse(data)
+    
+    
 @login_required(login_url='signin')
 @api_view(['GET'])
 def apiOverview(request):
@@ -213,11 +218,12 @@ def createCasino(request,):
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username)        
     lastEm           = CambioEmpres.objects.filter(usuario_id=idUser.id).last()    
+    nomCasino        = request.data['nom_casino']
     try: 
         obj = Casino.objects.create(
         usuario_id     = int(idUser.id),
         empresa_id     = int(lastEm.lastEm),
-        nom_casino     = request.data['nom_casino'],        
+        nom_casino     = nomCasino.upper(),        
         )
                 
         data = {'Casino': "Casino guardado con exito!",
