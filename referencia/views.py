@@ -88,7 +88,6 @@ class DeleteReferencia(View):
         
         
         if sinRefe[0]['nom_referencia'] != 'SIN REFERENCIA':
-            print("sinRefe", sinRefe)
             Referencia.objects.get(id=idReferencia).delete()
             data = {
             'deleted': True
@@ -110,20 +109,17 @@ def UpdateReferencia(request):
     descripcion = request.data['descripcionUP']   
     idUser = request.data['idUserUP']
     estatus = request.data['estatusUP']
-    
+   
     sinRefe = Referencia.objects.filter(
-    	id=idReferencia, nom_referencia='SIN REFERENCIA')
-    
-    if sinRefe == None:
-        
-        obj = Referencia.objects.get(id=idReferencia)
-        obj.nom_referencia = nom_referencia
-        obj.estatus     = estatus
-        obj.descripcion = descripcion  
-        obj.usuario_id = idUser
-        
-        
+    	id=idReferencia).values('nom_referencia')
+
+    if sinRefe[0]['nom_referencia'] != 'SIN REFERENCIA':
         try:
+            obj = Referencia.objects.get(id=idReferencia)
+            obj.nom_referencia = nom_referencia.upper()
+            obj.estatus     = estatus
+            obj.descripcion = descripcion  
+            obj.usuario_id = idUser           
             obj.save()
             return redirect('home')
         except Exception as e:
