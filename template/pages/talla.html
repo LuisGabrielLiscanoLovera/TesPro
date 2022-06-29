@@ -55,7 +55,7 @@ data-auto-refresh-status="true"
             </div>
 
 
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <table id="TallaTable" data-id-field="id" class="table table-sm" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-show-columns="false" data-search="false" data-show-fullscreen="false" data-locale="es-SP" data-pagination="true"
                     data-detail-view-icon="false" data-url="talla/talla-list/">
 
@@ -67,6 +67,9 @@ data-auto-refresh-status="true"
 
                             <th data-field="nom_talla" class="text-center">Nombre Talla </th>
                             <th data-field="num_talla" class="text-center">N° Talla </th>
+                            <th data-field="estatus" class="text-center">Estatus</th>
+                            <th data-field="created_at" class="text-center">Fecha creada</th>
+
 
                             <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionTalla" class="text-center">Accion</th>
                         </tr>
@@ -92,8 +95,36 @@ data-auto-refresh-status="true"
                 return '<form id="editarITalla" style="display: inline"  >{% csrf_token %}<hr>' +
                     '<div class="row">' +
 
-                    '<div class="col-sm-1">' + '<button value="" onclick="removeTalla(' + row.id + ')"  id="buttonEliminarTalla" class="btn btn-outline-danger icofont-ui-remove ">Eliminar</button>' +
+
+                    '<div class="form-group"><label>Nombre Talla </label>' +
+                    '<input type="text" id="nom_tallaUP-' + row.id + '" Class="form-control" value="' + row.nom_talla + '">' +
                     '</div>' +
+
+                    '<div class="form-group"><label>N° Talla </label>' +
+                    '<input type="text" id="num_tallaUP-' + row.id + '" Class="form-control" value="' + row.num_talla + '">' +
+                    '</div>' +
+
+                    '<div class="form-group">' +
+                    '<div class="form-group"><label>Estatus</label>' +
+                    '<select class="form-control" id="estatusUPtalla-' + row.id + '">' +
+                    '<option value="' + row.estatus + '">' + row.estatus + '</option>' +
+                    '<option value="A">Activo</option>' +
+                    '<option value="I">Inactivo</option>' +
+                    '</select></div>' +
+                    '</div>' +
+
+
+                    '<div class="form-group ">' +
+                    '<input id="EditPatinadorBtn-' + row.id + '" value="Actualizar registro" class="form-control btn-warning" type="submit" onclick="editTalla(' + row.id +
+                    ')" class="btn-md  btn btn-outline-warning btn-rounded  " >' +
+                    '</div>' +
+
+                    '<div class="form-group">' +
+                    '<button value="" onclick="removeTalla(' + row.id + ')"  id="buttonEliminarTalla" class="btn btn-outline-danger  form-control icofont-ui-remove ">Eliminar</button>' +
+                    '</div>' +
+                    '<input type="number" hidden="True" name="idEmpresaUP" value="{{ lastIdEmpresa }}">' +
+                    '<input type="number" hidden="True" name="idUserUP" value="{{ login_user_id}}">' +
+                    '<input type="number" hidden="True" name="idIpatinadorUP" value="' + row.id + '"' +
                     '</form>';
 
 
@@ -148,6 +179,65 @@ data-auto-refresh-status="true"
         return false;
     });
 </script>
+
+<!--Editar talla-->
+<script>
+    function editTalla(id) {
+
+
+
+        var estatusUP = document.getElementById("estatusUPtalla-" + id).value;
+        var idEmpresaUP = $('input[name="idEmpresaUP"]').val().trim();
+        var idUserUP = $('input[name="idUserUP"]').val().trim();
+        var num_tallaUP = document.getElementById("num_tallaUP-" + id).value;
+        var nom_tallaUP = document.getElementById("nom_tallaUP-" + id).value;
+
+
+
+
+        if (idUserUP && idEmpresaUP) {
+
+            $.ajax({
+                url: '{% url "Talla_ajax_update" %}',
+                data: {
+                    'estatusUP': estatusUP,
+                    'idEmpresaUP': idEmpresaUP,
+                    'idUserUP': idUserUP,
+                    'idTallaUP': id,
+                    'nom_tallaUP': nom_tallaUP,
+                    'num_tallaUP': num_tallaUP,
+
+
+
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if (data.user) {
+                        appendToUsrTable(data.user);
+                    }
+
+
+                    window.location.reload();
+                }
+
+
+            });
+        } else {
+            alert("All fields must have a valid value.");
+        }
+
+
+
+
+
+
+
+
+
+        alert(id);
+    }
+</script>
+
 
 <!--Delete Talla-->
 <script>

@@ -51,7 +51,8 @@ def TallaList(request):
             username = request.session['username']     
             idUser   = MyUser.objects.get(username=username) 
     lastEm     = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
-    cantalla   = Talla.objects.filter(empresa_id=lastEm.lastEm).order_by('-id')
+    cantalla = Talla.objects.filter(
+    	empresa_id=lastEm.lastEm, usuario_id=idUser.id,estatus='A').order_by('-id')
     serializer = TallaSerializer(cantalla, many=True)
     return Response(serializer.data)
 
@@ -238,46 +239,29 @@ class DeleteTallaOP(View):
             'deleted': True
         }        
         return JsonResponse(data)
-    
-    
 
 class UpdateTalla(LoginRequiredMixin,TemplateView):
     def  get(self, request):
-        idIptalla        = request.GET.get('idIptallaUP', None)
-        idEmpresa        = request.GET.get('idEmpresaUP', None)
-        idUser           = request.GET.get('idUserUP', None)
-        nombres          = request.GET.get('nombresInputUP', None)
-        apellido         = request.GET.get('apellidosUP', None)
-        sexo             = request.GET.get('sexoUP', None)
-        estatus          = request.GET.get('estatusUP', None)
-        correo           = request.GET.get('correoUP', None)
-        cedula           = request.GET.get('cedulaUP', None)
-        num_telf         = request.GET.get('num_telefonoUP', None)
-        direccion        = request.GET.get('direccionUP', None)
-        abilidad         = request.GET.get('abilidadUP', None)
+        idTalla        = request.GET.get('idTallaUP', None)
+        idEmpresa      = request.GET.get('idEmpresaUP', None)
+        idUser         = request.GET.get('idUserUP', None)
+        estatus        = request.GET.get('estatusUP', None)
+        nom_talla      = request.GET.get('nom_tallaUP', None)
+        num_talla      = request.GET.get('num_tallaUP', None)
         
-      
-        obj = Talla.objects.get(id=idIptalla)
+        obj = Talla.objects.get(id=idTalla)
         obj.empresa_id = idEmpresa
         obj.usuario_id = idUser
-        obj.nombres    = nombres  
-        obj.apellido   = apellido 
-        obj.sexo       = sexo     
         obj.estatus    = estatus  
-        obj.correo     = correo   
-        obj.cedula     = cedula   
-        obj.num_telf   = num_telf 
-        obj.direccion  = direccion
-        obj.abilidad   = abilidad 
-        
-        
-
-        
+        obj.num_talla  = num_talla
+        obj.nom_talla  = nom_talla.upper()
+             
         try:
             obj.save()
             return redirect('home')
-        except Exception as e:  print("reparar peo de cors header crsf token")
-
+        except Exception as e:
+            print("reparar peo de cors header crsf token Error:"+str(e))
+            return redirect('home')
 
 
 

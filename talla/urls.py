@@ -1,11 +1,13 @@
 from django.urls import path
 from talla.views import CreateTalla,DeleteTalla,TallaList
-from talla.views import CreateTallaOP,DeleteTallaOP,TallaOPList,TallaOpCanIncosistente,TallaEmpresaList
+from talla.views import CreateTallaOP, DeleteTallaOP, TallaOPList, TallaOpCanIncosistente, TallaEmpresaList, UpdateTalla
 
 urlpatterns = [
     path('talla-list/', TallaList, name="talla-list"),
     path('talla/crud/create/', CreateTalla.as_view(), name='Talla_ajax_create'),
-    path('talla/crud/delete/', DeleteTalla.as_view(), name='Talla_ajax_delete'),   
+    path('talla/crud/delete/', DeleteTalla.as_view(), name='Talla_ajax_delete'),
+    path('patinador/crud/Update/', UpdateTalla.as_view(),name='Talla_ajax_update'),
+
     
     #tallas generales de la empresa    
     path('tallaEmpresa-list/', TallaEmpresaList, name="tallaEmpresa-list"),
