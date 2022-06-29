@@ -31,7 +31,7 @@ def referenciaList(request):
     lastEm     = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
     lastEm=lastEm.lastEm
     referencias = Referencia.objects.all().filter(
-    	empresa_id=lastEm, usuario_id=idUser.id,estatus='A').order_by('-id')
+    	empresa_id=lastEm, usuario_id=idUser.id).order_by('-id')
     
     
     serializer = ReferenciaSerializer(referencias, many=True)
