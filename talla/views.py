@@ -52,7 +52,7 @@ def TallaList(request):
             idUser   = MyUser.objects.get(username=username) 
     lastEm     = CambioEmpres.objects.filter(usuario_id=idUser.id).last()
     cantalla = Talla.objects.filter(
-    	empresa_id=lastEm.lastEm, usuario_id=idUser.id,estatus='A').order_by('-id')
+    	empresa_id=lastEm.lastEm, usuario_id=idUser.id).order_by('-id')
     serializer = TallaSerializer(cantalla, many=True)
     return Response(serializer.data)
 
@@ -217,24 +217,32 @@ class CreateTallaOP(View):
 
 class DeleteTalla(View):
     def  get(self, request):
-        id1 = request.GET.get('id', None)
-        Talla.objects.get(id=id1).delete()
-        data = {
+        idTalla = request.GET.get('id', None)
+        sinTalla = Talla.objects.filter(id=idTalla).values('nom_talla')
+        if (sinTalla[0]['nom_talla'] != 'SIN TALLA'):
+            Talla.objects.get(id=idTalla).delete()
+            data = {
             'deleted': True
-        }
-        return JsonResponse(data)
+            }
+            return JsonResponse(data)
+        else:
+            
+            data = {
+                'deleted': False
+            }
+            return JsonResponse(data)
 
 
 class DeleteTallaOP(View):
     def  get(self, request):
-        id1 = request.GET.get('id', None)
-        idOpCantalla = CanTalla.objects.filter(id=id1).values('id','operacion_id','talla_id')       
+        idTalla = request.GET.get('id', None)
+        idOpCantalla = CanTalla.objects.filter(id=idTalla).values('id','operacion_id','talla_id')       
         canT=0
           
         for canTerminada in Despacho.objects.filter(operacion_id=idOpCantalla[0]['operacion_id'],talla_id=idOpCantalla[0]['talla_id']).values('can_terminada'):canT+=canTerminada['can_terminada']
         Operacion.objects.all().filter(id=idOpCantalla[0]['operacion_id']).update(can_restante= F('can_restante') - int(canT))
         Despacho.objects.filter(operacion_id=idOpCantalla[0]['operacion_id'],talla_id=idOpCantalla[0]['talla_id']).delete()
-        CanTalla.objects.get(id=id1).delete()
+        CanTalla.objects.get(id=idTalla).delete()
         data = {
             'deleted': True
         }        
@@ -248,19 +256,22 @@ class UpdateTalla(LoginRequiredMixin,TemplateView):
         estatus        = request.GET.get('estatusUP', None)
         nom_talla      = request.GET.get('nom_tallaUP', None)
         num_talla      = request.GET.get('num_tallaUP', None)
+        sinTalla = Talla.objects.filter(
+            id=idTalla).values('nom_talla')
         
-        obj = Talla.objects.get(id=idTalla)
-        obj.empresa_id = idEmpresa
-        obj.usuario_id = idUser
-        obj.estatus    = estatus  
-        obj.num_talla  = num_talla
-        obj.nom_talla  = nom_talla.upper()
-             
-        try:
-            obj.save()
-            return redirect('home')
-        except Exception as e:
-            print("reparar peo de cors header crsf token Error:"+str(e))
+        if (sinTalla[0]['nom_talla']!='SIN TALLA'):
+            try:
+                obj = Talla.objects.get(id=idTalla)
+                obj.empresa_id = idEmpresa
+                obj.usuario_id = idUser
+                obj.estatus    = estatus  
+                obj.num_talla  = num_talla
+                obj.nom_talla  = nom_talla.upper()
+                obj.save()
+                return redirect('home')
+            except Exception as e:
+                print("reparar peo de cors header crsf token Error:"+str(e))
+        else:
             return redirect('home')
 
 

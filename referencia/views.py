@@ -82,36 +82,26 @@ class CreateReferencia(View):
 
 class DeleteReferencia(View):
     def  get(self, request):
-        id1 = request.GET.get('id', None)
-        Referencia.objects.get(id=id1).delete()
-        data = {
+        idReferencia = request.GET.get('id', None)
+        
+        sinRefe  = Referencia.objects.filter(id=idReferencia).values('nom_referencia')
+        
+        
+        if sinRefe[0]['nom_referencia'] != 'SIN REFERENCIA':
+            print("sinRefe", sinRefe)
+            Referencia.objects.get(id=idReferencia).delete()
+            data = {
             'deleted': True
         }
-        return JsonResponse(data)
+            return JsonResponse(data)
+        else:
+            data = {
+                'deleted': False}
 
-''' 
-class UpdateReferencia(TemplateView):
-    def  get(self, request):
-       
-        idReferencia    = request.GET.get('idReferenciaUp', None)
-        nom_referencia = request.GET.get('nom_referenciaUP', None)
-        descripcion    = request.GET.get('descripcionUP', None)      
-        idEmpresa       = request.GET.get('empresaUP', None)
-        idUser          = request.GET.get('idUserUP', None)
-        
-        
-        obj = Referencia.objects.get(id=idReferencia)
-        obj.nom_referencia = nom_referencia
-        obj.descripcion = descripcion
-       
-        obj.empresa_id = idEmpresa
-        obj.usuario_id = idUser
-        try:
-            obj.save()
-            return redirect('home')
-        except Exception as e:
-            print("reparar peo de cors header crsf token")
- '''
+            return JsonResponse(data)
+
+
+
 
 @api_view(['POST'])
 def UpdateReferencia(request):
@@ -120,17 +110,22 @@ def UpdateReferencia(request):
     descripcion = request.data['descripcionUP']   
     idUser = request.data['idUserUP']
     estatus = request.data['estatusUP']
-
-    obj = Referencia.objects.get(id=idReferencia)
-    obj.nom_referencia = nom_referencia
-    obj.estatus     = estatus
-    obj.descripcion = descripcion  
-    obj.usuario_id = idUser
     
+    sinRefe = Referencia.objects.filter(
+    	id=idReferencia, nom_referencia='SIN REFERENCIA')
     
-    try:
-        obj.save()
-        return redirect('home')
-    except Exception as e:
-        print("reparar peo de cors header crsf token")
+    if sinRefe == None:
+        
+        obj = Referencia.objects.get(id=idReferencia)
+        obj.nom_referencia = nom_referencia
+        obj.estatus     = estatus
+        obj.descripcion = descripcion  
+        obj.usuario_id = idUser
+        
+        
+        try:
+            obj.save()
+            return redirect('home')
+        except Exception as e:
+            print("reparar peo de cors header crsf token")
     return Response(idReferencia)

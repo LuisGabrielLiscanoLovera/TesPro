@@ -161,16 +161,13 @@
             '</div>' +
 
             '</div>' +
-            '<div class="col-sm-1">' + '<button value="" onclick="remove(' + row.id + ')"  id="buttonEliminarReferencia" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>' +
+            '<div class="col-sm-1">' + '<button value="" onclick="deleteReferencia(' + row.id + ')"  id="buttonEliminarReferencia" class="btn btn-outline-danger icofont-ui-remov ">Eliminar</button>' +
             '</div>' +
             '</form>';
 
 
 
     }
-
-
-
 
 
 
@@ -257,4 +254,26 @@
         return false;
     });
 </script>
-</>
+
+<!--Delete Tarea-->
+<script>
+    function deleteReferencia(id) {
+
+
+
+        $.ajax({
+            url: '{% url "Referencia_ajax_delete" %}',
+            data: {
+                'id': id,
+            },
+            dataType: 'json',
+            success: function(data) {
+
+                window.location.reload();
+
+
+
+            }
+        });
+    }
+</script>
