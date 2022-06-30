@@ -9,7 +9,7 @@ from patinador.models import Patinador
 
 
 class Despacho(models.Model):
-   
+
 
     usuario              = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     patinador            = models.ForeignKey(Patinador,on_delete=models.CASCADE)
@@ -24,7 +24,7 @@ class Despacho(models.Model):
     
     btnDelDespacho  = models.CharField(max_length=300, blank=True ,default="" , null=True)
     #integrante = models.ForeignKey(Integrante,related_name='DespachoI', null=False, blank=False,on_delete=models.CASCADE)
-    
+
     ESTATUS       = (('A','Activo'),('I','Inactivo'))
     estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

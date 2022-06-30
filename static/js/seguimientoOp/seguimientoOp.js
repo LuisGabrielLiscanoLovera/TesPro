@@ -1,6 +1,10 @@
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
 
+function DetailFormatterButTareaSeguimiento(index, row) {
+
+    return 'Caras de culos';
+}
 
 function DetailFormatterButInfoseguimientoOp(index, row) {
     //crea y renderiza la tabla

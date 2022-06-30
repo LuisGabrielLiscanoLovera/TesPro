@@ -7,7 +7,8 @@ from referencia.models import Referencia
 class Operacion(models.Model):
     btnInfo       = '<button type="button" class="btn btn-outline-info text-center btn-sm btn-block ">Info</button>'
     btnAccion     = '<button type="button" class="btn btn-outline-warning text-center btn-sm btn-block ">Accion</button>'
-    
+    btnTAREA      = '<button type="button" class="btn btn-outline-primary text-center btn-sm btn-block ">Tarea</button>'
+
     costeProd     = models.IntegerField(blank=True, null=True, default=0)
     usuario       = models.ForeignKey(MyUser,on_delete=models.CASCADE)
     empresa       = models.ForeignKey(Empresa, on_delete=models.CASCADE)
@@ -19,6 +20,9 @@ class Operacion(models.Model):
     can_restante  = models.IntegerField(blank=True, null=True)    
     btnAcci       = models.CharField(max_length=300,default=btnAccion , null=True)
     btnInfo       = models.CharField(max_length=300,default=btnInfo , null=True)
+
+    btnTareaSeg = models.CharField(max_length=300, default=btnTAREA)
+
         
     ESTATUS       = (('A','Activo'),('I','Inactivo'))
     estatus       = models.CharField(max_length=1,choices=ESTATUS,default='A',blank=True, null=True)

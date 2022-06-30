@@ -5,13 +5,13 @@ from empresa.models import Empresa,RelacionEmpresa,CambioEmpres
 from despacho.models import Despacho
 from integrante.models import Integrante
 from patinador.models import Patinador
+from patinador.serializers import PatinadorSerializer
 from talla.models import Talla,CanTalla
 from django.db.models import F 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from authapp.models import MyUser
 from despacho.serializers import DespachoSerializer,OperacionSerializer
-from patinador.serializers import PatinadorSerializer
 from operacion.models import Operacion
 from django.views.generic import View
 from django.http import JsonResponse
@@ -229,12 +229,14 @@ def createDespacho(request,):
         )
         obj = Despacho.objects.latest('id')
         btnDel="<button class='btn btn-block btn-sm btn-outline-danger icofont-ui-remove' type='submit' onclick='deleteDespachoUnico({})'> </button>".format(obj.id)
-        obj = Despacho.objects.all().filter(id=obj.id).update(btnDelDespacho=btnDel)
+
+        obj = Despacho.objects.all().filter(id=obj.id).update(
+            btnDelDespacho=btnDel)
         data = {'despacho': True}
         
         
-        CanTallaOP      = CanTalla.objects.all().filter(operacion_id=int(request.data['id_OP']),talla_id=int(request.data['selectIdTalla'])).update(res_talla= F('res_talla') - canTerminada)
-        OpTallaRestante = Operacion.objects.all().filter(id=int(request.data['id_OP'])).update(can_restante= F('can_restante') - canTerminada)
+        CanTalla.objects.all().filter(operacion_id=int(request.data['id_OP']),talla_id=int(request.data['selectIdTalla'])).update(res_talla= F('res_talla') - canTerminada)
+        Operacion.objects.all().filter(id=int(request.data['id_OP'])).update(can_restante= F('can_restante') - canTerminada)
         
         
         
