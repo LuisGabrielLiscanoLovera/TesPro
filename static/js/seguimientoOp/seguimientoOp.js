@@ -139,53 +139,53 @@ function SeguimientoOp(idOperacion, idUsuario) {
 
             }
         },
-        methods: {
+
+        created() {
+            axios.get('tallaOP-listSeguimiento/', {
+                    params: {
+                        idOp: idOperacion,
+                    }
+                }).then((resp) => {
+                    this.tallaOPListSeguimiento = resp.data;
+                    console.log(this.tallaOPListSeguimiento);
+
+                })
+                .catch(error => console.log(error));
 
 
 
 
-            getProduccionData: function() {
-                axios.get('tallaOP-listSeguimiento/', {
-                        params: {
-                            idOp: idOperacion,
-                        }
-                    }).then((resp) => {
-                        this.tallaOPListSeguimiento = resp.data;
-                        console.log(this.tallaOPListSeguimiento);
-
-                    })
-                    .catch(error => console.log(error));
-
-
-                axios.get('integranteOp-listSeguimiento/', {
-                        params: {
-                            idOperacionSeguimiento: idOperacion,
-                        }
-                    }).then((resp) => {
-                        this.integranteOPListSeguimiento = resp.data;
-                        console.log(this.integranteOPListSeguimiento);
-                    })
-                    .catch(error => console.log(error));
-
-
-                axios.get('patinadoresOp-listSeguimiento/', {
-                        params: {
-                            idOperacionSeguimientoP: idOperacion,
-                        }
-                    }).then((resp) => {
-                        this.patinadorOPListSeguimiento = resp.data;
-                        console.log(this.patinadorOPListSeguimiento);
-                    })
-                    .catch(error => console.log(error));
 
 
 
 
-            },
+
+
+
+
+            axios.get('integranteOp-listSeguimiento/', {
+                    params: {
+                        idOperacionSeguimiento: idOperacion,
+                    }
+                }).then((resp) => {
+                    this.integranteOPListSeguimiento = resp.data;
+                    console.log(this.integranteOPListSeguimiento);
+                })
+                .catch(error => console.log(error));
+
+
+            axios.get('patinadoresOp-listSeguimiento/', {
+                    params: {
+                        idOperacionSeguimientoP: idOperacion,
+                    }
+                }).then((resp) => {
+                    this.patinadorOPListSeguimiento = resp.data;
+                    console.log(this.patinadorOPListSeguimiento);
+                })
+                .catch(error => console.log(error));
+
 
         },
-        mounted: function() {
-            this.getProduccionData();
-        }
+
     })
 }
