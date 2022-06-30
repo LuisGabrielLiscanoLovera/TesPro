@@ -1,7 +1,6 @@
 # tomar en cuenta los temas de db on cascade
 # crear registro pdf para generar cda data de los registro
 # mejorar los formularios
-# crear modulo seguimiento 
 # crear modulo de record
 # botones de advertencia
 # en los campos imput de los formularios bordearlo de color azul si es obligatorio 
@@ -11,5 +10,4 @@
 # enviar mensaje al correo
 # calculador de tarea 
 # prueba full pxc
-# formulario colores Occion de varios colores  #crear un calculador de prenda 
-#al eliminar patinador borrarrlo de user 
+# crear un calculador de prenda 

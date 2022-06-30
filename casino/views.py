@@ -209,6 +209,8 @@ def casinoListHistorial(request):
     casinos    = Casino.objects.filter(empresa_id=lastEm,usuario_id=idUser,estatus='I').order_by('-id')
     serializer = CasinoSerializer(casinos, many=True)
     return Response(serializer.data)    
+
+
 @login_required(login_url='signin')
 @api_view(['POST'])
 def createCasino(request,):
