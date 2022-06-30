@@ -33,26 +33,26 @@
         <hr>
     </center>
 
+    <div class="col-8 offset-2">
+        <table id="produccionTable" data-id-field="id" class="" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-show-columns="true" data-search="true" data-show-fullscreen="true" data-pagination="true"
+            data-show-refresh="true" data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-url="{% url 'prodAcumulado-listHistorial'%}">
+            <thead class="thead-dark ">
+                <tr>
+                    <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoAcumuladoHistorial" class="text-center">Info
+                    </th>
+                    {% comment %}
+                    <th data-field="id" class="text-center ">id</th> {% endcomment %}
+                    <th data-field="nom_acumulado" class="text-center ">Nom. Acumulado</th>
+                    <th data-field="estatus" class="text-center">Estatus</th>
+                    <th data-field="created_at" class="text-center">Fecha creada</th>
+                    <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionAcumuladoHistorial" class="text-center">
+                        Accion</th>
+                </tr>
+            </thead>
+        </table>
 
-    <table id="produccionTable" data-id-field="id" class="" data-toggle="table" data-detail-view="true" data-detail-view-by-click="true" data-detail-view-icon="false" data-show-columns="true" data-search="true" data-show-fullscreen="true" data-pagination="true"
-        data-show-refresh="true" data-always-use-formatter="true" data-show-export="true" data-locale="es-SP" data-url="{% url 'prodAcumulado-listHistorial'%}">
-        <thead class="thead-dark ">
-            <tr>
-                <th data-field="btnInfo" data-detail-formatter="DetailFormatterButInfoAcumuladoHistorial" class="text-center">Info
-                </th>
-                {% comment %}
-                <th data-field="id" class="text-center ">id</th> {% endcomment %}
-                <th data-field="nom_acumulado" class="text-center ">Nom. Acumulado</th>
-                <th data-field="estatus" class="text-center">Estatus</th>
-                <th data-field="created_at" class="text-center">Fecha creada</th>
-                <th data-field="btnAcci" data-detail-formatter="DetailFormatterButAccionAcumuladoHistorial" class="text-center">
-                    Accion</th>
-            </tr>
-        </thead>
-    </table>
 
-
-
+    </div>
 
 
 
