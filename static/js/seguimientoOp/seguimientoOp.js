@@ -1,7 +1,7 @@
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
 
-function DetailFormatterButTareaSeguimiento(index, row) {
+function DetailFormatterBuIintegranteSeguimiento(index, row) {
 
     return '' +
         '<script type="application/javascript">' + 'SeguimientoOpIntegrante(' + row.id + ',' + row.usuario + ');' +
@@ -131,7 +131,7 @@ function SeguimientoOp(idOperacion, idUsuario) {
         data: function() {
             return {
                 tallaOPListSeguimiento: [],
-                integranteOPListSeguimiento: [],
+                tareaOPListSeguimiento: [],
                 patinadorOPListSeguimiento: [],
                 usuario: idUsuario,
                 idOperacion: idOperacion,
